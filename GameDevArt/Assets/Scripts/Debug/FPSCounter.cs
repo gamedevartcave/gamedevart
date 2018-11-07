@@ -67,7 +67,7 @@ public class FPSCounter : MonoBehaviour
 
 			if (showPrefix == true)
 			{
-				FPSText.text = "FPS: " + FramesPerSec.ToString() + " (" + ((1.0f/(FramesPerSecB)) * 1000.0f) + " ms)";
+				FPSText.text = "FPS: " + FramesPerSec.ToString() + " (" + (System.Math.Round ((1.0f/(FramesPerSecB)) * 1000.0f, 2)) + " ms)";
 			}
 		}
 	}
