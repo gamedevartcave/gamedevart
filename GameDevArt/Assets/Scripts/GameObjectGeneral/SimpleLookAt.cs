@@ -22,7 +22,7 @@ public class SimpleLookAt : MonoBehaviour
 
 	void OnEnable ()
 	{
-		LookAtPos = Camera.main.transform;
+		//LookAtPos = Camera.main.transform;
 	}
 
 	void LateUpdate ()

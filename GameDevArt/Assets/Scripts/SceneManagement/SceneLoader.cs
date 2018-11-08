@@ -189,7 +189,10 @@ public class SceneLoader : MonoBehaviour
 	{
 		if (SceneManager.GetSceneByName (SceneName).IsValid () == true)
 		{
-			SceneManager.SetActiveScene (SceneManager.GetSceneByName (SceneName));
+			if (SceneManager.GetSceneByName (SceneName).isLoaded == true)
+			{
+				SceneManager.SetActiveScene (SceneManager.GetSceneByName (SceneName));
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using InControl;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -13,9 +14,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 		private bool m_DoubleJump;
-        
+		[HideInInspector]public bool doubleJumped;
+		public PlayerActions playerActions;
+
+
         private void Start()
         {
+			playerActions = PlayerActions.CreateWithDefaultBindings ();
+
             // get the transform of the main camera
             if (Camera.main != null)
             {
@@ -37,12 +43,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
             if (!m_Jump)
             {
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                //m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+				m_Jump = playerActions.Jump.WasPressed;
+		
             }
 
-			if (m_Jump)
+			if (m_Jump && doubleJumped == false)
 			{
-				m_DoubleJump = CrossPlatformInputManager.GetButtonDown("Jump");
+				//m_DoubleJump = CrossPlatformInputManager.GetButtonDown("Jump");
+				m_DoubleJump = playerActions.Jump.WasPressed;
+
+				if (playerActions.Jump.WasPressed)
+				{
+					doubleJumped = true;
+				}
 			}
         }
 
