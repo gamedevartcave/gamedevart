@@ -12,6 +12,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
 		[SerializeField] float m_JumpPower = 12f;
+		[SerializeField] float m_JumpPower_Forward = 2f;
 		[Range(1f, 4f)][SerializeField] float m_GravityMultiplier = 2f;
 		[SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
@@ -172,7 +173,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (doubleJump)
 			{
 				// jump!
-				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
+				var locVel = m_Rigidbody.transform.TransformDirection (m_Rigidbody.velocity);
+				locVel.x = m_Rigidbody.velocity.x;
+				locVel.y = m_JumpPower;
+				locVel.z = locVel.z + m_JumpPower_Forward;
+
+				//m_Rigidbody.AddRelativeForce (0, m_JumpPower, m_JumpPower_Forward, ForceMode.VelocityChange);
+				m_Rigidbody.AddRelativeForce (0, m_JumpPower, 0, ForceMode.VelocityChange);
+
+				//m_Rigidbody.velocity = m_Rigidbody.transform.InverseTransformDirection (locVel);
+					//new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z + m_JumpPower_Forward);
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
 				m_GroundCheckDistance = 0.1f;

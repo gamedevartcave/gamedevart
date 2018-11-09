@@ -295,6 +295,7 @@ public class SaveAndLoadScript : MonoBehaviour
 		myName = data.myName;
 	}
 
+	/*
 	public void LoadLevelData ()
 	{
 		if (Directory.Exists (Application.persistentDataPath + "/" + Username + "/") == true)
@@ -331,6 +332,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			LoadLevelData ();
 		}
 	}
+	*/
 		
 	public void StorePlayerDataInGame ()
 	{

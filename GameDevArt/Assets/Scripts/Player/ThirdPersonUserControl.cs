@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
-using InControl;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -9,9 +8,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     public class ThirdPersonUserControl : MonoBehaviour
     {
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
-		public Transform m_CamRigRotX;
-		public Vector2 CamXRotBounds;
-		public Transform m_CamRigRotY;
 		public float rotateSens;
 		public Transform m_Cam;                   // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
@@ -20,9 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private bool m_DoubleJump;
 		[HideInInspector]public bool doubleJumped;
 
-
 		public PlayerActions playerActions;
-
 
         private void Start()
         {
@@ -79,14 +73,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			float h = playerActions.Move.Value.x;
 			float v = playerActions.Move.Value.y;
-
-			float ch = playerActions.CamRot.Value.x;
-			float cv = playerActions.CamRot.Value.y;
-
-			//m_CamRigRotX.Rotate (cv * rotateSens, 0, 0, Space.World);
-		
-				
-			//m_CamRigRotY.Rotate (0, ch * rotateSens, 0, Space.World);
 
 			bool crouch = playerActions.Crouch.IsPressed;
 
