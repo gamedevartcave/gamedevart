@@ -24,6 +24,7 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction CamDown;
 
 	public TwoAxisInputControl CamRot;
+	public PlayerAction CameraChange;
 
 	public PlayerActions()
 	{
@@ -46,6 +47,7 @@ public class PlayerActions : PlayerActionSet
 		CamUp = CreatePlayerAction ( "CamUp" );
 		CamDown = CreatePlayerAction ( "CamDown" );
 		CamRot = CreateTwoAxisPlayerAction ( CamLeft, CamRight, CamUp, CamDown );
+		CameraChange = CreatePlayerAction ( "CameraChange" );
 	}
 
 	public static PlayerActions CreateWithDefaultBindings()
@@ -101,6 +103,9 @@ public class PlayerActions : PlayerActionSet
 
 		playerActions.CamDown.AddDefaultBinding( Mouse.PositiveY );
 		playerActions.CamDown.AddDefaultBinding( InputControlType.RightStickDown );
+
+		playerActions.CameraChange.AddDefaultBinding ( Key.Tab );
+		playerActions.CameraChange.AddDefaultBinding ( InputControlType.LeftStickButton );
 
 		//Debug.Log ("Created Player Actions.");
 		return playerActions;

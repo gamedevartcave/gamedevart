@@ -15,6 +15,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 		private bool m_DoubleJump;
+		public Transform CamFollow;
+		private bool isRight;
+		public Vector2 cameraOffset;
+		public float cameraOffsetSmoothing = 5;
 		[HideInInspector]public bool doubleJumped;
 
 		public PlayerActions playerActions;
@@ -51,11 +55,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
+			// Jumping.
             if (!m_Jump)
             {
 				m_Jump = playerActions.Jump.WasPressed;
             }
 
+			// Double jumping.
 			if (m_Jump && doubleJumped == false)
 			{
 				m_DoubleJump = playerActions.Jump.WasPressed;
@@ -96,6 +102,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				}
 			}
 				
+			// Aiming.
 			if (playerActions.Shoot.Value > 0.5f)
 			{
 				if (Time.time > PlayerController.instance.nextFire)
@@ -110,10 +117,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				}
 			}
 
+			// Using.
 			if (playerActions.Use.WasPressed == true)
 			{
 				PlayerController.instance.OnUse.Invoke ();
 			}
+
+			// Camera change.
+			if (playerActions.CameraChange.WasPressed)
+			{
+				isRight = !isRight;
+			}
+
+
         }
 
 
@@ -150,5 +166,41 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Jump = false;
 			m_DoubleJump = false;
         }
+
+		void LateUpdate ()
+		{
+			GetCameraChangeSmoothing ();
+		}
+
+		void GetCameraChangeSmoothing ()
+		{
+			// Camera change = Left.
+			if (!isRight)
+			{
+				CamFollow.localPosition = Vector3.Lerp (
+					CamFollow.localPosition, 
+					new Vector3 (
+						cameraOffset.x,
+						CamFollow.localPosition.y,
+						CamFollow.localPosition.z
+					), 
+					cameraOffsetSmoothing * Time.deltaTime
+				);
+			}
+
+			// Camera change = Right.
+			if (isRight)
+			{
+				CamFollow.localPosition = Vector3.Lerp (
+					CamFollow.localPosition,
+					new Vector3 (
+						cameraOffset.y,
+						CamFollow.localPosition.y,
+						CamFollow.localPosition.z
+					),
+					cameraOffsetSmoothing * Time.deltaTime
+				);
+			}
+		}
     }
 }
