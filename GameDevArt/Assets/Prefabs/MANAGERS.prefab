@@ -210,6 +210,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1842970078982720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4954329459419268}
+  - component: {fileID: 114901554979435392}
+  m_Layer: 0
+  m_Name: SaveAndLoadScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1858178651555546
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +295,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1881190581398598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4503466710320080}
+  - component: {fileID: 114703005641886034}
+  m_Layer: 0
+  m_Name: TimescaleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1961637826847236
 GameObject:
   m_ObjectHideFlags: 1
@@ -321,6 +353,19 @@ Transform:
   m_Father: {fileID: 4944371401764102}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4503466710320080
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1881190581398598}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4944371401764102}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4944371401764102
 Transform:
   m_ObjectHideFlags: 1
@@ -335,8 +380,23 @@ Transform:
   - {fileID: 224958215030257976}
   - {fileID: 4486147873972634}
   - {fileID: 224007169070513050}
+  - {fileID: 4954329459419268}
+  - {fileID: 4503466710320080}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4954329459419268
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1842970078982720}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4944371401764102}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95435993928599896
 Animator:
@@ -1047,6 +1107,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114703005641886034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1881190581398598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad4f1fc68309f04b83ac2002fe6fc8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeStep: 0.01
 --- !u!114 &114852347583519430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1061,6 +1133,54 @@ MonoBehaviour:
   targetFramerate: -1
   currentTargetFramerate: 0
   useScreenRefreshRate: 0
+--- !u!114 &114901554979435392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1842970078982720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fe34c41956b81419202d1601627cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllowLoading: 1
+  AllowSaving: 1
+  TestMode: 0
+  Username: default
+  myName: 
+  LevelId: 0
+  cam: {fileID: 0}
+  QualitySettingsIndex: 0
+  targetframerate: 0
+  averageFpsTimer: 0
+  ParticleEmissionMultiplier: 1
+  MasterVolume: 0
+  SoundtrackVolume: 0
+  EffectsVolume: 0
+  PlayerData:
+    Username: 
+    myName: 
+    ExperiencePoints: 0
+    Currency: 0
+    TotalMirrorBounces: 0
+    ItemsInInventories: 
+    SelectedAbility: 0
+    SelectedSkin: 0
+    ThemeUnlocks: 
+    LevelUnlocks: 
+    HighestScores: 
+    TotalBouncesPerLevel: 
+  LevelData:
+    ItemsInInventories: 
+    StartingItemInventories: 
+  SettingsData:
+    QualitySettingsIndex: 0
+    ParticleEmissionMultiplier: 1
+    targetframerate: 0
+    MasterVolume: 0
+    SoundtrackVolume: 0
+    EffectsVolume: 0
 --- !u!198 &198052940456786208
 ParticleSystem:
   m_ObjectHideFlags: 1

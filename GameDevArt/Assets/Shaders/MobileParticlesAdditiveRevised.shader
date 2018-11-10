@@ -31,6 +31,7 @@ Shader "Custom/Mobile/Particles/Additive"
         UNITY_FOG_COORDS(1)
     };
 
+
     v2f vert(appdata_t v)
     {
         v2f o;
@@ -40,6 +41,7 @@ Shader "Custom/Mobile/Particles/Additive"
         UNITY_TRANSFER_FOG(o, o.vertex);
         return o;
     }
+
 
     fixed4 frag(v2f i) : SV_Target
     {

@@ -7,9 +7,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     [RequireComponent(typeof (ThirdPersonCharacter))]
     public class ThirdPersonUserControl : MonoBehaviour
     {
+		public static ThirdPersonUserControl instance { get; private set; }
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
 		public float rotateSens;
-		public Transform m_Cam;                   // A reference to the main camera in the scenes transform
+		public Camera m_Cam;                   // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
@@ -17,6 +18,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[HideInInspector]public bool doubleJumped;
 
 		public PlayerActions playerActions;
+
+		void Awake ()
+		{
+			instance = this;
+		}
 
         private void Start()
         {
@@ -27,10 +33,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // get the transform of the main camera
             if (Camera.main != null)
             {
-                m_Cam = Camera.main.transform;
+                m_Cam = Camera.main;
             }
+
             else
-            {
+           
+			{
                 Debug.LogWarning(
                     "Warning: no main camera found. Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.", gameObject);
                 // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
@@ -45,14 +53,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
             if (!m_Jump)
             {
-                //m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 				m_Jump = playerActions.Jump.WasPressed;
-		
             }
 
 			if (m_Jump && doubleJumped == false)
 			{
-				//m_DoubleJump = CrossPlatformInputManager.GetButtonDown("Jump");
 				m_DoubleJump = playerActions.Jump.WasPressed;
 
 				if (playerActions.Jump.WasPressed)
@@ -60,31 +65,75 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					doubleJumped = true;
 				}
 			}
+
+			// Aiming.
+			if (playerActions.Aim.Value > 0.5f)
+			{
+				m_Cam.fieldOfView = Mathf.Lerp (
+					m_Cam.fieldOfView, 
+					PlayerController.instance.aimFov, 
+					PlayerController.instance.aimSmoothing * Time.deltaTime
+				);
+
+				if (PlayerController.instance.CrosshairObject.activeSelf == false)
+				{
+					PlayerController.instance.CrosshairObject.SetActive (true);
+				}
+			}
+
+			// Not aiming.
+			if (playerActions.Aim.Value <= 0.5f)
+			{
+				m_Cam.fieldOfView = Mathf.Lerp (
+					m_Cam.fieldOfView, 
+					PlayerController.instance.normalFov,
+					PlayerController.instance.aimSmoothing * Time.deltaTime
+				);
+
+				if (PlayerController.instance.CrosshairObject.activeSelf == true)
+				{
+					PlayerController.instance.CrosshairObject.SetActive (false);
+				}
+			}
+				
+			if (playerActions.Shoot.Value > 0.5f)
+			{
+				if (Time.time > PlayerController.instance.nextFire)
+				{
+					PlayerController.instance.transform.rotation = Quaternion.LookRotation (
+						PlayerController.instance.AimNoPitchDir, 
+						Vector3.up
+					);
+
+					PlayerController.instance.Shoot ();
+					PlayerController.instance.nextFire = Time.time + PlayerController.instance.currentFireRate;
+				}
+			}
+
+			if (playerActions.Use.WasPressed == true)
+			{
+				PlayerController.instance.OnUse.Invoke ();
+			}
         }
 
 
         // Fixed update is called in sync with physics
         private void FixedUpdate()
         {
-            // read inputs
-            //float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            //float v = CrossPlatformInputManager.GetAxis("Vertical");
-            //bool crouch = Input.GetKey(KeyCode.C);
-
-			float h = playerActions.Move.Value.x;
-			float v = playerActions.Move.Value.y;
+			float h = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.x;
+			float v = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.y;
 
 			bool crouch = playerActions.Crouch.IsPressed;
 
             // calculate move direction to pass to character
             if (m_Cam != null)
             {
-                // calculate camera relative direction to move:
-                m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-                m_Move = v*m_CamForward + h*m_Cam.right;
+				// calculate camera relative direction to move:
+				m_CamForward = Vector3.Scale (m_Cam.transform.forward, new Vector3 (1, 0, 1)).normalized;
+				m_Move = v * m_CamForward + h * m_Cam.transform.right;
             }
             
-			else
+			else // calculate move direction in world space
             
 			{
                 // we use world-relative directions in the case of no main camera

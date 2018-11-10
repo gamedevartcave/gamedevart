@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SceneryZone
   - Bounds
+  - CamOverride
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -17,9 +19,9 @@ TagManager:
   - 
   - PostProcessing
   - Scenery
-  - 
-  - 
-  - 
+  - CameraOverride
+  - Player
+  - Footstep
   - 
   - 
   - 

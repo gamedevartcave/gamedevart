@@ -47,7 +47,7 @@ MonoBehaviour:
       sampleCount: 16
       downsampling: 0
       forceForwardCompatibility: 0
-      ambientOnly: 1
+      ambientOnly: 0
       highPrecision: 0
   screenSpaceReflection:
     m_Enabled: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
         intensity: 0.4
         threshold: 0.75
         softKnee: 0.5
-        radius: 4
+        radius: 3
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}

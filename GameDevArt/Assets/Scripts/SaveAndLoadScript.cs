@@ -42,6 +42,11 @@ public class SaveAndLoadScript : MonoBehaviour
 	}
 	#endregion
 
+	void Start ()
+	{
+		SaveAndLoadScript.Instance.LoadPlayerData ();
+	}
+
 	void CheckUsername ()
 	{
 		if (Username == null || Username == "") 
@@ -135,7 +140,7 @@ public class SaveAndLoadScript : MonoBehaviour
 		data.Username = Username;
 		data.myName = myName;
 
-		SaveLevelData ();
+		//SaveLevelData ();
 	}
 
 	public void SaveLevelData ()
@@ -502,24 +507,11 @@ public class SaveAndLoadScript : MonoBehaviour
 		public string Username;
 		public string myName;
 		public int ExperiencePoints;
-		public int Currency;
-		public int TotalMirrorBounces;
-
-		public int[] ItemsInInventories;
-
-		public int SelectedAbility;
-		public int SelectedSkin;
-		public bool[] ThemeUnlocks;
-		public bool[] LevelUnlocks;
-		public int[] HighestScores;
-		public int[] TotalBouncesPerLevel;
 	}
 
 	[System.Serializable]
 	public class levelData
 	{
-		public int[] ItemsInInventories;
-		public int[] StartingItemInventories;
 	}
 
 	[System.Serializable]

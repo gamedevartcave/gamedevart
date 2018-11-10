@@ -173,19 +173,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (doubleJump)
 			{
 				// jump!
-				var locVel = m_Rigidbody.transform.TransformDirection (m_Rigidbody.velocity);
-				locVel.x = m_Rigidbody.velocity.x;
-				locVel.y = m_JumpPower;
-				locVel.z = locVel.z + m_JumpPower_Forward;
-
-				//m_Rigidbody.AddRelativeForce (0, m_JumpPower, m_JumpPower_Forward, ForceMode.VelocityChange);
-				m_Rigidbody.AddRelativeForce (0, m_JumpPower, 0, ForceMode.VelocityChange);
-
-				//m_Rigidbody.velocity = m_Rigidbody.transform.InverseTransformDirection (locVel);
-					//new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z + m_JumpPower_Forward);
+				m_Rigidbody.AddRelativeForce (0, m_JumpPower, m_JumpPower_Forward, ForceMode.VelocityChange);
+			
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
 				m_GroundCheckDistance = 0.1f;
+				PlayerController.instance.OnDoubleJump.Invoke ();
 			}
 		}
 
@@ -200,6 +193,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
 				m_GroundCheckDistance = 0.1f;
+				PlayerController.instance.OnJump.Invoke ();
 			}
 		}
 
@@ -238,10 +232,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
 			{
 				m_GroundNormal = hitInfo.normal;
-				m_IsGrounded = true;
+
+				if (m_IsGrounded == false)
+				{
+					m_IsGrounded = true;
+					PlayerController.instance.OnLand.Invoke ();
+				}
+
 				m_Animator.applyRootMotion = true;
 			}
+
 			else
+			
 			{
 				m_IsGrounded = false;
 				m_GroundNormal = Vector3.up;
