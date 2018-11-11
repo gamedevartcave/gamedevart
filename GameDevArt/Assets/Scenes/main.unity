@@ -4142,6 +4142,7 @@ GameObject:
   - component: {fileID: 794116997}
   - component: {fileID: 794116996}
   - component: {fileID: 794116999}
+  - component: {fileID: 794116994}
   m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4225,6 +4226,20 @@ MonoBehaviour:
   useSmoothing: 1
   SmoothingAmount: 5
   Offset: {x: 0, y: -1, z: 0}
+--- !u!114 &794116994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 794116989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9b31d009d7fdb49b9ae29abcb17fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseResolution: {x: 1920, y: 1080}
+  cameras:
+  - {fileID: 794116991}
 --- !u!4 &794116995
 Transform:
   m_ObjectHideFlags: 0

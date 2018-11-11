@@ -5,7 +5,7 @@ public class HiResScreenShots : MonoBehaviour
 {
 	public static HiResScreenShots instance { get ; private set; }
 
-	private Vector2 baseResolution = new Vector2 (Screen.width, Screen.height); // Base resolution dimensions.
+	public Vector2 baseResolution = new Vector2 (Screen.width, Screen.height); // Base resolution dimensions.
 	private Vector2 ResolutionMultiplier = new Vector2 (1, 1);
 	private bool processShot = false; // Is screenshot going to be processed now?
 
@@ -66,9 +66,11 @@ public class HiResScreenShots : MonoBehaviour
 		// Take screenshot using window size as base resolution (overwrites base resolution value).
 		if (Input.GetKeyDown (KeyCode.F4))
 		{
+			Vector2 LastBaseRes = baseResolution;
 			baseResolution = new Vector2 (Screen.height, Screen.width);
 			ResolutionMultiplier = new Vector2 (1, 1);
 			TakeHiResShot ();
+			baseResolution = LastBaseRes;
 		}
 	}
 
