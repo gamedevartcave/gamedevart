@@ -16,6 +16,7 @@ public class CameraShake : MonoBehaviour
 	public float decreaseFactor = 1.0f;
 	
 	Vector3 originalPos; // Returns to this position once camera shake has finished.
+	Vector3 originalRot;
 	public Vector3 Offset; // Offset for shaking.
 
 	public int Priority; // Higher priorities allow their shake to override the current shake parameters.
@@ -44,6 +45,8 @@ public class CameraShake : MonoBehaviour
 
 	IEnumerator ShakeTimeOn ()
 	{
+		originalRot = camTransform.eulerAngles;
+
 		while (shakeTimeRemaining > 0)
 		{
 			// Dont use smoothing, simply give a random position.
@@ -53,7 +56,8 @@ public class CameraShake : MonoBehaviour
 
 				if (shakeRotation == true) 
 				{
-					camTransform.transform.eulerAngles = new Vector3 (
+					//originalRot = camTransform.eulerAngles;
+					camTransform.transform.eulerAngles = originalRot + new Vector3 (
 						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.x,
 						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.y, 
 						Random.Range (-1f * shakeAmount, 1f * shakeAmount) + Offset.z
@@ -72,7 +76,8 @@ public class CameraShake : MonoBehaviour
 
 				if (shakeRotation == true) 
 				{
-					camTransform.transform.eulerAngles = new Vector3 (
+					//originalRot = camTransform.eulerAngles;
+					camTransform.transform.eulerAngles = originalRot + new Vector3 (
 						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.x,
 						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.y, 
 						Random.Range (-1f * shakeAmount, 1f * shakeAmount) + Offset.z
@@ -90,11 +95,15 @@ public class CameraShake : MonoBehaviour
 
 	IEnumerator ShakeTimeOff ()
 	{
-		while (shakeTimeRemaining < 0)
-		{
-			Priority = 0; // Reset priority.
-			shakeTimeRemaining = 0f; // Reset shake time.
+		Priority = 0; // Reset priority.
+		shakeTimeRemaining = 0f; // Reset shake time.
 
+		//camTransform.localRotation = Quaternion.identity;
+		//camTransform.localEulerAngles = Vector3.zero;
+
+		// To do when theres no shake time.
+		while (shakeTimeRemaining <= 0)
+		{
 			//camTransform.localPosition = originalPos + Offset; // Return to original position with offset.
 			camTransform.localPosition = Vector3.Lerp (
 				camTransform.localPosition, 
@@ -102,8 +111,12 @@ public class CameraShake : MonoBehaviour
 				Time.deltaTime * smoothAmount
 			);
 
-			camTransform.localRotation = Quaternion.identity;
-
+			camTransform.localRotation = Quaternion.Slerp (
+				camTransform.localRotation, 
+				Quaternion.identity, 
+				Time.deltaTime * smoothAmount
+			);
+				
 			yield return null;
 		}
 	}

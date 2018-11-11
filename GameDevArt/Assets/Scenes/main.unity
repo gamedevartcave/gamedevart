@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.004
+  m_FogDensity: 0.008
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.514151, g: 0.8056603, b: 1, a: 1}
@@ -5785,7 +5785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be074cb1eb75b54449db2a152cad3638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camTransform: {fileID: 1203244979}
+  camTransform: {fileID: 794116995}
   shakeDuration: 100
   shakeTimeRemaining: 0
   shakeAmount: 0.3
@@ -5794,7 +5794,7 @@ MonoBehaviour:
   Priority: 1
   useSmoothing: 1
   smoothAmount: 10
-  shakeRotation: 1
+  shakeRotation: 0
   SyncWithShaker: 0
   SyncShaker: {fileID: 0}
   SyncMultiplier: 1

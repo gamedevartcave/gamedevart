@@ -20,6 +20,8 @@ public class TargetFPS : MonoBehaviour
 		} 
 
 		InvokeRepeating ("UpdateCurrentTargetFramerate", 0, 1);
+
+		SetTargetFramerate (targetFramerate);
 	}
 
 	void UpdateCurrentTargetFramerate ()

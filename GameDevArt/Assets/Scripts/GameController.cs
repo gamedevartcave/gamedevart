@@ -43,11 +43,6 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public void Vibrate ()
-	{
-		
-	}
-
 	public void StartTrackingTime ()
 	{
 		if (trackTime == false)
