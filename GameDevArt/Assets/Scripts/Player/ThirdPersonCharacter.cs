@@ -13,6 +13,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_StationaryTurnSpeed = 180;
 		[SerializeField] float m_JumpPower = 12f;
 		[SerializeField] float m_JumpPower_Forward = 2f;
+		[SerializeField] float m_DoubleJumpPower = 1.5f;
+		[SerializeField] float m_AirControl = 5;
 		[Range(1f, 4f)][SerializeField] float m_GravityMultiplier = 2f;
 		[SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
@@ -32,7 +34,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 
-
 		void Start()
 		{
 			m_Animator = GetComponent<Animator>();
@@ -45,14 +46,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 		}
 
-
 		public void Move(Vector3 move, bool crouch, bool jump, bool doubleJump)
 		{
 
 			// convert the world relative moveInput vector into a local-relative
-			// turn amount and forward amount required to head in the desired
-			// direction.
-			if (move.magnitude > 1f) move.Normalize();
+			// turn amount and forward amount required to head in the desired direction.
+			if (move.magnitude > 1f)
+			{
+				move.Normalize ();
+			}
+
 			move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
@@ -71,7 +74,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					thirdPersonUserControl.doubleJumped = false;
 				}
 			}
+
 			else
+			
 			{
 				HandleAirborneMovement(doubleJump);
 			}
@@ -82,8 +87,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// send input and other state parameters to the animator
 			UpdateAnimator(move);
 		}
-
-
+			
 		void ScaleCapsuleForCrouching(bool crouch)
 		{
 			if (m_IsGrounded && crouch)
@@ -121,8 +125,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				}
 			}
 		}
-
-
+			
 		void UpdateAnimator(Vector3 move)
 		{
 			// update the animator parameters
@@ -159,21 +162,39 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Animator.speed = 1;
 			}
 		}
-
-
+			
 		void HandleAirborneMovement(bool doubleJump)
 		{
 			// apply extra gravity from multiplier:
 			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 			m_Rigidbody.AddForce(extraGravityForce);
 
+			float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
+
+			m_Rigidbody.AddRelativeForce (
+				transform.InverseTransformDirection (transform.forward) * airControlForce, 
+				ForceMode.Acceleration
+			);
+
 			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 
-			// check whether conditions are right to allow a jump:
+			// check whether conditions are right to allow a double jump:
 			if (doubleJump)
 			{
-				// jump!
-				m_Rigidbody.AddRelativeForce (0, m_JumpPower, m_JumpPower_Forward, ForceMode.VelocityChange);
+				// Override vertical velocity.
+				m_Rigidbody.velocity = new Vector3 (
+					m_Rigidbody.velocity.x,
+					m_DoubleJumpPower,
+					m_Rigidbody.velocity.z
+				);
+
+				// Add forward force.
+				m_Rigidbody.AddRelativeForce (
+					0, 
+					0, 
+					m_JumpPower_Forward, 
+					ForceMode.VelocityChange
+				);
 			
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
@@ -181,8 +202,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				PlayerController.instance.OnDoubleJump.Invoke ();
 			}
 		}
-
-
+			
 		void HandleGroundedMovement(bool crouch, bool jump)
 		{
 			// check whether conditions are right to allow a jump:
@@ -203,8 +223,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
 			transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
 		}
-
-
+			
 		public void OnAnimatorMove()
 		{
 			// we implement this function to override the default root motion.
@@ -218,8 +237,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Rigidbody.velocity = v;
 			}
 		}
-
-
+			
 		void CheckGroundStatus()
 		{
 			RaycastHit hitInfo;

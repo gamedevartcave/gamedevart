@@ -1,13 +1,25 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class GameController : MonoBehaviour 
 {
+	public static GameController instance { get; private set; }
+	[ReadOnlyAttribute] public bool isPaused;
+
 	private bool trackTime;
 	private float finalTime;
 	private float startTime;
 
+	private PlayerActions playerActions;
+
+	void Awake ()
+	{
+		instance = this;
+	}
+
 	void Start ()
 	{
+		playerActions = InControlActions.instance.playerActions;
 		StartTrackingTime ();
 	}
 
@@ -16,6 +28,11 @@ public class GameController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.T))
 		{
 			StopTrackingTime ();
+		}
+
+		if (playerActions.Pause.WasPressed)
+		{
+			CheckPause ();
 		}
 	}
 
@@ -47,6 +64,21 @@ public class GameController : MonoBehaviour
 				seconds + " seconds, " + 
 				milliseconds + " milliseconds"
 			);
+		}
+	}
+
+	void CheckPause ()
+	{
+		isPaused = !isPaused;
+
+		if (isPaused)
+		{
+			Time.timeScale = 0;
+		}
+
+		if (!isPaused)
+		{
+			Time.timeScale = TimescaleController.instance.targetTimeScale;
 		}
 	}
 }

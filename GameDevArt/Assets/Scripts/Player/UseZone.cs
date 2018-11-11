@@ -16,6 +16,11 @@ public class UseZone : MonoBehaviour
 	public bool active;
 	public float activeTime;
 
+	[Header ("Audio")]
+	public AudioSource useSound;
+	public AudioSource useEndSound;
+	public AudioSource useDenySound;
+
 	public Collider playerCol;
 	public UnityEvent UseEvent;
 	public UnityEvent OnUseEnded;

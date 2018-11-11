@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -8,20 +7,22 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     public class ThirdPersonUserControl : MonoBehaviour
     {
 		public static ThirdPersonUserControl instance { get; private set; }
-        private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
-		public float rotateSens;
-		public Camera m_Cam;                   // A reference to the main camera in the scenes transform
-        private Vector3 m_CamForward;             // The current forward direction of the camera
-        private Vector3 m_Move;
-        private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
-		private bool m_DoubleJump;
-		public Transform CamFollow;
-		private bool isRight;
-		public Vector2 cameraOffset;
-		public float cameraOffsetSmoothing = 5;
-		[HideInInspector]public bool doubleJumped;
 
-		public PlayerActions playerActions;
+        private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
+
+		public Camera m_Cam; // A reference to the main camera in the scenes transform
+        private Vector3 m_CamForward; // The current forward direction of the camera
+		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
+		private bool m_Jump; // Jump state.
+		[HideInInspector] public bool m_DoubleJump; // Double jump input state.
+		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state.m_Rigidbody.velocity.z.
+		[Space (10)]
+		public Transform CamFollow; // Camera offset follow point.
+		private bool isRight; // Camera horizontal offset toggle state.
+		public Vector2 cameraOffset; // Camera horizontal offset values.
+		public float cameraOffsetSmoothing = 5; // Smoothing between offsets.
+
+		private PlayerActions playerActions;
 
 		void Awake ()
 		{
@@ -30,7 +31,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Start()
         {
-			playerActions = PlayerActions.CreateWithDefaultBindings ();
+			playerActions = InControlActions.instance.playerActions;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 
@@ -51,8 +52,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();
         }
-
-
+			
         private void Update()
         {
 			// Jumping.
@@ -102,7 +102,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				}
 			}
 				
-			// Aiming.
+			// Shooting.
 			if (playerActions.Shoot.Value > 0.5f)
 			{
 				if (Time.time > PlayerController.instance.nextFire)
@@ -128,12 +128,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				isRight = !isRight;
 			}
-
-
         }
-
-
-        // Fixed update is called in sync with physics
+			
         private void FixedUpdate()
         {
 			float h = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.x;

@@ -35,6 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4235708907777764}
   - component: {fileID: 82122157416134476}
+  - component: {fileID: 114641268673992612}
   m_Layer: 11
   m_Name: DoubleJumpSound
   m_TagString: Untagged
@@ -126,6 +127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4272439029593168}
   - component: {fileID: 82073380394943222}
+  - component: {fileID: 114578647795598854}
   m_Layer: 11
   m_Name: FootstepSound
   m_TagString: Untagged
@@ -247,6 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4495339677801872}
   - component: {fileID: 82895562210044388}
+  - component: {fileID: 114687353915621094}
   m_Layer: 11
   m_Name: JumpSound
   m_TagString: Untagged
@@ -818,6 +821,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943448236111516}
   - component: {fileID: 82234244739353980}
+  - component: {fileID: 114036633096916050}
   m_Layer: 11
   m_Name: LandingSound
   m_TagString: Untagged
@@ -1715,7 +1719,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1745226132108084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4051058254473330}
@@ -2698,7 +2702,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1232716988898570}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 1.28}
+  m_LocalPosition: {x: -0.4, y: 0.3, z: 1.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4051058254473330}
@@ -3239,6 +3243,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114036633096916050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563473346460364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b2cc53bd682584e87054727de7bdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPitchView: 0
+  dontUseStartPitch: 1
+  startingPitch: 1
+  multiplierPitch: 1
+  minimumPitch: 0
+  maximumPitch: 20
+  addPitch: 0
 --- !u!114 &114073268666569690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3250,6 +3272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1c326e33771c540b7b2b5dce57a1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tags:
+  - Ground
+  - Scenery
 --- !u!114 &114207120252397576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3264,9 +3289,10 @@ MonoBehaviour:
   thirdPersonUserControl: {fileID: 114339389852459282}
   m_MovingTurnSpeed: 720
   m_StationaryTurnSpeed: 360
-  m_JumpPower: 5
-  m_JumpPower_Forward: 1
-  m_GravityMultiplier: 1.25
+  m_JumpPower: 8
+  m_JumpPower_Forward: 0.5
+  m_DoubleJumpPower: 12
+  m_GravityMultiplier: 3
   m_RunCycleLegOffset: 0.2
   m_MoveSpeedMultiplier: 0.9
   m_AnimSpeedMultiplier: 1.5
@@ -3282,9 +3308,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfe20afea440c2479f8121ee057b0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSens: 10
   m_Cam: {fileID: 0}
+  m_DoubleJump: 0
   doubleJumped: 0
+  CamFollow: {fileID: 0}
+  cameraOffset: {x: -0.35, y: 0.35}
+  cameraOffsetSmoothing: 10
 --- !u!114 &114383533769616224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3296,6 +3325,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1c326e33771c540b7b2b5dce57a1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tags:
+  - Ground
+  - Scenery
+--- !u!114 &114578647795598854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085543960501846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b2cc53bd682584e87054727de7bdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPitchView: 0
+  dontUseStartPitch: 1
+  startingPitch: 1
+  multiplierPitch: 1
+  minimumPitch: 0
+  maximumPitch: 20
+  addPitch: 0
+--- !u!114 &114641268673992612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1041245834866722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b2cc53bd682584e87054727de7bdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPitchView: 0
+  dontUseStartPitch: 1
+  startingPitch: 1
+  multiplierPitch: 1
+  minimumPitch: 0
+  maximumPitch: 20
+  addPitch: 0
+--- !u!114 &114687353915621094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1153381704815980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b2cc53bd682584e87054727de7bdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPitchView: 0
+  dontUseStartPitch: 1
+  startingPitch: 1
+  multiplierPitch: 1
+  minimumPitch: 0
+  maximumPitch: 20
+  addPitch: 0
 --- !u!114 &114938810846430798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3307,8 +3393,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camShakeScript: {fileID: 0}
+  playerCol: {fileID: 136886608646034890}
+  DeathBarrier: {fileID: 0}
   health: 0
-  StartHealth: 100
+  StartHealth: 10
   MaximumHealth: 100
   HealthSlider: {fileID: 0}
   HealthSlider_Smoothed: {fileID: 0}
@@ -3319,6 +3408,7 @@ MonoBehaviour:
   CrosshairObject: {fileID: 0}
   AimingOrigin: {fileID: 4320577710479646}
   AimDir: {x: 0, y: 0, z: 0}
+  AimNoPitchDir: {x: 0, y: 0, z: 0}
   currentFireRate: 0.1
   nextFire: 0
   OnShoot:
@@ -3367,7 +3457,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  DeathBarrier: {fileID: 0}
 --- !u!136 &136886608646034890
 CapsuleCollider:
   m_ObjectHideFlags: 1
