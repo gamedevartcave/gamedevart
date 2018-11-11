@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class DontDestroyOnLoadInit : MonoBehaviour 
 {
@@ -8,6 +9,7 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 	public GameObject ManagersPrefab;
 	public float Delay;
 	private GameObject managers;
+	public UnityEvent OnInitialize;
 
 	void Awake ()
 	{
@@ -25,6 +27,7 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 			managers = Instantiate (ManagersPrefab);
 			managers.name = "MANAGERS";
 			DontDestroyOnLoad (managers.gameObject); 
+			OnInitialize.Invoke ();
 		}
 	}
 }
