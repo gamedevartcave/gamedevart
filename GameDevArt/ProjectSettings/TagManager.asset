@@ -8,6 +8,7 @@ TagManager:
   - Bounds
   - CamOverride
   - Ground
+  - DontDestroyOnLoadInit
   layers:
   - Default
   - TransparentFX

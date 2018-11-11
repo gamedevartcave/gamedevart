@@ -18,16 +18,23 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 		Invoke ("DetectManagers", Delay);
 	}
 
+	public void SetInstance ()
+	{
+		Instance = this;
+	}
+
 	public void DetectManagers ()
 	{
 		// If there is no MANAGERS GameObject present,
 		// Create one and make it not destory on load.
-		if (InitManager.Instance == null) 
+		if (InitManager.Instance == null)
 		{
-			managers = Instantiate (ManagersPrefab);
+			managers = Instantiate (ManagersPrefab); // Includes the InitManager.
 			managers.name = "MANAGERS";
 			DontDestroyOnLoad (managers.gameObject); 
-			OnInitialize.Invoke ();
+
 		}
+
+		OnInitialize.Invoke ();
 	}
 }
