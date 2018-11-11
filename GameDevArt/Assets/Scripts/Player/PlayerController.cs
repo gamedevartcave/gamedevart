@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
 	public static PlayerController instance { get; private set; }
 
-	public CameraShake camShakeScript;
 	public Collider playerCol;
 
 	public Collider DeathBarrier;
@@ -34,6 +33,9 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector] public float nextFire;
 	public UnityEvent OnShoot;
 
+	[Header ("Using")]
+	public UnityEvent OnUse;
+
 	[Header ("Footsteps")]
 	public AudioSource footstepAudioSource;
 	public AudioClip[] footstepClips;
@@ -59,10 +61,6 @@ public class PlayerController : MonoBehaviour
 	public AudioClip[] landingClips;
 	private int landingSoundIndex;
 	public UnityEvent OnLand;
-
-
-	public UnityEvent OnUse;
-
 
 
 	void Awake ()
@@ -97,6 +95,7 @@ public class PlayerController : MonoBehaviour
 		);
 	}
 
+	#region Shooting
 	public void Shoot ()
 	{
 		RaycastHit hit;
@@ -114,6 +113,7 @@ public class PlayerController : MonoBehaviour
 		OnShoot.Invoke ();
 		Debug.Log ("Shoot");
 	}
+	#endregion
 
 	#region Footsteps
 	public void GetFootStepSound ()
@@ -171,6 +171,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
+	#region Physics
 	void OnTriggerEnter (Collider other)
 	{
 		if (other == DeathBarrier)
@@ -178,4 +179,5 @@ public class PlayerController : MonoBehaviour
 			transform.position = Vector3.zero;
 		}
 	}
+	#endregion
 }

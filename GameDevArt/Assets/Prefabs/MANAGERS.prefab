@@ -1295,7 +1295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60afcb647de8b9b4a8e9e6c97e136524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFramerate: -1
+  targetFramerate: 60
   currentTargetFramerate: 0
   useScreenRefreshRate: 0
 --- !u!114 &114901554979435392

@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
 	private float finalTime;
 	private float startTime;
 
+	public CameraShake camShakeScript;
+
 	private PlayerActions playerActions;
 
 	void Awake ()
@@ -30,10 +32,20 @@ public class GameController : MonoBehaviour
 			StopTrackingTime ();
 		}
 
+		if (Input.GetKeyDown (KeyCode.K))
+		{
+			camShakeScript.Shake ();
+		}
+
 		if (playerActions.Pause.WasPressed)
 		{
 			CheckPause ();
 		}
+	}
+
+	public void Vibrate ()
+	{
+		
 	}
 
 	public void StartTrackingTime ()

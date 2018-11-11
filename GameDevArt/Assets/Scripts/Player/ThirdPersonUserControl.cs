@@ -114,6 +114,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 					PlayerController.instance.Shoot ();
 					PlayerController.instance.nextFire = Time.time + PlayerController.instance.currentFireRate;
+
+					GameController.instance.camShakeScript.shakeDuration = 1;
+					GameController.instance.camShakeScript.Shake ();
+					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
 				}
 			}
 
