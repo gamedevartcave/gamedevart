@@ -105,7 +105,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// Shooting.
 			if (playerActions.Shoot.Value > 0.5f)
 			{
-				if (Time.time > PlayerController.instance.nextFire)
+				if (Time.time > PlayerController.instance.nextFire && GameController.instance.isPaused == false)
 				{
 					PlayerController.instance.transform.rotation = Quaternion.LookRotation (
 						PlayerController.instance.AimNoPitchDir, 

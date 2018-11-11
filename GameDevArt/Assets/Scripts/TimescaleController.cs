@@ -27,9 +27,12 @@ public class TimescaleController : MonoBehaviour
 
 	void SetTargetTimeScale ()
 	{
-		if (GameController.instance.isPaused == false)
+		if (GameController.instance != null)
 		{
-			Time.timeScale = Mathf.Lerp (Time.timeScale, targetTimeScale, timeScaleSmoothing * Time.unscaledDeltaTime);
+			if (GameController.instance.isPaused == false)
+			{
+				Time.timeScale = Mathf.Lerp (Time.timeScale, targetTimeScale, timeScaleSmoothing * Time.unscaledDeltaTime);
+			}
 		}
 	}
 
