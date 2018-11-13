@@ -56,7 +56,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private void Update()
         {
 			// Jumping.
-            if (!m_Jump)
+			if (!m_Jump && doubleJumped == false)
             {
 				m_Jump = playerActions.Jump.WasPressed;
             }

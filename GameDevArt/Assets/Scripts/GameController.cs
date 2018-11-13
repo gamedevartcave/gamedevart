@@ -81,11 +81,15 @@ public class GameController : MonoBehaviour
 		if (isPaused)
 		{
 			Time.timeScale = 0;
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
 		}
 
 		if (!isPaused)
 		{
 			Time.timeScale = TimescaleController.instance.targetTimeScale;
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 	}
 }

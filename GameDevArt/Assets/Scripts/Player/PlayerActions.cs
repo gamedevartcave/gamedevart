@@ -57,8 +57,8 @@ public class PlayerActions : PlayerActionSet
 		playerActions.Jump.AddDefaultBinding (Key.Space);
 		playerActions.Jump.AddDefaultBinding (InputControlType.Action1);
 
-		playerActions.Crouch.AddDefaultBinding(Key.C);
-		playerActions.Crouch.AddDefaultBinding (InputControlType.Action2);
+		//playerActions.Crouch.AddDefaultBinding(Key.C);
+		//playerActions.Crouch.AddDefaultBinding (InputControlType.Action2);
 
 		playerActions.Aim.AddDefaultBinding (Mouse.RightButton);
 		playerActions.Aim.AddDefaultBinding (InputControlType.LeftTrigger);

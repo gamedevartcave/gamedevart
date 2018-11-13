@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
 	public float aimSmoothing = 10;
 	public GameObject CrosshairObject;
 	public Transform AimingOrigin;
-	public Vector3 AimDir;
-	public Vector3 AimNoPitchDir;
+	[HideInInspector] public Vector3 AimDir;
+	[HideInInspector] public Vector3 AimNoPitchDir;
 
 	[Header ("Shooting")]
 	public float currentFireRate;

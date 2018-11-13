@@ -15,11 +15,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_JumpPower_Forward = 2f;
 		[SerializeField] float m_DoubleJumpPower = 1.5f;
 		[SerializeField] float m_AirControl = 5;
-		[Range(1f, 4f)][SerializeField] float m_GravityMultiplier = 2f;
+		[Range(1f, 10f)][SerializeField] float m_GravityMultiplier = 2f;
 		[SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		public float terminalVelocity = 10;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -28,6 +29,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		const float k_Half = 0.5f;
 		float m_TurnAmount;
 		float m_ForwardAmount;
+		public float moveMultiplier;
 		Vector3 m_GroundNormal;
 		float m_CapsuleHeight;
 		Vector3 m_CapsuleCenter;
@@ -44,6 +46,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
+		}
+
+		void LateUpdate ()
+		{
+			//if (m_Rigidbody.velocity.magnitude > terminalVelocity)
+			//{
+			//	Debug.Log ("Clamping velocity.");
+			//}
+
+			//m_Rigidbody.velocity = Vector3.ClampMagnitude (m_Rigidbody.velocity, terminalVelocity);
 		}
 
 		public void Move(Vector3 move, bool crouch, bool jump, bool doubleJump)
@@ -167,19 +179,28 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			// apply extra gravity from multiplier:
 			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-			m_Rigidbody.AddForce(extraGravityForce);
+			m_Rigidbody.AddForce (extraGravityForce);
 
-			float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
+			//float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
 
+			/*
 			m_Rigidbody.AddRelativeForce (
 				transform.InverseTransformDirection (transform.forward) * airControlForce, 
 				ForceMode.Acceleration
 			);
+			*/
 
+			/*
+			m_Rigidbody.AddRelativeForce (
+				transform.InverseTransformDirection (transform.forward), 
+				ForceMode.Force
+			);
+			*/
+				
 			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 
 			// check whether conditions are right to allow a double jump:
-			if (doubleJump)
+			if (doubleJump && m_IsGrounded == false)
 			{
 				// Override vertical velocity.
 				m_Rigidbody.velocity = new Vector3 (
@@ -198,7 +219,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
-				m_GroundCheckDistance = 0.1f;
+				//m_GroundCheckDistance = 0.1f;
 				PlayerController.instance.OnDoubleJump.Invoke ();
 			}
 		}
@@ -212,7 +233,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
-				m_GroundCheckDistance = 0.1f;
+				//m_GroundCheckDistance = 0.1f;
 				PlayerController.instance.OnJump.Invoke ();
 			}
 		}
@@ -243,7 +264,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			RaycastHit hitInfo;
 #if UNITY_EDITOR
 			// helper to visualise the ground check ray in the scene view
-			Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
+			Debug.DrawLine (transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
 #endif
 			// 0.1f is a small offset to start the ray from inside the character
 			// it is also good to note that the transform position in the sample assets is at the base of the character
@@ -251,16 +272,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				m_GroundNormal = hitInfo.normal;
 
+				// Get grounded.
 				if (m_IsGrounded == false)
 				{
 					m_IsGrounded = true;
+					m_Rigidbody.velocity = Vector3.zero;
+					ThirdPersonUserControl.instance.m_DoubleJump = false;
+					ThirdPersonUserControl.instance.doubleJumped = false;
 					PlayerController.instance.OnLand.Invoke ();
 				}
 
 				m_Animator.applyRootMotion = true;
 			}
 
-			else
+			else // is in air.
 			
 			{
 				m_IsGrounded = false;
