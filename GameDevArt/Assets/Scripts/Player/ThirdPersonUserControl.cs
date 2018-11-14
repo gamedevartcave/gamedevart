@@ -140,7 +140,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			float h = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.x;
 			float v = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.y;
 
-			bool crouch = playerActions.Crouch.IsPressed;
+			//bool crouch = playerActions.Crouch.IsPressed;
 
             // calculate move direction to pass to character
             if (m_Cam != null)
@@ -163,7 +163,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 //#endif
 
             // pass all parameters to the character control script
-			m_Character.Move(m_Move, crouch, m_Jump, m_DoubleJump);
+			//m_Character.Move(m_Move, crouch, m_Jump, m_DoubleJump);
+			m_Character.Move(m_Move, false, m_Jump, m_DoubleJump);
             m_Jump = false;
 			m_DoubleJump = false;
         }

@@ -651,9 +651,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.111009784
+  m_TransitionDuration: 0.120518595
   m_TransitionOffset: 0
-  m_ExitTime: 0.9
+  m_ExitTime: 0.88477826
   m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
@@ -770,16 +770,16 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: Jump
-    m_EventTreshold: -2
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 110200000}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.18205842
+  m_TransitionDuration: 0.25291735
   m_TransitionOffset: 0
-  m_ExitTime: 0.9
+  m_ExitTime: 0.7582823
   m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
