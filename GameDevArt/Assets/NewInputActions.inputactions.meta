@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: b4d37890a721bd44b89584e99782f616
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400002: New action map/Run
+    11400004: New action map/combo
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 0
+  wrapperCodePath: 
+  wrapperClassName: 
+  wrapperCodeNamespace: 
+  generateActionEvents: 0
+  generateInterfaces: 0
+  actionGuids: []
+  actionMapGuids: []
