@@ -184,7 +184,7 @@ public class SceneLoader : MonoBehaviour
 		// Finally, we can activate the newly loaded scene.
 		async.allowSceneActivation = true;
 
-		OnSceneLoadComplete.Invoke ();
+		//OnSceneLoadComplete.Invoke ();
 
 		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
 		{

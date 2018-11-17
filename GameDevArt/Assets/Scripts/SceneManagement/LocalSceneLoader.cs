@@ -5,6 +5,13 @@ public class LocalSceneLoader : MonoBehaviour
 {
 	public static LocalSceneLoader Instance { get; private set; }
 	public bool SceneLoadCommit;
+	private string ActiveSceneName
+	{
+		get 
+		{ 
+			return SceneManager.GetActiveScene ().name; 
+		}
+	}
 		
 	private void Awake ()
 	{
@@ -25,15 +32,29 @@ public class LocalSceneLoader : MonoBehaviour
 
 			SceneLoadCommit = true;
 		}
+	}
 
-		return;
+	public void ReloadActiveScene ()
+	{
+		if (SceneLoadCommit == false)
+		{
+			SceneLoader.Instance.SceneName = ActiveSceneName;
+			SceneLoadSequence ();
+
+			if (ActiveSceneName == "menu") 
+			{
+				InitManager.Instance.LoadingMissionText.text = "";
+			}
+
+			SceneLoadCommit = true;
+		}
 	}
 
 	void Update ()
 	{
 		if (Input.GetKeyDown (KeyCode.R))
 		{
-			LoadScene (SceneManager.GetActiveScene ().name);
+			LoadScene (ActiveSceneName);
 		}
 	}
 

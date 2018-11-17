@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.PostProcessing;
 
 public class GameController : MonoBehaviour 
 {
 	public static GameController instance { get; private set; }
+
+	[Header ("Post processing")]
+	public PostProcessingProfile postProcessing;
+	public float targetDofDistance;
+	public float dofSmoothing = 5.0f;
+
+	[Header ("Pausing")]
+	public MenuNavigation activeMenu;
 	[ReadOnlyAttribute] public bool isPaused;
 	public UnityEvent OnPause;
 	public UnityEvent OnUnpause;
 
+	[Header ("Game timer")]
 	private bool trackTime;
 	private float finalTime;
 	private float startTime;
@@ -35,6 +45,46 @@ public class GameController : MonoBehaviour
 		{
 			CheckPause ();
 		}
+
+		if (isPaused == false)
+		{
+			GetDepthOfField ();
+		}
+	}
+
+	void GetDepthOfField ()
+	{
+		var dofSettings = postProcessing.depthOfField.settings;
+
+		//Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
+		{
+			if (playerActions.CamRot.Value.magnitude > 0)
+			{
+				targetDofDistance = Vector3.Distance (Camera.main.transform.position, hit.point);
+			} 
+
+			else
+			
+			{
+				targetDofDistance = 0.5f;
+			}
+		}
+
+		dofSettings.focusDistance = Mathf.Lerp (
+			dofSettings.focusDistance, 
+			targetDofDistance, 
+			Time.deltaTime * dofSmoothing
+		);
+
+		postProcessing.depthOfField.settings = dofSettings;
+
+		#if UNITY_EDITOR
+		Debug.DrawRay (Camera.main.transform.position, Camera.main.transform.forward, Color.blue);
+		Debug.DrawLine (Camera.main.transform.position, hit.point, Color.gray);
+		#endif
 	}
 
 	public void StartTrackingTime ()
@@ -78,18 +128,35 @@ public class GameController : MonoBehaviour
 
 		if (isPaused)
 		{
-			Time.timeScale = 0;
-			Cursor.visible = true;
-			Cursor.lockState = CursorLockMode.None;
+			DoPause ();
 			OnPause.Invoke ();
 		}
 
 		if (!isPaused)
 		{
-			Time.timeScale = TimescaleController.instance.targetTimeScale;
-			Cursor.visible = false;
-			Cursor.lockState = CursorLockMode.Locked;
+			DoUnpause ();
 			OnUnpause.Invoke ();
 		}
+	}
+
+	public void SetActiveMenu (MenuNavigation newActiveMenu)
+	{
+		activeMenu = newActiveMenu;
+	}
+
+	public void DoPause ()
+	{
+		isPaused = true;
+		Time.timeScale = 0;
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
+	}
+
+	public void DoUnpause ()
+	{
+		Time.timeScale = TimescaleController.instance.targetTimeScale;
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+		isPaused = false;
 	}
 }

@@ -69,10 +69,10 @@ MonoBehaviour:
       screenEdgeMask:
         intensity: 0.03
   depthOfField:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
-      focusDistance: 5
-      aperture: 0.45
+      focusDistance: 252.4932
+      aperture: 0.25
       focalLength: 20
       useCameraFov: 0
       kernelSize: 1
@@ -83,19 +83,19 @@ MonoBehaviour:
       sampleCount: 32
       frameBlending: 0
   eyeAdaptation:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
-      lowPercent: 1
-      highPercent: 99
-      minLuminance: 9.6
-      maxLuminance: -4.01
+      lowPercent: 45
+      highPercent: 95
+      minLuminance: -5
+      maxLuminance: 1
       keyValue: 0.25
       dynamicKeyValue: 1
       adaptationType: 0
       speedUp: 2
       speedDown: 1
-      logMin: -2
-      logMax: 5
+      logMin: -8
+      logMax: 4
   bloom:
     m_Enabled: 1
     m_Settings:

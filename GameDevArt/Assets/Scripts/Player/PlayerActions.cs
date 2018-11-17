@@ -8,6 +8,8 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Aim;
 	public PlayerAction Use;
 	public PlayerAction Pause;
+	public PlayerAction Submit;
+	public PlayerAction Back;
 	public PlayerAction Shoot;
 	public PlayerAction Melee;
 
@@ -18,13 +20,13 @@ public class PlayerActions : PlayerActionSet
 
 	public PlayerTwoAxisAction Move;
 
+	public PlayerAction CameraChange;
 	public PlayerAction CamLeft;
 	public PlayerAction CamRight;
 	public PlayerAction CamUp;
 	public PlayerAction CamDown;
 
 	public TwoAxisInputControl CamRot;
-	public PlayerAction CameraChange;
 
 	public PlayerActions()
 	{
@@ -33,6 +35,9 @@ public class PlayerActions : PlayerActionSet
 		Aim = CreatePlayerAction ("Aim");
 		Use = CreatePlayerAction ("Use");
 		Pause = CreatePlayerAction ("Pause");
+		Submit = CreatePlayerAction ("Submit");
+		Back = CreatePlayerAction ("Back");
+
 		Shoot = CreatePlayerAction ("Shoot");
 		Melee = CreatePlayerAction ("Melee");
 
@@ -69,6 +74,12 @@ public class PlayerActions : PlayerActionSet
 
 		playerActions.Pause.AddDefaultBinding (Key.Escape);
 		playerActions.Pause.AddDefaultBinding (InputControlType.Command);
+
+		playerActions.Submit.AddDefaultBinding (Key.Return);
+		playerActions.Submit.AddDefaultBinding (InputControlType.Action1);
+
+		playerActions.Back.AddDefaultBinding (Key.Escape);
+		playerActions.Back.AddDefaultBinding (InputControlType.Action2);
 
 		playerActions.Shoot.AddDefaultBinding (Mouse.LeftButton);
 		playerActions.Shoot.AddDefaultBinding (InputControlType.RightTrigger);

@@ -32,6 +32,11 @@ public class SimpleFollow : MonoBehaviour
 	private float FollowPosVelX, FollowPosVelY, FollowPosVelZ;
 	public Vector3 FollowPosOffset;
 	public Vector3 FollowPosSmoothTime;
+
+	private float xPos;
+	private float yPos;
+	private float zPos;
+
 	[Space (10)]
 	public bool XPosTimeUnscaled = true;
 	public bool YPosTimeUnscaled = true;
@@ -65,8 +70,15 @@ public class SimpleFollow : MonoBehaviour
 		Fixed
 	}
 
+	void Awake ()
+	{
+		
+	}
+
 	public void Start ()
 	{
+		FollowPosVelY = 0;
+
 		if (AutomaticallyFindPlayerPosObject == true)
 		{
 			Transform PlayerPos = GameObject.Find (LookForPosName).transform;
@@ -114,7 +126,8 @@ public class SimpleFollow : MonoBehaviour
 
 			if (FollowPosMethod == followPosMethod.NoSmoothing) 
 			{
-				transform.position = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
+				Vector3 Pos = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
+				transform.position = Pos;
 			}
 		}
 	}
@@ -147,7 +160,8 @@ public class SimpleFollow : MonoBehaviour
 
 			if (FollowPosMethod == followPosMethod.NoSmoothing) 
 			{
-				transform.position = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
+				Vector3 Pos = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
+				transform.position = Pos;
 			}
 		}
 	}
@@ -180,7 +194,8 @@ public class SimpleFollow : MonoBehaviour
 
 			if (FollowPosMethod == followPosMethod.NoSmoothing) 
 			{
-				transform.position = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
+				Vector3 Pos = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
+				transform.position = Pos;
 			}
 		}
 	}
@@ -189,85 +204,77 @@ public class SimpleFollow : MonoBehaviour
 	{
 		if (FollowPosMethod == followPosMethod.Lerp) 
 		{
-			transform.position = new Vector3 
-				(
-					// X position.
-					Mathf.Clamp (
-						Mathf.Lerp (
-							transform.position.x, 
-							FollowPosX.position.x + FollowPosOffset.x, 
-							FollowPosSmoothTime.x * (XPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
+			xPos = Mathf.Clamp (
+				Mathf.Lerp (
+					transform.position.x, 
+					FollowPosX.position.x + FollowPosOffset.x, 
+					FollowPosSmoothTime.x * (XPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
-						PosBoundsX.x, 
-						PosBoundsX.y
-					),
+				PosBoundsX.x, 
+				PosBoundsX.y
+			);
 
+			yPos = Mathf.Clamp (
+	             Mathf.Lerp (
+		             transform.position.y, 
+		             FollowPosY.position.y + FollowPosOffset.y, 
+		             FollowPosSmoothTime.y * (YPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
-					// Y position.
-					Mathf.Clamp (
-						Mathf.Lerp (
-							transform.position.y, 
-							FollowPosY.position.y + FollowPosOffset.y, 
-							FollowPosSmoothTime.y * (YPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
+	             PosBoundsY.x, 
+	             PosBoundsY.y
+             );
 
-						PosBoundsY.x, 
-						PosBoundsY.y
-					),
+			zPos = Mathf.Clamp (
+	             Mathf.Lerp (
+		             transform.position.z, 
+		             FollowPosZ.position.z + FollowPosOffset.z, 
+		             FollowPosSmoothTime.z * (ZPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
-
-					// Z position.
-					Mathf.Clamp (
-						Mathf.Lerp (
-							transform.position.z, 
-							FollowPosZ.position.z + FollowPosOffset.z, 
-							FollowPosSmoothTime.z * (ZPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
-
-						PosBoundsZ.x, 
-						PosBoundsZ.y
-					)
-				);
+	             PosBoundsZ.x, 
+	             PosBoundsZ.y
+             );
+				
+			Vector3 newPos = new Vector3 (xPos, yPos, zPos);
+			transform.position = newPos;
 		}
 
 		if (FollowPosMethod == followPosMethod.SmoothDamp) 
 		{
-			transform.position = new Vector3 
-				(
-					// X position.
-					Mathf.Clamp (
-						Mathf.SmoothDamp (
-							transform.position.x, 
-							FollowPosX.position.x + FollowPosOffset.x, 
-							ref FollowPosVelX, 
-							FollowPosSmoothTime.x * (XPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
+			xPos = Mathf.Clamp (
+				Mathf.SmoothDamp (
+					transform.position.x, 
+					FollowPosX.position.x + FollowPosOffset.x, 
+					ref FollowPosVelX, 
+					FollowPosSmoothTime.x * (XPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
-						PosBoundsX.x, 
-						PosBoundsX.y
-					),
+				PosBoundsX.x, 
+				PosBoundsX.y
+			);
 
-					// Y position.
-					Mathf.Clamp (
-						Mathf.SmoothDamp (
-							transform.position.y, 
-							FollowPosY.position.y + FollowPosOffset.y, 
-							ref FollowPosVelY, 
-							FollowPosSmoothTime.y * (YPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
+			yPos = Mathf.Clamp (
+	             Mathf.SmoothDamp (
+		             transform.position.y, 
+		             FollowPosY.position.y + FollowPosOffset.y, 
+		             ref FollowPosVelY, 
+		             FollowPosSmoothTime.y * (YPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
-						PosBoundsY.x, 
-						PosBoundsY.y
-					),
+	             PosBoundsY.x, 
+	             PosBoundsY.y
+             );
 
-					// Z position.
-					Mathf.Clamp (
-						Mathf.SmoothDamp (
-							transform.position.z, 
-							FollowPosZ.position.z + FollowPosOffset.z, 
-							ref FollowPosVelZ, 
-							FollowPosSmoothTime.z * (ZPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
+			zPos = Mathf.Clamp (
+				Mathf.SmoothDamp (
+					transform.position.z, 
+					FollowPosZ.position.z + FollowPosOffset.z, 
+					ref FollowPosVelZ, 
+					FollowPosSmoothTime.z * (ZPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
-						PosBoundsZ.x, 
-						PosBoundsZ.y
-					)
-				);
+				PosBoundsZ.x, 
+				PosBoundsZ.y
+			);
+
+			Vector3 newPos = new Vector3 (xPos, yPos, zPos);
+			transform.position = newPos;
 		}
 	}
 

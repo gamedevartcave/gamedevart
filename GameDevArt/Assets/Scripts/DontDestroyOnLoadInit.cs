@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class DontDestroyOnLoadInit : MonoBehaviour 
 {
@@ -8,13 +9,17 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 	[Tooltip ("Managers Prefab.")]
 	public GameObject ManagersPrefab;
 	public float Delay;
+	public float initializeWaitTime = 0.5f;
 	private GameObject managers;
 	public UnityEvent OnInitialize;
+
+	private WaitForSeconds initializeWait;
 
 	void Awake ()
 	{
 		Instance = this;
 		Time.timeScale = 1;
+		initializeWait = new WaitForSeconds (initializeWaitTime);
 		Invoke ("DetectManagers", Delay);
 	}
 
@@ -35,6 +40,13 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 
 		}
 
+		StartCoroutine (Initialize ());
+	}
+
+	IEnumerator Initialize ()
+	{
+		yield return initializeWait;
 		OnInitialize.Invoke ();
+		SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 	}
 }
