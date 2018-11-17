@@ -71,13 +71,13 @@ public class PlayerController : MonoBehaviour
 	void Start ()
 	{
 		health = StartHealth;
+		HealthSlider.value = health;
+		HealthSlider_Smoothed.value = health;
 
 		OnFootstep.AddListener (OnFootStep);
 		OnJump.AddListener (OnJumpBegan);
 		OnDoubleJump.AddListener (OnDoubleJumpBegan);
 		OnLand.AddListener (OnLanded);
-
-		//camShakeScript.Shake ();
 	}
 
 	void LateUpdate ()
@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
 		CheckHealthSliders ();
 	}
 
+	#region Health
 	void CheckHealthSliders ()
 	{
 		HealthSlider.value = health;
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour
 			healthSliderSmoothing * Time.deltaTime
 		);
 	}
+	#endregion
 
 	#region Shooting
 	public void Shoot ()
@@ -111,7 +113,6 @@ public class PlayerController : MonoBehaviour
 		}
 
 		OnShoot.Invoke ();
-		Debug.Log ("Shoot");
 	}
 	#endregion
 
@@ -178,6 +179,13 @@ public class PlayerController : MonoBehaviour
 		{
 			transform.position = Vector3.zero;
 		}
+	}
+	#endregion
+
+	#region Override
+	public void OverridePlayerPosition (Transform newPos)
+	{
+		transform.position = newPos.position;
 	}
 	#endregion
 }

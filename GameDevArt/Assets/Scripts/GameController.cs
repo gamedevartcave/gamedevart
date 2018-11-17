@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 public class GameController : MonoBehaviour 
 {
 	public static GameController instance { get; private set; }
 	[ReadOnlyAttribute] public bool isPaused;
+	public UnityEvent OnPause;
+	public UnityEvent OnUnpause;
 
 	private bool trackTime;
 	private float finalTime;
 	private float startTime;
+	public UnityEvent OnTimerTrackingStarted;
+	public UnityEvent OnTimerTrackingStopped;
 
 	public CameraShake camShakeScript;
 
@@ -22,21 +27,10 @@ public class GameController : MonoBehaviour
 	void Start ()
 	{
 		playerActions = InControlActions.instance.playerActions;
-		StartTrackingTime ();
 	}
 
 	void Update ()
 	{
-		if (Input.GetKeyDown (KeyCode.T))
-		{
-			StopTrackingTime ();
-		}
-
-		if (Input.GetKeyDown (KeyCode.K))
-		{
-			camShakeScript.Shake ();
-		}
-
 		if (playerActions.Pause.WasPressed)
 		{
 			CheckPause ();
@@ -49,6 +43,8 @@ public class GameController : MonoBehaviour
 		{
 			startTime = Time.time;
 			trackTime = true;
+			Debug.Log ("Started tracking time.");
+			OnTimerTrackingStarted.Invoke ();
 		}
 	}
 
@@ -71,6 +67,8 @@ public class GameController : MonoBehaviour
 				seconds + " seconds, " + 
 				milliseconds + " milliseconds"
 			);
+
+			OnTimerTrackingStopped.Invoke ();
 		}
 	}
 
@@ -83,6 +81,7 @@ public class GameController : MonoBehaviour
 			Time.timeScale = 0;
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
+			OnPause.Invoke ();
 		}
 
 		if (!isPaused)
@@ -90,6 +89,7 @@ public class GameController : MonoBehaviour
 			Time.timeScale = TimescaleController.instance.targetTimeScale;
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
+			OnUnpause.Invoke ();
 		}
 	}
 }

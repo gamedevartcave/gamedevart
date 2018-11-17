@@ -190,14 +190,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
 			m_Rigidbody.AddForce (extraGravityForce);
 
-			//float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
+			float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
 
 			/*
 			m_Rigidbody.AddRelativeForce (
 				transform.InverseTransformDirection (transform.forward) * airControlForce, 
 				ForceMode.Acceleration
+			);*/
+
+			m_Rigidbody.AddRelativeForce (new Vector3 (0, 0, Mathf.Abs (airControlForce * 0.05f)),
+				//transform.InverseTransformDirection (transform.forward) * airControlForce, 
+				ForceMode.VelocityChange
 			);
-			*/
+
 
 			/*
 			m_Rigidbody.AddRelativeForce (

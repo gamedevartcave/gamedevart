@@ -1176,9 +1176,9 @@ MonoBehaviour:
   OnSceneLoadComplete:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 95435993928599896}
-        m_MethodName: Play
-        m_Mode: 5
+      - m_Target: {fileID: 114507946513632190}
+        m_MethodName: LoadingUICheck
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5991,7 +5991,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_TargetDisplay: 0
 --- !u!223 &223248359440724948
 Canvas:

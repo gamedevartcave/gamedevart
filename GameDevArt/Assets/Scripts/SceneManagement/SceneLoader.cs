@@ -79,8 +79,16 @@ public class SceneLoader : MonoBehaviour
 		SmoothProgress = 0;
 		LoadProgressText.text = "";
 		LoadSlider.value = 0;
-		SceneLoaderUI.Play ("SceneLoaderUIAppear");
-		LoadParticlesAnim.Play ("LoadingParticlesLoop");
+
+		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
+		{
+			//SceneLoaderUI.Play ("SceneLoaderUIAppear");
+		}
+
+		if (LoadParticlesAnim.gameObject.activeInHierarchy == true)
+		{
+			//LoadParticlesAnim.Play ("LoadingParticlesLoop");
+		}
 
 		foreach (ParticleSystem loadParticle in LoadingParticles) 
 		{
@@ -178,10 +186,20 @@ public class SceneLoader : MonoBehaviour
 
 		OnSceneLoadComplete.Invoke ();
 
-		if (SceneLoaderUI.GetAnimatorTransitionInfo (0).IsName ("SceneLoaderUIDisappear") == false)
+		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
 		{
-			
-			//SceneLoaderUI.Play ("SceneLoaderUIDisappear");
+			if (SceneLoaderUI.GetAnimatorTransitionInfo (0).IsName ("SceneLoaderUIDisappear") == false)
+			{
+				//SceneLoaderUI.Play ("SceneLoaderUIDisappear");
+			}
+		}
+	}
+
+	public void LoadingUICheck ()
+	{
+		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
+		{
+			SceneLoaderUI.Play ("SceneLoaderUIDisappear");
 		}
 	}
 
