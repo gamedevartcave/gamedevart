@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
 
 		if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
 		{
-			if (playerActions.CamRot.Value.magnitude > 0 || playerActions.Move.Value.magnitude > 0)
+			if (playerActions.CamRot.Value.magnitude > 0.25f || playerActions.Move.Value.magnitude > 0.25f)
 			{
 				targetDofDistance = Vector3.Distance (Camera.main.transform.position, hit.point);
 			} 

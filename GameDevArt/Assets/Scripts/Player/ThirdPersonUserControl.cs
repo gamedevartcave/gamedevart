@@ -9,7 +9,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public static ThirdPersonUserControl instance { get; private set; }
 
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
-
+		public SimpleFollow camRigSimpleFollow;
+		public Vector3 camRigSimpleFollowRotNormal = new Vector3 (5, 15, 0);
+		public Vector3 camRigSimpleFollowRotAiming;
 		public Camera m_Cam; // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward; // The current forward direction of the camera
 		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
@@ -80,6 +82,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					PlayerController.instance.aimFov, 
 					PlayerController.instance.aimSmoothing * Time.deltaTime
 				);
+					
+				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
 
 				if (PlayerController.instance.CrosshairObject.activeSelf == false)
 				{
@@ -95,6 +99,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					PlayerController.instance.normalFov,
 					PlayerController.instance.aimSmoothing * Time.deltaTime
 				);
+
+				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
 
 				if (PlayerController.instance.CrosshairObject.activeSelf == true)
 				{
