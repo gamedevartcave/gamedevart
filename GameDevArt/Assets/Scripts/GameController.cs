@@ -56,12 +56,11 @@ public class GameController : MonoBehaviour
 	{
 		var dofSettings = postProcessing.depthOfField.settings;
 
-		//Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 
 		if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
 		{
-			if (playerActions.CamRot.Value.magnitude > 0)
+			if (playerActions.CamRot.Value.magnitude > 0 || playerActions.Move.Value.magnitude > 0)
 			{
 				targetDofDistance = Vector3.Distance (Camera.main.transform.position, hit.point);
 			} 
@@ -69,14 +68,16 @@ public class GameController : MonoBehaviour
 			else
 			
 			{
-				targetDofDistance = 0.5f;
+				targetDofDistance = Vector3.Distance (
+					Camera.main.transform.position, 
+					PlayerController.instance.transform.position);
 			}
 		}
 
 		dofSettings.focusDistance = Mathf.Lerp (
 			dofSettings.focusDistance, 
 			targetDofDistance, 
-			Time.deltaTime * dofSmoothing
+			Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
 		);
 
 		postProcessing.depthOfField.settings = dofSettings;
