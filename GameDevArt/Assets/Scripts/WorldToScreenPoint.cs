@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class WorldToScreenPoint : MonoBehaviour 
 {
@@ -33,15 +33,19 @@ public class WorldToScreenPoint : MonoBehaviour
 	void Start ()
 	{
 		DistanceUpdate = new WaitForSeconds (distanceUpdateTime);
+	}
+
+	void OnEnable ()
+	{
 		StartCoroutine (UpdateDistance ());
 	}
 		
 	IEnumerator UpdateDistance ()
 	{
-		while (true)
+		while (showDistance == true)
 		{
 			DoUpdateDistance ();
-			yield return distanceUpdateTime;
+			yield return DistanceUpdate;
 		}
 	}
 
@@ -99,7 +103,6 @@ public class WorldToScreenPoint : MonoBehaviour
 				distanceText.text = "";
 			}
 		}
-
 	}
 
 	void DoUpdateDistance ()

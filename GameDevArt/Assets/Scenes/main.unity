@@ -17818,7 +17818,7 @@ MonoBehaviour:
   distanceReferencePos: {fileID: 1881082943}
   currentDistance: 0
   distanceText: {fileID: 1057242656}
-  distanceUpdateTime: 0.5
+  distanceUpdateTime: 0.25
   CanvasRect: {fileID: 149050337}
   UI_Element: {fileID: 827961301}
   UI_Element_Image: {fileID: 1716561531}
@@ -18824,7 +18824,7 @@ MonoBehaviour:
   distanceReferencePos: {fileID: 1881082943}
   currentDistance: 0
   distanceText: {fileID: 1861131475}
-  distanceUpdateTime: 0.5
+  distanceUpdateTime: 0.25
   CanvasRect: {fileID: 149050337}
   UI_Element: {fileID: 1001681959}
   UI_Element_Image: {fileID: 1953303426}
