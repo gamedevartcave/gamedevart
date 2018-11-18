@@ -12,7 +12,8 @@ public class WorldToScreenPoint : MonoBehaviour
 
 	private Vector2 ViewportPosition;
 	private Vector2 WorldObject_ScreenPosition;
-	public Vector2 offset;
+	public Vector2 screenOffset;
+	public Vector3 worldOffset;
 	public Vector2 xBounds = new Vector2 (-960, 960);
 	public Vector2 yBounds = new Vector2 (-540, 540);
 
@@ -44,7 +45,7 @@ public class WorldToScreenPoint : MonoBehaviour
 		}
 	}
 
-	void LateUpdate ()
+	void Update ()
 	{
 		// Checks any camera (including Editor camera).
 		if (worldMeshRend.isVisible == true) // Object is visible on camera.
@@ -54,14 +55,24 @@ public class WorldToScreenPoint : MonoBehaviour
 			// whereas WorldToViewPortPoint treats the lower left corner as 0,0. 
 			// Because of this, you need to subtract the height / width of the canvas * 0.5f to get the correct position.
 
-			ViewportPosition = Camera.main.WorldToViewportPoint (WorldObject.position);
+			ViewportPosition = Camera.main.WorldToViewportPoint (WorldObject.position + worldOffset);
+
 			WorldObject_ScreenPosition = new Vector2 (
-				Mathf.Clamp (((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)), xBounds.x, xBounds.y),
-				Mathf.Clamp (((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)), yBounds.x, yBounds.y)
+				Mathf.Clamp (
+					((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)), 
+					xBounds.x, 
+					xBounds.y
+				),
+
+				Mathf.Clamp (
+					((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)), 
+					yBounds.x, 
+					yBounds.y
+				)
 			);
 
 			// Set the position of the UI element.
-			UI_Element.anchoredPosition = WorldObject_ScreenPosition + offset;
+			UI_Element.anchoredPosition = WorldObject_ScreenPosition + screenOffset;
 
 			if (currentDistance > 1)
 			{
@@ -120,14 +131,14 @@ public class WorldToScreenPoint : MonoBehaviour
 					if (currentDistance < 1000) // Use m units.
 					{
 						//distanceText.text = Mathf.Floor (currentDistance) + "m";
-						distanceText.text =  Math.Round (currentDistance, 1).ToString ("#.0") + "m";
+						distanceText.text =  Math.Round (currentDistance, 1).ToString ("#.0") + " m";
 					} 
 
 					else // Use km units.
 					
 					{
 						//distanceText.text = Mathf.Floor (currentDistance * 0.001f) + "km";
-						distanceText.text = Math.Round (currentDistance * 0.001f, 1).ToString ("#.0") + "km";
+						distanceText.text = Math.Round (currentDistance * 0.001f, 1).ToString ("#.0") + " km";
 					}
 				}
 			} 
