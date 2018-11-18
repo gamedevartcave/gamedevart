@@ -13,6 +13,6 @@ public class DisplayBuildNumber : MonoBehaviour
 	{
 		path = Application.streamingAssetsPath + "/version.txt";
 		versionText = CommonUtils.ReadTextFile (path);
-		buildNumberText.text = "Build " + versionText + "(Windows x86_x64)";
+		buildNumberText.text = "Build " + versionText;
 	}
 }

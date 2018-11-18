@@ -5,7 +5,6 @@
 // Transform, this is a much better approach.)
 //
 
-
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -25,8 +24,10 @@ public class VersionIncrementor
     //static void RunOnce()
     //{
         //EditorApplication.update -= RunOnce;
-       // ReadVersionAndIncrement();
-   // }
+        //ReadVersionAndIncrement();
+    //}
+
+	private static int buildNumber;
 
 	[PostProcessBuild]
 	public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject) 
@@ -45,14 +46,14 @@ public class VersionIncrementor
         if (versionText != null)
         {
             //versionText = versionText.Trim(); //clean up whitespace if necessary
-            string[] lines = versionText.Split('.');
+            //string[] lines = versionText.Split('.');
 
             //int MajorVersion = int.Parse(lines[0]);
             //int MinorVersion = int.Parse(lines[1]);
             //int SubMinorVersion = int.Parse(lines[2]) + 1; //increment here
             //string SubVersionText = lines[3].Trim();
 
-			int buildNumber = int.Parse(lines[0]) + 1; // Increment here.
+			buildNumber = int.Parse(versionText) + 1; // Increment here.
 
             //Debug.Log("Major, Minor, SubMinor, SubVerLetter: " + MajorVersion + " " + MinorVersion + " " + SubMinorVersion + " " + SubVersionText);
 
@@ -63,21 +64,23 @@ public class VersionIncrementor
                           SubVersionText;
 			*/
 
-			versionText = buildNumber.ToString ("0");
+			versionText = buildNumber.ToString ();
 
+            Debug.Log("Version Incremented " + versionText);
 
-            //Debug.Log("Version Incremented " + versionText);
-
-            //save the file (overwrite the original) with the new version number
+            // Save the file (overwrite the original) with the new version number
             CommonUtils.WriteTextFile(versionTextFileNameAndPath, versionText);
 
-            //tell unity the file changed (important if the versionTextFileNameAndPath is in the Assets folder)
+            // Tell unity the file changed (important if the versionTextFileNameAndPath is in the Assets folder)
             AssetDatabase.Refresh();
         }
-        else
-        {
+        
+		else
+        
+		{
+			buildNumber = 0;
             //no file at that path, make it
-            CommonUtils.WriteTextFile(versionTextFileNameAndPath, "1");
+			CommonUtils.WriteTextFile(versionTextFileNameAndPath, buildNumber.ToString ());
         }
 
 		File.Copy (versionTextFileNameAndPath, (Application.streamingAssetsPath + "/version.txt").ToString (), true);
