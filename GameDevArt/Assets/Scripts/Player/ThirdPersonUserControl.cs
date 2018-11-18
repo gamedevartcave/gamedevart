@@ -7,18 +7,22 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     public class ThirdPersonUserControl : MonoBehaviour
     {
 		public static ThirdPersonUserControl instance { get; private set; }
-
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
+
+		[Header ("Camera rig")]
 		public SimpleFollow camRigSimpleFollow;
 		public Vector3 camRigSimpleFollowRotNormal = new Vector3 (5, 15, 0);
 		public Vector3 camRigSimpleFollowRotAiming;
 		public Camera m_Cam; // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward; // The current forward direction of the camera
+		public Animator CrosshairAnim;
+
 		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
 		private bool m_Jump; // Jump state.
 		[HideInInspector] public bool m_DoubleJump; // Double jump input state.
 		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state.m_Rigidbody.velocity.z.
-		[Space (10)]
+
+		[Header ("Camera offset")]
 		public Transform CamFollow; // Camera offset follow point.
 		private bool isRight; // Camera horizontal offset toggle state.
 		public Vector2 cameraOffset; // Camera horizontal offset values.
@@ -47,9 +51,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
            
 			{
                 Debug.LogWarning(
-                    "Warning: no main camera found. Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.", gameObject);
-                // we use self-relative controls in this case, which probably isn't what the user wants, but hey, we warned them!
-            }
+                    "Warning: no main camera found. " + 
+					"Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.", 
+					gameObject
+				);
+			}
 
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();
@@ -85,9 +91,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
 
-				if (PlayerController.instance.CrosshairObject.activeSelf == false)
+				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairOut") == true)
 				{
-					PlayerController.instance.CrosshairObject.SetActive (true);
+					CrosshairAnim.ResetTrigger ("Out");
+					CrosshairAnim.SetTrigger ("In");
 				}
 			}
 
@@ -102,9 +109,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
 
-				if (PlayerController.instance.CrosshairObject.activeSelf == true)
+				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairIn") == true)
 				{
-					PlayerController.instance.CrosshairObject.SetActive (false);
+					CrosshairAnim.ResetTrigger ("In");
+					CrosshairAnim.SetTrigger ("Out");
 				}
 			}
 				
@@ -124,6 +132,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					GameController.instance.camShakeScript.shakeDuration = 1;
 					GameController.instance.camShakeScript.shakeAmount = 0.1f;
 					GameController.instance.camShakeScript.Shake ();
+
 					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
 				}
 			}
@@ -151,6 +160,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // calculate move direction to pass to character
             if (m_Cam != null)
             {
+
+				// Using self-relative controls.
 				// calculate camera relative direction to move:
 				m_CamForward = Vector3.Scale (m_Cam.transform.forward, new Vector3 (1, 0, 1)).normalized;
 				m_Move = v * m_CamForward + h * m_Cam.transform.right;
@@ -163,10 +174,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 m_Move = v*Vector3.forward + h*Vector3.right;
             }
 
-//#if !MOBILE_INPUT
+			//#if !MOBILE_INPUT
 			// walk speed multiplier
 	        //if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
-//#endif
+			//#endif
 
             // pass all parameters to the character control script
 			//m_Character.Move(m_Move, crouch, m_Jump, m_DoubleJump);
@@ -182,8 +193,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void GetCameraChangeSmoothing ()
 		{
-			// Camera change = Left.
-			if (!isRight)
+			if (isRight == false)
 			{
 				CamFollow.localPosition = Vector3.Lerp (
 					CamFollow.localPosition, 
@@ -194,10 +204,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					), 
 					cameraOffsetSmoothing * Time.deltaTime
 				);
-			}
 
-			// Camera change = Right.
-			if (isRight)
+				return;
+			}
+				
+			else
+				
 			{
 				CamFollow.localPosition = Vector3.Lerp (
 					CamFollow.localPosition,
@@ -208,6 +220,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					),
 					cameraOffsetSmoothing * Time.deltaTime
 				);
+
+				return;
 			}
 		}
     }

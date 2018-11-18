@@ -41,6 +41,17 @@ public class MenuNavigation : MonoBehaviour
 		canvasGroup = GetComponent<CanvasGroup> ();
 	}
 
+	public void SetButtonIndex (int index)
+	{
+		for (int i = 0; i < buttons.Length; i++)
+		{
+			ButtonExit (i);
+		}
+
+		buttonIndex = index;
+		ButtonEnter (buttonIndex);
+	}
+
 	void Update ()
 	{
 		// Bail out if not fully visible.

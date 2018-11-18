@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 	#region Health
 	void CheckHealthSliders ()
 	{
-		HealthSlider.value = health;
+		HealthSlider.value = Mathf.Clamp (health, 0, MaximumHealth);
 		HealthSlider_Smoothed.value = Mathf.Lerp (
 			HealthSlider_Smoothed.value, 
 			health, 

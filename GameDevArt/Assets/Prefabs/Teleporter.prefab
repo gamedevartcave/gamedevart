@@ -299,7 +299,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667479520809404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -335,11 +335,11 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1397978658127894}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
@@ -5115,7 +5115,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1749476349969252}
   serializedVersion: 5
   lengthInSec: 0.75
-  simulationSpeed: 1
+  simulationSpeed: 0.5
   stopAction: 0
   looping: 1
   prewarm: 0
@@ -5734,7 +5734,7 @@ ParticleSystem:
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -5819,8 +5819,8 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 360
-      mode: 0
-      spread: 0.2
+      mode: 1
+      spread: 0
       speed:
         serializedVersion: 2
         minMaxState: 0
@@ -6774,7 +6774,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: -20
-      minScalar: -10
+      minScalar: -20
       maxCurve:
         serializedVersion: 2
         m_Curve:
