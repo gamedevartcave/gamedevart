@@ -9,26 +9,31 @@ public class WorldToScreenPoint : MonoBehaviour
 	[Header ("World")]
 	public Transform WorldObject;
 	public Renderer worldMeshRend;
+	public Vector3 worldOffset;
 
 	private Vector2 ViewportPosition;
 	private Vector2 WorldObject_ScreenPosition;
-	public Vector2 screenOffset;
-	public Vector3 worldOffset;
-	public Vector2 xBounds = new Vector2 (-960, 960);
-	public Vector2 yBounds = new Vector2 (-540, 540);
 
 	[Header ("Distance")]
 	public bool showDistance;
+	public Vector2 distanceRange = new Vector2 (1, 10000);
 	public Transform distanceReferencePos;
 	[ReadOnlyAttribute] public float currentDistance;
 	public TextMeshProUGUI distanceText;
 	public WaitForSeconds DistanceUpdate;
 	public float distanceUpdateTime = 0.5f;
+	[Range (0, 2)]
+	public int decimalPlaces;
 
 	[Header ("UI")]
 	public RectTransform CanvasRect;
-	public RectTransform UI_Element;
 	public RawImage UI_Element_Image;
+	public RectTransform UI_Element;
+	public Vector2 screenOffset;
+
+	[Header ("Screen bounds")]
+	public Vector2 xBounds = new Vector2 (-960, 960);
+	public Vector2 yBounds = new Vector2 (-540, 540);
 
 	void Start ()
 	{
@@ -78,7 +83,7 @@ public class WorldToScreenPoint : MonoBehaviour
 			// Set the position of the UI element.
 			UI_Element.anchoredPosition = WorldObject_ScreenPosition + screenOffset;
 
-			if (currentDistance > 1)
+			if (currentDistance > distanceRange.x && currentDistance < distanceRange.y)
 			{
 				if (UI_Element_Image != null)
 				{
@@ -114,8 +119,8 @@ public class WorldToScreenPoint : MonoBehaviour
 				// Update current distance.
 				currentDistance = Vector3.Distance (distanceReferencePos.position, WorldObject.position);
 
-				// If current distance is less than 1 metre.
-				if (currentDistance < 1)
+				// If current distance is out of distance range.
+				if (currentDistance < distanceRange.x || currentDistance > distanceRange.y)
 				{
 					if (distanceText != null)
 					{
@@ -134,14 +139,14 @@ public class WorldToScreenPoint : MonoBehaviour
 					if (currentDistance < 1000) // Use m units.
 					{
 						//distanceText.text = Mathf.Floor (currentDistance) + "m";
-						distanceText.text =  Math.Round (currentDistance, 1).ToString ("#.0") + " m";
+						distanceText.text =  Math.Round (currentDistance, decimalPlaces).ToString () + " m";
 					} 
 
 					else // Use km units.
 					
 					{
 						//distanceText.text = Mathf.Floor (currentDistance * 0.001f) + "km";
-						distanceText.text = Math.Round (currentDistance * 0.001f, 1).ToString ("#.0") + " km";
+						distanceText.text = Math.Round (currentDistance * 0.001f, decimalPlaces).ToString () + " km";
 					}
 				}
 			} 

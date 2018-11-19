@@ -12309,18 +12309,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldObject: {fileID: 1881082943}
   worldMeshRend: {fileID: 1261694172}
-  screenOffset: {x: 110, y: -25}
   worldOffset: {x: 0, y: 0, z: 0}
-  xBounds: {x: -900, y: 900}
-  yBounds: {x: -480, y: 480}
   showDistance: 0
+  distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 0}
   currentDistance: 0
   distanceText: {fileID: 0}
   distanceUpdateTime: 0.5
+  decimalPlaces: 0
   CanvasRect: {fileID: 149050337}
-  UI_Element: {fileID: 770630037}
   UI_Element_Image: {fileID: 0}
+  UI_Element: {fileID: 770630037}
+  screenOffset: {x: 110, y: -25}
+  xBounds: {x: -900, y: 900}
+  yBounds: {x: -480, y: 480}
 --- !u!1 &782312824
 GameObject:
   m_ObjectHideFlags: 0
@@ -17810,18 +17812,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldObject: {fileID: 148990262}
   worldMeshRend: {fileID: 148990264}
-  screenOffset: {x: 0, y: 0}
   worldOffset: {x: 0, y: 0.5, z: 0}
-  xBounds: {x: -1000, y: 1000}
-  yBounds: {x: -1000, y: 1000}
   showDistance: 1
+  distanceRange: {x: 1, y: 200}
   distanceReferencePos: {fileID: 1881082943}
   currentDistance: 0
   distanceText: {fileID: 1057242656}
   distanceUpdateTime: 0.25
+  decimalPlaces: 0
   CanvasRect: {fileID: 149050337}
-  UI_Element: {fileID: 827961301}
   UI_Element_Image: {fileID: 1716561531}
+  UI_Element: {fileID: 827961301}
+  screenOffset: {x: 0, y: 0}
+  xBounds: {x: -1000, y: 1000}
+  yBounds: {x: -1000, y: 1000}
 --- !u!222 &827961304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18816,18 +18820,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldObject: {fileID: 1146120088}
   worldMeshRend: {fileID: 1146120089}
-  screenOffset: {x: 0, y: 0}
   worldOffset: {x: 0, y: 0.5, z: 0}
-  xBounds: {x: -1000, y: 1000}
-  yBounds: {x: -1000, y: 1000}
   showDistance: 1
+  distanceRange: {x: 1, y: 50}
   distanceReferencePos: {fileID: 1881082943}
   currentDistance: 0
   distanceText: {fileID: 1861131475}
   distanceUpdateTime: 0.25
+  decimalPlaces: 0
   CanvasRect: {fileID: 149050337}
-  UI_Element: {fileID: 1001681959}
   UI_Element_Image: {fileID: 1953303426}
+  UI_Element: {fileID: 1001681959}
+  screenOffset: {x: 0, y: 0}
+  xBounds: {x: -1000, y: 1000}
+  yBounds: {x: -1000, y: 1000}
 --- !u!222 &1001681962
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32593,18 +32599,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldObject: {fileID: 1881082943}
   worldMeshRend: {fileID: 1261694172}
-  screenOffset: {x: 110, y: 0}
   worldOffset: {x: 0, y: 0, z: 0}
-  xBounds: {x: -900, y: 900}
-  yBounds: {x: -480, y: 480}
   showDistance: 0
+  distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 0}
   currentDistance: 0
   distanceText: {fileID: 0}
   distanceUpdateTime: 0.5
+  decimalPlaces: 0
   CanvasRect: {fileID: 149050337}
-  UI_Element: {fileID: 1896488256}
   UI_Element_Image: {fileID: 0}
+  UI_Element: {fileID: 1896488256}
+  screenOffset: {x: 110, y: 0}
+  xBounds: {x: -900, y: 900}
+  yBounds: {x: -480, y: 480}
 --- !u!1 &1899210372
 GameObject:
   m_ObjectHideFlags: 0

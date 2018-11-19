@@ -20,6 +20,7 @@ public class MouseLook : MonoBehaviour
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
 	public RotationAxes axes = RotationAxes.MouseXAndY;
 
+	public bool invertLookVertical;
 	public float sensitivityX = 15F;
 	public float sensitivityY = 15F;
 
@@ -58,7 +59,7 @@ public class MouseLook : MonoBehaviour
 			if (playerActions.Aim.Value > 0.5f)
 			{
 				// Don't use deadzone.
-				rotationY += playerActions.CamRot.Value.y * -sensitivityY;
+				rotationY += playerActions.CamRot.Value.y * (invertLookVertical ? sensitivityY : -sensitivityY);
 			}
 
 			// Not aiming.
@@ -68,7 +69,7 @@ public class MouseLook : MonoBehaviour
 				if (playerActions.CamRot.Value.y > rotYDeadZone ||
 				    playerActions.CamRot.Value.y < -rotYDeadZone)
 				{
-					rotationY += playerActions.CamRot.Value.y * -sensitivityY;
+					rotationY += playerActions.CamRot.Value.y * (invertLookVertical ? sensitivityY : -sensitivityY);
 				}
 			}
 
