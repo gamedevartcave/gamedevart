@@ -38,6 +38,11 @@ public class WorldToScreenPoint : MonoBehaviour
 	void Start ()
 	{
 		DistanceUpdate = new WaitForSeconds (distanceUpdateTime);
+
+		if (distanceReferencePos != null)
+		{
+			currentDistance = Vector3.Distance (distanceReferencePos.position, WorldObject.position);
+		}
 	}
 
 	void OnEnable ()
@@ -47,7 +52,8 @@ public class WorldToScreenPoint : MonoBehaviour
 		
 	IEnumerator UpdateDistance ()
 	{
-		while (showDistance == true)
+		//while (showDistance == true)
+		while (true)
 		{
 			DoUpdateDistance ();
 			yield return DistanceUpdate;
@@ -83,6 +89,15 @@ public class WorldToScreenPoint : MonoBehaviour
 			// Set the position of the UI element.
 			UI_Element.anchoredPosition = WorldObject_ScreenPosition + screenOffset;
 
+			if (showDistance == false) // Showing distance.
+			{
+				if (distanceReferencePos != null)
+				{
+					// Update current distance.
+					currentDistance = Vector3.Distance (distanceReferencePos.position, WorldObject.position);
+				}
+			} 
+
 			if (currentDistance > distanceRange.x && currentDistance < distanceRange.y)
 			{
 				if (UI_Element_Image != null)
@@ -92,20 +107,42 @@ public class WorldToScreenPoint : MonoBehaviour
 						UI_Element_Image.enabled = true;
 					}
 				}
+			} 
+
+			else // Outside range, hide.
+
+			{
+				if (UI_Element_Image != null)
+				{
+					if (UI_Element_Image.enabled == true)
+					{
+						UI_Element_Image.enabled = false;
+					}
+				}
 			}
 		} 
 
 		else // Object is not visible on camera.
 		
 		{
-			if (UI_Element_Image != null)
+			if (showDistance == true)
 			{
-				UI_Element_Image.enabled = false;
-			}
+				if (UI_Element_Image != null)
+				{
+					if (UI_Element_Image.enabled == true)
+					{
+						UI_Element_Image.enabled = false;
+					}
+				}
+			} 
 
-			if (distanceText != null)
+			else
+			
 			{
-				distanceText.text = "";
+				if (distanceText != null)
+				{
+					distanceText.text = "";
+				}
 			}
 		}
 	}
@@ -126,7 +163,7 @@ public class WorldToScreenPoint : MonoBehaviour
 					{
 						distanceText.text = "";
 					}
-
+						
 					if (UI_Element_Image != null)
 					{
 						UI_Element_Image.enabled = false;
@@ -138,14 +175,12 @@ public class WorldToScreenPoint : MonoBehaviour
 				{
 					if (currentDistance < 1000) // Use m units.
 					{
-						//distanceText.text = Mathf.Floor (currentDistance) + "m";
 						distanceText.text =  Math.Round (currentDistance, decimalPlaces).ToString () + " m";
 					} 
 
 					else // Use km units.
 					
 					{
-						//distanceText.text = Mathf.Floor (currentDistance * 0.001f) + "km";
 						distanceText.text = Math.Round (currentDistance * 0.001f, decimalPlaces).ToString () + " km";
 					}
 				}
@@ -158,7 +193,7 @@ public class WorldToScreenPoint : MonoBehaviour
 				{
 					distanceText.text = "";
 				}
-
+					
 				if (UI_Element_Image != null)
 				{
 					UI_Element_Image.enabled = false;
