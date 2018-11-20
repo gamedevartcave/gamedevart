@@ -49,4 +49,9 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 		OnInitialize.Invoke ();
 		SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 	}
+
+	public void LoadData ()
+	{
+		SaveAndLoadScript.Instance.InitializeLoad ();
+	}
 }

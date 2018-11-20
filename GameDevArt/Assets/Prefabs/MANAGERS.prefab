@@ -1505,11 +1505,14 @@ MonoBehaviour:
   myName: 
   LevelId: 0
   cam: {fileID: 0}
-  QualitySettingsIndex: 0
-  targetframerate: 0
+  postProcessing: {fileID: 11400000, guid: 93d1067e618f1054fb277861db0fbe39, type: 2}
+  volLightRend: {fileID: 0}
+  sunShafts: {fileID: 0}
+  QualitySettingsIndex: 2
+  targetFrameRate: 60
   averageFpsTimer: 0
   ParticleEmissionMultiplier: 1
-  MasterVolume: 0
+  MasterVolume: 1
   SoundtrackVolume: 0
   EffectsVolume: 0
   PlayerData:
@@ -1519,7 +1522,7 @@ MonoBehaviour:
   SettingsData:
     QualitySettingsIndex: 0
     ParticleEmissionMultiplier: 1
-    targetframerate: 0
+    targetFrameRate: 0
     MasterVolume: 0
     SoundtrackVolume: 0
     EffectsVolume: 0
@@ -6311,7 +6314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 727.1, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &224401926477011390

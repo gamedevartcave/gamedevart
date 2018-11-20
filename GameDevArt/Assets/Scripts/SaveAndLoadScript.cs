@@ -2,7 +2,9 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.ImageEffects;
 
 public class SaveAndLoadScript : MonoBehaviour 
 {
@@ -13,26 +15,38 @@ public class SaveAndLoadScript : MonoBehaviour
 	public bool TestMode;
 
 	[Header ("Player Data")]
-	public string Username = "default";
-	public string myName;
-	public int LevelId;
+	public string Username = "default"; // For multiple profiles.
+	public string myName; // For multiple playthroughs.
+	public int LevelId; // This is the maximum level number the player can access, 0 = Level 1.
 
 	[Header ("Settings Data")]
-	public Camera cam;
+	public Camera cam; // Camera to use to change settings.
+	public PostProcessingProfile postProcessing;
+	public VolumetricLightRenderer volLightRend;
+	public SunShafts sunShafts;
+	// Screen resolution will be independent of quality settings.
+	public int targetResolutionWidth = 1920;
+	public int targetResolutionHeight = 1080;
+
 	[Space (10)]
 	public int QualitySettingsIndex;
 	[Space (10)]
-	public int targetframerate;
+	public int targetFrameRate;
 	public float averageFpsTimer;
 	[Space (10)]
+	[Range (0, 2)]
 	public float ParticleEmissionMultiplier = 1;
 	[Space (10)]
-	public float MasterVolume;
-	public float SoundtrackVolume;
-	public float EffectsVolume;
+	public float MasterVolume = 1; // Using volume multiplier applied to AudioListener.
+	public float SoundtrackVolume = 0; // Using dB scale (-80, 0)
+	public float EffectsVolume = 0;  // Using dB scale (-80, 0)
+	public bool invertXAxis;
+	public bool invertYAxis;
 
+	[HideInInspector]
 	public playerData PlayerData;
-	public levelData LevelData;
+	//public levelData LevelData;
+	[HideInInspector]
 	public settingsData SettingsData;
 
 	#region Singleton
@@ -44,7 +58,18 @@ public class SaveAndLoadScript : MonoBehaviour
 
 	void Start ()
 	{
+		
+	}
+
+	public void InitializeLoad ()
+	{
 		SaveAndLoadScript.Instance.LoadPlayerData ();
+
+		cam = Camera.main;
+		volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
+		sunShafts = cam.GetComponent<SunShafts> ();
+
+		SaveAndLoadScript.Instance.LoadSettingsData ();
 	}
 
 	void CheckUsername ()
@@ -143,6 +168,7 @@ public class SaveAndLoadScript : MonoBehaviour
 		//SaveLevelData ();
 	}
 
+	/*
 	public void SaveLevelData ()
 	{
 		if (SceneManager.GetActiveScene ().name != "menu")
@@ -156,6 +182,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			file.Close ();
 		}
 	}
+	*/
 
 	public void DeletePlayerDataEditor ()
 	{
@@ -212,6 +239,7 @@ public class SaveAndLoadScript : MonoBehaviour
 		}
 	}
 
+	/*
 	public void DeleteLevelData ()
 	{
 		string levelDirectory = Application.persistentDataPath + "/" + Username + "/";
@@ -221,11 +249,14 @@ public class SaveAndLoadScript : MonoBehaviour
 			Directory.Delete (levelDirectory, true);
 		}
 	}
+	*/
 
+	/*
 	public void ResetAllLeaderboards ()
 	{
 		Debug.Log ("Leaderboards have been reset.");
 	}
+	*/
 		
 	// Load PlayerData main.
 	public void LoadPlayerData ()
@@ -257,6 +288,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			
 			{
 				SavePlayerData ();
+				LoadPlayerData ();
 			}
 		}
 		#endif
@@ -288,6 +320,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			
 			{
 				SavePlayerData ();
+				LoadPlayerData ();
 			}
 		}
 		#endif
@@ -354,6 +387,8 @@ public class SaveAndLoadScript : MonoBehaviour
 		 || File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 		{
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
+			targetResolutionWidth = Screen.currentResolution.width; 
+			targetResolutionHeight = Screen.currentResolution.height;
 
 			if (QualitySettingsIndex == 0) 
 			{
@@ -366,7 +401,7 @@ public class SaveAndLoadScript : MonoBehaviour
 			}
 
 			MasterVolume = Mathf.Clamp (AudioListener.volume, 0, 1);
-			targetframerate = Application.targetFrameRate;
+			targetFrameRate = Application.targetFrameRate;
 		}
 	}
 
@@ -382,7 +417,6 @@ public class SaveAndLoadScript : MonoBehaviour
 			BinaryFormatter bf = new BinaryFormatter ();
 
 			#if !UNITY_EDITOR
-
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 				
 				Debug.Log (
@@ -414,11 +448,15 @@ public class SaveAndLoadScript : MonoBehaviour
 	void SetSettingsData (settingsData data)
 	{
 		data.QualitySettingsIndex = QualitySettingsIndex;
+		data.targetResolutionWidth = targetResolutionWidth;
+		data.targetResolutionHeight = targetResolutionHeight;
 		data.ParticleEmissionMultiplier = ParticleEmissionMultiplier;
-		data.targetframerate  = targetframerate;
+		data.targetFrameRate  = targetFrameRate;
 		data.MasterVolume 	  = Mathf.Clamp (MasterVolume, 	     0, 1);
 		data.SoundtrackVolume = Mathf.Clamp (SoundtrackVolume, -80, 0);
 		data.EffectsVolume 	  = Mathf.Clamp (EffectsVolume,    -80, 0);
+		data.invertXAxis = invertXAxis;
+		data.invertYAxis = invertYAxis;
 	}
 
 	public void LoadSettingsData ()
@@ -443,6 +481,13 @@ public class SaveAndLoadScript : MonoBehaviour
 				LoadSettingsDataContents (data);
 				StoreSettingsDataInGame ();
 			}
+
+			else
+
+			{
+				SaveSettingsData ();
+				LoadSettingsData ();
+			}
 			#endif
 
 			#if UNITY_EDITOR
@@ -463,6 +508,13 @@ public class SaveAndLoadScript : MonoBehaviour
 				LoadSettingsDataContents (data);
 				StoreSettingsDataInGame ();
 			}
+
+			else
+			
+			{
+				SaveSettingsData ();
+				LoadSettingsData ();
+			}
 			#endif
 		}
 	}
@@ -471,17 +523,76 @@ public class SaveAndLoadScript : MonoBehaviour
 	void LoadSettingsDataContents (settingsData data)
 	{
 		QualitySettingsIndex = data.QualitySettingsIndex;
+		targetResolutionWidth = data.targetResolutionWidth;
+		targetResolutionHeight = data.targetResolutionHeight;
 		ParticleEmissionMultiplier = data.ParticleEmissionMultiplier;
-		targetframerate = data.targetframerate;
+		targetFrameRate = data.targetFrameRate;
 		MasterVolume = data.MasterVolume;
 		SoundtrackVolume = data.SoundtrackVolume;
 		EffectsVolume = data.EffectsVolume;
+		invertXAxis = data.invertXAxis;
+		invertYAxis = data.invertYAxis;
 	}
 
 	// Puts new data into relevant scripts.
 	void StoreSettingsDataInGame ()
 	{
 		QualitySettings.SetQualityLevel (QualitySettingsIndex);
+
+		switch (QualitySettingsIndex)
+		{
+		case 0: // Low setting. In the dire hopes it works on integrated graphics.
+			postProcessing.ambientOcclusion.enabled = false;
+			postProcessing.antialiasing.enabled = false;
+			postProcessing.bloom.enabled = false;
+			postProcessing.chromaticAberration.enabled = false;
+			postProcessing.colorGrading.enabled = false;
+			postProcessing.depthOfField.enabled = false;
+			postProcessing.eyeAdaptation.enabled = false;
+			postProcessing.fog.enabled = false;
+			postProcessing.grain.enabled = false;
+			postProcessing.motionBlur.enabled = false;
+			postProcessing.screenSpaceReflection.enabled = false;
+			postProcessing.vignette.enabled = false;
+			volLightRend.enabled = false;
+			sunShafts.enabled = false;
+			break;
+		case 1: // Medium setting. Good quality but some optimizations.
+			postProcessing.ambientOcclusion.enabled = true;
+			postProcessing.antialiasing.enabled = false;
+			postProcessing.bloom.enabled = true;
+			postProcessing.chromaticAberration.enabled = false;
+			postProcessing.colorGrading.enabled = true;
+			postProcessing.depthOfField.enabled = true;
+			postProcessing.eyeAdaptation.enabled = true;
+			postProcessing.fog.enabled = true;
+			postProcessing.grain.enabled = true;
+			postProcessing.motionBlur.enabled = true;
+			postProcessing.screenSpaceReflection.enabled = false;
+			postProcessing.vignette.enabled = false;
+			volLightRend.enabled = false;
+			sunShafts.enabled = true;
+			break;
+		case 2: // High setting. Most things are enabled and on high/highest settings.
+			postProcessing.ambientOcclusion.enabled = true;
+			postProcessing.antialiasing.enabled = true;
+			postProcessing.bloom.enabled = true;
+			postProcessing.chromaticAberration.enabled = true;
+			postProcessing.colorGrading.enabled = true;
+			postProcessing.depthOfField.enabled = true;
+			postProcessing.eyeAdaptation.enabled = true;
+			postProcessing.fog.enabled = true;
+			postProcessing.grain.enabled = true;
+			postProcessing.motionBlur.enabled = true;
+			postProcessing.screenSpaceReflection.enabled = true;
+			postProcessing.vignette.enabled = true;
+			volLightRend.enabled = true;
+			sunShafts.enabled = true;
+			break;
+		}
+
+		Screen.SetResolution (targetResolutionWidth, targetResolutionHeight, Screen.fullScreen, 60);
+
 		AudioListener.volume = Mathf.Clamp (MasterVolume, 0, 1);
 
 		if (AudioSettingsManager.instance != null)
@@ -489,14 +600,14 @@ public class SaveAndLoadScript : MonoBehaviour
 			AudioSettingsManager.instance.GetAudioSettings ();
 		}
 
-		if (targetframerate < 30 && targetframerate >= 0) 
+		if (targetFrameRate < 30 && targetFrameRate >= 0) 
 		{
-			targetframerate = -1;
+			targetFrameRate = -1;
 		}
 
-		if (targetframerate >= 30 || targetframerate <= -1) 
+		if (targetFrameRate >= 30 || targetFrameRate <= -1) 
 		{
-			TargetFPS.Instance.SetTargetFramerate (targetframerate);
+			TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
 		}
 	}
 
@@ -509,20 +620,26 @@ public class SaveAndLoadScript : MonoBehaviour
 		public int ExperiencePoints;
 	}
 
+	/*
 	[System.Serializable]
 	public class levelData
 	{
 	}
+	*/
 
 	[System.Serializable]
 	public class settingsData
 	{
 		public int QualitySettingsIndex;
+		public int targetResolutionWidth = 1920;
+		public int targetResolutionHeight = 1080;
 		[Range (0, 2)]
 		public float ParticleEmissionMultiplier = 1;
-		public int targetframerate;
-		public float MasterVolume;
-		public float SoundtrackVolume;
-		public float EffectsVolume;
+		public int targetFrameRate = 60;
+		public float MasterVolume = 1;
+		public float SoundtrackVolume = 0;
+		public float EffectsVolume = 0;
+		public bool invertXAxis;
+		public bool invertYAxis;
 	}
 }
