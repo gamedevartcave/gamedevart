@@ -40,7 +40,6 @@ public class SaveAndLoadScript : MonoBehaviour
 	public float MasterVolume = 1; // Using volume multiplier applied to AudioListener.
 	public float SoundtrackVolume = 0; // Using dB scale (-80, 0)
 	public float EffectsVolume = 0;  // Using dB scale (-80, 0)
-	public bool invertXAxis;
 	public bool invertYAxis;
 
 	[HideInInspector]
@@ -455,7 +454,6 @@ public class SaveAndLoadScript : MonoBehaviour
 		data.MasterVolume 	  = Mathf.Clamp (MasterVolume, 	     0, 1);
 		data.SoundtrackVolume = Mathf.Clamp (SoundtrackVolume, -80, 0);
 		data.EffectsVolume 	  = Mathf.Clamp (EffectsVolume,    -80, 0);
-		data.invertXAxis = invertXAxis;
 		data.invertYAxis = invertYAxis;
 	}
 
@@ -530,7 +528,6 @@ public class SaveAndLoadScript : MonoBehaviour
 		MasterVolume = data.MasterVolume;
 		SoundtrackVolume = data.SoundtrackVolume;
 		EffectsVolume = data.EffectsVolume;
-		invertXAxis = data.invertXAxis;
 		invertYAxis = data.invertYAxis;
 	}
 
@@ -639,7 +636,6 @@ public class SaveAndLoadScript : MonoBehaviour
 		public float MasterVolume = 1;
 		public float SoundtrackVolume = 0;
 		public float EffectsVolume = 0;
-		public bool invertXAxis;
 		public bool invertYAxis;
 	}
 }

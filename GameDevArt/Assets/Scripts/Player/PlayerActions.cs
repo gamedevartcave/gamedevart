@@ -12,6 +12,9 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Back;
 	public PlayerAction Shoot;
 	public PlayerAction Melee;
+	public PlayerAction DodgeLeft;
+	public PlayerAction DodgeRight;
+	public OneAxisInputControl Dodge;
 
 	public PlayerAction Left;
 	public PlayerAction Right;
@@ -40,6 +43,9 @@ public class PlayerActions : PlayerActionSet
 
 		Shoot = CreatePlayerAction ("Shoot");
 		Melee = CreatePlayerAction ("Melee");
+		DodgeLeft = CreatePlayerAction ("DodgeLeft");
+		DodgeRight = CreatePlayerAction ("DodgeRight");
+		Dodge = CreateOneAxisPlayerAction (DodgeLeft, DodgeRight);
 
 		Left = CreatePlayerAction ("Move Left");
 		Right = CreatePlayerAction ("Move Right");
@@ -68,7 +74,7 @@ public class PlayerActions : PlayerActionSet
 		playerActions.Aim.AddDefaultBinding (Mouse.RightButton);
 		playerActions.Aim.AddDefaultBinding (InputControlType.LeftTrigger);
 
-		playerActions.Use.AddDefaultBinding (Key.E);
+		//playerActions.Use.AddDefaultBinding (Key.E);
 		playerActions.Use.AddDefaultBinding (Key.F);
 		playerActions.Use.AddDefaultBinding (InputControlType.Action3);
 
@@ -86,6 +92,12 @@ public class PlayerActions : PlayerActionSet
 
 		playerActions.Melee.AddDefaultBinding (Mouse.LeftButton);
 		playerActions.Melee.AddDefaultBinding (InputControlType.Action4);
+
+		playerActions.DodgeLeft.AddDefaultBinding (Key.Q);
+		playerActions.DodgeLeft.AddDefaultBinding (InputControlType.LeftBumper);
+
+		playerActions.DodgeRight.AddDefaultBinding (Key.E);
+		playerActions.DodgeRight.AddDefaultBinding (InputControlType.RightBumper);
 
 		playerActions.Up.AddDefaultBinding (Key.UpArrow);
 		playerActions.Up.AddDefaultBinding (Key.W);

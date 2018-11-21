@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
 {
 	public static GameController instance { get; private set; }
 
+	public CameraShake camShakeScript;
+
 	[Header ("Post processing")]
 	public PostProcessingProfile postProcessing;
 	public float targetDofDistance;
@@ -19,13 +21,11 @@ public class GameController : MonoBehaviour
 	public UnityEvent OnUnpause;
 
 	[Header ("Game timer")]
+	public UnityEvent OnTimerTrackingStarted;
+	public UnityEvent OnTimerTrackingStopped;
 	private bool trackTime;
 	private float finalTime;
 	private float startTime;
-	public UnityEvent OnTimerTrackingStarted;
-	public UnityEvent OnTimerTrackingStopped;
-
-	public CameraShake camShakeScript;
 
 	private PlayerActions playerActions;
 

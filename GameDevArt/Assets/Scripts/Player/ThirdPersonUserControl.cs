@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Events;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -27,6 +28,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private bool isRight; // Camera horizontal offset toggle state.
 		public Vector2 cameraOffset; // Camera horizontal offset values.
 		public float cameraOffsetSmoothing = 5; // Smoothing between offsets.
+
+		[Header ("Dodging")]
+		[ReadOnlyAttribute] public bool isDodging;
+		public float dodgeRate = 0.5f;
+		public float dodgeSpeed = 15;
+		private float nextDodge;
+		private float dodgeTimeRemain;
+		public float DodgeTimeDuration;
+		public float dodgeTimeScale = 0.25f;
+		public UnityEvent OnDodgeBegan;
+		public UnityEvent OnDodgeEnded;
 
 		private PlayerActions playerActions;
 
@@ -148,9 +160,84 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				isRight = !isRight;
 			}
+
+			// Dodging.
+			if (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed)
+			{
+				// Get dodge value to determine left or right dodge.
+				// Assign to player animation.
+
+				if (Time.time > nextDodge)
+				{
+					isDodging = true;
+					m_Character.m_Animator.SetFloat ("DodgeDir", playerActions.Dodge.Value);
+					m_Character.m_Animator.SetTrigger ("Dodge");
+					m_Character.m_Animator.SetBool ("Dodging", true);
+					m_Character.moveMultiplier *= 10;
+					m_Character.m_AnimSpeedMultiplier *= 10;
+					m_Character.m_MovingTurnSpeed *= 10;
+					m_Character.m_StationaryTurnSpeed *= 10;
+					m_Character.m_Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+					dodgeTimeRemain = DodgeTimeDuration;
+					TimescaleController.instance.targetTimeScale = dodgeTimeScale;
+
+					OnDodgeBegan.Invoke ();
+					nextDodge = Time.time + dodgeRate;
+					Debug.Log ("Dodged " + playerActions.Dodge.Value);
+				}
+
+				else // Not able to dodge yet.
+				
+				{
+					//m_Character.m_Animator.SetFloat ("DodgeDir", 0);
+					//m_Character.m_Animator.ResetTrigger ("Dodge");
+					//m_Character.m_Animator.SetBool ("Dodging", false);
+				}
+			}
+				
+			if (dodgeTimeRemain <= 0)
+			{
+				if (isDodging == true)
+				{
+					if (GameController.instance.isPaused == false)
+					{
+						TimescaleController.instance.targetTimeScale = 1;
+						isDodging = false;
+
+						// Reset dodging.
+						m_Character.m_Animator.SetFloat ("DodgeDir", 0);
+						m_Character.m_Animator.ResetTrigger ("Dodge");
+						m_Character.m_Animator.SetBool ("Dodging", false);
+
+						m_Character.moveMultiplier /= 10;
+						m_Character.m_AnimSpeedMultiplier /= 10;
+						m_Character.m_MovingTurnSpeed /= 10;
+						m_Character.m_StationaryTurnSpeed /= 10;
+						m_Character.m_Animator.updateMode = AnimatorUpdateMode.Normal;
+
+						OnDodgeEnded.Invoke ();
+					}
+				}
+			} 
+
+			else // There is dodge time.
+			
+			{
+				if (GameController.instance.isPaused == false)
+				{
+					dodgeTimeRemain -= Time.unscaledDeltaTime;
+					Vector3 relativeDodgeDir = 
+						transform.InverseTransformDirection (Camera.main.transform.right * m_Character.m_Animator.GetFloat ("DodgeDir") * dodgeSpeed * Time.unscaledDeltaTime);
+
+					transform.Translate (relativeDodgeDir, Space.Self);
+
+					m_Character.m_Animator.SetBool ("Dodging", true);
+				}
+			}
         }
 			
-        private void FixedUpdate()
+        private void FixedUpdate ()
         {
 			float h = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.x;
 			float v = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.y;
@@ -160,7 +247,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // calculate move direction to pass to character
             if (m_Cam != null)
             {
-
 				// Using self-relative controls.
 				// calculate camera relative direction to move:
 				m_CamForward = Vector3.Scale (m_Cam.transform.forward, new Vector3 (1, 0, 1)).normalized;
@@ -181,7 +267,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             // pass all parameters to the character control script
 			//m_Character.Move(m_Move, crouch, m_Jump, m_DoubleJump);
-			m_Character.Move(m_Move, false, m_Jump, m_DoubleJump);
+			m_Character.Move (m_Move, false, m_Jump, m_DoubleJump);
             m_Jump = false;
 			m_DoubleJump = false;
         }
