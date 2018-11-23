@@ -3,50 +3,43 @@ using InControl;
 
 public class PlayerActions : PlayerActionSet
 {
-	public PlayerAction Jump;
-	public PlayerAction Crouch;
-	public PlayerAction Aim;
-	public PlayerAction Use;
-	public PlayerAction Pause;
-	public PlayerAction Submit;
-	public PlayerAction Back;
-	public PlayerAction Shoot;
-	public PlayerAction Melee;
-	public PlayerAction DodgeLeft;
-	public PlayerAction DodgeRight;
-	public OneAxisInputControl Dodge;
-
+	// Movement actions.
 	public PlayerAction Left;
 	public PlayerAction Right;
 	public PlayerAction Up;
 	public PlayerAction Down;
-
 	public PlayerTwoAxisAction Move;
 
+	// Camera actions.
 	public PlayerAction CameraChange;
 	public PlayerAction CamLeft;
 	public PlayerAction CamRight;
 	public PlayerAction CamUp;
 	public PlayerAction CamDown;
-
 	public TwoAxisInputControl CamRot;
+
+	// Main actions.
+	public PlayerAction Jump;
+	public PlayerAction Use;
+	public PlayerAction Crouch; // This isn't used yet.
+
+	// Attack actions.
+	public PlayerAction Aim;
+	public PlayerAction Shoot;
+	public PlayerAction Melee;
+
+	// Dodge actions.
+	public PlayerAction DodgeLeft;
+	public PlayerAction DodgeRight;
+	public OneAxisInputControl Dodge;
+
+	// Menu actions.
+	public PlayerAction Pause;
+	public PlayerAction Submit;
+	public PlayerAction Back;
 
 	public PlayerActions()
 	{
-		Jump = CreatePlayerAction ("Jump");
-		Crouch = CreatePlayerAction ("Crouch");
-		Aim = CreatePlayerAction ("Aim");
-		Use = CreatePlayerAction ("Use");
-		Pause = CreatePlayerAction ("Pause");
-		Submit = CreatePlayerAction ("Submit");
-		Back = CreatePlayerAction ("Back");
-
-		Shoot = CreatePlayerAction ("Shoot");
-		Melee = CreatePlayerAction ("Melee");
-		DodgeLeft = CreatePlayerAction ("DodgeLeft");
-		DodgeRight = CreatePlayerAction ("DodgeRight");
-		Dodge = CreateOneAxisPlayerAction (DodgeLeft, DodgeRight);
-
 		Left = CreatePlayerAction ("Move Left");
 		Right = CreatePlayerAction ("Move Right");
 		Up = CreatePlayerAction ("Move Up");
@@ -59,6 +52,22 @@ public class PlayerActions : PlayerActionSet
 		CamDown = CreatePlayerAction ("CamDown");
 		CamRot = CreateTwoAxisPlayerAction (CamLeft, CamRight, CamUp, CamDown);
 		CameraChange = CreatePlayerAction ("CameraChange");
+
+		Jump = CreatePlayerAction ("Jump");
+		Use = CreatePlayerAction ("Use");
+		Crouch = CreatePlayerAction ("Crouch");
+
+		Aim = CreatePlayerAction ("Aim");
+		Shoot = CreatePlayerAction ("Shoot");
+		Melee = CreatePlayerAction ("Melee");
+
+		DodgeLeft = CreatePlayerAction ("DodgeLeft");
+		DodgeRight = CreatePlayerAction ("DodgeRight");
+		Dodge = CreateOneAxisPlayerAction (DodgeLeft, DodgeRight);
+
+		Pause = CreatePlayerAction ("Pause");
+		Submit = CreatePlayerAction ("Submit");
+		Back = CreatePlayerAction ("Back");
 	}
 
 	public static PlayerActions CreateWithDefaultBindings()
@@ -74,7 +83,6 @@ public class PlayerActions : PlayerActionSet
 		playerActions.Aim.AddDefaultBinding (Mouse.RightButton);
 		playerActions.Aim.AddDefaultBinding (InputControlType.LeftTrigger);
 
-		//playerActions.Use.AddDefaultBinding (Key.E);
 		playerActions.Use.AddDefaultBinding (Key.F);
 		playerActions.Use.AddDefaultBinding (InputControlType.Action3);
 

@@ -38308,7 +38308,7 @@ GameObject:
   - component: {fileID: 2117436692}
   - component: {fileID: 2117436695}
   m_Layer: 15
-  m_Name: HurtZone (1)
+  m_Name: HurtZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
