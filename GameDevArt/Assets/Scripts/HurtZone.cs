@@ -5,6 +5,7 @@ public class HurtZone : MonoBehaviour
 {
 	[ReadOnlyAttribute] public bool isInsideHurtZone;
 	public Collider playerCol;
+	public Animator PlayerUI;
 	public bool damageOnEnter;
 
 	public int damageAmount = 10;
@@ -15,7 +16,8 @@ public class HurtZone : MonoBehaviour
 	public float damageStartWaitTime = 1;
 	private WaitForSeconds damageStartWait;
 
-	public Animator PlayerUI;
+	[Header ("HitStun")]
+	public bool isHitStunZone;
 
 	void Start ()
 	{
@@ -23,12 +25,56 @@ public class HurtZone : MonoBehaviour
 		damageWait = new WaitForSeconds (damageRate);
 	}
 
+	void OnCollisionEnter (Collision other)
+	{
+		if (other.collider == playerCol)
+		{
+			isInsideHurtZone = true;
+			PlayerUI.SetTrigger ("Show");
+			HitStunSequence ();
+			StartCoroutine (TakeDamage ());
+		}
+	}
+		
 	void OnTriggerEnter (Collider other)
 	{
 		if (other == playerCol)
 		{
 			isInsideHurtZone = true;
+			PlayerUI.SetTrigger ("Show");
+			HitStunSequence ();
 			StartCoroutine (TakeDamage ());
+		}
+	}
+
+	void OnCollisionStay (Collision other)
+	{
+		if (other.collider == playerCol)
+		{
+			isInsideHurtZone = true;
+			PlayerUI.SetTrigger ("Show");
+			HitStunSequence ();
+		}
+	}
+
+	void OnTriggerStay (Collider other)
+	{
+		if (other == playerCol)
+		{
+			isInsideHurtZone = true;
+			PlayerUI.SetTrigger ("Show");
+			HitStunSequence ();
+		}
+	}
+		
+	void OnCollisionExit (Collision other)
+	{
+		if (other.collider == playerCol)
+		{
+			isInsideHurtZone = false;
+			PlayerUI.SetTrigger ("Show");
+			HitStunSequence ();
+			StopCoroutine (TakeDamage ());
 		}
 	}
 
@@ -38,6 +84,7 @@ public class HurtZone : MonoBehaviour
 		{
 			isInsideHurtZone = false;
 			PlayerUI.SetTrigger ("Show");
+			HitStunSequence ();
 			StopCoroutine (TakeDamage ());
 		}
 	}
@@ -47,7 +94,6 @@ public class HurtZone : MonoBehaviour
 		if (damageOnEnter == false) // Inflict damage immediately.
 		{
 			yield return damageStartWait; // Give start wait.
-
 		} 
 
 		// Inflict inside hurt zone periodically.
@@ -56,6 +102,14 @@ public class HurtZone : MonoBehaviour
 			PlayerController.instance.health -= damageAmount;
 			PlayerUI.SetTrigger ("Show");
 			yield return damageWait;
+		}
+	}
+
+	void HitStunSequence ()
+	{
+		if (isHitStunZone == true)
+		{
+			PlayerController.instance.DoHitStun ();
 		}
 	}
 }

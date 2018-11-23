@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityStandardAssets.Characters.ThirdPerson;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
 	public Collider DeathBarrier;
 
+	public Animator PlayerUI;
+
 	[Header ("Health")]
 	public int health;
 	public int StartHealth = 100;
@@ -18,6 +21,14 @@ public class PlayerController : MonoBehaviour
 	public Slider HealthSlider;
 	public Slider HealthSlider_Smoothed;
 	public float healthSliderSmoothing;
+
+	[Header ("Magic")]
+	public int magic;
+	public int StartingMagic = 100;
+	public int MaximumMagic = 100;
+	public Slider MagicSlider;
+	public Slider MagicSlider_Smoothed;
+	public float magicSliderSmoothing;
 
 	[Header ("Aiming")]
 	public float normalFov = 65;
@@ -62,6 +73,15 @@ public class PlayerController : MonoBehaviour
 	private int landingSoundIndex;
 	public UnityEvent OnLand;
 
+	[Header ("Hit stun")]
+	[ReadOnlyAttribute] public bool isInHitStun;
+	public Renderer[] skinnedMeshes;
+	[ReadOnlyAttribute] [SerializeField] private float hitStunCurrentTime;
+	public float hitStunDuration = 2;
+	private WaitForSeconds hitStunYield;
+	public float HitStunRenderToggleWait = 0.07f;
+	public UnityEvent OnHitStunBegin;
+	public UnityEvent OnHitStunEnded;
 
 	void Awake ()
 	{
@@ -74,15 +94,39 @@ public class PlayerController : MonoBehaviour
 		HealthSlider.value = health;
 		HealthSlider_Smoothed.value = health;
 
+		magic = StartingMagic;
+		MagicSlider.value = magic;
+		MagicSlider_Smoothed.value = magic;
+
 		OnFootstep.AddListener (OnFootStep);
 		OnJump.AddListener (OnJumpBegan);
 		OnDoubleJump.AddListener (OnDoubleJumpBegan);
 		OnLand.AddListener (OnLanded);
+
+		hitStunYield = new WaitForSeconds (HitStunRenderToggleWait);
 	}
 
 	void LateUpdate ()
 	{
 		CheckHealthSliders ();
+		CheckMagicSliders ();
+
+		if (health < 25 || magic < 25)
+		{
+			if (PlayerUI.GetBool ("Low") == false)
+			{
+				PlayerUI.SetBool ("Low", true);
+			}
+		} 
+
+		else
+		
+		{
+			if (PlayerUI.GetBool ("Low") == true)
+			{
+				PlayerUI.SetBool ("Low", false);
+			}
+		}
 	}
 
 	#region Health
@@ -93,6 +137,18 @@ public class PlayerController : MonoBehaviour
 			HealthSlider_Smoothed.value, 
 			health, 
 			healthSliderSmoothing * Time.deltaTime
+		);
+	}
+	#endregion
+
+	#region Magic
+	void CheckMagicSliders ()
+	{
+		MagicSlider.value = Mathf.Clamp (magic, 0, MaximumMagic);
+		MagicSlider_Smoothed.value = Mathf.Lerp (
+			MagicSlider_Smoothed.value, 
+			magic, 
+			magicSliderSmoothing * Time.deltaTime
 		);
 	}
 	#endregion
@@ -186,6 +242,43 @@ public class PlayerController : MonoBehaviour
 	public void OverridePlayerPosition (Transform newPos)
 	{
 		transform.position = newPos.position;
+	}
+	#endregion
+
+	#region Hit stun
+	public void DoHitStun ()
+	{	
+		if (isInHitStun == false)
+		{
+			StartCoroutine (Hitstun ());
+		}
+	}
+
+	public IEnumerator Hitstun ()
+	{
+		// Get current time.
+		hitStunCurrentTime = Time.time;
+		isInHitStun = true;
+		OnHitStunBegin.Invoke ();
+
+		while (Time.time < hitStunCurrentTime + hitStunDuration)
+		{
+			for (int i = 0; i < skinnedMeshes.Length; i++)
+			{
+				skinnedMeshes [i].enabled = !skinnedMeshes [i].enabled;
+			}
+
+			yield return hitStunYield;
+		}
+
+		for (int i = 0; i < skinnedMeshes.Length; i++)
+		{
+			// Always end with skinned mesh renderers enabled.
+			skinnedMeshes [i].enabled = true;
+		}
+			
+		OnHitStunEnded.Invoke ();
+		isInHitStun = false;
 	}
 	#endregion
 }

@@ -3320,11 +3320,12 @@ MonoBehaviour:
   m_DoubleJump: 0
   doubleJumped: 0
   CamFollow: {fileID: 0}
-  cameraOffset: {x: -0.35, y: 0.35}
+  cameraOffset: {x: -0.5, y: 0.5}
   cameraOffsetSmoothing: 10
   isDodging: 0
   dodgeRate: 1
-  DodgeTimeDuration: 1
+  dodgeSpeed: 15
+  DodgeTimeDuration: 0.125
   dodgeTimeScale: 0.25
   OnDodgeBegan:
     m_PersistentCalls:

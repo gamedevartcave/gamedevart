@@ -44,7 +44,7 @@ public class MouseLook : MonoBehaviour
 				// Don't use deadzone.
 				rotationY += 
 					playerActions.CamRot.Value.y * 
-					(SaveAndLoadScript.Instance.invertYAxis ? sensitivityY : -sensitivityY);
+					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivityY : sensitivityY);
 			}
 
 			// Not aiming.
@@ -56,7 +56,7 @@ public class MouseLook : MonoBehaviour
 				{
 					rotationY += 
 						playerActions.CamRot.Value.y * 
-						(SaveAndLoadScript.Instance.invertYAxis ? sensitivityY : -sensitivityY);
+						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivityY : sensitivityY);
 				}
 			}
 

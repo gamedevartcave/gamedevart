@@ -90,7 +90,7 @@ public class PlayerActions : PlayerActionSet
 		playerActions.Shoot.AddDefaultBinding (Mouse.LeftButton);
 		playerActions.Shoot.AddDefaultBinding (InputControlType.RightTrigger);
 
-		playerActions.Melee.AddDefaultBinding (Mouse.LeftButton);
+		playerActions.Melee.AddDefaultBinding (Mouse.MiddleButton);
 		playerActions.Melee.AddDefaultBinding (InputControlType.Action4);
 
 		playerActions.DodgeLeft.AddDefaultBinding (Key.Q);

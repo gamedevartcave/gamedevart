@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.Events;
+using System.Collections;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -69,172 +70,26 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				);
 			}
 
-            // get the third person character ( this should never be null due to require component )
+            // get the third person character.
+			// This should never be null due to require component.
             m_Character = GetComponent<ThirdPersonCharacter>();
         }
 			
         private void Update()
         {
-			// Jumping.
-			if (!m_Jump && doubleJumped == false)
-            {
-				m_Jump = playerActions.Jump.WasPressed;
-            }
+			JumpAction ();
 
-			// Double jumping.
-			if (m_Jump && doubleJumped == false)
-			{
-				m_DoubleJump = playerActions.Jump.WasPressed;
-
-				if (playerActions.Jump.WasPressed)
-				{
-					doubleJumped = true;
-				}
-			}
-
-			// Aiming.
-			if (playerActions.Aim.Value > 0.5f)
-			{
-				m_Cam.fieldOfView = Mathf.Lerp (
-					m_Cam.fieldOfView, 
-					PlayerController.instance.aimFov, 
-					PlayerController.instance.aimSmoothing * Time.deltaTime
-				);
-					
-				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
-
-				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairOut") == true)
-				{
-					CrosshairAnim.ResetTrigger ("Out");
-					CrosshairAnim.SetTrigger ("In");
-				}
-			}
-
-			// Not aiming.
-			if (playerActions.Aim.Value <= 0.5f)
-			{
-				m_Cam.fieldOfView = Mathf.Lerp (
-					m_Cam.fieldOfView, 
-					PlayerController.instance.normalFov,
-					PlayerController.instance.aimSmoothing * Time.deltaTime
-				);
-
-				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
-
-				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairIn") == true)
-				{
-					CrosshairAnim.ResetTrigger ("In");
-					CrosshairAnim.SetTrigger ("Out");
-				}
-			}
+			AimAction ();
 				
-			// Shooting.
-			if (playerActions.Shoot.Value > 0.5f)
-			{
-				if (Time.time > PlayerController.instance.nextFire && GameController.instance.isPaused == false)
-				{
-					PlayerController.instance.transform.rotation = Quaternion.LookRotation (
-						PlayerController.instance.AimNoPitchDir, 
-						Vector3.up
-					);
+			ShootAction ();
 
-					PlayerController.instance.Shoot ();
-					PlayerController.instance.nextFire = Time.time + PlayerController.instance.currentFireRate;
+			MeleeAction ();
 
-					GameController.instance.camShakeScript.shakeDuration = 1;
-					GameController.instance.camShakeScript.shakeAmount = 0.1f;
-					GameController.instance.camShakeScript.Shake ();
+			UseAction ();
 
-					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
-				}
-			}
+			CameraChangeAction ();
 
-			// Using.
-			if (playerActions.Use.WasPressed == true)
-			{
-				PlayerController.instance.OnUse.Invoke ();
-			}
-
-			// Camera change.
-			if (playerActions.CameraChange.WasPressed)
-			{
-				isRight = !isRight;
-			}
-
-			// Dodging.
-			if (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed)
-			{
-				// Get dodge value to determine left or right dodge.
-				// Assign to player animation.
-
-				if (Time.time > nextDodge)
-				{
-					isDodging = true;
-					m_Character.m_Animator.SetFloat ("DodgeDir", playerActions.Dodge.Value);
-					m_Character.m_Animator.SetTrigger ("Dodge");
-					m_Character.m_Animator.SetBool ("Dodging", true);
-					m_Character.moveMultiplier *= 10;
-					m_Character.m_AnimSpeedMultiplier *= 10;
-					m_Character.m_MovingTurnSpeed *= 10;
-					m_Character.m_StationaryTurnSpeed *= 10;
-					m_Character.m_Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-
-					dodgeTimeRemain = DodgeTimeDuration;
-					TimescaleController.instance.targetTimeScale = dodgeTimeScale;
-
-					OnDodgeBegan.Invoke ();
-					nextDodge = Time.time + dodgeRate;
-					Debug.Log ("Dodged " + playerActions.Dodge.Value);
-				}
-
-				else // Not able to dodge yet.
-				
-				{
-					//m_Character.m_Animator.SetFloat ("DodgeDir", 0);
-					//m_Character.m_Animator.ResetTrigger ("Dodge");
-					//m_Character.m_Animator.SetBool ("Dodging", false);
-				}
-			}
-				
-			if (dodgeTimeRemain <= 0)
-			{
-				if (isDodging == true)
-				{
-					if (GameController.instance.isPaused == false)
-					{
-						TimescaleController.instance.targetTimeScale = 1;
-						isDodging = false;
-
-						// Reset dodging.
-						m_Character.m_Animator.SetFloat ("DodgeDir", 0);
-						m_Character.m_Animator.ResetTrigger ("Dodge");
-						m_Character.m_Animator.SetBool ("Dodging", false);
-
-						m_Character.moveMultiplier /= 10;
-						m_Character.m_AnimSpeedMultiplier /= 10;
-						m_Character.m_MovingTurnSpeed /= 10;
-						m_Character.m_StationaryTurnSpeed /= 10;
-						m_Character.m_Animator.updateMode = AnimatorUpdateMode.Normal;
-
-						OnDodgeEnded.Invoke ();
-					}
-				}
-			} 
-
-			else // There is dodge time.
-			
-			{
-				if (GameController.instance.isPaused == false)
-				{
-					dodgeTimeRemain -= Time.unscaledDeltaTime;
-					Vector3 relativeDodgeDir = 
-						transform.InverseTransformDirection (Camera.main.transform.right * m_Character.m_Animator.GetFloat ("DodgeDir") * dodgeSpeed * Time.unscaledDeltaTime);
-
-					transform.Translate (relativeDodgeDir, Space.Self);
-
-					m_Character.m_Animator.SetBool ("Dodging", true);
-				}
-			}
+			DodgeAction ();
         }
 			
         private void FixedUpdate ()
@@ -271,9 +126,115 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Jump = false;
 			m_DoubleJump = false;
         }
-
-		void LateUpdate ()
+			
+		#region Actions
+		void JumpAction ()
 		{
+			// Jumping.
+			if (!m_Jump && doubleJumped == false)
+			{
+				m_Jump = playerActions.Jump.WasPressed;
+			}
+
+			// Double jumping.
+			if (m_Jump && doubleJumped == false)
+			{
+				m_DoubleJump = playerActions.Jump.WasPressed;
+
+				if (playerActions.Jump.WasPressed)
+				{
+					doubleJumped = true;
+				}
+			}
+		}
+
+		void AimAction ()
+		{
+			// Aiming.
+			if (playerActions.Aim.Value > 0.5f)
+			{
+				m_Cam.fieldOfView = Mathf.Lerp (
+					m_Cam.fieldOfView, 
+					PlayerController.instance.aimFov, 
+					PlayerController.instance.aimSmoothing * Time.deltaTime
+				);
+
+				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
+
+				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairOut") == true)
+				{
+					CrosshairAnim.ResetTrigger ("Out");
+					CrosshairAnim.SetTrigger ("In");
+				}
+			}
+
+			// Not aiming.
+			if (playerActions.Aim.Value <= 0.5f)
+			{
+				m_Cam.fieldOfView = Mathf.Lerp (
+					m_Cam.fieldOfView, 
+					PlayerController.instance.normalFov,
+					PlayerController.instance.aimSmoothing * Time.deltaTime
+				);
+
+				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
+
+				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairIn") == true)
+				{
+					CrosshairAnim.ResetTrigger ("In");
+					CrosshairAnim.SetTrigger ("Out");
+				}
+			}
+		}
+
+		void ShootAction ()
+		{
+			if (playerActions.Shoot.Value > 0.5f)
+			{
+				if (Time.time > PlayerController.instance.nextFire && GameController.instance.isPaused == false)
+				{
+					PlayerController.instance.transform.rotation = Quaternion.LookRotation (
+						PlayerController.instance.AimNoPitchDir, 
+						Vector3.up
+					);
+
+					PlayerController.instance.Shoot ();
+					PlayerController.instance.nextFire = Time.time + PlayerController.instance.currentFireRate;
+
+					GameController.instance.camShakeScript.shakeDuration = 1;
+					GameController.instance.camShakeScript.shakeAmount = 0.1f;
+					GameController.instance.camShakeScript.Shake ();
+
+					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
+				}
+			}
+		}
+
+		void MeleeAction ()
+		{
+			if (playerActions.Melee.WasPressed)
+			{
+				// TODO: Make combos.
+
+				Debug.Log ("Melee action was pressed.");
+			}
+		}
+
+		void UseAction ()
+		{
+			if (playerActions.Use.WasPressed == true)
+			{
+				PlayerController.instance.OnUse.Invoke ();
+			}
+		}
+
+		void CameraChangeAction ()
+		{
+			if (playerActions.CameraChange.WasPressed)
+			{
+				isRight = !isRight;
+			}
+
 			GetCameraChangeSmoothing ();
 		}
 
@@ -292,10 +253,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				);
 
 				return;
-			}
-				
+			} 
+
 			else
-				
+
 			{
 				CamFollow.localPosition = Vector3.Lerp (
 					CamFollow.localPosition,
@@ -310,5 +271,83 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				return;
 			}
 		}
+
+		void DodgeAction ()
+		{
+			if (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed)
+			{
+				// Get dodge value to determine left or right dodge.
+				// Assign to player animation.
+
+				if (Time.time > nextDodge)
+				{
+					isDodging = true;
+					m_Character.m_Animator.SetFloat ("DodgeDir", playerActions.Dodge.Value);
+					m_Character.m_Animator.SetTrigger ("Dodge");
+					m_Character.m_Animator.SetBool ("Dodging", true);
+					m_Character.moveMultiplier *= 10;
+					m_Character.m_AnimSpeedMultiplier *= 10;
+					m_Character.m_MovingTurnSpeed *= 10;
+					m_Character.m_StationaryTurnSpeed *= 10;
+					m_Character.m_Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+					dodgeTimeRemain = DodgeTimeDuration;
+					TimescaleController.instance.targetTimeScale = dodgeTimeScale;
+
+					OnDodgeBegan.Invoke ();
+					nextDodge = Time.time + dodgeRate;
+					Debug.Log ("Dodged " + playerActions.Dodge.Value);
+				}
+
+				else // Not able to dodge yet.
+
+				{
+					//m_Character.m_Animator.SetFloat ("DodgeDir", 0);
+					//m_Character.m_Animator.ResetTrigger ("Dodge");
+					//m_Character.m_Animator.SetBool ("Dodging", false);
+				}
+			}
+
+			if (dodgeTimeRemain <= 0)
+			{
+				if (isDodging == true)
+				{
+					if (GameController.instance.isPaused == false)
+					{
+						TimescaleController.instance.targetTimeScale = 1;
+						isDodging = false;
+
+						// Reset dodging.
+						m_Character.m_Animator.SetFloat ("DodgeDir", 0);
+						m_Character.m_Animator.ResetTrigger ("Dodge");
+						m_Character.m_Animator.SetBool ("Dodging", false);
+
+						m_Character.moveMultiplier /= 10;
+						m_Character.m_AnimSpeedMultiplier /= 10;
+						m_Character.m_MovingTurnSpeed /= 10;
+						m_Character.m_StationaryTurnSpeed /= 10;
+						m_Character.m_Animator.updateMode = AnimatorUpdateMode.Normal;
+
+						OnDodgeEnded.Invoke ();
+					}
+				}
+			} 
+
+			else // There is dodge time.
+
+			{
+				if (GameController.instance.isPaused == false)
+				{
+					dodgeTimeRemain -= Time.unscaledDeltaTime;
+					Vector3 relativeDodgeDir = 
+						transform.InverseTransformDirection (Camera.main.transform.right * m_Character.m_Animator.GetFloat ("DodgeDir") * dodgeSpeed * Time.unscaledDeltaTime);
+
+					transform.Translate (relativeDodgeDir, Space.Self);
+
+					m_Character.m_Animator.SetBool ("Dodging", true);
+				}
+			}
+		}
+		#endregion
     }
 }

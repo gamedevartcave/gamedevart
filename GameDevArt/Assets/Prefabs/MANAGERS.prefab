@@ -1337,7 +1337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLoading: 0
   delay: 1
-  SceneName: main
+  SceneName: menu
   ProgressBarSmoothTime: 20
   LevelLoadUICanvas: {fileID: 223178841514365646}
   LoadProgressText: {fileID: 114048806205546848}
@@ -1508,6 +1508,8 @@ MonoBehaviour:
   postProcessing: {fileID: 11400000, guid: 93d1067e618f1054fb277861db0fbe39, type: 2}
   volLightRend: {fileID: 0}
   sunShafts: {fileID: 0}
+  targetResolutionWidth: 1920
+  targetResolutionHeight: 1080
   QualitySettingsIndex: 2
   targetFrameRate: 60
   averageFpsTimer: 0
@@ -1515,17 +1517,21 @@ MonoBehaviour:
   MasterVolume: 1
   SoundtrackVolume: 0
   EffectsVolume: 0
+  invertYAxis: 0
   PlayerData:
     Username: 
     myName: 
     ExperiencePoints: 0
   SettingsData:
     QualitySettingsIndex: 0
+    targetResolutionWidth: 1920
+    targetResolutionHeight: 1080
     ParticleEmissionMultiplier: 1
     targetFrameRate: 0
     MasterVolume: 0
     SoundtrackVolume: 0
     EffectsVolume: 0
+    invertYAxis: 0
 --- !u!114 &114930921967628566
 MonoBehaviour:
   m_ObjectHideFlags: 1
