@@ -21,7 +21,8 @@ public class SaveAndLoadScript : MonoBehaviour
 
 	[Header ("Settings Data")]
 	public Camera cam; // Camera to use to change settings.
-	public PostProcessingProfile postProcessing;
+	public PostProcessingProfile main_postProcessing;
+	public PostProcessingProfile camera_UI_PostProcessing;
 	public VolumetricLightRenderer volLightRend;
 	public SunShafts sunShafts;
 	// Screen resolution will be independent of quality settings.
@@ -539,52 +540,55 @@ public class SaveAndLoadScript : MonoBehaviour
 		switch (QualitySettingsIndex)
 		{
 		case 0: // Low setting. In the dire hopes it works on integrated graphics.
-			postProcessing.ambientOcclusion.enabled = false;
-			postProcessing.antialiasing.enabled = false;
-			postProcessing.bloom.enabled = false;
-			postProcessing.chromaticAberration.enabled = false;
-			postProcessing.colorGrading.enabled = false;
-			postProcessing.depthOfField.enabled = false;
-			postProcessing.eyeAdaptation.enabled = false;
-			postProcessing.fog.enabled = false;
-			postProcessing.grain.enabled = false;
-			postProcessing.motionBlur.enabled = false;
-			postProcessing.screenSpaceReflection.enabled = false;
-			postProcessing.vignette.enabled = false;
+			main_postProcessing.ambientOcclusion.enabled = false;
+			main_postProcessing.antialiasing.enabled = false;
+			main_postProcessing.bloom.enabled = false;
+			main_postProcessing.chromaticAberration.enabled = false;
+			main_postProcessing.colorGrading.enabled = false;
+			main_postProcessing.depthOfField.enabled = false;
+			main_postProcessing.eyeAdaptation.enabled = false;
+			main_postProcessing.fog.enabled = false;
+			main_postProcessing.grain.enabled = false;
+			main_postProcessing.motionBlur.enabled = false;
+			main_postProcessing.screenSpaceReflection.enabled = false;
+			main_postProcessing.vignette.enabled = false;
 			volLightRend.enabled = false;
 			sunShafts.enabled = false;
+			camera_UI_PostProcessing.bloom.enabled = false;
 			break;
 		case 1: // Medium setting. Good quality but some optimizations.
-			postProcessing.ambientOcclusion.enabled = true;
-			postProcessing.antialiasing.enabled = false;
-			postProcessing.bloom.enabled = true;
-			postProcessing.chromaticAberration.enabled = false;
-			postProcessing.colorGrading.enabled = true;
-			postProcessing.depthOfField.enabled = true;
-			postProcessing.eyeAdaptation.enabled = true;
-			postProcessing.fog.enabled = true;
-			postProcessing.grain.enabled = true;
-			postProcessing.motionBlur.enabled = true;
-			postProcessing.screenSpaceReflection.enabled = false;
-			postProcessing.vignette.enabled = false;
+			main_postProcessing.ambientOcclusion.enabled = true;
+			main_postProcessing.antialiasing.enabled = false;
+			main_postProcessing.bloom.enabled = true;
+			main_postProcessing.chromaticAberration.enabled = false;
+			main_postProcessing.colorGrading.enabled = true;
+			main_postProcessing.depthOfField.enabled = true;
+			main_postProcessing.eyeAdaptation.enabled = true;
+			main_postProcessing.fog.enabled = true;
+			main_postProcessing.grain.enabled = true;
+			main_postProcessing.motionBlur.enabled = true;
+			main_postProcessing.screenSpaceReflection.enabled = false;
+			main_postProcessing.vignette.enabled = false;
 			volLightRend.enabled = false;
 			sunShafts.enabled = true;
+			camera_UI_PostProcessing.bloom.enabled = false;
 			break;
 		case 2: // High setting. Most things are enabled and on high/highest settings.
-			postProcessing.ambientOcclusion.enabled = true;
-			postProcessing.antialiasing.enabled = true;
-			postProcessing.bloom.enabled = true;
-			postProcessing.chromaticAberration.enabled = true;
-			postProcessing.colorGrading.enabled = true;
-			postProcessing.depthOfField.enabled = true;
-			postProcessing.eyeAdaptation.enabled = true;
-			postProcessing.fog.enabled = true;
-			postProcessing.grain.enabled = true;
-			postProcessing.motionBlur.enabled = true;
-			postProcessing.screenSpaceReflection.enabled = true;
-			postProcessing.vignette.enabled = true;
+			main_postProcessing.ambientOcclusion.enabled = true;
+			main_postProcessing.antialiasing.enabled = true;
+			main_postProcessing.bloom.enabled = true;
+			main_postProcessing.chromaticAberration.enabled = true;
+			main_postProcessing.colorGrading.enabled = true;
+			main_postProcessing.depthOfField.enabled = true;
+			main_postProcessing.eyeAdaptation.enabled = true;
+			main_postProcessing.fog.enabled = true;
+			main_postProcessing.grain.enabled = true;
+			main_postProcessing.motionBlur.enabled = true;
+			main_postProcessing.screenSpaceReflection.enabled = true;
+			main_postProcessing.vignette.enabled = true;
 			volLightRend.enabled = true;
 			sunShafts.enabled = true;
+			camera_UI_PostProcessing.bloom.enabled = true;
 			break;
 		}
 

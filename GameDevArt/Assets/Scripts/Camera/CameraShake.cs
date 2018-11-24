@@ -98,26 +98,14 @@ public class CameraShake : MonoBehaviour
 		Priority = 0; // Reset priority.
 		shakeTimeRemaining = 0f; // Reset shake time.
 
-		//camTransform.localRotation = Quaternion.identity;
-		//camTransform.localEulerAngles = Vector3.zero;
-
 		// To do when theres no shake time.
 		while (shakeTimeRemaining <= 0)
 		{
-			//camTransform.localPosition = originalPos + Offset; // Return to original position with offset.
 			camTransform.localPosition = Vector3.Lerp (
 				camTransform.localPosition, 
 				originalPos + Offset, 
 				Time.deltaTime * smoothAmount
 			);
-
-			/*
-			camTransform.localRotation = Quaternion.Slerp (
-				camTransform.localRotation, 
-				Quaternion.identity, 
-				Time.deltaTime * smoothAmount
-			);
-			*/
 				
 			yield return null;
 		}

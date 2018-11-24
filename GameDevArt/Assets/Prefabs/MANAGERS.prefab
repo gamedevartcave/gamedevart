@@ -1505,7 +1505,10 @@ MonoBehaviour:
   myName: 
   LevelId: 0
   cam: {fileID: 0}
-  postProcessing: {fileID: 11400000, guid: 93d1067e618f1054fb277861db0fbe39, type: 2}
+  main_postProcessing: {fileID: 11400000, guid: 93d1067e618f1054fb277861db0fbe39,
+    type: 2}
+  camera_UI_PostProcessing: {fileID: 11400000, guid: 833c81bb5d3e2134eb9b93159cf05709,
+    type: 2}
   volLightRend: {fileID: 0}
   sunShafts: {fileID: 0}
   targetResolutionWidth: 1920

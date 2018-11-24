@@ -206,24 +206,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
 
-			/*
-			m_Rigidbody.AddRelativeForce (
-				transform.InverseTransformDirection (transform.forward) * airControlForce, 
-				ForceMode.Acceleration
-			);*/
-
 			m_Rigidbody.AddRelativeForce (new Vector3 (0, 0, Mathf.Abs (airControlForce * 0.05f)),
-				//transform.InverseTransformDirection (transform.forward) * airControlForce, 
 				ForceMode.VelocityChange
 			);
-
-
-			/*
-			m_Rigidbody.AddRelativeForce (
-				transform.InverseTransformDirection (transform.forward), 
-				ForceMode.Force
-			);
-			*/
 				
 			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
 
@@ -247,7 +232,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
-				m_GroundCheckDistance = 0.1f;
+				//m_GroundCheckDistance = 0.1f;
 				PlayerController.instance.OnDoubleJump.Invoke ();
 			}
 		}
@@ -265,7 +250,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
-				m_GroundCheckDistance = 0.1f;
+				//m_GroundCheckDistance = 0.1f;
 				PlayerController.instance.OnJump.Invoke ();
 			}
 		}
