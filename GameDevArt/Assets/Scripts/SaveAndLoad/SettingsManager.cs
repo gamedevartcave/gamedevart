@@ -30,9 +30,16 @@ public class SettingsManager : MonoBehaviour
 	public Button EffectsVolumeButtonDown;
 	public TextMeshProUGUI EffectsVolumeValueText;
 
+	[Header ("Gameplay Settings")]
+	public bool invertMouse;
+	public Toggle invertToggle;
+	public Slider MouseSensitivitySlider;
+
+
 	void Awake ()
 	{
 		Instance = this;
+		this.enabled = false;
 	}
 
 	void Start ()
@@ -41,6 +48,7 @@ public class SettingsManager : MonoBehaviour
 
 		UpdateVisuals ();
 		UpdateVolumeTextValues ();
+		UpdateGameplayValues ();
 
 		InvokeRepeating ("GetSoundtrackVolumeValue", 0, 1);
 		InvokeRepeating ("GetEffectsVolumeValue", 0, 1);
@@ -205,6 +213,22 @@ public class SettingsManager : MonoBehaviour
 			System.Math.Round ((0.0125f * SaveAndLoadScript.Instance.EffectsVolume), 1)
 			).ToString ();
 		}
+	}
+
+	// Gameplay settings
+	void UpdateGameplayValues ()
+	{
+		invertToggle.isOn = SaveAndLoadScript.Instance.invertYAxis;
+	}
+
+	public void SetInvertMouse ()
+	{
+		SaveAndLoadScript.Instance.invertYAxis = invertToggle.isOn;
+	}
+
+	public void SetMouseSens ()
+	{
+
 	}
 		
 

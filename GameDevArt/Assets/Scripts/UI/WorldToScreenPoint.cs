@@ -22,8 +22,9 @@ public class WorldToScreenPoint : MonoBehaviour
 	public TextMeshProUGUI distanceText;
 	public WaitForSeconds DistanceUpdate;
 	public float distanceUpdateTime = 0.5f;
-	[Range (0, 2)]
-	public int decimalPlaces;
+	[Range (0, 2)] public int decimalPlaces;
+	public bool useSmoothing;
+	public float smoothAmount = 10;
 
 	[Header ("UI")]
 	public RectTransform CanvasRect;
@@ -87,7 +88,13 @@ public class WorldToScreenPoint : MonoBehaviour
 			);
 
 			// Set the position of the UI element.
-			UI_Element.anchoredPosition = WorldObject_ScreenPosition + screenOffset;
+			UI_Element.anchoredPosition = useSmoothing ? 
+				Vector2.Lerp (
+					UI_Element.anchoredPosition, 
+					WorldObject_ScreenPosition + screenOffset, 
+					Time.deltaTime * smoothAmount
+				) : 
+				WorldObject_ScreenPosition + screenOffset;
 
 			if (showDistance == false) // Showing distance.
 			{

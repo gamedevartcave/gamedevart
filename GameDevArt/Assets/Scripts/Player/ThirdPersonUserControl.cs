@@ -91,6 +91,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			CameraChangeAction ();
 
 			DodgeAction ();
+
+			AbilityAction ();
         }
 			
         private void FixedUpdate ()
@@ -347,6 +349,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 					m_Character.m_Animator.SetBool ("Dodging", true);
 				}
+			}
+		}
+
+		void AbilityAction ()
+		{
+			if (playerActions.Ability.WasPressed)
+			{
+				Debug.Log ("Ability pressed.");
 			}
 		}
 		#endregion

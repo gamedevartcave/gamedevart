@@ -10,6 +10,7 @@ public class CameraLockOnController : MonoBehaviour
 	public Transform cam;
 	public SimpleLookAt camLookAt;
 	public float resetRotationSmoothing = 5;
+	public WorldToScreenPoint target;
 	public int activeLockOnIndex;
 	public List<Transform> lockOnPoints;
 
@@ -113,6 +114,8 @@ public class CameraLockOnController : MonoBehaviour
 		OnLockOnBegan.Invoke ();
 		camLookAt.enabled = true;
 		lockedOn = true;
-		camLookAt.LookAtPos = lockOnPoints [activeLockOnIndex];
+		camLookAt.LookAtPos  = lockOnPoints [activeLockOnIndex];
+		target.WorldObject   = lockOnPoints [activeLockOnIndex];
+		target.worldMeshRend = lockOnPoints [activeLockOnIndex].GetComponent<Renderer> ();
 	}
 }

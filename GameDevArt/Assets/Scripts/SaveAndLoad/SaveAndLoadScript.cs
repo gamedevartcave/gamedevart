@@ -42,6 +42,7 @@ public class SaveAndLoadScript : MonoBehaviour
 	public float SoundtrackVolume = 0; // Using dB scale (-80, 0)
 	public float EffectsVolume = 0;  // Using dB scale (-80, 0)
 	public bool invertYAxis;
+	//public float MouseSensitivity;
 
 	[HideInInspector]
 	public playerData PlayerData;

@@ -31,6 +31,7 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Aim;
 	public PlayerAction Shoot;
 	public PlayerAction Melee;
+	public PlayerAction Ability;
 
 	// Dodge actions.
 	public PlayerAction DodgeLeft;
@@ -68,6 +69,7 @@ public class PlayerActions : PlayerActionSet
 		Aim = CreatePlayerAction ("Aim");
 		Shoot = CreatePlayerAction ("Shoot");
 		Melee = CreatePlayerAction ("Melee");
+		Ability = CreatePlayerAction ("Ability");
 
 		DodgeLeft = CreatePlayerAction ("DodgeLeft");
 		DodgeRight = CreatePlayerAction ("DodgeRight");
@@ -108,6 +110,9 @@ public class PlayerActions : PlayerActionSet
 
 		playerActions.Melee.AddDefaultBinding (Mouse.MiddleButton);
 		playerActions.Melee.AddDefaultBinding (InputControlType.Action4);
+
+		playerActions.Ability.AddDefaultBinding (Key.LeftAlt);
+		playerActions.Ability.AddDefaultBinding (InputControlType.RightStickButton);
 
 		playerActions.DodgeLeft.AddDefaultBinding (Key.Q);
 		playerActions.DodgeLeft.AddDefaultBinding (InputControlType.LeftBumper);
