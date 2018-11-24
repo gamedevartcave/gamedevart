@@ -575,6 +575,22 @@ MonoBehaviour:
   teleportLockParticles: {fileID: 1749476349969252}
   teleportWaitTime: 1
   capsuleCollider: {fileID: 136087541732335688}
+  teleportDelayTime: 1
+  OnTeleportEnter:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnTeleportEnterDelayed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnTeleportComplete:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!136 &136087541732335688
 CapsuleCollider:
   m_ObjectHideFlags: 1
