@@ -56,11 +56,11 @@ public class CameraShake : MonoBehaviour
 
 				if (shakeRotation == true) 
 				{
-					//originalRot = camTransform.eulerAngles;
+					originalRot = camTransform.eulerAngles;
 					camTransform.transform.eulerAngles = originalRot + new Vector3 (
-						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.x,
-						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.y, 
-						Random.Range (-1f * shakeAmount, 1f * shakeAmount) + Offset.z
+						originalRot.x + Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.x,
+						originalRot.y + Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.y, 
+						originalRot.z + Random.Range (-1f * shakeAmount, 1f * shakeAmount) + Offset.z
 					);
 				}
 			}
@@ -76,11 +76,11 @@ public class CameraShake : MonoBehaviour
 
 				if (shakeRotation == true) 
 				{
-					//originalRot = camTransform.eulerAngles;
+					originalRot = camTransform.eulerAngles;
 					camTransform.transform.eulerAngles = originalRot + new Vector3 (
-						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.x,
-						Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.y, 
-						Random.Range (-1f * shakeAmount, 1f * shakeAmount) + Offset.z
+						originalRot.x + Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.x,
+						originalRot.y + Random.Range (0.25f * shakeAmount, 0.25f * shakeAmount) + Offset.y, 
+						originalRot.z + Random.Range (-1f * shakeAmount, 1f * shakeAmount) + Offset.z
 					);
 				}
 			}
@@ -111,11 +111,13 @@ public class CameraShake : MonoBehaviour
 				Time.deltaTime * smoothAmount
 			);
 
+			/*
 			camTransform.localRotation = Quaternion.Slerp (
 				camTransform.localRotation, 
 				Quaternion.identity, 
 				Time.deltaTime * smoothAmount
 			);
+			*/
 				
 			yield return null;
 		}

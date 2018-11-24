@@ -323,4 +323,14 @@ public class SimpleFollow : MonoBehaviour
 	{
 		OverrideTransform = pos;
 	}
+
+	public void SetFollowPos (bool follow)
+	{
+		FollowPosition = follow;
+	}
+
+	public void SetFollowRot (bool follow)
+	{
+		FollowRotation = follow;
+	}
 }

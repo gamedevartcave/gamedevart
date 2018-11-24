@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
 	void Awake ()
 	{
 		instance = this;
+		this.enabled = false;
 	}
 
 	void Start ()

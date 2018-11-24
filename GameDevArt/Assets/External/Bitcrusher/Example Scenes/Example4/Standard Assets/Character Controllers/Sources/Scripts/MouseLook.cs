@@ -3,24 +3,31 @@ using UnityEngine;
 [AddComponentMenu("Camera-Control/Mouse Look")]
 public class MouseLook : MonoBehaviour 
 {
+	public static MouseLook instance { get; private set; }
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
 	public RotationAxes axes = RotationAxes.MouseXAndY;
 
-	public float sensitivityX = 15F;
-	public float sensitivityY = 15F;
+	public float sensitivityX = 15;
+	public float sensitivityY = 15;
 
-	/// Minimum and Maximum values can be used to constrain the possible rotation/// 
+	// Minimum and Maximum values can be used to constrain the possible rotation
 
-	public float minimumX = -360F;
-	public float maximumX = 360F;
+	public float minimumX = -360;
+	public float maximumX = 360;
 
-	public float minimumY = -60F;
-	public float maximumY = 60F;
+	public float minimumY = -60;
+	public float maximumY = 60;
 
-	float rotationY = 0F;
+	float rotationY = 0;
 	public float rotYDeadZone = 0.25f;
 
 	private PlayerActions playerActions;
+
+	void Awake ()
+	{
+		instance = this;
+		this.enabled = false;
+	}
 
 	void Start ()
 	{

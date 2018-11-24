@@ -13,14 +13,13 @@ public class BackgroundFader : MonoBehaviour
 	void Awake ()
 	{
 		instance = this;
+		this.enabled = false;
 	}
 
-	/*
 	void Start ()
 	{
-		StartCoroutine (FadeScreen ());
+		
 	}
-	*/
 
 	public void StartFade ()
 	{

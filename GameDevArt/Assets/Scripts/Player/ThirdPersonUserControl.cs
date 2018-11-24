@@ -46,6 +46,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		void Awake ()
 		{
 			instance = this;
+			this.enabled = false;
 		}
 
         private void Start()

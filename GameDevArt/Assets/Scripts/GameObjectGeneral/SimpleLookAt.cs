@@ -20,16 +20,18 @@ public class SimpleLookAt : MonoBehaviour
 	public float SmoothingAmount;
 	public Vector3 Offset;
 
+	/*
 	void OnEnable ()
 	{
 		//LookAtPos = Camera.main.transform;
 	}
+	*/
 
 	void LateUpdate ()
 	{
 		if (useSmoothing == true) 
 		{
-			Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset);
+			Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset, Vector3.up);
 
 			transform.rotation = Quaternion.Slerp (transform.rotation, lookPos, SmoothingAmount * Time.deltaTime);
 
@@ -43,7 +45,7 @@ public class SimpleLookAt : MonoBehaviour
 			{
 				if (useUpDirection == false) 
 				{
-					transform.LookAt (LookAtPos.position, Vector3.forward);
+					transform.LookAt (LookAtPos.position, transform.forward);
 				}
 
 				if (useUpDirection == true) 

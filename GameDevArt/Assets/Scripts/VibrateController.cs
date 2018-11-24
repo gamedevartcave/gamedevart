@@ -5,14 +5,13 @@ public class VibrateController : MonoBehaviour
 {
 	public static VibrateController instance { get; private set; }
 	[ReadOnlyAttribute] int priority;
-
 	private PlayerActions playerActions;
-
 	private WaitForSeconds vibrateTime;
 
 	void Awake ()
 	{
 		instance = this;
+		this.enabled = false;
 	}
 
 	void Start ()

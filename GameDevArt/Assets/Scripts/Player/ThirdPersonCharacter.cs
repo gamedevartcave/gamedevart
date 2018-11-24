@@ -8,6 +8,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	[RequireComponent(typeof(Animator))]
 	public class ThirdPersonCharacter : MonoBehaviour
 	{
+		public static ThirdPersonCharacter instance { get; private set; }
 		public ThirdPersonUserControl thirdPersonUserControl;
 		[SerializeField] public float m_MovingTurnSpeed = 360;
 		[SerializeField] public float m_StationaryTurnSpeed = 180;
@@ -38,6 +39,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		bool m_Crouching;
 
 		//private PlayerActions playerActions;
+
+		void Awake ()
+		{
+			instance = this;
+			this.enabled = false;
+		}
 
 		void Start()
 		{

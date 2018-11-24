@@ -18,6 +18,10 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction CamDown;
 	public TwoAxisInputControl CamRot;
 
+	public PlayerAction LockOnLeft;
+	public PlayerAction LockOnRight;
+	public OneAxisInputControl LockOn;
+
 	// Main actions.
 	public PlayerAction Jump;
 	public PlayerAction Use;
@@ -52,6 +56,10 @@ public class PlayerActions : PlayerActionSet
 		CamDown = CreatePlayerAction ("CamDown");
 		CamRot = CreateTwoAxisPlayerAction (CamLeft, CamRight, CamUp, CamDown);
 		CameraChange = CreatePlayerAction ("CameraChange");
+
+		LockOnLeft = CreatePlayerAction ("LockOnLeft");
+		LockOnRight = CreatePlayerAction ("LockOnRight");
+		LockOn = CreateOneAxisPlayerAction (Left, Right);
 
 		Jump = CreatePlayerAction ("Jump");
 		Use = CreatePlayerAction ("Use");
@@ -130,13 +138,19 @@ public class PlayerActions : PlayerActionSet
 		playerActions.CamRight.AddDefaultBinding (InputControlType.RightStickRight);
 
 		playerActions.CamUp.AddDefaultBinding (Mouse.NegativeY);
-		playerActions.CamUp.AddDefaultBinding (InputControlType.RightStickUp );
+		playerActions.CamUp.AddDefaultBinding (InputControlType.RightStickUp);
 
 		playerActions.CamDown.AddDefaultBinding (Mouse.PositiveY);
 		playerActions.CamDown.AddDefaultBinding (InputControlType.RightStickDown);
 
 		playerActions.CameraChange.AddDefaultBinding (Key.Tab);
 		playerActions.CameraChange.AddDefaultBinding (InputControlType.LeftStickButton);
+
+		playerActions.LockOnLeft.AddDefaultBinding (Key.V);
+		playerActions.LockOnLeft.AddDefaultBinding (InputControlType.DPadLeft);
+
+		playerActions.LockOnRight.AddDefaultBinding (Key.B);
+		playerActions.LockOnRight.AddDefaultBinding (InputControlType.DPadRight);
 
 		//Debug.Log ("Created Player Actions.");
 		return playerActions;

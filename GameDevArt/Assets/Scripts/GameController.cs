@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
 	void Awake ()
 	{
 		instance = this;
+		this.enabled = false;
 	}
 
 	void Start ()
