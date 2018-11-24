@@ -3312,6 +3312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfe20afea440c2479f8121ee057b0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponChangeRate: 0.25
   camRigSimpleFollow: {fileID: 0}
   camRigSimpleFollowRotNormal: {x: 5, y: 15, z: 0}
   camRigSimpleFollowRotAiming: {x: 100, y: 100, z: 0}
@@ -3445,6 +3446,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  currentWeaponIndex: 0
+  Weapons:
+  - {fileID: 0}
+  - {fileID: 0}
   OnUse:
     m_PersistentCalls:
       m_Calls: []

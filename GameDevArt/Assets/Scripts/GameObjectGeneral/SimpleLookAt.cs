@@ -5,6 +5,7 @@ public class SimpleLookAt : MonoBehaviour
 {
 	[Tooltip ("Position to look at.")]
 	public Transform LookAtPos;
+	public Vector3 Offset;
 	[Tooltip ("How to look at the Transform.")]
 	public lookType LookMethod;
 	public enum lookType
@@ -15,26 +16,15 @@ public class SimpleLookAt : MonoBehaviour
 
 	[Tooltip ("Find up direction instead of forward direction.")]
 	public bool useUpDirection;
-
 	public bool useSmoothing;
 	public float SmoothingAmount;
-	public Vector3 Offset;
-
-	/*
-	void OnEnable ()
-	{
-		//LookAtPos = Camera.main.transform;
-	}
-	*/
 
 	void LateUpdate ()
 	{
 		if (useSmoothing == true) 
 		{
 			Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset, Vector3.up);
-
 			transform.rotation = Quaternion.Slerp (transform.rotation, lookPos, SmoothingAmount * Time.deltaTime);
-
 			return;
 		}
 
@@ -43,29 +33,17 @@ public class SimpleLookAt : MonoBehaviour
 			// Look towards.
 			if (LookMethod == lookType.LookTowards && LookAtPos != null) 
 			{
-				if (useUpDirection == false) 
-				{
-					transform.LookAt (LookAtPos.position, transform.forward);
-				}
-
-				if (useUpDirection == true) 
-				{
-					transform.LookAt (LookAtPos.position, Vector3.up);
-				}
+				transform.LookAt (
+					LookAtPos.position, useUpDirection ? Vector3.up : transform.forward 
+				);
 			}
 
 			// Look away.
 			if (LookMethod == lookType.LookAway) 
 			{
-				if (useUpDirection == false) 
-				{
-					transform.LookAt (LookAtPos.position, -Vector3.forward);
-				}
-
-				if (useUpDirection == true) 
-				{
-					transform.LookAt (LookAtPos.position, -Vector3.up);
-				}
+				transform.LookAt (
+					LookAtPos.position, useUpDirection ? -Vector3.up : -transform.forward
+				);
 			}
 		}
 	}

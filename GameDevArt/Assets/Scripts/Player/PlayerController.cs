@@ -43,6 +43,10 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector] public float nextFire;
 	public UnityEvent OnShoot;
 
+	[Header ("Weapons")]
+	public int currentWeaponIndex;
+	public GameObject[] Weapons;
+
 	[Header ("Using")]
 	public UnityEvent OnUse;
 
@@ -174,6 +178,16 @@ public class PlayerController : MonoBehaviour
 		}
 
 		OnShoot.Invoke ();
+	}
+	#endregion
+
+	#region Weapons
+	public void SetWeaponIndex (int index)
+	{
+		for (int i = 0; i < Weapons.Length; i++)
+		{	
+			Weapons [i].SetActive ((index == i) ? true : false);
+		}
 	}
 	#endregion
 

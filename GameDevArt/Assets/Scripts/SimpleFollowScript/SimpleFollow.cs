@@ -70,11 +70,6 @@ public class SimpleFollow : MonoBehaviour
 		Fixed
 	}
 
-	void Awake ()
-	{
-		
-	}
-
 	public void Start ()
 	{
 		FollowPosVelY = 0;

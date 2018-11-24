@@ -9,7 +9,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     public class ThirdPersonUserControl : MonoBehaviour
     {
 		public static ThirdPersonUserControl instance { get; private set; }
-        private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
+        
+		private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
+		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
+
+		[Header ("Weapon changing")]
+		public float weaponChangeRate =  0.25f;
+		private float nextWeaponChange;
 
 		[Header ("Camera rig")]
 		public SimpleFollow camRigSimpleFollow;
@@ -19,7 +25,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_CamForward; // The current forward direction of the camera
 		public Animator CrosshairAnim;
 
-		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
 		private bool m_Jump; // Jump state.
 		[HideInInspector] public bool m_DoubleJump; // Double jump input state.
 		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state.m_Rigidbody.velocity.z.
@@ -85,6 +90,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			ShootAction ();
 
 			MeleeAction ();
+
+			WeaponChangeAction ();
 
 			UseAction ();
 
@@ -209,6 +216,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					GameController.instance.camShakeScript.Shake ();
 
 					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
+
+					Debug.Log ("Shooting from weapon " + PlayerController.instance.currentWeaponIndex);
 				}
 			}
 		}
@@ -220,6 +229,55 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				// TODO: Make combos.
 
 				Debug.Log ("Melee action was pressed.");
+			}
+		}
+
+		void WeaponChangeAction ()
+		{
+			if (playerActions.NextWeapon.IsPressed == true)
+			{
+				if (Time.time > nextWeaponChange)
+				{
+					// Change to next weapon.
+					if (PlayerController.instance.currentWeaponIndex < PlayerController.instance.Weapons.Length - 1)
+					{
+						PlayerController.instance.currentWeaponIndex++;
+					} 
+
+					else
+					
+					{
+						PlayerController.instance.currentWeaponIndex = 0;
+					}
+
+					PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+					nextWeaponChange = Time.time + weaponChangeRate;
+				}
+
+				return;
+			}
+
+			if (playerActions.PreviousWeapon.IsPressed == true)
+			{
+				if (Time.time > nextWeaponChange)
+				{
+					// Change to previous weapon.
+					if (PlayerController.instance.currentWeaponIndex > 0)
+					{
+						PlayerController.instance.currentWeaponIndex--;
+					} 
+
+					else
+
+					{
+						PlayerController.instance.currentWeaponIndex = PlayerController.instance.Weapons.Length - 1;
+					}
+
+					PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+					nextWeaponChange = Time.time + weaponChangeRate;
+				}
+
+				return;
 			}
 		}
 

@@ -32,6 +32,8 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Shoot;
 	public PlayerAction Melee;
 	public PlayerAction Ability;
+	public PlayerAction NextWeapon;
+	public PlayerAction PreviousWeapon;
 
 	// Dodge actions.
 	public PlayerAction DodgeLeft;
@@ -45,39 +47,45 @@ public class PlayerActions : PlayerActionSet
 
 	public PlayerActions()
 	{
-		Left = CreatePlayerAction ("Move Left");
-		Right = CreatePlayerAction ("Move Right");
-		Up = CreatePlayerAction ("Move Up");
-		Down = CreatePlayerAction ("Move Down");
-		Move = CreateTwoAxisPlayerAction (Left, Right, Down, Up);
+		Left  		   = CreatePlayerAction ("Move Left");
+		Right 		   = CreatePlayerAction ("Move Right");
+		Up    		   = CreatePlayerAction ("Move Up");
+		Down  		   = CreatePlayerAction ("Move Down");
 
-		CamLeft = CreatePlayerAction ("CamLeft");
-		CamRight = CreatePlayerAction ("CamRight");
-		CamUp = CreatePlayerAction ("CamUp");
-		CamDown = CreatePlayerAction ("CamDown");
-		CamRot = CreateTwoAxisPlayerAction (CamLeft, CamRight, CamUp, CamDown);
-		CameraChange = CreatePlayerAction ("CameraChange");
+		Move  		   = CreateTwoAxisPlayerAction (Left, Right, Down, Up);
 
-		LockOnLeft = CreatePlayerAction ("LockOnLeft");
-		LockOnRight = CreatePlayerAction ("LockOnRight");
-		LockOn = CreateOneAxisPlayerAction (Left, Right);
+		CamLeft        = CreatePlayerAction ("CamLeft");
+		CamRight       = CreatePlayerAction ("CamRight");
+		CamUp          = CreatePlayerAction ("CamUp");
+		CamDown        = CreatePlayerAction ("CamDown");
 
-		Jump = CreatePlayerAction ("Jump");
-		Use = CreatePlayerAction ("Use");
-		Crouch = CreatePlayerAction ("Crouch");
+		CamRot         = CreateTwoAxisPlayerAction (CamLeft, CamRight, CamUp, CamDown);
 
-		Aim = CreatePlayerAction ("Aim");
-		Shoot = CreatePlayerAction ("Shoot");
-		Melee = CreatePlayerAction ("Melee");
-		Ability = CreatePlayerAction ("Ability");
+		CameraChange   = CreatePlayerAction ("CameraChange");
 
-		DodgeLeft = CreatePlayerAction ("DodgeLeft");
-		DodgeRight = CreatePlayerAction ("DodgeRight");
-		Dodge = CreateOneAxisPlayerAction (DodgeLeft, DodgeRight);
+		LockOnLeft     = CreatePlayerAction ("LockOnLeft");
+		LockOnRight    = CreatePlayerAction ("LockOnRight");
+		LockOn         = CreateOneAxisPlayerAction (Left, Right);
 
-		Pause = CreatePlayerAction ("Pause");
-		Submit = CreatePlayerAction ("Submit");
-		Back = CreatePlayerAction ("Back");
+		Jump 		   = CreatePlayerAction ("Jump");
+		Use            = CreatePlayerAction ("Use");
+		Crouch   	   = CreatePlayerAction ("Crouch");
+
+		Aim 		   = CreatePlayerAction ("Aim");
+		Shoot 		   = CreatePlayerAction ("Shoot");
+		Melee 		   = CreatePlayerAction ("Melee");
+		Ability 	   = CreatePlayerAction ("Ability");
+
+		NextWeapon     = CreatePlayerAction ("NextWeapon");
+		PreviousWeapon = CreatePlayerAction ("PreviousWeapon");
+
+		DodgeLeft 	   = CreatePlayerAction ("DodgeLeft");
+		DodgeRight 	   = CreatePlayerAction ("DodgeRight");
+		Dodge 		   = CreateOneAxisPlayerAction (DodgeLeft, DodgeRight);
+
+		Pause 		   = CreatePlayerAction ("Pause");
+		Submit 		   = CreatePlayerAction ("Submit");
+		Back 		   = CreatePlayerAction ("Back");
 	}
 
 	public static PlayerActions CreateWithDefaultBindings()
@@ -157,7 +165,13 @@ public class PlayerActions : PlayerActionSet
 		playerActions.LockOnRight.AddDefaultBinding (Key.B);
 		playerActions.LockOnRight.AddDefaultBinding (InputControlType.DPadRight);
 
-		//Debug.Log ("Created Player Actions.");
+		playerActions.NextWeapon.AddDefaultBinding (Mouse.PositiveScrollWheel);
+		playerActions.NextWeapon.AddDefaultBinding (InputControlType.DPadUp);
+
+		playerActions.PreviousWeapon.AddDefaultBinding (Mouse.NegativeScrollWheel);
+		playerActions.PreviousWeapon.AddDefaultBinding (InputControlType.DPadDown);
+
+		Debug.Log ("Created Player Actions.");
 		return playerActions;
 	}
 }

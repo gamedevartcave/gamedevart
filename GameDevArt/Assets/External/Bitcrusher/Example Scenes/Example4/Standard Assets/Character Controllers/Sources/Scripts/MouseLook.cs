@@ -4,21 +4,18 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour 
 {
 	public static MouseLook instance { get; private set; }
-	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-	public RotationAxes axes = RotationAxes.MouseXAndY;
+	//public RotationAxes axes = RotationAxes.MouseXAndY;
+	//public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
 
-	public float sensitivityX = 15;
-	public float sensitivityY = 15;
+	public Vector2 sensitivity = new Vector2 (15, 15);
 
 	// Minimum and Maximum values can be used to constrain the possible rotation
+	public Vector2 minimum = new Vector2 (-360, 360);
+	public Vector2 maximum = new Vector2 (-60, 60);
 
-	public float minimumX = -360;
-	public float maximumX = 360;
-
-	public float minimumY = -60;
-	public float maximumY = 60;
-
+	float rotationX = 0;
 	float rotationY = 0;
+	[Range (0.0f, 1.0f)]
 	public float rotYDeadZone = 0.25f;
 
 	private PlayerActions playerActions;
@@ -34,6 +31,7 @@ public class MouseLook : MonoBehaviour
 		playerActions = InControlActions.instance.playerActions;
 	}
 
+	// Settings Manager.
 	public void SetInvertAxis (bool invert)
 	{
 		SaveAndLoadScript.Instance.invertYAxis = invert;
@@ -41,9 +39,10 @@ public class MouseLook : MonoBehaviour
 
 	void Update ()
 	{
-		if (axes == RotationAxes.MouseXAndY && GameController.instance.isPaused == false)
-		{
-			float rotationX = transform.localEulerAngles.y + playerActions.CamRot.Value.x * sensitivityX;
+		// Both axes.
+		//if (axes == RotationAxes.MouseXAndY && GameController.instance.isPaused == false)
+		//{
+			rotationX = transform.localEulerAngles.y + playerActions.CamRot.Value.x * sensitivity.x;
 
 			// While aiming.
 			if (playerActions.Aim.Value > 0.5f)
@@ -51,7 +50,7 @@ public class MouseLook : MonoBehaviour
 				// Don't use deadzone.
 				rotationY += 
 					playerActions.CamRot.Value.y * 
-					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivityY : sensitivityY);
+					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
 			}
 
 			// Not aiming.
@@ -63,31 +62,33 @@ public class MouseLook : MonoBehaviour
 				{
 					rotationY += 
 						playerActions.CamRot.Value.y * 
-						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivityY : sensitivityY);
+						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
 				}
 			}
 
-			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
 			
 			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, 0);
-		}
+		//}
 
-		else 
+		/*
+		else // Just MouseX.
 
 		if (axes == RotationAxes.MouseX && GameController.instance.isPaused == false)
 		{
-			transform.Rotate (0, playerActions.CamRot.Value.x * sensitivityX, 0);
+			transform.Rotate (0, playerActions.CamRot.Value.x * sensitivity.x, 0);
 		}
 		
-		else
+		else // Just MouseY.
 		
 		{
 			if (GameController.instance.isPaused == false)
 			{
-				rotationY += playerActions.CamRot.Value.y * sensitivityY;
-				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+				rotationY += playerActions.CamRot.Value.y * sensitivity.y;
+				rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
 				transform.localEulerAngles = new Vector3 (-rotationY, transform.localEulerAngles.y, 0);
 			}
 		}
+		*/
 	}
 }
