@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Teleporter : MonoBehaviour
 {
@@ -13,26 +14,37 @@ public class Teleporter : MonoBehaviour
 
 	public Collider capsuleCollider;
 
+	public float teleportDelayTime = 1;
+	private WaitForSeconds teleportYield;
+
+	public UnityEvent OnTeleportEnter;
+	public UnityEvent OnTeleportEnterDelayed;
+	public UnityEvent OnTeleportComplete;
+
 	void Start ()
 	{
 		teleportWait = new WaitForSeconds (teleportWaitTime);
+		teleportYield = new WaitForSeconds (teleportDelayTime);
 		StartCoroutine (UpdateTeleportLockState ());
 	}
 
 	IEnumerator UpdateTeleportLockState ()
 	{
-		yield return teleportWait;
-
-		// Check whether this teleporter should be locked.
-		// locked = save script level unlocked?
-
-		//if (capsuleCollider.enabled != locked)
-		//{
+		while (true)
+		{
 			capsuleCollider.enabled = locked;
 			teleportLockParticles.SetActive (locked);
-		//}
+			yield return teleportWait;
+		}
+	}
 
-		StartCoroutine (UpdateTeleportLockState ());
+	IEnumerator TeleportEnterDelay ()
+	{
+		yield return teleportYield;
+		OnTeleportEnterDelayed.Invoke ();
+		yield return teleportYield;
+		yield return teleportYield;
+		OnTeleportComplete.Invoke ();
 	}
 
 	void OnTriggerEnter (Collider other)
@@ -43,6 +55,8 @@ public class Teleporter : MonoBehaviour
 			{
 				teleportParticles.Play ();
 				timesUsed++;
+				OnTeleportEnter.Invoke ();
+				StartCoroutine (TeleportEnterDelay ());
 			}
 		}
 	}

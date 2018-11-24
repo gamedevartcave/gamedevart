@@ -8,10 +8,9 @@ public class PlayerController : MonoBehaviour
 {
 	public static PlayerController instance { get; private set; }
 
+	[Header ("General")]
 	public Collider playerCol;
-
 	public Collider DeathBarrier;
-
 	public Animator PlayerUI;
 
 	[Header ("Health")]
@@ -86,6 +85,12 @@ public class PlayerController : MonoBehaviour
 	void Awake ()
 	{
 		instance = this;
+
+		for (int i = 0; i < skinnedMeshes.Length; i++)
+		{
+			skinnedMeshes [i].enabled = false;
+		}
+
 		this.enabled = false;
 	}
 
@@ -161,7 +166,6 @@ public class PlayerController : MonoBehaviour
 		Ray ray = ThirdPersonUserControl.instance.m_Cam.ScreenPointToRay (Input.mousePosition);
 		AimDir = ray.direction;
 		AimNoPitchDir = new Vector3 (ray.direction.x, 0, ray.direction.z);
-
 
 		if (Physics.Raycast (AimingOrigin.position, ray.direction, out hit, Mathf.Infinity))
 		{
@@ -282,4 +286,12 @@ public class PlayerController : MonoBehaviour
 		isInHitStun = false;
 	}
 	#endregion
+
+	public void EnableSkinnedMeshes ()
+	{
+		for (int i = 0; i < skinnedMeshes.Length; i++)
+		{
+			skinnedMeshes [i].enabled = true;
+		}
+	}
 }

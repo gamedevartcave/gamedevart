@@ -25,7 +25,9 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 
 	public void SetInstance ()
 	{
-		Instance = this;
+		//Instance = this;
+		//SceneLoader.Instance.OnSceneLoadComplete.AddListener (OnSceneLoadComplete);
+		//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
 	}
 
 	public void DetectManagers ()
@@ -40,7 +42,9 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 
 		}
 
-		StartCoroutine (Initialize ());
+		//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
+
+		//StartCoroutine (Initialize ());
 	}
 
 	IEnumerator Initialize ()
@@ -53,5 +57,10 @@ public class DontDestroyOnLoadInit : MonoBehaviour
 	public void LoadData ()
 	{
 		SaveAndLoadScript.Instance.InitializeLoad ();
+	}
+
+	public void OnInitialized ()
+	{
+		StartCoroutine (Initialize ());
 	}
 }

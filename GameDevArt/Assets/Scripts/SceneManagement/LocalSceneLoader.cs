@@ -23,7 +23,11 @@ public class LocalSceneLoader : MonoBehaviour
 		if (SceneLoadCommit == false)
 		{
 			SceneLoader.Instance.SceneName = sceneName;
-			SceneLoadSequence ();
+			SceneLoader.Instance.SmoothProgress = 0;
+			SceneLoader.Instance.LoadProgressText.text = "0%";
+			SceneLoader.Instance.LoadSlider.value = 0;
+			SceneLoader.Instance.SceneLoaderUI.ResetTrigger ("Disappear");
+			SceneLoader.Instance.SceneLoaderUI.SetTrigger ("Appear");
 
 			if (sceneName == "menu") 
 			{
@@ -39,7 +43,11 @@ public class LocalSceneLoader : MonoBehaviour
 		if (SceneLoadCommit == false)
 		{
 			SceneLoader.Instance.SceneName = ActiveSceneName;
-			SceneLoadSequence ();
+			SceneLoader.Instance.SmoothProgress = 0;
+			SceneLoader.Instance.LoadProgressText.text = "0%";
+			SceneLoader.Instance.LoadSlider.value = 0;
+			SceneLoader.Instance.SceneLoaderUI.ResetTrigger ("Disappear");
+			SceneLoader.Instance.SceneLoaderUI.SetTrigger ("Appear");
 
 			if (ActiveSceneName == "menu") 
 			{
@@ -78,5 +86,26 @@ public class LocalSceneLoader : MonoBehaviour
 	public void DestroyCurrentLoadedObjects ()
 	{
 		SceneLoader.Instance.DestroyObjectsInScene ();
+	}
+
+	public void SetLoadScreenBackground (Texture background)
+	{
+		SceneLoader.Instance.loadScreenBackground.texture = background;
+
+		if (SceneLoader.Instance.loadScreenBackground.texture == null)
+		{
+			SceneLoader.Instance.loadScreenBackground.color = new Color (0, 0, 0, 0);
+		} 
+
+		else
+		
+		{
+			SceneLoader.Instance.loadScreenBackground.color = Color.white;
+		}
+	}
+
+	public void FadeOutLoaderUI ()
+	{
+		SceneLoader.Instance.SceneLoadUIDisappear ();
 	}
 }

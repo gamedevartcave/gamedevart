@@ -61,11 +61,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void FixedUpdate ()
 		{
-			//if (m_Rigidbody.velocity.magnitude > terminalVelocity)
-			//{
-			//	Debug.Log ("Clamping velocity.");
-			//}
-
 			m_Rigidbody.velocity = Vector3.ClampMagnitude (m_Rigidbody.velocity, terminalVelocity);
 		}
 
@@ -89,7 +84,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// control and velocity handling is different when grounded and airborne:
 			if (m_IsGrounded)
 			{
-				//HandleGroundedMovement(crouch, jump);
 				HandleGroundedMovement(false, jump);
 
 				if (thirdPersonUserControl.doubleJumped)
@@ -232,7 +226,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			
 				m_IsGrounded = false;
 				m_Animator.applyRootMotion = false;
-				//m_GroundCheckDistance = 0.1f;
+				m_GroundCheckDistance = 0.1f;
 				PlayerController.instance.OnDoubleJump.Invoke ();
 			}
 		}

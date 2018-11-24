@@ -5,6 +5,7 @@ using System.Collections;
 public class BackgroundFader : MonoBehaviour
 {
 	public static BackgroundFader instance { get; private set; }
+
 	public RawImage background;
 	public float fadeSmoothing = 3;
 	public Color StartColor;
@@ -14,11 +15,6 @@ public class BackgroundFader : MonoBehaviour
 	{
 		instance = this;
 		this.enabled = false;
-	}
-
-	void Start ()
-	{
-		
 	}
 
 	public void StartFade ()

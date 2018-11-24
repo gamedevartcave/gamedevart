@@ -15,7 +15,7 @@ public class SceneLoader : MonoBehaviour
 	public float delay; // How long before the actual loading of the next scene starts.
 	public string SceneName; // The name of the scene that other scripts can modify. The next scene should load by this name.
 	public float ProgressBarSmoothTime = 1; // The progress bar value smoothing amount.
-	private float SmoothProgress; // The actual smoothed scene load progress value.
+	[HideInInspector]public float SmoothProgress; // The actual smoothed scene load progress value.
 
 	[Header ("UI Elements")]
 	public Canvas LevelLoadUICanvas;
@@ -24,9 +24,10 @@ public class SceneLoader : MonoBehaviour
 	public ParticleSystem[] LoadingParticles;
 	public Animator LoadParticlesAnim;
 	public Slider LoadSlider;
+	public RawImage loadScreenBackground;
 
 	private WaitForSecondsRealtime WaitDelay;
-
+	public UnityEvent OnInitialize;
 	public UnityEvent OnSceneLoadBegin;
 	public UnityEvent OnSceneLoadComplete;
 
@@ -34,6 +35,12 @@ public class SceneLoader : MonoBehaviour
 	private void Awake ()
 	{
 		Instance = this;
+		OnInitialize.Invoke ();
+
+		if (DontDestroyOnLoadInit.Instance != null)
+		{
+			DontDestroyOnLoadInit.Instance.OnInitialized ();
+		}
 	}
 	#endregion
 
@@ -49,8 +56,6 @@ public class SceneLoader : MonoBehaviour
 			if (SceneManager.GetSceneByName (SceneName).isLoaded == false)
 			{
 				OnSceneLoadBegin.Invoke ();
-		
-				StartLoadSequence ();
 			}
 		}
 	}
@@ -75,25 +80,21 @@ public class SceneLoader : MonoBehaviour
 	// Main scene loading process.
 	IEnumerator LoadProgress ()
 	{
-		SceneLoaderUI.gameObject.SetActive (true); // Turn on the scene loading UI
 		SmoothProgress = 0;
-		LoadProgressText.text = "";
+		LoadProgressText.text = "0%";
 		LoadSlider.value = 0;
-
-		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
-		{
-			//SceneLoaderUI.Play ("SceneLoaderUIAppear");
-		}
 
 		if (LoadParticlesAnim.gameObject.activeInHierarchy == true)
 		{
 			//LoadParticlesAnim.Play ("LoadingParticlesLoop");
 		}
 
+		/*
 		foreach (ParticleSystem loadParticle in LoadingParticles) 
 		{
 			loadParticle.Play (true);
 		}
+		*/
 
 		yield return WaitDelay;
 
@@ -110,11 +111,13 @@ public class SceneLoader : MonoBehaviour
 			// UI checks load progress and displays for the player.
 			SmoothProgress = Mathf.Lerp (SmoothProgress, async.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
 
+			/*
 			foreach (ParticleSystem loadParticle in LoadingParticles) 
 			{
 				var ParticleStartLifetimeMain = loadParticle.main;
 				ParticleStartLifetimeMain.startLifetime = async.progress + 0.5f;
 			}
+			*/
 				
 			if (asyncprogress < 100) 
 			{
@@ -149,25 +152,21 @@ public class SceneLoader : MonoBehaviour
 
 	IEnumerator LoadThisScene ()
 	{
+		/*
 		foreach (ParticleSystem loadParticle in LoadingParticles) 
 		{
 			loadParticle.Stop (true, ParticleSystemStopBehavior.StopEmitting);
 		}
+		*/
 			
 		yield return new WaitForEndOfFrame ();
 
 		isLoading = false;
 
-		if (Application.internetReachability == NetworkReachability.NotReachable)
+		if (SceneManager.GetActiveScene ().name == "init")
 		{
-			Debug.LogWarning ("No internet connection...");
-			ActivateScene ();
-		}
-
-		//if (SceneManager.GetActiveScene ().name == "init")
-		//{
 			//
-		//}
+		}
 
 		ActivateScene ();
 	}
@@ -183,24 +182,25 @@ public class SceneLoader : MonoBehaviour
 
 		// Finally, we can activate the newly loaded scene.
 		async.allowSceneActivation = true;
+		GC.Collect ();
+		Shader.WarmupAllShaders ();
+		OnSceneLoadComplete.Invoke ();
 
-		//OnSceneLoadComplete.Invoke ();
-
-		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
+		if (SceneName == "menu")
 		{
-			if (SceneLoaderUI.GetAnimatorTransitionInfo (0).IsName ("SceneLoaderUIDisappear") == false)
-			{
-				//SceneLoaderUI.Play ("SceneLoaderUIDisappear");
-			}
+			SceneLoadUIDisappear ();
+		}
+
+		if (DontDestroyOnLoadInit.Instance != null)
+		{
+			DontDestroyOnLoadInit.Instance.OnInitialized ();
 		}
 	}
 
-	public void LoadingUICheck ()
+	public void SceneLoadUIDisappear ()
 	{
-		if (SceneLoaderUI.gameObject.activeInHierarchy == true)
-		{
-			SceneLoaderUI.Play ("SceneLoaderUIDisappear");
-		}
+		SceneLoaderUI.ResetTrigger ("Appear");
+		SceneLoaderUI.SetTrigger ("Disappear");
 	}
 
 	public void SetLoadedSceneActive ()

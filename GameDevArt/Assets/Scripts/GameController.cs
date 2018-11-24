@@ -15,8 +15,8 @@ public class GameController : MonoBehaviour
 	public float dofSmoothing = 5.0f;
 
 	[Header ("Pausing")]
-	public MenuNavigation activeMenu;
 	[ReadOnlyAttribute] public bool isPaused;
+	public MenuNavigation activeMenu;
 	public UnityEvent OnPause;
 	public UnityEvent OnUnpause;
 

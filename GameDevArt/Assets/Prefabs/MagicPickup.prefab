@@ -79,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1313019573872454
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,12 +91,12 @@ GameObject:
   - component: {fileID: 198175095298401914}
   - component: {fileID: 199961836672557606}
   m_Layer: 0
-  m_Name: HealthSquares
+  m_Name: MagicSquares
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1422794059351026
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1429080004392332
 GameObject:
   m_ObjectHideFlags: 1
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 135305466094603628}
   - component: {fileID: 114682849951983574}
   m_Layer: 0
-  m_Name: HealthZone
+  m_Name: MagicZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4001202180737566
 Transform:
   m_ObjectHideFlags: 1
@@ -265,13 +265,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1429080004392332}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 1, z: 0.25}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 4844528634097354}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!4 &4655478975533834
 Transform:
   m_ObjectHideFlags: 1
@@ -279,7 +279,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730958003254828}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0, z: 8.51}
+  m_LocalPosition: {x: -2.5, y: 0, z: 4.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4402713938892830}
@@ -315,7 +315,7 @@ Transform:
   m_GameObject: {fileID: 1161959478955034}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.399996, y: 1, z: 0.25000495}
+  m_LocalScale: {x: 0.73, y: 1, z: 0.25000495}
   m_Children: []
   m_Father: {fileID: 4844528634097354}
   m_RootOrder: 1
@@ -335,7 +335,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 9c99b86983ffe254a9e98dff8400534f, type: 2}
+  - {fileID: 2100000, guid: 3da14623eb70fc94eb2d82e4c483c231, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -370,7 +370,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 9c99b86983ffe254a9e98dff8400534f, type: 2}
+  - {fileID: 2100000, guid: 3da14623eb70fc94eb2d82e4c483c231, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -405,7 +405,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 9c99b86983ffe254a9e98dff8400534f, type: 2}
+  - {fileID: 2100000, guid: 3da14623eb70fc94eb2d82e4c483c231, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -466,7 +466,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1429080004392332}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &33255829972983010
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -487,7 +487,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1161959478955034}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &33826403649140960
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -601,9 +601,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee2631e4bb2e1945817907d09d0c6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthAmount: 25
+  Amount: 20
+  pickupType: 1
   objectToDestroy: {fileID: 1730958003254828}
-  OnHealthPickup:
+  OnPickup:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
@@ -853,7 +854,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.5568628, g: 0.88280094, b: 1, a: 1}
-      maxColor: {r: 0.41037738, g: 0.692144, b: 1, a: 1}
+      maxColor: {r: 0.41176474, g: 1, b: 0.54917294, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.7047376, g: 0.30980396, b: 1, a: 1}
@@ -5288,8 +5289,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.0001
+      scalar: 0.1
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5393,9 +5394,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 2
+      minMaxState: 0
       minColor: {r: 0.81580377, g: 0.6462264, b: 1, a: 1}
-      maxColor: {r: 0.81960773, g: 0, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.7047376, g: 0.30980396, b: 1, a: 1}
@@ -5458,7 +5459,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.05
-      minScalar: 0
+      minScalar: 0.01
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5982,7 +5983,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 120
+      scalar: 200
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -14376,7 +14377,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: c1bdc4602147e5c4580071ca91986d96, type: 2}
-  - {fileID: 2100000, guid: 9c99b86983ffe254a9e98dff8400534f, type: 2}
+  - {fileID: 2100000, guid: 3da14623eb70fc94eb2d82e4c483c231, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -6,8 +6,7 @@ public class MenuNavigation : MonoBehaviour
 	public static MenuNavigation activeMenu { get; protected set; }
 
 	// Button index
-	[ReadOnlyAttribute] 
-	public int buttonIndex;
+	[ReadOnlyAttribute] public int buttonIndex;
 	public int startButtonIndex;
 
 	public bool wrapAround;

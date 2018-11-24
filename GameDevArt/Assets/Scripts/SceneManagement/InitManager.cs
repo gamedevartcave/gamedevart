@@ -16,8 +16,6 @@ public class InitManager : MonoBehaviour
 
 	void Start ()
 	{
-		Shader.WarmupAllShaders ();
-		GC.Collect ();
 		LoadingMissionText.text = "";
 		LoadingMissionText.gameObject.SetActive (false);
 
@@ -25,9 +23,10 @@ public class InitManager : MonoBehaviour
 		//SaveAndLoadScript.Instance.SaveSettingsData ();
 		//SaveAndLoadScript.Instance.LoadPlayerData ();
 
-		CheckPostProcessQuality ();
+		//CheckPostProcessQuality ();
 	}
 
+	/*
 	void CheckPostProcessQuality ()
 	{
 		int qualLevel = QualitySettings.GetQualityLevel ();
@@ -40,7 +39,7 @@ public class InitManager : MonoBehaviour
 		{
 		}
 	}
-
+	*/
 
 	void OnApplicationQuit ()
 	{

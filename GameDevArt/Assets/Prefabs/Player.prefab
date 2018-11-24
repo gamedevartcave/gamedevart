@@ -3281,7 +3281,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1745226132108084}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b744773419aab18418e82b2ebe2e1a68, type: 3}
   m_Name: 
@@ -3297,7 +3297,7 @@ MonoBehaviour:
   m_RunCycleLegOffset: 0.2
   m_MoveSpeedMultiplier: 1.5
   m_AnimSpeedMultiplier: 1
-  m_GroundCheckDistance: 0.25
+  m_GroundCheckDistance: 0.28
   terminalVelocity: 25
   m_Animator: {fileID: 95884795619259730}
   moveMultiplier: 10
@@ -3307,7 +3307,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1745226132108084}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdfe20afea440c2479f8121ee057b0e2, type: 3}
   m_Name: 
@@ -3323,10 +3323,10 @@ MonoBehaviour:
   cameraOffset: {x: -0.5, y: 0.5}
   cameraOffsetSmoothing: 10
   isDodging: 0
-  dodgeRate: 1
-  dodgeSpeed: 15
-  DodgeTimeDuration: 0.125
-  dodgeTimeScale: 0.25
+  dodgeRate: 0.6
+  dodgeSpeed: 14
+  DodgeTimeDuration: 0.25
+  dodgeTimeScale: 0.1
   OnDodgeBegan:
     m_PersistentCalls:
       m_Calls: []
@@ -3411,19 +3411,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1745226132108084}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerCol: {fileID: 136886608646034890}
   DeathBarrier: {fileID: 0}
+  PlayerUI: {fileID: 0}
   health: 0
   StartHealth: 10
   MaximumHealth: 100
   HealthSlider: {fileID: 0}
   HealthSlider_Smoothed: {fileID: 0}
   healthSliderSmoothing: 3
+  magic: 0
+  StartingMagic: 10
+  MaximumMagic: 100
+  MagicSlider: {fileID: 0}
+  MagicSlider_Smoothed: {fileID: 0}
+  magicSliderSmoothing: 3
   normalFov: 65
   aimFov: 35
   aimSmoothing: 10
@@ -3475,6 +3482,23 @@ MonoBehaviour:
   landingClips:
   - {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   OnLand:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  isInHitStun: 0
+  skinnedMeshes:
+  - {fileID: 137893836330158196}
+  - {fileID: 137417391442393214}
+  hitStunCurrentTime: 0
+  hitStunDuration: 2
+  HitStunRenderToggleWait: 0.1
+  OnHitStunBegin:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHitStunEnded:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
