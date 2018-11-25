@@ -328,4 +328,9 @@ public class SimpleFollow : MonoBehaviour
 	{
 		FollowRotation = follow;
 	}
+
+	public void SetFollowRotX (Transform newFollowRotX)
+	{
+		FollowRotX = newFollowRotX;
+	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class CameraLockOnController : MonoBehaviour 
 {
@@ -16,6 +17,7 @@ public class CameraLockOnController : MonoBehaviour
 
 	public UnityEvent OnLockOnBegan;
 	public UnityEvent OnLockOnRelease;
+	public MouseLook mouseLook;
 
 	public PlayerActions playerActions;
 
@@ -57,6 +59,7 @@ public class CameraLockOnController : MonoBehaviour
 				
 				{
 					// Uses last index.
+					mouseLook.rotationY = 0;
 				}
 
 				SetLockOnPoint ();
@@ -85,6 +88,7 @@ public class CameraLockOnController : MonoBehaviour
 				
 				{
 					// Uses last index.
+					mouseLook.rotationY = 0;
 				}
 
 				SetLockOnPoint ();

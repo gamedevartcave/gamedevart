@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using CityBashers;
 
 public class FootstepTrigger : MonoBehaviour 
 {

@@ -13,8 +13,8 @@ public class MouseLook : MonoBehaviour
 	public Vector2 minimum = new Vector2 (-360, 360);
 	public Vector2 maximum = new Vector2 (-60, 60);
 
-	float rotationX = 0;
-	float rotationY = 0;
+	public float rotationX = 0;
+	public float rotationY = 0;
 	[Range (0.0f, 1.0f)]
 	public float rotYDeadZone = 0.25f;
 

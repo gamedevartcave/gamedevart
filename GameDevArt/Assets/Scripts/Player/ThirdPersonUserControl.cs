@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.Events;
 using System.Collections;
+using CityBashers;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -21,6 +22,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public SimpleFollow camRigSimpleFollow;
 		public Vector3 camRigSimpleFollowRotNormal = new Vector3 (5, 15, 0);
 		public Vector3 camRigSimpleFollowRotAiming;
+		public MouseLook mouseLook;
 		public Camera m_Cam; // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward; // The current forward direction of the camera
 		public Animator CrosshairAnim;
@@ -175,6 +177,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				{
 					CrosshairAnim.ResetTrigger ("Out");
 					CrosshairAnim.SetTrigger ("In");
+					//mouseLook.rotationY = 0;
 				}
 			}
 
@@ -193,6 +196,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				{
 					CrosshairAnim.ResetTrigger ("In");
 					CrosshairAnim.SetTrigger ("Out");
+					mouseLook.rotationY = 0;
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using InControl;
+using CityBashers;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -110,8 +111,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (m_IsGrounded && crouch)
 			{
 				if (m_Crouching) return;
-				m_Capsule.height = m_Capsule.height / 2f;
-				m_Capsule.center = m_Capsule.center / 2f;
+				m_Capsule.height = 0.5f * m_Capsule.height;
+				m_Capsule.center = 0.5f * m_Capsule.center;
 				m_Crouching = true;
 			}
 

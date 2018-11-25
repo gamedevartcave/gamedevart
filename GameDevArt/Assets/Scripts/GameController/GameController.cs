@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.PostProcessing;
+using CityBashers;
 
 public class GameController : MonoBehaviour 
 {
