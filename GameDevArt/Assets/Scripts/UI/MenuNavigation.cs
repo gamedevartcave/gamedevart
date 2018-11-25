@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MenuNavigation : MonoBehaviour 
 {
 	public static MenuNavigation activeMenu { get; protected set; }
-
-	// Button index
-	[ReadOnlyAttribute] public int buttonIndex;
-	public int startButtonIndex;
-
-	public bool wrapAround;
 
 	// Scrolling
 	public float scrollSpeed;
@@ -17,35 +12,52 @@ public class MenuNavigation : MonoBehaviour
 
 	// Button assets
 	public GameObject backButton;
-	public GameObject[] buttons;
+	public Selectable firstSelectable;
+	[ReadOnlyAttribute] public Selectable currentSelectable;
+	public Selectable[] buttons;
 
 	// Misc
 	private CanvasGroup canvasGroup;
 	public PlayerActions playerActions;
 	public PointerEventData eventData;
 
+	void Awake ()
+	{
+		DontDestroyOnLoadInit.Instance.OnInitialize.AddListener (OnInitialize);
+		activeMenu = this;
+		this.enabled = false;
+	}
+
 	void OnEnable ()
 	{
-		buttonIndex = startButtonIndex;
 		activeMenu = this;
+		ButtonEnter (currentSelectable);
 	}
 
-	void Start ()
+	void OnInitialize ()
 	{
-		playerActions = InControlActions.instance.playerActions;
-		eventData = new PointerEventData (EventSystem.current);
-		canvasGroup = GetComponent<CanvasGroup> ();
+		FetchComponents ();
 	}
 
+	void FetchComponents ()
+	{
+		if (eventData == null) eventData = new PointerEventData (EventSystem.current);
+		if (playerActions == null) playerActions = InControlActions.instance.playerActions;
+		if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup> ();
+		if (currentSelectable == null) currentSelectable = firstSelectable;
+	}
+		
 	public void SetButtonIndex (int index)
 	{
 		for (int i = 0; i < buttons.Length; i++)
 		{
-			ButtonExit (i);
+			if (index != i)
+			{
+				ButtonExit (buttons [i]);
+			}
 		}
-
-		buttonIndex = index;
-		ButtonEnter (buttonIndex);
+			
+		ButtonEnter (buttons [index]);
 	}
 
 	void Update ()
@@ -63,25 +75,13 @@ public class MenuNavigation : MonoBehaviour
 		{
 			if (Time.unscaledTime > nextScroll)
 			{
-				if (buttonIndex > 0)
+				if (currentSelectable.FindSelectableOnUp () != null)
 				{
-					ButtonExit (buttonIndex);
-					buttonIndex--;
-					ButtonEnter (buttonIndex);
-				} 
-
-				else
-
-				{
-					if (wrapAround == true)
-					{
-						ButtonExit (buttonIndex);
-						buttonIndex = buttons.Length - 1;
-						ButtonEnter (buttonIndex);
-					}
+					ButtonExit (currentSelectable);
+					ButtonEnter (currentSelectable.FindSelectableOnUp ());
+					currentSelectable = currentSelectable.FindSelectableOnUp ();					
+					nextScroll = Time.unscaledTime + scrollSpeed;
 				}
-					
-				nextScroll = Time.unscaledTime + scrollSpeed;
 			}
 		}
 
@@ -90,33 +90,53 @@ public class MenuNavigation : MonoBehaviour
 		{
 			if (Time.unscaledTime > nextScroll)
 			{
-				if (buttonIndex < buttons.Length - 1)
+				if (currentSelectable.FindSelectableOnDown () != null)
 				{
-					ButtonExit (buttonIndex);
-					buttonIndex++;
-					ButtonEnter (buttonIndex);
-				} 
-
-				else
-
-				{
-					if (wrapAround == true)
-					{
-						ButtonExit (buttonIndex);
-						buttonIndex = 0;
-						ButtonEnter (buttonIndex);
-					}
+					ButtonExit (currentSelectable);
+					ButtonEnter (currentSelectable.FindSelectableOnDown ());
+					currentSelectable = currentSelectable.FindSelectableOnDown ();					
+					nextScroll = Time.unscaledTime + scrollSpeed;
 				}
-					
-				nextScroll = Time.unscaledTime + scrollSpeed;
 			}
 		}
 
-		if (playerActions.Submit.WasPressed)
+		// LEFT
+		if (playerActions.Left.Value > 0.5f)
 		{
-			SubmitButton (buttonIndex);
+			if (Time.unscaledTime > nextScroll)
+			{
+				if (currentSelectable.FindSelectableOnLeft () != null)
+				{
+					ButtonExit (currentSelectable);
+					ButtonEnter (currentSelectable.FindSelectableOnLeft ());
+					currentSelectable = currentSelectable.FindSelectableOnLeft ();					
+					nextScroll = Time.unscaledTime + scrollSpeed;
+				}
+			}
 		}
 
+		// RIGHT
+		if (playerActions.Right.Value > 0.5f)
+		{
+			if (Time.unscaledTime > nextScroll)
+			{
+				if (currentSelectable.FindSelectableOnRight () != null)
+				{
+					ButtonExit (currentSelectable);
+					ButtonEnter (currentSelectable.FindSelectableOnRight ());
+					currentSelectable = currentSelectable.FindSelectableOnRight ();					
+					nextScroll = Time.unscaledTime + scrollSpeed;
+				}
+			}
+		}
+
+		// SUBMIT
+		if (playerActions.Submit.WasPressed)
+		{
+			SubmitButton (currentSelectable);
+		}
+
+		// BACK
 		if (playerActions.Back.WasPressed)
 		{
 			BackButton ();
@@ -124,21 +144,21 @@ public class MenuNavigation : MonoBehaviour
 	}
 
 	// Invoke Pointer Enter (BaseEventData) from EventTrigger.
-	void ButtonEnter (int index)
+	void ButtonEnter (Selectable _selectable)
 	{
-		ExecuteEvents.Execute (buttons [buttonIndex], eventData, ExecuteEvents.pointerEnterHandler);
+		ExecuteEvents.Execute (_selectable.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
 	}
 
 	// Invoke Pointer Exit (BaseEventData) from EventTrigger.
-	void ButtonExit (int index)
+	void ButtonExit (Selectable _selectable)
 	{
-		ExecuteEvents.Execute (buttons [buttonIndex], eventData, ExecuteEvents.pointerExitHandler);
+		ExecuteEvents.Execute (_selectable.gameObject, eventData, ExecuteEvents.pointerExitHandler);
 	}
 
 	// Get current active button and send OnClick() event.
-	void SubmitButton (int index)
+	void SubmitButton (Selectable _selectable)
 	{
-		ExecuteEvents.Execute (buttons [buttonIndex], eventData, ExecuteEvents.pointerClickHandler);
+		ExecuteEvents.Execute (_selectable.gameObject, eventData, ExecuteEvents.pointerClickHandler);
 	}
 
 	// Execute OnClick() event at any button index.
