@@ -19,7 +19,12 @@ namespace UnityEngine.UI.Extensions
         public RectTransform MaskArea;
 
         [Tooltip("Texture to be used to do the soft alpha")]
+		public bool useInputTexture = true;
         public Texture AlphaMask;
+		public UnityEngine.Gradient AlphaGradient;
+		private Texture2D gradientTexture;
+		public Vector2 gradientSize;
+		private Color gradientEvaluate;
 
         [Tooltip("At what point to apply the alpha min range 0-1")]
         [Range(0, 1)]
@@ -37,7 +42,24 @@ namespace UnityEngine.UI.Extensions
         Vector2 maskOffset = Vector2.zero;
         Vector2 maskScale = Vector2.one;
 
-        // Use this for initialization
+		void CreateGradientTexture ()
+		{
+			gradientTexture = new Texture2D (Mathf.CeilToInt (gradientSize.x), Mathf.CeilToInt (gradientSize.y));
+			gradientTexture.alphaIsTransparency = true;
+
+			for (int y = 0; y < Mathf.CeilToInt (gradientSize.y); y++)
+			{
+				for (int x = 0; x < Mathf.CeilToInt (gradientSize.x); x++)
+				{
+					gradientEvaluate = AlphaGradient.Evaluate (x / gradientSize.x);
+					gradientTexture.SetPixel (Mathf.CeilToInt (x), Mathf.CeilToInt (y), gradientEvaluate);
+				}
+			}
+
+			gradientTexture.Apply ();
+			mat.SetTexture("_AlphaMask", gradientTexture);
+		}
+			
         void Start()
         {
             if (MaskArea == null)
@@ -69,8 +91,19 @@ namespace UnityEngine.UI.Extensions
                 cachedCanvas = graphic.canvas;
                 cachedCanvasTransform = cachedCanvas.transform;
             }
+
+			if (useInputTexture == false)
+			{
+				CreateGradientTexture ();
+			}
+
+			if (cachedCanvas != null)
+			{
+				SetMask();
+			}
         }
 
+		/*
         void Update()
         {
             if (cachedCanvas != null)
@@ -78,6 +111,7 @@ namespace UnityEngine.UI.Extensions
                 SetMask();
             }
         }
+		*/
 
         void SetMask()
         {
