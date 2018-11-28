@@ -2,33 +2,29 @@
 /// Sourced from - https://github.com/Titinious/CurlyUI
 
 using System.Collections.Generic;
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace UnityEngine.UI.Extensions
 {
-    [RequireComponent(typeof(RectTransform))]
-    [RequireComponent(typeof(Graphic))]
+    [RequireComponent (typeof(RectTransform))]
+    [RequireComponent (typeof(Graphic))]
     [DisallowMultipleComponent]
-    [AddComponentMenu("UI/Effects/Extensions/Curly UI Graphic")]
+    [AddComponentMenu ("UI/Effects/Extensions/Curly UI Graphic")]
     public class CUIGraphic : BaseMeshEffect
     {
         // Describing the properties that are shared by all objects of this class
         #region Nature
-
         readonly public static int bottomCurveIdx = 0;
         readonly public static int topCurveIdx = 1;
-
         #endregion
 
         /// <summary>
         /// Describing the properties of this object.
         /// </summary>
         #region Description
-
-        [Tooltip("Set true to make the curve/morph to work. Set false to quickly see the original UI.")]
+        [Tooltip ("Set true to make the curve/morph to work. Set false to quickly see the original UI.")]
         [SerializeField]
         protected bool isCurved = true;
         public bool IsCurved
@@ -39,7 +35,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        [Tooltip("Set true to dynamically change the curve according to the dynamic change of the UI layout")]
+        [Tooltip ("Set true to dynamically change the curve according to the dynamic change of the UI layout")]
         [SerializeField]
         protected bool isLockWithRatio = true;
         public bool IsLockWithRatio
@@ -50,18 +46,16 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        [Tooltip("Pick a higher resolution to improve the quality of the curved graphic.")]
+        [Tooltip ("Pick a higher resolution to improve the quality of the curved graphic.")]
         [SerializeField]
-        [Range(0.01f, 30.0f)]
+        [Range (0.01f, 30.0f)]
         protected float resolution = 5.0f;
-
         #endregion
 
         /// <summary>
         /// Refernce to other objects that are needed by this object.
         /// </summary>
         #region Links
-
         protected RectTransform rectTrans;
         public RectTransform RectTrans
         {
@@ -81,6 +75,7 @@ namespace UnityEngine.UI.Extensions
                 return uiGraphic;
             }
         }
+
         [Tooltip("Put in the reference Graphic that will be used to tune the bezier curves. Think button image and text.")]
         [SerializeField]
         protected CUIGraphic refCUIGraphic;
@@ -114,8 +109,7 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-#if UNITY_EDITOR
-
+		#if UNITY_EDITOR
         public CUIBezierCurve[] EDITOR_RefCurves
         {
             set
@@ -131,20 +125,15 @@ namespace UnityEngine.UI.Extensions
                 refCurvesControlRatioPoints = value;
             }
         }
-
-#endif
-
+		#endif
         #endregion
 
         // Methods that are used often.
         #region Reuse
-
         protected List<UIVertex> reuse_quads = new List<UIVertex>();
-
         #endregion
 
         #region Action
-
         protected void solveDoubleEquationWithVector(float _x_1, float _y_1, float _x_2, float _y_2, Vector3 _constant_1, Vector3 _contant_2, out Vector3 _x, out Vector3 _y)
         {
             Vector3 f;
@@ -171,8 +160,7 @@ namespace UnityEngine.UI.Extensions
                     _y = (_contant_2 - _y_2 * _x) / _x_2;
             }
         }
-
-
+			
         protected UIVertex uiVertexLerp(UIVertex _a, UIVertex _b, float _time)
         {
             UIVertex tmpUIVertex = new UIVertex();
@@ -270,12 +258,10 @@ namespace UnityEngine.UI.Extensions
 
             reuse_quads.Clear();
         }
-
         #endregion
 
         // Events are for handling reoccuring function calls that react to the changes of the environment.
         #region Events
-
         protected override void OnRectTransformDimensionsChange()
         {
             if (isLockWithRatio)
@@ -303,9 +289,9 @@ namespace UnityEngine.UI.Extensions
                     for (int p = 0; p < CUIBezierCurve.CubicBezierCurvePtNum; p++)
                     {
 
-#if UNITY_EDITOR
+						#if UNITY_EDITOR
                         Undo.RecordObject(this, "Move Point");
-#endif
+						#endif
 
                         Vector3 ratioPoint = controlPoints[p];
 
@@ -325,12 +311,10 @@ namespace UnityEngine.UI.Extensions
                 uiGraphic.enabled = true;
             }
         }
-
         #endregion
 
         // Methods that change the behaviour of the object.
         #region Flash-Phase
-
         protected override void Awake()
         {
             base.Awake();
