@@ -42,8 +42,8 @@ MonoBehaviour:
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 0.5
-      radius: 0.3
+      intensity: 1
+      radius: 0.1
       sampleCount: 10
       downsampling: 0
       forceForwardCompatibility: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
   depthOfField:
     m_Enabled: 1
     m_Settings:
-      focusDistance: 1.2945591
+      focusDistance: 6.683568
       aperture: 22
       focalLength: 55
       useCameraFov: 0
@@ -79,8 +79,8 @@ MonoBehaviour:
   motionBlur:
     m_Enabled: 1
     m_Settings:
-      shutterAngle: 270
-      sampleCount: 32
+      shutterAngle: 180
+      sampleCount: 16
       frameBlending: 0
   eyeAdaptation:
     m_Enabled: 1
@@ -124,23 +124,23 @@ MonoBehaviour:
         temperature: 0
         tint: 0
         hueShift: 0
-        saturation: 1
-        contrast: 1
+        saturation: 1.1
+        contrast: 1.1
       channelMixer:
         red: {x: 1, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
-        currentEditingChannel: 0
+        currentEditingChannel: 1
       colorWheels:
-        mode: 1
+        mode: 0
         log:
           slope: {r: 1, g: 1, b: 1, a: 0}
           power: {r: 1, g: 1, b: 1, a: 0}
           offset: {r: 1, g: 1, b: 1, a: 0}
         linear:
-          lift: {r: 0, g: 0, b: 0, a: 0}
-          gamma: {r: 0, g: 0, b: 0, a: 0}
-          gain: {r: 0, g: 0, b: 0, a: 0}
+          lift: {r: 1, g: 1, b: 1, a: 0}
+          gamma: {r: 1, g: 1, b: 1, a: 0}
+          gain: {r: 1, g: 1, b: 1, a: 0}
       curves:
         master:
           curve:
@@ -149,7 +149,7 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 0
-              inSlope: 1
+              inSlope: 0
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
               time: 1
               value: 1
               inSlope: 1
-              outSlope: 1
+              outSlope: 0
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
         e_CurveG: 0
         e_CurveB: 0
   userLut:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       lut: {fileID: 2800000, guid: e45483e270a314c4bbc6e317771d56ab, type: 3}
       contribution: 1
@@ -322,7 +322,7 @@ MonoBehaviour:
       mode: 0
       color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.23
+      intensity: 0.15
       smoothness: 0.2
       roundness: 1
       mask: {fileID: 0}

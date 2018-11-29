@@ -100,7 +100,9 @@ namespace UnityEngine.UI.Extensions
 		public void CreateGradientTexture ()
 		{
 			gradientTexture = new Texture2D (Mathf.CeilToInt (gradientSize.x), Mathf.CeilToInt (gradientSize.y));
-			gradientTexture.alphaIsTransparency = true; // Enable transparency so alpha effect works.
+
+			// Note: Causes error when building (missing assembly reference for Texture2D).
+			//gradientTexture.alphaIsTransparency = true; // Enable transparency so alpha effect works.
 
 			// Loop through all pixels and evaluate points on the gradient.
 			for (int y = 0; y < Mathf.CeilToInt (gradientSize.y); y++)

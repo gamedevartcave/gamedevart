@@ -196,7 +196,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				{
 					CrosshairAnim.ResetTrigger ("In");
 					CrosshairAnim.SetTrigger ("Out");
-					mouseLook.rotationY = 0;
 				}
 			}
 		}
