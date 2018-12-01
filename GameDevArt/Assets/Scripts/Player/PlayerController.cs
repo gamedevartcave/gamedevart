@@ -12,8 +12,9 @@ namespace CityBashers
 
 		[Header ("General")]
 		public Collider playerCol;
-		public Collider DeathBarrier;
+		public Rigidbody playerRb;
 		public Animator PlayerUI;
+		public Transform startingPoint;
 
 		[Header ("Health")]
 		[ReadOnlyAttribute] public bool lostAllHealth;
@@ -262,12 +263,13 @@ namespace CityBashers
 		#endregion
 
 		#region Physics
-		void OnTriggerEnter (Collider other)
+
+		// When player hits death barrier.
+		// Hard reset on positioning and movement.
+		public void DeathBarrier ()
 		{
-			if (other == DeathBarrier)
-			{
-				transform.position = Vector3.zero;
-			}
+			transform.position = startingPoint.position;
+			playerRb.velocity = Vector3.zero;
 		}
 		#endregion
 
