@@ -2,7 +2,8 @@
 
 public class SimpleFollow : MonoBehaviour 
 {
-	public UpdateMethod updateMethod;
+	public UpdateMethod posUpdateMethod;
+	public UpdateMethod rotUpdateMethod;
 	public enum UpdateMethod
 	{
 		Update = 0,
@@ -15,11 +16,11 @@ public class SimpleFollow : MonoBehaviour
 	[Space (10)]
 	public bool AutomaticallyFindPlayerPosObject;
 	public string LookForPosName = "Player";
-	public Transform OverrideTransform;
 	[Space (10)]
-	public Transform FollowPosX;
-	public Transform FollowPosY;
-	public Transform FollowPosZ;
+	[ReadOnlyAttribute] [SerializeField] private Vector3 targetPos;
+	public Transform[] FollowPosX;
+	public Transform[] FollowPosY;
+	public Transform[] FollowPosZ;
 
 	public followPosMethod FollowPosMethod;
 	public enum followPosMethod
@@ -78,9 +79,9 @@ public class SimpleFollow : MonoBehaviour
 		{
 			Transform PlayerPos = GameObject.Find (LookForPosName).transform;
 
-			FollowPosX = PlayerPos;
-			FollowPosY = PlayerPos;
-			FollowPosZ = PlayerPos;
+			FollowPosX = new Transform[] {PlayerPos};
+			FollowPosY = new Transform[] {PlayerPos};
+			FollowPosZ = new Transform[] {PlayerPos};
 		}
 
 		if (AutomaticallyFindPlayerRotObject == true)
@@ -93,108 +94,156 @@ public class SimpleFollow : MonoBehaviour
 		}
 	}
 
+	float GetAverageXPoint (Transform[] xPoints)
+	{
+		float accumulativeXPoints = 0;
+		float averageXPoints = 0;
+
+		for (int i = 0; i < xPoints.Length; i++)
+		{
+			accumulativeXPoints += xPoints [i].position.x;
+		}
+
+		averageXPoints = accumulativeXPoints / xPoints.Length;
+		return averageXPoints;
+	}
+
+	float GetAverageYPoint (Transform[] yPoints)
+	{
+		float accumulativeYPoints = 0;
+		float averageYPoints = 0;
+
+		for (int i = 0; i < yPoints.Length; i++)
+		{
+			accumulativeYPoints += yPoints [i].position.y;
+		}
+
+		averageYPoints = accumulativeYPoints / yPoints.Length;
+		return averageYPoints;
+	}
+
+	float GetAverageZPoint (Transform[] zPoints)
+	{
+		float accumulativeZPoints = 0;
+		float averageZPoints = 0;
+
+		for (int i = 0; i < zPoints.Length; i++)
+		{
+			accumulativeZPoints += zPoints [i].position.z;
+		}
+
+		averageZPoints = accumulativeZPoints / zPoints.Length;
+		return averageZPoints;
+	}
+
 	void Update () 
 	{
-		if (updateMethod == UpdateMethod.Update) 
+		// Positioning
+		if (posUpdateMethod == UpdateMethod.Update)
 		{
-			if (OverrideTransform != null) 
-			{
-				FollowPosX = OverrideTransform.transform;
-				FollowPosY = OverrideTransform.transform;
-				FollowPosZ = OverrideTransform.transform;
-				FollowRotX = OverrideTransform.transform;
-				FollowRotY = OverrideTransform.transform;
-				FollowRotZ = OverrideTransform.transform;
-			}
-
-			if (FollowPosition == true && FollowPosMethod != followPosMethod.NoSmoothing) 
-			{
-				FollowObjectPosition ();
-			}
-
 			CheckFollowPosTransforms ();
+						
+			if (FollowPosition == true)
+			{
+				switch (FollowPosMethod)
+				{
+				case followPosMethod.NoSmoothing:
+					Vector3 targetPos = new Vector3 (
+						GetAverageXPoint (FollowPosX), GetAverageYPoint(FollowPosY), GetAverageZPoint (FollowPosZ));
+					transform.position = targetPos;
+					break;
+				case followPosMethod.Lerp:
+					FollowObjectPosition ();
+					break;
+				case followPosMethod.SmoothDamp:
+					FollowObjectPosition ();
+					break;
+				}
+			}
+		}
 
+		// Rotation
+		if (rotUpdateMethod == UpdateMethod.Update)
+		{
 			if (FollowRotation == true) 
 			{
 				FollowObjectRotation ();
-			}
-
-			if (FollowPosMethod == followPosMethod.NoSmoothing) 
-			{
-				Vector3 Pos = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
-				transform.position = Pos;
 			}
 		}
 	}
 
 	void FixedUpdate () 
 	{
-		if (updateMethod == UpdateMethod.FixedUpdate) 
+		// Positioning
+		if (posUpdateMethod == UpdateMethod.FixedUpdate) 
 		{
-			if (OverrideTransform != null) 
-			{
-				FollowPosX = OverrideTransform.transform;
-				FollowPosY = OverrideTransform.transform;
-				FollowPosZ = OverrideTransform.transform;
-				FollowRotX = OverrideTransform.transform;
-				FollowRotY = OverrideTransform.transform;
-				FollowRotZ = OverrideTransform.transform;
-			}
-
-			if (FollowPosition == true && FollowPosMethod != followPosMethod.NoSmoothing) 
-			{
-				FollowObjectPosition ();
-			}
-
 			CheckFollowPosTransforms ();
 
+			if (FollowPosition == true)
+			{
+				switch (FollowPosMethod)
+				{
+				case followPosMethod.NoSmoothing:
+					Vector3 targetPos = new Vector3 (
+						GetAverageXPoint (FollowPosX), GetAverageYPoint(FollowPosY), GetAverageZPoint (FollowPosZ));
+					transform.position = targetPos;
+					break;
+				case followPosMethod.Lerp:
+					FollowObjectPosition ();
+					break;
+				case followPosMethod.SmoothDamp:
+					FollowObjectPosition ();
+					break;
+				}
+			}
+		}
+
+		// Rotation
+		if (rotUpdateMethod == UpdateMethod.FixedUpdate)
+		{
 			if (FollowRotation == true) 
 			{
 				FollowObjectRotation ();
-			}
-
-			if (FollowPosMethod == followPosMethod.NoSmoothing) 
-			{
-				Vector3 Pos = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
-				transform.position = Pos;
 			}
 		}
 	}
 
 	void LateUpdate () 
 	{
-		if (updateMethod == UpdateMethod.LateUpdate) 
+		// Positioning
+		if (posUpdateMethod == UpdateMethod.LateUpdate) 
 		{
-			if (OverrideTransform != null) 
-			{
-				FollowPosX = OverrideTransform.transform;
-				FollowPosY = OverrideTransform.transform;
-				FollowPosZ = OverrideTransform.transform;
-				FollowRotX = OverrideTransform.transform;
-				FollowRotY = OverrideTransform.transform;
-				FollowRotZ = OverrideTransform.transform;
-			}
-
-			if (FollowPosition == true && FollowPosMethod != followPosMethod.NoSmoothing) 
-			{
-				FollowObjectPosition ();
-			}
-
 			CheckFollowPosTransforms ();
 
+			if (FollowPosition == true)
+			{
+				switch (FollowPosMethod)
+				{
+				case followPosMethod.NoSmoothing:
+					Vector3 targetPos = new Vector3 (
+						GetAverageXPoint (FollowPosX), GetAverageYPoint(FollowPosY), GetAverageZPoint (FollowPosZ));
+					transform.position = targetPos;
+					break;
+				case followPosMethod.Lerp:
+					FollowObjectPosition ();
+					break;
+				case followPosMethod.SmoothDamp:
+					FollowObjectPosition ();
+					break;
+				}
+			}
+		}
+
+		// Rotation
+		if (rotUpdateMethod == UpdateMethod.LateUpdate)
+		{
 			if (FollowRotation == true) 
 			{
 				FollowObjectRotation ();
 			}
-
-			if (FollowPosMethod == followPosMethod.NoSmoothing) 
-			{
-				Vector3 Pos = new Vector3 (FollowPosX.position.x, FollowPosY.position.y, FollowPosZ.position.z);
-				transform.position = Pos;
-			}
 		}
 	}
-
+		
 	void FollowObjectPosition ()
 	{
 		if (FollowPosMethod == followPosMethod.Lerp) 
@@ -202,7 +251,7 @@ public class SimpleFollow : MonoBehaviour
 			xPos = Mathf.Clamp (
 				Mathf.Lerp (
 					transform.position.x, 
-					FollowPosX.position.x + FollowPosOffset.x, 
+					GetAverageXPoint (FollowPosX) + FollowPosOffset.x, 
 					FollowPosSmoothTime.x * (XPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
 				PosBoundsX.x, 
@@ -212,7 +261,7 @@ public class SimpleFollow : MonoBehaviour
 			yPos = Mathf.Clamp (
 	             Mathf.Lerp (
 		             transform.position.y, 
-		             FollowPosY.position.y + FollowPosOffset.y, 
+					 GetAverageYPoint (FollowPosY) + FollowPosOffset.y, 
 		             FollowPosSmoothTime.y * (YPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
 	             PosBoundsY.x, 
@@ -222,7 +271,7 @@ public class SimpleFollow : MonoBehaviour
 			zPos = Mathf.Clamp (
 	             Mathf.Lerp (
 		             transform.position.z, 
-		             FollowPosZ.position.z + FollowPosOffset.z, 
+					 GetAverageZPoint (FollowPosZ) + FollowPosOffset.z, 
 		             FollowPosSmoothTime.z * (ZPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
 	             PosBoundsZ.x, 
@@ -238,7 +287,7 @@ public class SimpleFollow : MonoBehaviour
 			xPos = Mathf.Clamp (
 				Mathf.SmoothDamp (
 					transform.position.x, 
-					FollowPosX.position.x + FollowPosOffset.x, 
+					GetAverageXPoint (FollowPosX) + FollowPosOffset.x, 
 					ref FollowPosVelX, 
 					FollowPosSmoothTime.x * (XPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
@@ -249,7 +298,7 @@ public class SimpleFollow : MonoBehaviour
 			yPos = Mathf.Clamp (
 	             Mathf.SmoothDamp (
 		             transform.position.y, 
-		             FollowPosY.position.y + FollowPosOffset.y, 
+					 GetAverageYPoint (FollowPosY) + FollowPosOffset.y, 
 		             ref FollowPosVelY, 
 		             FollowPosSmoothTime.y * (YPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
@@ -260,7 +309,7 @@ public class SimpleFollow : MonoBehaviour
 			zPos = Mathf.Clamp (
 				Mathf.SmoothDamp (
 					transform.position.z, 
-					FollowPosZ.position.z + FollowPosOffset.z, 
+					GetAverageZPoint (FollowPosZ) + FollowPosOffset.z, 
 					ref FollowPosVelZ, 
 					FollowPosSmoothTime.z * (ZPosTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime)), 
 
@@ -275,19 +324,19 @@ public class SimpleFollow : MonoBehaviour
 
 	void CheckFollowPosTransforms ()
 	{
-		if (FollowPosX.transform == null) 
+		if (FollowPosX == null) 
 		{
-			FollowPosX = this.transform;
+			FollowPosX = new Transform[] {this.transform};
 		}
 
-		if (FollowPosY.transform == null) 
+		if (FollowPosY == null) 
 		{
-			FollowPosY = this.transform;
+			FollowPosY = new Transform[] {this.transform};
 		}
 
-		if (FollowPosZ.transform == null) 
+		if (FollowPosZ == null) 
 		{
-			FollowPosZ = this.transform;
+			FollowPosZ = new Transform[] {this.transform};
 		}
 	}
 
@@ -311,12 +360,7 @@ public class SimpleFollow : MonoBehaviour
 					FollowRotSmoothTime.z * (ZRotTimeUnscaled ? Time.unscaledDeltaTime : Time.deltaTime))
 			);
 
-		transform.rotation = Quaternion.Euler(RotationAngle);
-	}
-
-	public void OverridePos (Transform pos)
-	{
-		OverrideTransform = pos;
+		transform.rotation = Quaternion.Euler (RotationAngle);
 	}
 
 	public void SetFollowPos (bool follow)
@@ -332,5 +376,15 @@ public class SimpleFollow : MonoBehaviour
 	public void SetFollowRotX (Transform newFollowRotX)
 	{
 		FollowRotX = newFollowRotX;
+	}
+
+	public void SetFollowRotY (Transform newFollowRotY)
+	{
+		FollowRotY = newFollowRotY;
+	}
+
+	public void SetFollowRotZ (Transform newFollowRotZ)
+	{
+		FollowRotZ = newFollowRotZ;
 	}
 }

@@ -17,7 +17,7 @@ public class SaveAndLoadScript : MonoBehaviour
 	[Header ("Player Data")]
 	public string Username = "default"; // For multiple profiles.
 	public string myName; // For multiple playthroughs.
-	public int LevelId; // This is the maximum level number the player can access, 0 = Level 1.
+	public int LevelId; // This is the maximum level number the player can access, 0 = Level 1, 1 = level 2, etc.
 
 	[Header ("Settings Data")]
 	public Camera cam; // Camera to use to change settings.

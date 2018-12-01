@@ -45,7 +45,10 @@ public class GameController : MonoBehaviour
 	{
 		if (playerActions.Pause.WasPressed)
 		{
-			CheckPause ();
+			if (PlayerController.instance.lostAllHealth == false)
+			{
+				CheckPause ();
+			}
 		}
 
 		if (isPaused == false)
