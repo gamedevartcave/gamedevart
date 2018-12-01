@@ -2,65 +2,68 @@
 using UnityEngine.Events;
 using System.Collections;
 
-public class DontDestroyOnLoadInit : MonoBehaviour 
+namespace CityBashers
 {
-	public static DontDestroyOnLoadInit Instance { get; private set; }
-
-	[Tooltip ("Managers Prefab.")]
-	public GameObject ManagersPrefab;
-	public float Delay;
-	public float initializeWaitTime = 0.5f;
-	private GameObject managers;
-	public UnityEvent OnInitialize;
-
-	private WaitForSeconds initializeWait;
-
-	void Awake ()
+	public class DontDestroyOnLoadInit : MonoBehaviour 
 	{
-		Instance = this;
-		Time.timeScale = 1;
-		initializeWait = new WaitForSeconds (initializeWaitTime);
-		Invoke ("DetectManagers", Delay);
-	}
+		public static DontDestroyOnLoadInit Instance { get; private set; }
 
-	public void SetInstance ()
-	{
-		//Instance = this;
-		//SceneLoader.Instance.OnSceneLoadComplete.AddListener (OnSceneLoadComplete);
-		//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
-	}
+		[Tooltip ("Managers Prefab.")]
+		public GameObject ManagersPrefab;
+		public float Delay;
+		public float initializeWaitTime = 0.5f;
+		private GameObject managers;
+		public UnityEvent OnInitialize;
 
-	public void DetectManagers ()
-	{
-		// If there is no MANAGERS GameObject present,
-		// Create one and make it not destory on load.
-		if (InitManager.Instance == null)
+		private WaitForSeconds initializeWait;
+
+		void Awake ()
 		{
-			managers = Instantiate (ManagersPrefab); // Includes the InitManager.
-			managers.name = "MANAGERS";
-			DontDestroyOnLoad (managers.gameObject); 
-
+			Instance = this;
+			Time.timeScale = 1;
+			initializeWait = new WaitForSeconds (initializeWaitTime);
+			Invoke ("DetectManagers", Delay);
 		}
 
-		//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
+		public void SetInstance ()
+		{
+			//Instance = this;
+			//SceneLoader.Instance.OnSceneLoadComplete.AddListener (OnSceneLoadComplete);
+			//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
+		}
 
-		//StartCoroutine (Initialize ());
-	}
+		public void DetectManagers ()
+		{
+			// If there is no MANAGERS GameObject present,
+			// Create one and make it not destory on load.
+			if (InitManager.Instance == null)
+			{
+				managers = Instantiate (ManagersPrefab); // Includes the InitManager.
+				managers.name = "MANAGERS";
+				DontDestroyOnLoad (managers.gameObject); 
 
-	IEnumerator Initialize ()
-	{
-		yield return initializeWait;
-		OnInitialize.Invoke ();
-		SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
-	}
+			}
 
-	public void LoadData ()
-	{
-		SaveAndLoadScript.Instance.InitializeLoad ();
-	}
+			//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
 
-	public void OnInitialized ()
-	{
-		StartCoroutine (Initialize ());
+			//StartCoroutine (Initialize ());
+		}
+
+		IEnumerator Initialize ()
+		{
+			yield return initializeWait;
+			OnInitialize.Invoke ();
+			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+		}
+
+		public void LoadData ()
+		{
+			SaveAndLoadScript.Instance.InitializeLoad ();
+		}
+
+		public void OnInitialized ()
+		{
+			StartCoroutine (Initialize ());
+		}
 	}
 }

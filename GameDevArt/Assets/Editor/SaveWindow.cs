@@ -1,115 +1,118 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class SaveWindow : EditorWindow
+namespace CityBashers
 {
-	static SaveAndLoadScript savescript;
-	private GUIStyle style;
-
-	[MenuItem ("Window/Save Editor")]
-	public static void ShowSaveEditorWindow ()
+	public class SaveWindow : EditorWindow
 	{
-		GetWindow<SaveWindow> ("Save Editor");
-	}
+		static SaveAndLoadScript savescript;
+		private GUIStyle style;
 
-	[MenuItem ("Window/Open save folder location")]
-	public static void ShowSaveLocationWindow ()
-	{
-		string savefolder = Application.persistentDataPath + "/";
-		Application.OpenURL (savefolder);
-		Debug.Log ("Opened save folder at " + savefolder);
-	}
-
-	void OnGUI ()
-	{
-		savescript = FindObjectOfType<SaveAndLoadScript> ();
-
-		style = new GUIStyle (GUI.skin.button);
-		style.stretchWidth = true;
-		style.alignment = TextAnchor.MiddleCenter;
-		style.normal.textColor = Color.white;
-
-		GUILayout.Label ("Save and Load data management.", EditorStyles.boldLabel);
-
-		if (GUILayout.Button ("Open save location"))
+		[MenuItem ("Window/Save Editor")]
+		public static void ShowSaveEditorWindow ()
 		{
-			ShowSaveLocationWindow ();
+			GetWindow<SaveWindow> ("Save Editor");
 		}
 
-		GUILayout.Space (10);
-
-		GUILayout.Label ("Player Data");
-
-		GUILayout.BeginHorizontal ();
-
-		// SAVE
-		GUI.backgroundColor = new Color (0.4f, 0.9f, 1, 1);
-		if (GUILayout.Button ("Save", style)) 
+		[MenuItem ("Window/Open save folder location")]
+		public static void ShowSaveLocationWindow ()
 		{
-			savescript.SavePlayerData ();
+			string savefolder = Application.persistentDataPath + "/";
+			Application.OpenURL (savefolder);
+			Debug.Log ("Opened save folder at " + savefolder);
 		}
 
-		// LOAD
-		if (Application.isPlaying == true)
+		void OnGUI ()
 		{
-			GUI.backgroundColor = new Color (0.75f, 0.75f, 1, 1);
-			if (GUILayout.Button ("Load", style))
+			savescript = FindObjectOfType<SaveAndLoadScript> ();
+
+			style = new GUIStyle (GUI.skin.button);
+			style.stretchWidth = true;
+			style.alignment = TextAnchor.MiddleCenter;
+			style.normal.textColor = Color.white;
+
+			GUILayout.Label ("Save and Load data management.", EditorStyles.boldLabel);
+
+			if (GUILayout.Button ("Open save location"))
 			{
-				savescript.LoadPlayerData ();
+				ShowSaveLocationWindow ();
 			}
-		}
 
-		// DELETE
-		GUI.backgroundColor = new Color (1, 0.5f, 0.5f, 1);
-		if (GUILayout.Button ("Delete", style)) 
-		{
-			savescript.DeletePlayerDataMain ();
-		}
+			GUILayout.Space (10);
 
-		// DELETE (EDITOR)
-		if (GUILayout.Button ("Delete (Editor)", style)) 
-		{
-			savescript.DeletePlayerDataEditor ();
-		}
+			GUILayout.Label ("Player Data");
 
-		GUILayout.EndHorizontal ();
+			GUILayout.BeginHorizontal ();
 
-		GUILayout.Space (10);
-
-		GUILayout.Label ("Settings Data");
-
-		GUILayout.BeginHorizontal ();
-
-		// SAVE
-		GUI.backgroundColor = new Color (0.4f, 0.9f, 1, 1);
-		if (GUILayout.Button ("Save", style)) 
-		{
-			savescript.SaveSettingsData ();
-		}
-
-		// LOAD
-		if (Application.isPlaying == true) 
-		{
-			GUI.backgroundColor = new Color (0.75f, 0.75f, 1, 1);
-			if (GUILayout.Button ("Load", style)) 
+			// SAVE
+			GUI.backgroundColor = new Color (0.4f, 0.9f, 1, 1);
+			if (GUILayout.Button ("Save", style)) 
 			{
-				savescript.LoadSettingsData ();
+				savescript.SavePlayerData ();
 			}
-		}
 
-		// DELETE
-		GUI.backgroundColor = new Color (1, 0.5f, 0.5f, 1);
-		if (GUILayout.Button ("Delete", style)) 
-		{
-			savescript.DeleteSettingsDataMain ();
-		}
+			// LOAD
+			if (Application.isPlaying == true)
+			{
+				GUI.backgroundColor = new Color (0.75f, 0.75f, 1, 1);
+				if (GUILayout.Button ("Load", style))
+				{
+					savescript.LoadPlayerData ();
+				}
+			}
 
-		// DELETE (EDITOR)
-		if (GUILayout.Button ("Delete (Editor)", style)) 
-		{
-			savescript.DeleteSettingsDataEditor ();
-		}
+			// DELETE
+			GUI.backgroundColor = new Color (1, 0.5f, 0.5f, 1);
+			if (GUILayout.Button ("Delete", style)) 
+			{
+				savescript.DeletePlayerDataMain ();
+			}
 
-		GUILayout.EndHorizontal ();
+			// DELETE (EDITOR)
+			if (GUILayout.Button ("Delete (Editor)", style)) 
+			{
+				savescript.DeletePlayerDataEditor ();
+			}
+
+			GUILayout.EndHorizontal ();
+
+			GUILayout.Space (10);
+
+			GUILayout.Label ("Settings Data");
+
+			GUILayout.BeginHorizontal ();
+
+			// SAVE
+			GUI.backgroundColor = new Color (0.4f, 0.9f, 1, 1);
+			if (GUILayout.Button ("Save", style)) 
+			{
+				savescript.SaveSettingsData ();
+			}
+
+			// LOAD
+			if (Application.isPlaying == true) 
+			{
+				GUI.backgroundColor = new Color (0.75f, 0.75f, 1, 1);
+				if (GUILayout.Button ("Load", style)) 
+				{
+					savescript.LoadSettingsData ();
+				}
+			}
+
+			// DELETE
+			GUI.backgroundColor = new Color (1, 0.5f, 0.5f, 1);
+			if (GUILayout.Button ("Delete", style)) 
+			{
+				savescript.DeleteSettingsDataMain ();
+			}
+
+			// DELETE (EDITOR)
+			if (GUILayout.Button ("Delete (Editor)", style)) 
+			{
+				savescript.DeleteSettingsDataEditor ();
+			}
+
+			GUILayout.EndHorizontal ();
+		}
 	}
 }

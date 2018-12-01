@@ -2,41 +2,44 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class BackgroundFader : MonoBehaviour
+namespace CityBashers
 {
-	public static BackgroundFader instance { get; private set; }
-
-	public RawImage background;
-	public float fadeSmoothing = 3;
-	public Color StartColor;
-	public Color EndColor;
-
-	void Awake ()
+	public class BackgroundFader : MonoBehaviour
 	{
-		instance = this;
-		this.enabled = false;
-	}
+		public static BackgroundFader instance { get; private set; }
 
-	public void StartFade ()
-	{
-		StartCoroutine (FadeScreen ());
-	}
+		public RawImage background;
+		public float fadeSmoothing = 3;
+		public Color StartColor;
+		public Color EndColor;
 
-	public IEnumerator FadeScreen ()
-	{
-		background.color = StartColor;
-		SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
-
-		while (background.color != EndColor)
+		void Awake ()
 		{
-			background.color = 
-				Color.Lerp (
-					background.color, 
-					EndColor, 
-					fadeSmoothing * Time.deltaTime
-				);
+			instance = this;
+			this.enabled = false;
+		}
 
-			yield return null;
+		public void StartFade ()
+		{
+			StartCoroutine (FadeScreen ());
+		}
+
+		public IEnumerator FadeScreen ()
+		{
+			background.color = StartColor;
+			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+
+			while (background.color != EndColor)
+			{
+				background.color = 
+					Color.Lerp (
+						background.color, 
+						EndColor, 
+						fadeSmoothing * Time.deltaTime
+					);
+
+				yield return null;
+			}
 		}
 	}
 }

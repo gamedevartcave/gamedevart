@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-public class CursorManager : MonoBehaviour 
+namespace CityBashers
 {
-	public void ShowCursor ()
+	public class CursorManager : MonoBehaviour 
 	{
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.None;
-	}
+		public void ShowCursor ()
+		{
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
 
-	public void HideCursor ()
-	{
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
+		public void HideCursor ()
+		{
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+		}
 	}
 }

@@ -2,25 +2,28 @@
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class LoadingScreenTextUpdate : MonoBehaviour
+namespace CityBashers
 {
-	public TextMeshProUGUI loadingScreenText;
-
-	void Start ()
+	public class LoadingScreenTextUpdate : MonoBehaviour
 	{
-		if (loadingScreenText == null) 
+		public TextMeshProUGUI loadingScreenText;
+
+		void Start ()
 		{
-			loadingScreenText = InitManager.Instance.LoadingMissionText;
+			if (loadingScreenText == null) 
+			{
+				loadingScreenText = InitManager.Instance.LoadingMissionText;
+			}
 		}
-	}
 
-	public void UpdateMissionText (string missionText)
-	{
-		loadingScreenText.text = missionText;
-	}
+		public void UpdateMissionText (string missionText)
+		{
+			loadingScreenText.text = missionText;
+		}
 
-	public void UpdateLoadingTextInLevel ()
-	{
-		loadingScreenText.text = "Level " + (SaveAndLoadScript.Instance.LevelId + 1).ToString ();
+		public void UpdateLoadingTextInLevel ()
+		{
+			loadingScreenText.text = "Level " + (SaveAndLoadScript.Instance.LevelId + 1).ToString ();
+		}
 	}
 }

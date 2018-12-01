@@ -87,7 +87,10 @@ namespace UnityEngine.UI.Extensions
 
 			if (useInputTexture == false)
 			{
-				CreateGradientTexture ();
+				if (gradientTexture == null)
+				{
+					CreateGradientTexture ();
+				}
 			}
 
 			if (cachedCanvas != null)

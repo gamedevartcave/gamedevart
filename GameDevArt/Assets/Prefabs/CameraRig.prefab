@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114247999168420246}
   m_Layer: 9
   m_Name: RenderTextureCamera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   screenBlendMode: 1
   sunTransform: {fileID: 0}
   radialBlurIterations: 3
-  sunColor: {r: 1, g: 1, b: 1, a: 1}
+  sunColor: {r: 1, g: 0.9828167, b: 0.9198113, a: 1}
   sunThreshold: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   sunShaftBlurRadius: 3.14
   sunShaftIntensity: 0.4
@@ -363,11 +363,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookAtPos: {fileID: 0}
+  Offset: {x: 0, y: 0, z: 0}
   LookMethod: 0
   useUpDirection: 0
   useSmoothing: 1
   SmoothingAmount: 10
-  Offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114247999168420246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1013544662402786}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1eed1d9cbe64423499f1fefc0ce50417, type: 3}
   m_Name: 
@@ -451,8 +451,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 319.0191
-      value: 0.8772583
+      time: 324.75372
+      value: 1.4031982
       inSlope: 0.0064607677
       outSlope: 0.0064607677
       tangentMode: 0
@@ -493,8 +493,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 325.76923
-      value: 0.20202637
+      time: 319.35895
+      value: 0.89730835
       inSlope: 0.0064607677
       outSlope: 0.0064607677
       tangentMode: 0
@@ -536,14 +536,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843463fa16eccc74a8bec53d8a9d04e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateMethod: 2
+  posUpdateMethod: 0
+  rotUpdateMethod: 0
   FollowPosition: 1
   AutomaticallyFindPlayerPosObject: 0
   LookForPosName: 
-  OverrideTransform: {fileID: 0}
-  FollowPosX: {fileID: 0}
-  FollowPosY: {fileID: 0}
-  FollowPosZ: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  FollowPosX:
+  - {fileID: 0}
+  FollowPosY:
+  - {fileID: 0}
+  FollowPosZ:
+  - {fileID: 0}
   FollowPosMethod: 1
   FollowPosOffset: {x: 0, y: 0, z: 0}
   FollowPosSmoothTime: {x: 5, y: 1, z: 5}
@@ -570,7 +574,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1002688175510626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
@@ -600,11 +604,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookAtPos: {fileID: 0}
+  Offset: {x: 0, y: -1, z: 0}
   LookMethod: 0
   useUpDirection: 1
   useSmoothing: 1
   SmoothingAmount: 5
-  Offset: {x: 0, y: -1, z: 0}
 --- !u!135 &135500360181896634
 SphereCollider:
   m_ObjectHideFlags: 1
