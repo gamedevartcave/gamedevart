@@ -1,25 +1,28 @@
 ﻿using UnityEngine;
 
-public class AudioSync : MonoBehaviour 
+namespace CityBashers
 {
-	public AudioSource master; // The AudioSource to follow.
-	public AudioSource slave; // The following AudioSource.
-
-	// Syncronizes audio source timing with another audio source.
-	void Update () 
+	public class AudioSync : MonoBehaviour 
 	{
-		// Checks if either audio source is playing.
-		if (slave.isPlaying == true || master.isPlaying == true) 
-		{
-			if (master.timeSamples > slave.timeSamples) 
-			{
-				slave.timeSamples = slave.timeSamples % master.timeSamples;
-			}
+		public AudioSource master; // The AudioSource to follow.
+		public AudioSource slave; // The following AudioSource.
 
-			else
-				
+		// Syncronizes audio source timing with another audio source.
+		void Update () 
+		{
+			// Checks if either audio source is playing.
+			if (slave.isPlaying == true || master.isPlaying == true) 
 			{
-				slave.timeSamples = master.timeSamples; // Match time samples.
+				if (master.timeSamples > slave.timeSamples) 
+				{
+					slave.timeSamples = slave.timeSamples % master.timeSamples;
+				}
+
+				else
+					
+				{
+					slave.timeSamples = master.timeSamples; // Match time samples.
+				}
 			}
 		}
 	}

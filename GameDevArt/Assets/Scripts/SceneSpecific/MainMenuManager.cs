@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-public class MainMenuManager : MonoBehaviour 
+namespace CityBashers
 {
-	void Start () 
+	public class MainMenuManager : MonoBehaviour 
 	{
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.None;
+		void Start () 
+		{
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
 	}
 }

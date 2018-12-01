@@ -2,47 +2,29 @@
 using TMPro;
 using System;
 
-public class InitManager : MonoBehaviour 
+namespace CityBashers
 {
-	public static InitManager Instance { get; private set; }
-
-	public TextMeshProUGUI LoadingMissionText;
-
-	void Awake ()
+	public class InitManager : MonoBehaviour 
 	{
-		Instance = this;
-		DontDestroyOnLoad (gameObject);
-	}
+		public static InitManager Instance { get; private set; }
 
-	void Start ()
-	{
-		LoadingMissionText.text = "";
-		LoadingMissionText.gameObject.SetActive (false);
+		public TextMeshProUGUI LoadingMissionText;
 
-		//SaveAndLoadScript.Instance.LoadSettingsData ();
-		//SaveAndLoadScript.Instance.SaveSettingsData ();
-		//SaveAndLoadScript.Instance.LoadPlayerData ();
-
-		//CheckPostProcessQuality ();
-	}
-
-	/*
-	void CheckPostProcessQuality ()
-	{
-		int qualLevel = QualitySettings.GetQualityLevel ();
-
-		if (qualLevel == 0) 
+		void Awake ()
 		{
+			Instance = this;
+			DontDestroyOnLoad (gameObject);
 		}
 
-		if (qualLevel == 1) 
+		void Start ()
 		{
+			LoadingMissionText.text = "";
+			LoadingMissionText.gameObject.SetActive (false);
 		}
-	}
-	*/
 
-	void OnApplicationQuit ()
-	{
-		Debug.Log ("Application ended after " + Time.unscaledTime + " seconds.");
+		void OnApplicationQuit ()
+		{
+			Debug.Log ("Application ended after " + Time.unscaledTime + " seconds.");
+		}
 	}
 }

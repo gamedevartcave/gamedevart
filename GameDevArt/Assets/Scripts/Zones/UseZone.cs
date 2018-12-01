@@ -1,72 +1,107 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using CityBashers;
 
-public class UseZone : MonoBehaviour 
+namespace CityBashers
 {
-	[ReadOnlyAttribute] public bool canUse;
-	public bool denyUse;
-	[ReadOnlyAttribute] public bool used;
-	public bool oneOffUse;
-	public bool autoUse;
-	public bool toggleUse;
-
-	[Header ("Timer use")]
-	public bool timerUse;
-	public bool active;
-	public float activeTime;
-
-	[Header ("Audio")]
-	public AudioSource useSound;
-	public AudioSource useEndSound;
-	public AudioSource useDenySound;
-
-	public Collider playerCol;
-	public UnityEvent UseEvent;
-	public UnityEvent OnUseEnded;
-	public UnityEvent OnUseDeny;
-
-	void Start ()
+	public class UseZone : MonoBehaviour 
 	{
-		PlayerController.instance.OnUse.AddListener (Use);
-	}
+		[ReadOnlyAttribute] public bool canUse;
+		public bool denyUse;
+		[ReadOnlyAttribute] public bool used;
+		public bool oneOffUse;
+		public bool autoUse;
+		public bool toggleUse;
 
-	void OnTriggerEnter (Collider other)
-	{
-		if (other == playerCol)
+		[Header ("Timer use")]
+		public bool timerUse;
+		public bool active;
+		public float activeTime;
+
+		[Header ("Audio")]
+		public AudioSource useSound;
+		public AudioSource useEndSound;
+		public AudioSource useDenySound;
+
+		public Collider playerCol;
+		public UnityEvent UseEvent;
+		public UnityEvent OnUseEnded;
+		public UnityEvent OnUseDeny;
+
+		void Start ()
 		{
-			canUse = true;
+			PlayerController.instance.OnUse.AddListener (Use);
+		}
 
-			if (autoUse == true && denyUse == false)
+		void OnTriggerEnter (Collider other)
+		{
+			if (other == playerCol)
 			{
-				Use ();
-			} 
+				canUse = true;
 
-			if (denyUse == true)
-			{
-				OnUseDeny.Invoke ();
+				if (autoUse == true && denyUse == false)
+				{
+					Use ();
+				} 
+
+				if (denyUse == true)
+				{
+					OnUseDeny.Invoke ();
+				}
 			}
 		}
-	}
 
-	void OnTriggerExit (Collider other)
-	{
-		if (other == playerCol)
+		void OnTriggerExit (Collider other)
 		{
-			canUse = false;
-		}
-	}
-
-	public void Use ()
-	{
-		if (denyUse == false)
-		{
-			if (toggleUse == false)
+			if (other == playerCol)
 			{
-				if (oneOffUse == true)
+				canUse = false;
+			}
+		}
+
+		public void Use ()
+		{
+			if (denyUse == false)
+			{
+				if (toggleUse == false)
 				{
-					if (used == false)
+					if (oneOffUse == true)
+					{
+						if (used == false)
+						{
+							if (canUse == true)
+							{
+								if (timerUse == true)
+								{
+									if (active == false)
+									{
+										UseEvent.Invoke ();
+										StartCoroutine (Timer ());
+										active = true;
+										Debug.Log ("One off timer use.");
+									}
+								} 
+
+								else // Normal use.
+								
+								{
+									UseEvent.Invoke ();
+									Debug.Log ("Normal one off use.");
+								}
+
+								used = true;
+							}
+
+							else // Cannot use.
+							
+							{
+								//OnUseDeny.Invoke ();
+							}
+						}
+					} 
+
+					else // Can use as many times as you like.
+					
 					{
 						if (canUse == true)
 						{
@@ -77,7 +112,7 @@ public class UseZone : MonoBehaviour
 									UseEvent.Invoke ();
 									StartCoroutine (Timer ());
 									active = true;
-									Debug.Log ("One off timer use.");
+									Debug.Log ("Normal timer use.");
 								}
 							} 
 
@@ -85,11 +120,9 @@ public class UseZone : MonoBehaviour
 							
 							{
 								UseEvent.Invoke ();
-								Debug.Log ("Normal one off use.");
+								Debug.Log ("Normal use.");
 							}
-
-							used = true;
-						}
+						} 
 
 						else // Cannot use.
 						
@@ -99,28 +132,24 @@ public class UseZone : MonoBehaviour
 					}
 				} 
 
-				else // Can use as many times as you like.
+				else // Toggle use.
 				
 				{
 					if (canUse == true)
 					{
-						if (timerUse == true)
-						{
-							if (active == false)
-							{
-								UseEvent.Invoke ();
-								StartCoroutine (Timer ());
-								active = true;
-								Debug.Log ("Normal timer use.");
-							}
-						} 
-
-						else // Normal use.
-						
+						if (active == false)
 						{
 							UseEvent.Invoke ();
-							Debug.Log ("Normal use.");
+							Debug.Log ("Toggle use on.");
 						}
+
+						if (active == true)
+						{
+							OnUseEnded.Invoke ();
+							Debug.Log ("Toggle use off.");
+						}
+
+						active = !active;
 					} 
 
 					else // Cannot use.
@@ -129,41 +158,14 @@ public class UseZone : MonoBehaviour
 						//OnUseDeny.Invoke ();
 					}
 				}
-			} 
-
-			else // Toggle use.
-			
-			{
-				if (canUse == true)
-				{
-					if (active == false)
-					{
-						UseEvent.Invoke ();
-						Debug.Log ("Toggle use on.");
-					}
-
-					if (active == true)
-					{
-						OnUseEnded.Invoke ();
-						Debug.Log ("Toggle use off.");
-					}
-
-					active = !active;
-				} 
-
-				else // Cannot use.
-				
-				{
-					//OnUseDeny.Invoke ();
-				}
 			}
 		}
-	}
 
-	IEnumerator Timer ()
-	{
-		yield return new WaitForSeconds (activeTime);
-		OnUseEnded.Invoke ();
-		active = false;
+		IEnumerator Timer ()
+		{
+			yield return new WaitForSeconds (activeTime);
+			OnUseEnded.Invoke ();
+			active = false;
+		}
 	}
 }

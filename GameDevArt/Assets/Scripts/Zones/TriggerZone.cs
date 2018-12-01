@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerZone : MonoBehaviour 
+namespace CityBashers
 {
-	public Collider PlayerCol;
-
-	public UnityEvent OnTriggerEntered;
-	public UnityEvent OnTriggerStaying;
-	public UnityEvent OnTriggerExited;
-
-	void OnTriggerEnter (Collider other)
+	public class TriggerZone : MonoBehaviour 
 	{
-		OnTriggerEntered.Invoke ();
-	}
-		
-	void OnTriggerStay (Collider other)
-	{
-		OnTriggerStaying.Invoke ();
-	}
+		public Collider PlayerCol;
 
-	void OnTriggerExit (Collider other)
-	{
-		OnTriggerExited.Invoke ();
+		public UnityEvent OnTriggerEntered;
+		public UnityEvent OnTriggerStaying;
+		public UnityEvent OnTriggerExited;
+
+		void OnTriggerEnter (Collider other)
+		{
+			OnTriggerEntered.Invoke ();
+		}
+			
+		void OnTriggerStay (Collider other)
+		{
+			OnTriggerStaying.Invoke ();
+		}
+
+		void OnTriggerExit (Collider other)
+		{
+			OnTriggerExited.Invoke ();
+		}
 	}
 }

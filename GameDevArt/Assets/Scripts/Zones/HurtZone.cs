@@ -2,115 +2,118 @@
 using System.Collections;
 using CityBashers;
 
-public class HurtZone : MonoBehaviour 
+namespace CityBashers
 {
-	[ReadOnlyAttribute] public bool isInsideHurtZone;
-	public Collider playerCol;
-	public Animator PlayerUI;
-	public bool damageOnEnter;
-
-	public int damageAmount = 10;
-
-	public float damageRate;
-	private WaitForSeconds damageWait;
-
-	public float damageStartWaitTime = 1;
-	private WaitForSeconds damageStartWait;
-
-	[Header ("HitStun")]
-	public bool isHitStunZone;
-
-	void Start ()
+	public class HurtZone : MonoBehaviour 
 	{
-		damageStartWait = new WaitForSeconds (damageStartWaitTime);
-		damageWait = new WaitForSeconds (damageRate);
-	}
+		[ReadOnlyAttribute] public bool isInsideHurtZone;
+		public Collider playerCol;
+		public Animator PlayerUI;
+		public bool damageOnEnter;
 
-	void OnCollisionEnter (Collision other)
-	{
-		if (other.collider == playerCol)
+		public int damageAmount = 10;
+
+		public float damageRate;
+		private WaitForSeconds damageWait;
+
+		public float damageStartWaitTime = 1;
+		private WaitForSeconds damageStartWait;
+
+		[Header ("HitStun")]
+		public bool isHitStunZone;
+
+		void Start ()
 		{
-			isInsideHurtZone = true;
-			PlayerUI.SetTrigger ("Show");
-			HitStunSequence ();
-			StartCoroutine (TakeDamage ());
+			damageStartWait = new WaitForSeconds (damageStartWaitTime);
+			damageWait = new WaitForSeconds (damageRate);
 		}
-	}
-		
-	void OnTriggerEnter (Collider other)
-	{
-		if (other == playerCol)
-		{
-			isInsideHurtZone = true;
-			PlayerUI.SetTrigger ("Show");
-			HitStunSequence ();
-			StartCoroutine (TakeDamage ());
-		}
-	}
 
-	void OnCollisionStay (Collision other)
-	{
-		if (other.collider == playerCol)
+		void OnCollisionEnter (Collision other)
 		{
-			isInsideHurtZone = true;
-			PlayerUI.SetTrigger ("Show");
-			HitStunSequence ();
+			if (other.collider == playerCol)
+			{
+				isInsideHurtZone = true;
+				PlayerUI.SetTrigger ("Show");
+				HitStunSequence ();
+				StartCoroutine (TakeDamage ());
+			}
 		}
-	}
-
-	void OnTriggerStay (Collider other)
-	{
-		if (other == playerCol)
+			
+		void OnTriggerEnter (Collider other)
 		{
-			isInsideHurtZone = true;
-			PlayerUI.SetTrigger ("Show");
-			HitStunSequence ();
+			if (other == playerCol)
+			{
+				isInsideHurtZone = true;
+				PlayerUI.SetTrigger ("Show");
+				HitStunSequence ();
+				StartCoroutine (TakeDamage ());
+			}
 		}
-	}
-		
-	void OnCollisionExit (Collision other)
-	{
-		if (other.collider == playerCol)
+
+		void OnCollisionStay (Collision other)
 		{
-			isInsideHurtZone = false;
-			PlayerUI.SetTrigger ("Show");
-			HitStunSequence ();
-			StopCoroutine (TakeDamage ());
+			if (other.collider == playerCol)
+			{
+				isInsideHurtZone = true;
+				PlayerUI.SetTrigger ("Show");
+				HitStunSequence ();
+			}
 		}
-	}
 
-	void OnTriggerExit (Collider other)
-	{
-		if (other == playerCol)
+		void OnTriggerStay (Collider other)
 		{
-			isInsideHurtZone = false;
-			PlayerUI.SetTrigger ("Show");
-			HitStunSequence ();
-			StopCoroutine (TakeDamage ());
+			if (other == playerCol)
+			{
+				isInsideHurtZone = true;
+				PlayerUI.SetTrigger ("Show");
+				HitStunSequence ();
+			}
 		}
-	}
-
-	IEnumerator TakeDamage ()
-	{
-		if (damageOnEnter == false) // Inflict damage immediately.
+			
+		void OnCollisionExit (Collision other)
 		{
-			yield return damageStartWait; // Give start wait.
-		} 
-
-		// Inflict inside hurt zone periodically.
-		while (isInsideHurtZone == true)
-		{
-			PlayerController.instance.health -= damageAmount;
-			PlayerUI.SetTrigger ("Show");
-			yield return damageWait;
+			if (other.collider == playerCol)
+			{
+				isInsideHurtZone = false;
+				PlayerUI.SetTrigger ("Show");
+				HitStunSequence ();
+				StopCoroutine (TakeDamage ());
+			}
 		}
-	}
 
-	void HitStunSequence ()
-	{
-		if (isHitStunZone == true)
+		void OnTriggerExit (Collider other)
 		{
-			PlayerController.instance.DoHitStun ();
+			if (other == playerCol)
+			{
+				isInsideHurtZone = false;
+				PlayerUI.SetTrigger ("Show");
+				HitStunSequence ();
+				StopCoroutine (TakeDamage ());
+			}
+		}
+
+		IEnumerator TakeDamage ()
+		{
+			if (damageOnEnter == false) // Inflict damage immediately.
+			{
+				yield return damageStartWait; // Give start wait.
+			} 
+
+			// Inflict inside hurt zone periodically.
+			while (isInsideHurtZone == true)
+			{
+				PlayerController.instance.health -= damageAmount;
+				PlayerUI.SetTrigger ("Show");
+				yield return damageWait;
+			}
+		}
+
+		void HitStunSequence ()
+		{
+			if (isHitStunZone == true)
+			{
+				PlayerController.instance.DoHitStun ();
+			}
 		}
 	}
 }

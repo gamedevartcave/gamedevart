@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using CityBashers;
 
 public class SetUpExample2B : MonoBehaviour {
 

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
-public class InControlActions : MonoBehaviour 
+namespace CityBashers
 {
-	public static InControlActions instance { get; private set; }
-
-	public PlayerActions playerActions;
-
-	void Awake ()
+	public class InControlActions : MonoBehaviour 
 	{
-		instance = this;
-		playerActions = PlayerActions.CreateWithDefaultBindings ();
+		public static InControlActions instance { get; private set; }
+
+		public PlayerActions playerActions;
+
+		void Awake ()
+		{
+			instance = this;
+			playerActions = PlayerActions.CreateWithDefaultBindings ();
+		}
 	}
 }

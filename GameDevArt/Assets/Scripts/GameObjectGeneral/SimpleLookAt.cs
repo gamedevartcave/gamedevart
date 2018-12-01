@@ -1,49 +1,52 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
-public class SimpleLookAt : MonoBehaviour 
+namespace CityBashers
 {
-	[Tooltip ("Position to look at.")]
-	public Transform LookAtPos;
-	public Vector3 Offset;
-	[Tooltip ("How to look at the Transform.")]
-	public lookType LookMethod;
-	public enum lookType
+	[ExecuteInEditMode]
+	public class SimpleLookAt : MonoBehaviour 
 	{
-		LookTowards,
-		LookAway
-	}
-
-	[Tooltip ("Find up direction instead of forward direction.")]
-	public bool useUpDirection;
-	public bool useSmoothing;
-	public float SmoothingAmount;
-
-	void LateUpdate ()
-	{
-		if (useSmoothing == true) 
+		[Tooltip ("Position to look at.")]
+		public Transform LookAtPos;
+		public Vector3 Offset;
+		[Tooltip ("How to look at the Transform.")]
+		public lookType LookMethod;
+		public enum lookType
 		{
-			Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset, Vector3.up);
-			transform.rotation = Quaternion.Slerp (transform.rotation, lookPos, SmoothingAmount * Time.deltaTime);
-			return;
+			LookTowards,
+			LookAway
 		}
 
-		if (useSmoothing == false) 
+		[Tooltip ("Find up direction instead of forward direction.")]
+		public bool useUpDirection;
+		public bool useSmoothing;
+		public float SmoothingAmount;
+
+		void LateUpdate ()
 		{
-			// Look towards.
-			if (LookMethod == lookType.LookTowards && LookAtPos != null) 
+			if (useSmoothing == true) 
 			{
-				transform.LookAt (
-					LookAtPos.position, useUpDirection ? Vector3.up : transform.forward 
-				);
+				Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset, Vector3.up);
+				transform.rotation = Quaternion.Slerp (transform.rotation, lookPos, SmoothingAmount * Time.deltaTime);
+				return;
 			}
 
-			// Look away.
-			if (LookMethod == lookType.LookAway) 
+			if (useSmoothing == false) 
 			{
-				transform.LookAt (
-					LookAtPos.position, useUpDirection ? -Vector3.up : -transform.forward
-				);
+				// Look towards.
+				if (LookMethod == lookType.LookTowards && LookAtPos != null) 
+				{
+					transform.LookAt (
+						LookAtPos.position, useUpDirection ? Vector3.up : transform.forward 
+					);
+				}
+
+				// Look away.
+				if (LookMethod == lookType.LookAway) 
+				{
+					transform.LookAt (
+						LookAtPos.position, useUpDirection ? -Vector3.up : -transform.forward
+					);
+				}
 			}
 		}
 	}
