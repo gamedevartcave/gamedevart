@@ -25,7 +25,7 @@ namespace CityBashers
 			if (graphic.mainTexture != null)
 			{
 				aspectFitter.aspectRatio = graphic.mainTexture.width / graphic.mainTexture.height;
-				Debug.Log ("New aspect ratio: " + aspectFitter.aspectRatio);
+				//Debug.Log ("New aspect ratio: " + aspectFitter.aspectRatio);
 			}
 		}
 	}

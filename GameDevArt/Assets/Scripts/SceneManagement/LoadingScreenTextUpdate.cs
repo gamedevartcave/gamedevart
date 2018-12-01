@@ -20,10 +20,5 @@ namespace CityBashers
 		{
 			loadingScreenText.text = missionText;
 		}
-
-		public void UpdateLoadingTextInLevel ()
-		{
-			loadingScreenText.text = "Level " + (SaveAndLoadScript.Instance.LevelId + 1).ToString ();
-		}
 	}
 }

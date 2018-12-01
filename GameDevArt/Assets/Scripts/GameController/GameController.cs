@@ -136,13 +136,11 @@ namespace CityBashers
 			if (isPaused)
 			{
 				DoPause ();
-				OnPause.Invoke ();
 			}
 
 			if (!isPaused)
 			{
 				DoUnpause ();
-				OnUnpause.Invoke ();
 			}
 		}
 
@@ -157,6 +155,7 @@ namespace CityBashers
 			Time.timeScale = 0;
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
+			OnPause.Invoke ();
 		}
 
 		public void DoUnpause ()
@@ -165,6 +164,7 @@ namespace CityBashers
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 			isPaused = false;
+			OnUnpause.Invoke ();
 		}
 	}
 }

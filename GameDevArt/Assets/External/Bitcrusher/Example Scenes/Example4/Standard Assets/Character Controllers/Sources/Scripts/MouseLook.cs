@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CityBashers
 {
@@ -17,6 +18,8 @@ namespace CityBashers
 		public float rotationY = 0;
 		[Range (0.0f, 1.0f)]
 		public float rotYDeadZone = 0.25f;
+
+		public Slider MouseSensitivitySlider;
 
 		private PlayerActions playerActions;
 
@@ -37,9 +40,21 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.invertYAxis = invert;
 		}
 
+		public void SetMouseSensitivityMultiplier ()
+		{
+			SaveAndLoadScript.Instance.MouseSensitivityMultplier = MouseSensitivitySlider.value;
+		}
+
+		public void RefreshMouseSensitivityValue ()
+		{
+			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+		}
+
 		void Update ()
 		{
-			rotationX = transform.localEulerAngles.y + playerActions.CamRot.Value.x * sensitivity.x;
+			rotationX = 
+				transform.localEulerAngles.y + 
+				playerActions.CamRot.Value.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 
 			// While aiming.
 			if (playerActions.Aim.Value > 0.5f)
@@ -47,7 +62,8 @@ namespace CityBashers
 				// Don't use deadzone.
 				rotationY += 
 					playerActions.CamRot.Value.y * 
-					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
+					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y) 
+					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 			}
 
 			// Not aiming.

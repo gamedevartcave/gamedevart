@@ -18,8 +18,7 @@ namespace CityBashers
 
 		[Header ("Player Data")]
 		public string Username = "default"; // For multiple profiles.
-		public string myName; // For multiple playthroughs.
-		public int LevelId; // This is the maximum level number the player can access, 0 = Level 1, 1 = level 2, etc.
+		public int ExperiencePoints;
 
 		[Header ("Settings Data")]
 		public Camera cam; // Camera to use to change settings.
@@ -44,11 +43,10 @@ namespace CityBashers
 		public float SoundtrackVolume = 0; // Using dB scale (-80, 0)
 		public float EffectsVolume = 0;  // Using dB scale (-80, 0)
 		public bool invertYAxis;
-		//public float MouseSensitivity;
+		public float MouseSensitivityMultplier = 1;
 
 		[HideInInspector]
 		public playerData PlayerData;
-		//public levelData LevelData;
 		[HideInInspector]
 		public settingsData SettingsData;
 
@@ -58,11 +56,6 @@ namespace CityBashers
 			Instance = this;
 		}
 		#endregion
-
-		void Start ()
-		{
-			
-		}
 
 		public void InitializeLoad ()
 		{
@@ -166,26 +159,7 @@ namespace CityBashers
 		void SetPlayerData (playerData data)
 		{
 			data.Username = Username;
-			data.myName = myName;
-
-			//SaveLevelData ();
 		}
-
-		/*
-		public void SaveLevelData ()
-		{
-			if (SceneManager.GetActiveScene ().name != "menu")
-			{
-				BinaryFormatter bf = new BinaryFormatter ();
-				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "/" + "Level_" + LevelId + "_data.dat");
-				levelData LevDat = new levelData ();
-
-
-				bf.Serialize (file, LevDat);
-				file.Close ();
-			}
-		}
-		*/
 
 		public void DeletePlayerDataEditor ()
 		{
@@ -198,8 +172,6 @@ namespace CityBashers
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"
 				);
 			}
-
-			myName = string.Empty;
 		}
 
 		public void DeletePlayerDataMain ()
@@ -213,8 +185,6 @@ namespace CityBashers
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
 				);
 			}
-
-			myName = string.Empty;
 		}
 
 		public void DeleteSettingsDataEditor ()
@@ -241,25 +211,6 @@ namespace CityBashers
 				);
 			}
 		}
-
-		/*
-		public void DeleteLevelData ()
-		{
-			string levelDirectory = Application.persistentDataPath + "/" + Username + "/";
-
-			if (Directory.Exists (levelDirectory) == true)
-			{
-				Directory.Delete (levelDirectory, true);
-			}
-		}
-		*/
-
-		/*
-		public void ResetAllLeaderboards ()
-		{
-			Debug.Log ("Leaderboards have been reset.");
-		}
-		*/
 			
 		// Load PlayerData main.
 		public void LoadPlayerData ()
@@ -333,47 +284,7 @@ namespace CityBashers
 		void LoadPlayerDataContents (playerData data)
 		{
 			Username = data.Username;
-			myName = data.myName;
 		}
-
-		/*
-		public void LoadLevelData ()
-		{
-			if (Directory.Exists (Application.persistentDataPath + "/" + Username + "/") == true)
-			{
-				if (File.Exists (Application.persistentDataPath + "/" + Username + "/" + "Level_" + LevelId + "_data.dat") == true)
-				{
-					// Opens the save data.
-					BinaryFormatter bf = new BinaryFormatter ();
-					FileStream file = File.Open (
-						Application.persistentDataPath + "/" + Username + "/" + "Level_" + LevelId + "_data.dat", 
-						FileMode.Open
-					);
-
-					// Processes the save data into memory.
-					levelData levdat = (levelData)bf.Deserialize (file);
-					file.Close ();
-
-					Debug.Log ("Successfully loaded from " +
-					Application.persistentDataPath + "/" + Username + "/" + "Level_" + LevelId + "_data.dat");
-				} 
-
-				else
-				
-				{
-					Directory.CreateDirectory (Application.persistentDataPath + "/" + Username + "/");
-					SaveLevelData ();
-				}
-			} 
-
-			else
-			
-			{
-				Directory.CreateDirectory (Application.persistentDataPath + "/" + Username + "/");
-				LoadLevelData ();
-			}
-		}
-		*/
 			
 		public void StorePlayerDataInGame ()
 		{
@@ -459,6 +370,7 @@ namespace CityBashers
 			data.SoundtrackVolume = Mathf.Clamp (SoundtrackVolume, -80, 0);
 			data.EffectsVolume 	  = Mathf.Clamp (EffectsVolume,    -80, 0);
 			data.invertYAxis = invertYAxis;
+			data.MouseSensitivityMultplier = MouseSensitivityMultplier;
 		}
 
 		public void LoadSettingsData ()
@@ -533,6 +445,7 @@ namespace CityBashers
 			SoundtrackVolume = data.SoundtrackVolume;
 			EffectsVolume = data.EffectsVolume;
 			invertYAxis = data.invertYAxis;
+			MouseSensitivityMultplier = data.MouseSensitivityMultplier;
 		}
 
 		// Puts new data into relevant scripts.
@@ -609,7 +522,8 @@ namespace CityBashers
 				targetFrameRate = -1;
 			}
 
-			if (targetFrameRate >= 30 || targetFrameRate <= -1) 
+			else
+			
 			{
 				TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
 			}
@@ -620,16 +534,8 @@ namespace CityBashers
 		public class playerData
 		{
 			public string Username;
-			public string myName;
 			public int ExperiencePoints;
 		}
-
-		/*
-		[System.Serializable]
-		public class levelData
-		{
-		}
-		*/
 
 		[System.Serializable]
 		public class settingsData
@@ -644,6 +550,7 @@ namespace CityBashers
 			public float SoundtrackVolume = 0;
 			public float EffectsVolume = 0;
 			public bool invertYAxis;
+			public float MouseSensitivityMultplier = 1;
 		}
 	}
 }
