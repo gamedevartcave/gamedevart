@@ -5,8 +5,6 @@ namespace CityBashers
 {
 	public class TriggerZone : MonoBehaviour 
 	{
-		public Collider PlayerCol;
-
 		public UnityEvent OnTriggerEntered;
 		public UnityEvent OnTriggerStaying;
 		public UnityEvent OnTriggerExited;

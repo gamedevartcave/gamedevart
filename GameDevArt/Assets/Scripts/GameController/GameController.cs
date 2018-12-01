@@ -89,7 +89,7 @@ namespace CityBashers
 		void Start ()
 		{
 			playerActions = InControlActions.instance.playerActions;
-
+			ThirdPersonUserControl.instance.OnWeaponChange.AddListener (OnWeaponChange);
 			displayScore = 0;
 			targetScore = 0;
 			scoreText.text = 0.ToString ();
@@ -265,6 +265,11 @@ namespace CityBashers
 			Cursor.lockState = CursorLockMode.Locked;
 			isPaused = false;
 			OnUnpause.Invoke ();
+		}
+
+		public void OnWeaponChange ()
+		{
+			
 		}
 	}
 }
