@@ -2,6 +2,8 @@
 using UnityEngine.Events;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.PostProcessing;
+using UnityEngine.UI;
+using TMPro;
 
 namespace CityBashers
 {
@@ -11,16 +13,52 @@ namespace CityBashers
 
 		public CameraShake camShakeScript;
 
-		[Header ("Post processing")]
-		public PostProcessingProfile postProcessing;
-		public float targetDofDistance;
-		public float dofSmoothing = 5.0f;
+		[Header ("Scoring")]
+		[ReadOnlyAttribute] public float displayScore;
+		[SerializeField] private float targetScore;
+		public float score 
+		{
+			get 
+			{ 
+				return targetScore; 
+			}
 
-		[Header ("Pausing")]
-		[ReadOnlyAttribute] public bool isPaused;
-		public MenuNavigation activeMenu;
-		public UnityEvent OnPause;
-		public UnityEvent OnUnpause;
+			set 
+			{ 
+				OnScoreCountStarted.Invoke (); 
+				targetScore = value; 
+			}
+		}
+
+		[ReadOnlyAttribute] private bool isCountingScore;
+		public TextMeshProUGUI scoreText;
+		public float scoreSmoothing;
+		public UnityEvent OnScoreCountStarted;
+		public UnityEvent OnScoreCountComplete;
+		[Space (10)]
+
+		[ReadOnlyAttribute] public float displayComboScore;
+		[SerializeField] private float targetComboScore;
+		public float comboScore 
+		{
+			get 
+			{ 
+				return targetComboScore; 
+			}
+
+			set 
+			{
+				OnComboCountStarted.Invoke (); 
+				targetComboScore = value; 
+			}
+		}
+
+		[ReadOnlyAttribute] private bool isCountingCombo;
+		public TextMeshProUGUI comboScoreText;
+		public float comboScoreSmoothing;
+
+		public UnityEvent OnComboCountStarted;
+		public UnityEvent OnComboCountComplete;
 
 		[Header ("Game timer")]
 		public UnityEvent OnTimerTrackingStarted;
@@ -28,6 +66,17 @@ namespace CityBashers
 		private bool trackTime;
 		private float finalTime;
 		private float startTime;
+
+		[Header ("Pausing")]
+		[ReadOnlyAttribute] public bool isPaused;
+		public MenuNavigation activeMenu;
+		public UnityEvent OnPause;
+		public UnityEvent OnUnpause;
+
+		[Header ("Post processing")]
+		public PostProcessingProfile postProcessing;
+		public float targetDofDistance;
+		public float dofSmoothing = 5.0f;
 
 		private PlayerActions playerActions;
 
@@ -40,6 +89,13 @@ namespace CityBashers
 		void Start ()
 		{
 			playerActions = InControlActions.instance.playerActions;
+
+			displayScore = 0;
+			targetScore = 0;
+			scoreText.text = 0.ToString ();
+			displayComboScore = 0;
+			targetComboScore = 0;
+			comboScoreText.text = string.Empty;
 		}
 
 		void Update ()
@@ -55,6 +111,50 @@ namespace CityBashers
 			if (isPaused == false)
 			{
 				GetDepthOfField ();
+				GetScore ();
+				GetCombo ();
+			}
+		}
+
+		void GetScore ()
+		{
+			if (targetScore - displayScore >= 0.5f)
+			{
+				isCountingScore = true;
+				displayScore = Mathf.Lerp (displayScore, targetScore, scoreSmoothing * Time.deltaTime);
+				displayScore = Mathf.Clamp (displayScore, 0, Mathf.Infinity);
+				scoreText.text = Mathf.Round (displayScore).ToString ();
+			} 
+
+			else
+			
+			{
+				if (isCountingCombo == true)
+				{
+					OnScoreCountComplete.Invoke ();
+					isCountingCombo = false;
+				}
+			}
+		}
+
+		void GetCombo ()
+		{
+			if (targetComboScore - displayComboScore >= 0.5f)
+			{
+				isCountingCombo = true;
+				displayComboScore = Mathf.Lerp (displayComboScore, targetComboScore, scoreSmoothing * Time.deltaTime);
+				displayComboScore = Mathf.Clamp (displayComboScore, 0, Mathf.Infinity);
+				comboScoreText.text = "+ " + Mathf.Round (displayComboScore).ToString ();
+			} 
+
+			else
+			
+			{
+				if (isCountingCombo == true)
+				{
+					OnComboCountComplete.Invoke ();
+					isCountingCombo = false;
+				}
 			}
 		}
 

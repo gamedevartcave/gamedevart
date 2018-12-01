@@ -103,6 +103,7 @@ namespace UnityEngine.UI.Extensions
 		public void CreateGradientTexture ()
 		{
 			gradientTexture = new Texture2D (Mathf.CeilToInt (gradientSize.x), Mathf.CeilToInt (gradientSize.y));
+			gradientTexture.wrapMode = TextureWrapMode.Clamp;
 
 			// Note: Causes error when building (missing assembly reference for Texture2D).
 			//gradientTexture.alphaIsTransparency = true; // Enable transparency so alpha effect works.
