@@ -26,14 +26,18 @@ namespace CityBashers
 		void Awake ()
 		{
 			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener (OnInitialize);
-			activeMenu = this;
-			this.enabled = false;
+			//activeMenu = this;
+			//this.enabled = false;
 		}
 
 		void OnEnable ()
 		{
-			activeMenu = this;
-			ButtonEnter (currentSelectable);
+			//activeMenu = this;
+
+			if (activeMenu == this)
+			{
+				ButtonEnter (currentSelectable);
+			}
 		}
 
 		void OnInitialize ()
@@ -65,9 +69,22 @@ namespace CityBashers
 		void Update ()
 		{
 			// Bail out if not fully visible.
-			if (canvasGroup.alpha != 1 && 
-				GameController.instance.activeMenu != this && 
-				GameController.instance.activeMenu != null)
+			if (GameController.instance == null)
+			{
+				return;
+			} 
+
+			else
+			
+			{
+				if (GameController.instance.activeMenu != this &&
+					GameController.instance.activeMenu != null)
+				{
+					return;
+				}
+			}
+
+			if (playerActions == null)
 			{
 				return;
 			}

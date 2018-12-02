@@ -70,6 +70,7 @@ namespace CityBashers
 		[Header ("Pausing")]
 		[ReadOnlyAttribute] public bool isPaused;
 		public MenuNavigation activeMenu;
+		public MenuNavigation firstActiveMenu;
 		public UnityEvent OnPause;
 		public UnityEvent OnUnpause;
 
@@ -231,14 +232,17 @@ namespace CityBashers
 
 		void CheckPause ()
 		{
-			isPaused = !isPaused;
+			if (activeMenu == firstActiveMenu)
+			{
+				isPaused = !isPaused;
+			}
 
-			if (isPaused)
+			if (isPaused && activeMenu == firstActiveMenu)
 			{
 				DoPause ();
 			}
 
-			if (!isPaused)
+			if (!isPaused && activeMenu == firstActiveMenu)
 			{
 				DoUnpause ();
 			}
