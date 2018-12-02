@@ -24,7 +24,7 @@ namespace CityBashers
 		public Camera cam; // Camera to use to change settings.
 		public PostProcessingProfile main_postProcessing;
 		public PostProcessingProfile camera_UI_PostProcessing;
-		public VolumetricLightRenderer volLightRend;
+		//public VolumetricLightRenderer volLightRend;
 		public SunShafts sunShafts;
 		// Screen resolution will be independent of quality settings.
 		public int targetResolutionWidth = 1920;
@@ -62,7 +62,7 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.LoadPlayerData ();
 
 			cam = Camera.main;
-			volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
+			//volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
 			sunShafts = cam.GetComponent<SunShafts> ();
 
 			SaveAndLoadScript.Instance.LoadSettingsData ();
@@ -468,7 +468,7 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = false;
 				main_postProcessing.screenSpaceReflection.enabled = false;
 				main_postProcessing.vignette.enabled = false;
-				volLightRend.enabled = false;
+				//volLightRend.enabled = false;
 				sunShafts.enabled = false;
 				camera_UI_PostProcessing.bloom.enabled = false;
 				break;
@@ -485,7 +485,7 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = true;
 				main_postProcessing.screenSpaceReflection.enabled = false;
 				main_postProcessing.vignette.enabled = false;
-				volLightRend.enabled = false;
+				//volLightRend.enabled = false;
 				sunShafts.enabled = true;
 				camera_UI_PostProcessing.bloom.enabled = false;
 				break;
@@ -502,7 +502,7 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = true;
 				main_postProcessing.screenSpaceReflection.enabled = true;
 				main_postProcessing.vignette.enabled = true;
-				volLightRend.enabled = true;
+				//volLightRend.enabled = true;
 				sunShafts.enabled = true;
 				camera_UI_PostProcessing.bloom.enabled = true;
 				break;

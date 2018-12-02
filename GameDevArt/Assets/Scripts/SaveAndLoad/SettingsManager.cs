@@ -13,6 +13,7 @@ namespace CityBashers
 		public Camera cam;
 
 		public Button HighEndQualityButton;
+		public Button MediumQualityButton;
 		public Button LowEndQualityButton;
 
 		[Header ("Audio Settings")]
@@ -82,10 +83,18 @@ namespace CityBashers
 				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 0.25f;
 			}
 
-			// High visual quality settings.
+			// Medium visual quality settings.
 			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 1) 
 			{
 				QualitySettings.SetQualityLevel (1);
+
+				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
+			}
+
+			// High visual quality settings.
+			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 2) 
+			{
+				QualitySettings.SetQualityLevel (2);
 
 				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
 			}
