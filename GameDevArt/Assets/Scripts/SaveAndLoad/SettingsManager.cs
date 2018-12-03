@@ -38,7 +38,6 @@ namespace CityBashers
 		public Toggle invertToggle;
 		public Slider MouseSensitivitySlider;
 
-
 		void Awake ()
 		{
 			Instance = this;
@@ -57,16 +56,8 @@ namespace CityBashers
 			InvokeRepeating ("GetEffectsVolumeValue", 0, 1);
 		}
 
-		public void SaveSettings ()
-		{
-			SaveAndLoadScript.Instance.SaveSettingsData ();
-		}
 
-		public void LoadSettings ()
-		{
-			SaveAndLoadScript.Instance.LoadSettingsData ();
-		}
-
+		#region Video
 		public void OnQualitySettingsButtonClick (int QualityIndex)
 		{
 			SaveAndLoadScript.Instance.QualitySettingsIndex = QualityIndex;
@@ -99,10 +90,9 @@ namespace CityBashers
 				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
 			}
 		}
+		#endregion
 
-
-		// AUDIO
-
+		#region Audio
 		public void MasterVolumeUpOnClick ()
 		{
 			if (AudioListener.volume < 1) 
@@ -173,11 +163,17 @@ namespace CityBashers
 				if (curVolResult)
 				{
 					return curSoundtrackVol;
-				} else
+				} 
+
+				else
+				
 				{
 					return 0f;
 				}
-			} else
+			} 
+
+			else
+			
 			{
 				return 0f;
 			}
@@ -193,11 +189,17 @@ namespace CityBashers
 				if (curVolResult)
 				{
 					return curEffectsVol;
-				} else
+				} 
+
+				else
+				
 				{
 					return 0f;
 				}
-			} else
+			} 
+
+			else
+			
 			{
 				return 0f;
 			}
@@ -225,8 +227,9 @@ namespace CityBashers
 				).ToString ();
 			}
 		}
+		#endregion
 
-		// Gameplay settings
+		#region Gameplay
 		void UpdateGameplayValues ()
 		{
 			invertToggle.isOn = SaveAndLoadScript.Instance.invertYAxis;
@@ -241,9 +244,18 @@ namespace CityBashers
 		{
 
 		}
+		#endregion
 			
+		#region Saving and applying settings
+		public void SaveSettings ()
+		{
+			SaveAndLoadScript.Instance.SaveSettingsData ();
+		}
 
-		// Saving and applying settings.
+		public void LoadSettings ()
+		{
+			SaveAndLoadScript.Instance.LoadSettingsData ();
+		}
 
 		public void ApplySettings ()
 		{
@@ -261,5 +273,6 @@ namespace CityBashers
 		{
 			UpdateVolumeTextValues ();
 		}
+		#endregion
 	}
 }
