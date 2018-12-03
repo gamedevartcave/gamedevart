@@ -68,6 +68,11 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.LoadSettingsData ();
 		}
 
+		void OnApplicationQuit ()
+		{
+			SaveSettingsData ();
+		}
+
 		void CheckUsername ()
 		{
 			if (Username == null || Username == "") 
@@ -301,8 +306,8 @@ namespace CityBashers
 			 || File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 			{
 				QualitySettings.SetQualityLevel (QualitySettingsIndex);
-				targetResolutionWidth = Screen.currentResolution.width; 
-				targetResolutionHeight = Screen.currentResolution.height;
+				//targetResolutionWidth = Screen.currentResolution.width; 
+				//targetResolutionHeight = Screen.currentResolution.height;
 
 				if (QualitySettingsIndex == 0) 
 				{

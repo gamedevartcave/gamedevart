@@ -11,32 +11,31 @@ namespace CityBashers
 		{
 			Screen.SetResolution (
 				(int)resolutions [index].x, 
-				(int)resolutions[index].y, 
+				(int)resolutions [index].y, 
 				Screen.fullScreen, 
 				Screen.currentResolution.refreshRate
 			);
 
-			SaveAndLoadScript.Instance.targetResolutionWidth = (int)resolutions [index].x;
+			SaveAndLoadScript.Instance.targetResolutionWidth  = (int)resolutions [index].x;
 			SaveAndLoadScript.Instance.targetResolutionHeight = (int)resolutions [index].y;
 			SaveAndLoadScript.Instance.targetFrameRate = Screen.currentResolution.refreshRate;
-			SaveAndLoadScript.Instance.SaveSettingsData ();
 
-			Debug.Log ("New screen resolution: " + Screen.currentResolution);
+			//Debug.Log ("New screen resolution: " + Screen.currentResolution);
+			Debug.Log ("New screen resolution: " + (int)resolutions [index].x + " x " + (int)resolutions [index].y);
 		}
 
 		public void SetMaximumResolution ()
 		{
 			Screen.SetResolution (
-				Screen.width, 
-				Screen.height, 
+				Display.main.systemWidth, 
+				Display.main.systemHeight, 
 				Screen.fullScreen, 
 				Screen.currentResolution.refreshRate
 			);
 
-			SaveAndLoadScript.Instance.targetResolutionWidth = Screen.width;
-			SaveAndLoadScript.Instance.targetResolutionHeight = Screen.height;
+			SaveAndLoadScript.Instance.targetResolutionWidth  = Display.main.systemWidth;
+			SaveAndLoadScript.Instance.targetResolutionHeight = Display.main.systemHeight;
 			SaveAndLoadScript.Instance.targetFrameRate = Screen.currentResolution.refreshRate;
-			SaveAndLoadScript.Instance.SaveSettingsData ();
 
 			Debug.Log ("New screen resolution: " + Screen.currentResolution);
 		}
