@@ -99,6 +99,11 @@ namespace CityBashers
 			Screen.fullScreen = SaveAndLoadScript.Instance.isFullscreen;
 			Debug.Log ("Fullscreen " + Screen.fullScreen);
 		}
+
+		public void RefreshFullscreenToggle ()
+		{
+			FullscreenToggle.isOn = Screen.fullScreen;
+		}
 		#endregion
 
 		#region Audio
