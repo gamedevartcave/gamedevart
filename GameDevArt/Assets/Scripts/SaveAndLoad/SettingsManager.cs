@@ -16,6 +16,8 @@ namespace CityBashers
 		public Button MediumQualityButton;
 		public Button LowEndQualityButton;
 
+		public Toggle FullscreenToggle;
+
 		[Header ("Audio Settings")]
 		public Button MasterVolumeButtonUp;
 		public Button MasterVolumeButtonDown;
@@ -89,6 +91,13 @@ namespace CityBashers
 
 				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
 			}
+		}
+
+		public void ToggleFullScreen ()
+		{
+			SaveAndLoadScript.Instance.isFullscreen = FullscreenToggle.isOn;
+			Screen.fullScreen = SaveAndLoadScript.Instance.isFullscreen;
+			Debug.Log ("Fullscreen " + Screen.fullScreen);
 		}
 		#endregion
 

@@ -32,6 +32,7 @@ namespace CityBashers
 
 		[Space (10)]
 		public int QualitySettingsIndex;
+		public bool isFullscreen;
 		[Space (10)]
 		public int targetFrameRate;
 		public float averageFpsTimer;
@@ -369,6 +370,7 @@ namespace CityBashers
 			data.QualitySettingsIndex = QualitySettingsIndex;
 			data.targetResolutionWidth = targetResolutionWidth;
 			data.targetResolutionHeight = targetResolutionHeight;
+			data.isFullscreen = isFullscreen;
 			data.ParticleEmissionMultiplier = ParticleEmissionMultiplier;
 			data.targetFrameRate  = targetFrameRate;
 			data.MasterVolume 	  = Mathf.Clamp (MasterVolume, 	     0, 1);
@@ -444,6 +446,7 @@ namespace CityBashers
 			QualitySettingsIndex = data.QualitySettingsIndex;
 			targetResolutionWidth = data.targetResolutionWidth;
 			targetResolutionHeight = data.targetResolutionHeight;
+			isFullscreen = data.isFullscreen;
 			ParticleEmissionMultiplier = data.ParticleEmissionMultiplier;
 			targetFrameRate = data.targetFrameRate;
 			MasterVolume = data.MasterVolume;
@@ -548,6 +551,7 @@ namespace CityBashers
 			public int QualitySettingsIndex;
 			public int targetResolutionWidth = 1920;
 			public int targetResolutionHeight = 1080;
+			public bool isFullscreen;
 			[Range (0, 2)]
 			public float ParticleEmissionMultiplier = 1;
 			public int targetFrameRate = 60;
