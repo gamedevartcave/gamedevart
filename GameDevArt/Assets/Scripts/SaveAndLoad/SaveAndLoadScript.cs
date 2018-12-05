@@ -34,6 +34,7 @@ namespace CityBashers
 		public int QualitySettingsIndex;
 		public bool isFullscreen;
 		[Space (10)]
+		public bool limitFramerate;
 		public int targetFrameRate;
 		public float averageFpsTimer;
 		[Space (10)]
@@ -371,6 +372,7 @@ namespace CityBashers
 			data.targetResolutionWidth = targetResolutionWidth;
 			data.targetResolutionHeight = targetResolutionHeight;
 			data.isFullscreen = isFullscreen;
+			data.limitFramerate = limitFramerate;
 			data.ParticleEmissionMultiplier = ParticleEmissionMultiplier;
 			data.targetFrameRate  = targetFrameRate;
 			data.MasterVolume 	  = Mathf.Clamp (MasterVolume, 	     0, 1);
@@ -447,6 +449,7 @@ namespace CityBashers
 			targetResolutionWidth = data.targetResolutionWidth;
 			targetResolutionHeight = data.targetResolutionHeight;
 			isFullscreen = data.isFullscreen;
+			limitFramerate = data.limitFramerate;
 			ParticleEmissionMultiplier = data.ParticleEmissionMultiplier;
 			targetFrameRate = data.targetFrameRate;
 			MasterVolume = data.MasterVolume;
@@ -525,15 +528,24 @@ namespace CityBashers
 				AudioSettingsManager.instance.GetAudioSettings ();
 			}
 
-			if (targetFrameRate < 30 && targetFrameRate >= 0) 
+			if (limitFramerate == true)
 			{
-				targetFrameRate = -1;
-			}
+				if (targetFrameRate < 30 && targetFrameRate >= 0)
+				{
+					targetFrameRate = 60;
+				} 
+
+				else
+				
+				{
+					TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
+				}
+			} 
 
 			else
 			
 			{
-				TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
+				targetFrameRate = -1;
 			}
 		}
 
@@ -552,6 +564,7 @@ namespace CityBashers
 			public int targetResolutionWidth = 1920;
 			public int targetResolutionHeight = 1080;
 			public bool isFullscreen;
+			public bool limitFramerate;
 			[Range (0, 2)]
 			public float ParticleEmissionMultiplier = 1;
 			public int targetFrameRate = 60;

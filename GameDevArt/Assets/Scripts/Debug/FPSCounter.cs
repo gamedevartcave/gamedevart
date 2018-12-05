@@ -17,7 +17,8 @@ namespace CityBashers
 		public float FramesPerSecB { get; protected set; }
 		public bool toggle;
 		public bool showFps;
-		private float avFps;
+
+		private int qty;
 		public float averageFps;
 
 		void Awake ()
@@ -40,15 +41,16 @@ namespace CityBashers
 			}
 		}
 
-		void Update ()
+		float UpdateCumulativeMovingAverageFPS (float newFPS)
 		{
-			avFps += (Time.unscaledDeltaTime - avFps) * Time.unscaledDeltaTime;
-			averageFps = 1 / avFps;
+			qty++;
+			averageFps += (newFPS - averageFps) / qty;
+			return averageFps;
 		}
 
 		private IEnumerator FPS () 
 		{
-			for(;;)
+			while (true)
 			{
 				// Capture current framerate.
 				int lastFrameCount = Time.frameCount;
@@ -56,7 +58,7 @@ namespace CityBashers
 				float lastTime = Time.realtimeSinceStartup; // Get time since startup.
 
 				// Sets how fast this updates.
-				yield return new WaitForSeconds (frequency);
+				yield return new WaitForSecondsRealtime (frequency);
 
 				// Get time span and frame count.
 				float timeSpan = Time.realtimeSinceStartup - lastTime;
@@ -65,7 +67,9 @@ namespace CityBashers
 				// Display it.
 				FramesPerSec = Mathf.RoundToInt(frameCount / timeSpan);
 				FramesPerSecB = frameCount / timeSpan;
-				FPSText.text = FramesPerSec.ToString() + "";
+				FPSText.text = "CUR FPS: " + FramesPerSec.ToString() + " \nAVG FPS: " + Mathf.RoundToInt (averageFps);
+
+				averageFps = UpdateCumulativeMovingAverageFPS (FramesPerSecB);
 
 				if (showPrefix == true)
 				{

@@ -243,7 +243,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void WeaponChangeAction ()
 		{
-			if (playerActions.NextWeapon.IsPressed == true)
+			if (playerActions.NextWeapon.IsPressed == true && 
+				GameController.instance.isPaused == false)
 			{
 				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
 				{
@@ -268,7 +269,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
 			}
 
-			if (playerActions.PreviousWeapon.IsPressed == true)
+			if (playerActions.PreviousWeapon.IsPressed == true && 
+				GameController.instance.isPaused == false)
 			{
 				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
 				{

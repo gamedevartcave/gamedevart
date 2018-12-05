@@ -17,6 +17,7 @@ namespace CityBashers
 		public Button LowEndQualityButton;
 
 		public Toggle FullscreenToggle;
+		public Toggle LimitFramerateToggle;
 
 		[Header ("Audio Settings")]
 		public Button MasterVolumeButtonUp;
@@ -103,6 +104,30 @@ namespace CityBashers
 		public void RefreshFullscreenToggle ()
 		{
 			FullscreenToggle.isOn = Screen.fullScreen;
+		}
+
+		public void ToggleLimitFramerate ()
+		{
+			SaveAndLoadScript.Instance.limitFramerate = LimitFramerateToggle.isOn;
+
+			if (SaveAndLoadScript.Instance.limitFramerate == true)
+			{
+				SaveAndLoadScript.Instance.targetFrameRate = Screen.currentResolution.refreshRate;
+			} 
+
+			else
+			
+			{
+				SaveAndLoadScript.Instance.targetFrameRate = -1;
+			}
+
+			Application.targetFrameRate = SaveAndLoadScript.Instance.targetFrameRate;
+			Debug.Log ("Target framerate: " + Application.targetFrameRate);
+		}
+
+		public void RefreshLimitFramerateToggle ()
+		{
+			LimitFramerateToggle.isOn = SaveAndLoadScript.Instance.limitFramerate;
 		}
 		#endregion
 

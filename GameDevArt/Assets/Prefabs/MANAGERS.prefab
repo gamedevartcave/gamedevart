@@ -1059,7 +1059,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1493464209912784}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1072,7 +1072,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 60
+  m_text: 'CUR FPS: 000
+
+    AVG FPS: 000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1105,7 +1107,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_textAlignment: 1028
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
@@ -1117,7 +1119,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 13
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1140,19 +1142,19 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 5, w: 0}
   m_textInfo:
     textComponent: {fileID: 114252711840124728}
-    characterCount: 2
+    characterCount: 25
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 5
+    wordCount: 6
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1223,14 +1225,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1949649537383854}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d1473a2da9aeb949ac451659eede1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 0.25
   FPSText: {fileID: 114252711840124728}
-  showPrefix: 1
+  showPrefix: 0
   toggle: 1
   showFps: 1
   averageFps: 0
@@ -1600,6 +1602,7 @@ MonoBehaviour:
   targetResolutionHeight: 1080
   QualitySettingsIndex: 2
   isFullscreen: 0
+  limitFramerate: 0
   targetFrameRate: 60
   averageFpsTimer: 0
   ParticleEmissionMultiplier: 1
@@ -1616,6 +1619,7 @@ MonoBehaviour:
     targetResolutionWidth: 1920
     targetResolutionHeight: 1080
     isFullscreen: 0
+    limitFramerate: 0
     ParticleEmissionMultiplier: 1
     targetFrameRate: 0
     MasterVolume: 0
@@ -6339,7 +6343,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &224007169070513050
 RectTransform:
@@ -6431,7 +6435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: -20, y: -20}
   m_SizeDelta: {x: 727.1, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &224401926477011390
@@ -6523,7 +6527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -20, y: 20}
   m_SizeDelta: {x: 457.11, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!224 &224572433308079946
@@ -6563,7 +6567,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224654020154520104
 RectTransform:
