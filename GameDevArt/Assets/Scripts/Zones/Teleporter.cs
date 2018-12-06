@@ -1,63 +1,65 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-using CityBashers;
 
-public class Teleporter : MonoBehaviour
+namespace CityBashers
 {
-	public bool locked;
-	[ReadOnlyAttribute] public int timesUsed;
-	public int maxTimesUsed = 1;
-	public ParticleSystem teleportParticles;
-	public GameObject teleportLockParticles;
-	private WaitForSeconds teleportWait;
-	public float teleportWaitTime = 1;
-
-	public Collider capsuleCollider;
-
-	public float teleportDelayTime = 1;
-	private WaitForSeconds teleportYield;
-
-	public UnityEvent OnTeleportEnter;
-	public UnityEvent OnTeleportEnterDelayed;
-	public UnityEvent OnTeleportComplete;
-
-	void Start ()
+	public class Teleporter : MonoBehaviour
 	{
-		teleportWait = new WaitForSeconds (teleportWaitTime);
-		teleportYield = new WaitForSeconds (teleportDelayTime);
-		StartCoroutine (UpdateTeleportLockState ());
-	}
+		public bool locked;
+		[ReadOnlyAttribute] public int timesUsed;
+		public int maxTimesUsed = 1;
+		public ParticleSystem teleportParticles;
+		public GameObject teleportLockParticles;
+		private WaitForSeconds teleportWait;
+		public float teleportWaitTime = 1;
 
-	IEnumerator UpdateTeleportLockState ()
-	{
-		while (true)
+		public Collider capsuleCollider;
+
+		public float teleportDelayTime = 1;
+		private WaitForSeconds teleportYield;
+
+		public UnityEvent OnTeleportEnter;
+		public UnityEvent OnTeleportEnterDelayed;
+		public UnityEvent OnTeleportComplete;
+
+		void Start ()
 		{
-			capsuleCollider.enabled = locked;
-			teleportLockParticles.SetActive (locked);
-			yield return teleportWait;
+			teleportWait = new WaitForSeconds (teleportWaitTime);
+			teleportYield = new WaitForSeconds (teleportDelayTime);
+			StartCoroutine (UpdateTeleportLockState ());
 		}
-	}
 
-	IEnumerator TeleportEnterDelay ()
-	{
-		yield return teleportYield;
-		OnTeleportEnterDelayed.Invoke ();
-		yield return teleportYield;
-		yield return teleportYield;
-		OnTeleportComplete.Invoke ();
-	}
-
-	void OnTriggerEnter (Collider other)
-	{
-		if (other.gameObject == PlayerController.instance.gameObject)
+		IEnumerator UpdateTeleportLockState ()
 		{
-			if (timesUsed < maxTimesUsed)
+			while (true)
 			{
-				teleportParticles.Play ();
-				timesUsed++;
-				OnTeleportEnter.Invoke ();
-				StartCoroutine (TeleportEnterDelay ());
+				capsuleCollider.enabled = locked;
+				teleportLockParticles.SetActive (locked);
+				yield return teleportWait;
+			}
+		}
+
+		IEnumerator TeleportEnterDelay ()
+		{
+			yield return teleportYield;
+			OnTeleportEnterDelayed.Invoke ();
+			yield return teleportYield;
+			yield return teleportYield;
+			OnTeleportComplete.Invoke ();
+		}
+
+		void OnTriggerEnter (Collider other)
+		{
+			if (other.gameObject == PlayerController.instance.gameObject)
+			{
+				if (timesUsed < maxTimesUsed)
+				{
+					teleportParticles.Play ();
+					timesUsed++;
+					OnTeleportEnter.Invoke ();
+					StartCoroutine (TeleportEnterDelay ());
+				}
 			}
 		}
 	}

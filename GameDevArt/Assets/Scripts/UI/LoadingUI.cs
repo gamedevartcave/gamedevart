@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class LoadingUI : MonoBehaviour 
+namespace CityBashers
 {
-	public void StartLoadSequence ()
+	public class LoadingUI : MonoBehaviour 
 	{
-		SceneLoader.Instance.StartLoadSequence ();
+		public void StartLoadSequence ()
+		{
+			SceneLoader.Instance.StartLoadSequence ();
+		}
 	}
 }

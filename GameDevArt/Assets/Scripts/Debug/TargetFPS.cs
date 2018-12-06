@@ -1,39 +1,42 @@
 ﻿using UnityEngine;
 
-public class TargetFPS : MonoBehaviour 
+namespace CityBashers
 {
-	public static TargetFPS Instance { get; private set; }
-
-	[Tooltip ("Game will try to render as fast as the target. Will try to run as fast as possible if set to a negative number.")]
-	public int targetFramerate = 60; 
-	public int currentTargetFramerate;
-	[Tooltip ("Use screen refresh rate and match framerate.")]
-	public bool useScreenRefreshRate;
-
-	void Awake ()
+	public class TargetFPS : MonoBehaviour 
 	{
-		Instance = this;
+		public static TargetFPS Instance { get; private set; }
 
-		if (useScreenRefreshRate == true) 
+		[Tooltip ("Game will try to render as fast as the target. Will try to run as fast as possible if set to a negative number.")]
+		public int targetFramerate = 60; 
+		public int currentTargetFramerate;
+		[Tooltip ("Use screen refresh rate and match framerate.")]
+		public bool useScreenRefreshRate;
+
+		void Awake ()
 		{
-			Application.targetFrameRate = Screen.currentResolution.refreshRate;
-		} 
+			Instance = this;
 
-		InvokeRepeating ("UpdateCurrentTargetFramerate", 0, 1);
+			if (useScreenRefreshRate == true) 
+			{
+				Application.targetFrameRate = Screen.currentResolution.refreshRate;
+			} 
 
-		SetTargetFramerate (targetFramerate);
-	}
+			InvokeRepeating ("UpdateCurrentTargetFramerate", 0, 1);
 
-	void UpdateCurrentTargetFramerate ()
-	{
-		currentTargetFramerate = Application.targetFrameRate;
-	}
+			SetTargetFramerate (targetFramerate);
+		}
 
-	// Set target framerate by other scripts.
-	public void SetTargetFramerate (int framerate)
-	{
-		Application.targetFrameRate = framerate; 
-		//SaveAndLoadScript.Instance.targetframerate = framerate;
-		//Debug.Log ("Target framerate set to " + framerate + " FPS.");
+		void UpdateCurrentTargetFramerate ()
+		{
+			currentTargetFramerate = Application.targetFrameRate;
+		}
+
+		// Set target framerate by other scripts.
+		public void SetTargetFramerate (int framerate)
+		{
+			Application.targetFrameRate = framerate; 
+			//SaveAndLoadScript.Instance.targetframerate = framerate;
+			//Debug.Log ("Target framerate set to " + framerate + " FPS.");
+		}
 	}
 }

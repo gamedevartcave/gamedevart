@@ -1,32 +1,35 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class QuitScript : MonoBehaviour 
+namespace CityBashers
 {
-	private float delayQuitTime;
-	private WaitForSecondsRealtime QuitWait;
-
-	void Start ()
+	public class QuitScript : MonoBehaviour 
 	{
-		QuitWait = new WaitForSecondsRealtime (delayQuitTime);
-	}
+		private float delayQuitTime;
+		private WaitForSecondsRealtime QuitWait;
 
-	public void DelayAndQuit (float delay)
-	{
-		SaveAndLoadScript.Instance.SavePlayerData ();
-		SaveAndLoadScript.Instance.SaveSettingsData ();
-		delayQuitTime = delay;
-		StartCoroutine (DelayQuitApp ());
-	}
+		void Start ()
+		{
+			QuitWait = new WaitForSecondsRealtime (delayQuitTime);
+		}
 
-	IEnumerator DelayQuitApp ()
-	{
-		yield return QuitWait;
-		QuitGame ();
-	}
+		public void DelayAndQuit (float delay)
+		{
+			SaveAndLoadScript.Instance.SavePlayerData ();
+			SaveAndLoadScript.Instance.SaveSettingsData ();
+			delayQuitTime = delay;
+			StartCoroutine (DelayQuitApp ());
+		}
 
-	public void QuitGame ()
-	{
-		Application.Quit ();
+		IEnumerator DelayQuitApp ()
+		{
+			yield return QuitWait;
+			QuitGame ();
+		}
+
+		public void QuitGame ()
+		{
+			Application.Quit ();
+		}
 	}
 }

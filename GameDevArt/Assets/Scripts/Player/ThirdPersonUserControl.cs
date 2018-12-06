@@ -15,8 +15,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
 
 		[Header ("Weapon changing")]
+		[ReadOnlyAttribute] public bool isChangingWeapon;
 		public float weaponChangeRate =  0.25f;
 		private float nextWeaponChange;
+		public float OnWeaponChangeTimeScale = 0.05f;
+		[ReadOnlyAttribute] public float WeaponChangeModeTime = 1;
+		public float WeaponChangeDuration = 1;
+		public UnityEvent OnWeaponChange;
+		public UnityEvent WeaponChangeEnded;
 
 		[Header ("Camera rig")]
 		public SimpleFollow camRigSimpleFollow;
@@ -196,7 +202,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				{
 					CrosshairAnim.ResetTrigger ("In");
 					CrosshairAnim.SetTrigger ("Out");
-					mouseLook.rotationY = 0;
 				}
 			}
 		}
@@ -238,9 +243,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void WeaponChangeAction ()
 		{
-			if (playerActions.NextWeapon.IsPressed == true)
+			if (playerActions.NextWeapon.IsPressed == true && 
+				GameController.instance.isPaused == false)
 			{
-				if (Time.time > nextWeaponChange)
+				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to next weapon.
 					if (PlayerController.instance.currentWeaponIndex < PlayerController.instance.Weapons.Length - 1)
@@ -253,17 +259,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					{
 						PlayerController.instance.currentWeaponIndex = 0;
 					}
-
-					PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
-					nextWeaponChange = Time.time + weaponChangeRate;
 				}
 
-				return;
+				isChangingWeapon = true;
+				WeaponChangeModeTime = WeaponChangeDuration;
+				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+				OnWeaponChange.Invoke ();
+				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
+				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
 			}
 
-			if (playerActions.PreviousWeapon.IsPressed == true)
+			if (playerActions.PreviousWeapon.IsPressed == true && 
+				GameController.instance.isPaused == false)
 			{
-				if (Time.time > nextWeaponChange)
+				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to previous weapon.
 					if (PlayerController.instance.currentWeaponIndex > 0)
@@ -276,12 +285,33 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					{
 						PlayerController.instance.currentWeaponIndex = PlayerController.instance.Weapons.Length - 1;
 					}
-
-					PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
-					nextWeaponChange = Time.time + weaponChangeRate;
 				}
 
-				return;
+				isChangingWeapon = true;
+				WeaponChangeModeTime = WeaponChangeDuration;
+				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+				OnWeaponChange.Invoke ();
+				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
+				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
+			}
+
+			if (WeaponChangeModeTime <= 0)
+			{
+				if (isChangingWeapon == true)
+				{
+					isChangingWeapon = false;
+					TimescaleController.instance.targetTimeScale = 1;
+					WeaponChangeEnded.Invoke ();
+				}
+			} 
+
+			else // There is weapon changing time
+			
+			{
+				if (GameController.instance.isPaused == false)
+				{
+					WeaponChangeModeTime -= Time.unscaledDeltaTime;
+				}
 			}
 		}
 

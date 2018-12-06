@@ -6,210 +6,213 @@ using System.Collections;
 using System;
 using TMPro;
 
-public class SceneLoader : MonoBehaviour 
+namespace CityBashers
 {
-	public static SceneLoader Instance { get; private set; }
-	public AsyncOperation async = null; // The async operation variable. 
-
-	public bool isLoading;
-	public float delay; // How long before the actual loading of the next scene starts.
-	public string SceneName; // The name of the scene that other scripts can modify. The next scene should load by this name.
-	public float ProgressBarSmoothTime = 1; // The progress bar value smoothing amount.
-	[HideInInspector]public float SmoothProgress; // The actual smoothed scene load progress value.
-
-	[Header ("UI Elements")]
-	public Canvas LevelLoadUICanvas;
-	public TextMeshProUGUI LoadProgressText;
-	public Animator SceneLoaderUI;
-	public ParticleSystem[] LoadingParticles;
-	public Animator LoadParticlesAnim;
-	public Slider LoadSlider;
-	public RawImage loadScreenBackground;
-
-	private WaitForSecondsRealtime WaitDelay;
-	public UnityEvent OnInitialize;
-	public UnityEvent OnSceneLoadBegin;
-	public UnityEvent OnSceneLoadComplete;
-
-	#region Singleton
-	private void Awake ()
+	public class SceneLoader : MonoBehaviour 
 	{
-		Instance = this;
-		OnInitialize.Invoke ();
+		public static SceneLoader Instance { get; private set; }
+		public AsyncOperation async = null; // The async operation variable. 
 
-		if (DontDestroyOnLoadInit.Instance != null)
+		public bool isLoading;
+		public float delay; // How long before the actual loading of the next scene starts.
+		public string SceneName; // The name of the scene that other scripts can modify. The next scene should load by this name.
+		public float ProgressBarSmoothTime = 1; // The progress bar value smoothing amount.
+		[HideInInspector]public float SmoothProgress; // The actual smoothed scene load progress value.
+
+		[Header ("UI Elements")]
+		public Canvas LevelLoadUICanvas;
+		public TextMeshProUGUI LoadProgressText;
+		public Animator SceneLoaderUI;
+		public ParticleSystem[] LoadingParticles;
+		public Animator LoadParticlesAnim;
+		public Slider LoadSlider;
+		public RawImage loadScreenBackground;
+
+		private WaitForSecondsRealtime WaitDelay;
+		public UnityEvent OnInitialize;
+		public UnityEvent OnSceneLoadBegin;
+		public UnityEvent OnSceneLoadComplete;
+
+		#region Singleton
+		private void Awake ()
 		{
-			DontDestroyOnLoadInit.Instance.OnInitialized ();
-		}
-	}
-	#endregion
+			Instance = this;
+			OnInitialize.Invoke ();
 
-	void Start () 
-	{
-		WaitDelay = new WaitForSecondsRealtime (delay);
-
-		// Checks if the currently loaded scene is the init scene.
-		if (SceneManager.GetActiveScene ().name == "init") 
-		{
-			InitManager.Instance.LoadingMissionText.gameObject.SetActive (false);
-
-			if (SceneManager.GetSceneByName (SceneName).isLoaded == false)
+			if (DontDestroyOnLoadInit.Instance != null)
 			{
-				OnSceneLoadBegin.Invoke ();
+				DontDestroyOnLoadInit.Instance.OnInitialized ();
 			}
 		}
-	}
+		#endregion
 
-	public void StartLoadSequence ()
-	{
-		isLoading = true;
-		StartCoroutine (LoadProgress ());
-	}
-
-	// Gathers all GameObjects in the loaded scene as an array, destroys them all.
-	public void DestroyObjectsInScene ()
-	{
-		GameObject[] rootObjectsInScene = SceneManager.GetActiveScene ().GetRootGameObjects ();
-
-		foreach (GameObject RootObject in rootObjectsInScene)
+		void Start () 
 		{
-			Destroy (RootObject);
-		}
-	}
+			WaitDelay = new WaitForSecondsRealtime (delay);
 
-	// Main scene loading process.
-	IEnumerator LoadProgress ()
-	{
-		SmoothProgress = 0;
-		LoadProgressText.text = "0%";
-		LoadSlider.value = 0;
+			// Checks if the currently loaded scene is the init scene.
+			if (SceneManager.GetActiveScene ().name == "init") 
+			{
+				InitManager.Instance.LoadingMissionText.gameObject.SetActive (false);
 
-		if (LoadParticlesAnim.gameObject.activeInHierarchy == true)
-		{
-			//LoadParticlesAnim.Play ("LoadingParticlesLoop");
+				if (SceneManager.GetSceneByName (SceneName).isLoaded == false)
+				{
+					OnSceneLoadBegin.Invoke ();
+				}
+			}
 		}
 
-		/*
-		foreach (ParticleSystem loadParticle in LoadingParticles) 
+		public void StartLoadSequence ()
 		{
-			loadParticle.Play (true);
+			isLoading = true;
+			StartCoroutine (LoadProgress ());
 		}
-		*/
 
-		yield return WaitDelay;
-
-		GC.Collect ();
-
-		async = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
-		async.allowSceneActivation = false; // Prevents the loading scene from activating.
-
-		while (!async.isDone) 
+		// Gathers all GameObjects in the loaded scene as an array, destroys them all.
+		public void DestroyObjectsInScene ()
 		{
-			float asyncprogress = Mathf.Round (1.1111f * async.progress * 100);
-			AudioListener.volume -= 0.2f * Time.unscaledDeltaTime;
+			GameObject[] rootObjectsInScene = SceneManager.GetActiveScene ().GetRootGameObjects ();
 
-			// UI checks load progress and displays for the player.
-			SmoothProgress = Mathf.Lerp (SmoothProgress, async.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
+			foreach (GameObject RootObject in rootObjectsInScene)
+			{
+				Destroy (RootObject);
+			}
+		}
+
+		// Main scene loading process.
+		IEnumerator LoadProgress ()
+		{
+			SmoothProgress = 0;
+			LoadProgressText.text = "0%";
+			LoadSlider.value = 0;
+
+			if (LoadParticlesAnim.gameObject.activeInHierarchy == true)
+			{
+				//LoadParticlesAnim.Play ("LoadingParticlesLoop");
+			}
 
 			/*
 			foreach (ParticleSystem loadParticle in LoadingParticles) 
 			{
-				var ParticleStartLifetimeMain = loadParticle.main;
-				ParticleStartLifetimeMain.startLifetime = async.progress + 0.5f;
+				loadParticle.Play (true);
 			}
 			*/
-				
-			if (asyncprogress < 100) 
-			{
-				Debug.Log ("Scene load async progress: " + Mathf.Round (1.1111f * (async.progress * 100)) + "%");
-			}
 
-			// Somehow async operations load up to 90% before loading the next scene,
-			// we have to compensate by adding 10% to the progress text.
-			LoadProgressText.text = Mathf.Round (1.1111f * (SmoothProgress * 100)) + "%";
-			LoadSlider.value = 1.1111f * (SmoothProgress * 100);
+			yield return WaitDelay;
+
+			GC.Collect ();
+
+			async = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
+			async.allowSceneActivation = false; // Prevents the loading scene from activating.
+
+			while (!async.isDone) 
+			{
+				float asyncprogress = Mathf.Round (1.1111f * async.progress * 100);
+				AudioListener.volume -= 0.2f * Time.unscaledDeltaTime;
+
+				// UI checks load progress and displays for the player.
+				SmoothProgress = Mathf.Lerp (SmoothProgress, async.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
+
+				/*
+				foreach (ParticleSystem loadParticle in LoadingParticles) 
+				{
+					var ParticleStartLifetimeMain = loadParticle.main;
+					ParticleStartLifetimeMain.startLifetime = async.progress + 0.5f;
+				}
+				*/
+					
+				if (asyncprogress < 100) 
+				{
+					Debug.Log ("Scene load async progress: " + Mathf.Round (1.1111f * (async.progress * 100)) + "%");
+				}
+
+				// Somehow async operations load up to 90% before loading the next scene,
+				// we have to compensate by adding 10% to the progress text.
+				LoadProgressText.text = Mathf.Round (1.1111f * (SmoothProgress * 100)) + "%";
+				LoadSlider.value = 1.1111f * (SmoothProgress * 100);
+
+				// Checks if the scene has been completely loaded into memory. 
+				if (LoadProgressText.text == "100%")
+				{
+					OnLoadThisScene ();
+				}
+
+				yield return null;
+			}
 
 			// Checks if the scene has been completely loaded into memory. 
 			if (LoadProgressText.text == "100%")
 			{
 				OnLoadThisScene ();
 			}
-
-			yield return null;
 		}
 
-		// Checks if the scene has been completely loaded into memory. 
-		if (LoadProgressText.text == "100%")
+		public void OnLoadThisScene ()
 		{
-			OnLoadThisScene ();
-		}
-	}
-
-	public void OnLoadThisScene ()
-	{
-		StartCoroutine (LoadThisScene ());
-	}
-
-	IEnumerator LoadThisScene ()
-	{
-		/*
-		foreach (ParticleSystem loadParticle in LoadingParticles) 
-		{
-			loadParticle.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-		}
-		*/
-			
-		yield return new WaitForEndOfFrame ();
-
-		isLoading = false;
-
-		if (SceneManager.GetActiveScene ().name == "init")
-		{
-			//
+			StartCoroutine (LoadThisScene ());
 		}
 
-		ActivateScene ();
-	}
-
-	public void ActivateScene ()
-	{
-		StartCoroutine (LoadSceneDelay ());
-	}
-
-	IEnumerator LoadSceneDelay ()
-	{
-		yield return WaitDelay;
-
-		// Finally, we can activate the newly loaded scene.
-		async.allowSceneActivation = true;
-		GC.Collect ();
-		Shader.WarmupAllShaders ();
-		OnSceneLoadComplete.Invoke ();
-
-		if (SceneName == "menu")
+		IEnumerator LoadThisScene ()
 		{
-			SceneLoadUIDisappear ();
-		}
-
-		if (DontDestroyOnLoadInit.Instance != null)
-		{
-			DontDestroyOnLoadInit.Instance.OnInitialized ();
-		}
-	}
-
-	public void SceneLoadUIDisappear ()
-	{
-		SceneLoaderUI.ResetTrigger ("Appear");
-		SceneLoaderUI.SetTrigger ("Disappear");
-	}
-
-	public void SetLoadedSceneActive ()
-	{
-		if (SceneManager.GetSceneByName (SceneName).IsValid () == true)
-		{
-			if (SceneManager.GetSceneByName (SceneName).isLoaded == true)
+			/*
+			foreach (ParticleSystem loadParticle in LoadingParticles) 
 			{
-				SceneManager.SetActiveScene (SceneManager.GetSceneByName (SceneName));
+				loadParticle.Stop (true, ParticleSystemStopBehavior.StopEmitting);
+			}
+			*/
+				
+			yield return new WaitForEndOfFrame ();
+
+			isLoading = false;
+
+			if (SceneManager.GetActiveScene ().name == "init")
+			{
+				//
+			}
+
+			ActivateScene ();
+		}
+
+		public void ActivateScene ()
+		{
+			StartCoroutine (LoadSceneDelay ());
+		}
+
+		IEnumerator LoadSceneDelay ()
+		{
+			yield return WaitDelay;
+
+			// Finally, we can activate the newly loaded scene.
+			async.allowSceneActivation = true;
+			GC.Collect ();
+			Shader.WarmupAllShaders ();
+			OnSceneLoadComplete.Invoke ();
+
+			if (SceneName == "menu")
+			{
+				SceneLoadUIDisappear ();
+			}
+
+			if (DontDestroyOnLoadInit.Instance != null)
+			{
+				DontDestroyOnLoadInit.Instance.OnInitialized ();
+			}
+		}
+
+		public void SceneLoadUIDisappear ()
+		{
+			SceneLoaderUI.ResetTrigger ("Appear");
+			SceneLoaderUI.SetTrigger ("Disappear");
+		}
+
+		public void SetLoadedSceneActive ()
+		{
+			if (SceneManager.GetSceneByName (SceneName).IsValid () == true)
+			{
+				if (SceneManager.GetSceneByName (SceneName).isLoaded == true)
+				{
+					SceneManager.SetActiveScene (SceneManager.GetSceneByName (SceneName));
+				}
 			}
 		}
 	}

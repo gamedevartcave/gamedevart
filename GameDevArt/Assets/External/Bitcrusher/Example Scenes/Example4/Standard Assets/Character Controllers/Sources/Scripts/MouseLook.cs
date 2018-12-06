@@ -1,48 +1,60 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-[AddComponentMenu("Camera-Control/Mouse Look")]
-public class MouseLook : MonoBehaviour 
+namespace CityBashers
 {
-	public static MouseLook instance { get; private set; }
-	//public RotationAxes axes = RotationAxes.MouseXAndY;
-	//public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-
-	public Vector2 sensitivity = new Vector2 (15, 15);
-
-	// Minimum and Maximum values can be used to constrain the possible rotation
-	public Vector2 minimum = new Vector2 (-360, 360);
-	public Vector2 maximum = new Vector2 (-60, 60);
-
-	public float rotationX = 0;
-	public float rotationY = 0;
-	[Range (0.0f, 1.0f)]
-	public float rotYDeadZone = 0.25f;
-
-	private PlayerActions playerActions;
-
-	void Awake ()
+	[AddComponentMenu("Camera-Control/Mouse Look")]
+	public class MouseLook : MonoBehaviour 
 	{
-		instance = this;
-		this.enabled = false;
-	}
+		public static MouseLook instance { get; private set; }
 
-	void Start ()
-	{
-		playerActions = InControlActions.instance.playerActions;
-	}
+		public Vector2 sensitivity = new Vector2 (15, 15);
 
-	// Settings Manager.
-	public void SetInvertAxis (bool invert)
-	{
-		SaveAndLoadScript.Instance.invertYAxis = invert;
-	}
+		// Minimum and Maximum values can be used to constrain the possible rotation
+		public Vector2 minimum = new Vector2 (-360, 360);
+		public Vector2 maximum = new Vector2 (-60, 60);
 
-	void Update ()
-	{
-		// Both axes.
-		//if (axes == RotationAxes.MouseXAndY && GameController.instance.isPaused == false)
-		//{
-			rotationX = transform.localEulerAngles.y + playerActions.CamRot.Value.x * sensitivity.x;
+		public float rotationX = 0;
+		public float rotationY = 0;
+		[Range (0.0f, 1.0f)]
+		public float rotYDeadZone = 0.25f;
+
+		public Slider MouseSensitivitySlider;
+
+		private PlayerActions playerActions;
+
+		void Awake ()
+		{
+			instance = this;
+			this.enabled = false;
+		}
+
+		void Start ()
+		{
+			playerActions = InControlActions.instance.playerActions;
+		}
+
+		// Settings Manager.
+		public void SetInvertAxis (bool invert)
+		{
+			SaveAndLoadScript.Instance.invertYAxis = invert;
+		}
+
+		public void SetMouseSensitivityMultiplier ()
+		{
+			SaveAndLoadScript.Instance.MouseSensitivityMultplier = MouseSensitivitySlider.value;
+		}
+
+		public void RefreshMouseSensitivityValue ()
+		{
+			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+		}
+
+		void Update ()
+		{
+			rotationX = 
+				transform.localEulerAngles.y + 
+				playerActions.CamRot.Value.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 
 			// While aiming.
 			if (playerActions.Aim.Value > 0.5f)
@@ -50,7 +62,8 @@ public class MouseLook : MonoBehaviour
 				// Don't use deadzone.
 				rotationY += 
 					playerActions.CamRot.Value.y * 
-					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
+					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y) 
+					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 			}
 
 			// Not aiming.
@@ -69,26 +82,6 @@ public class MouseLook : MonoBehaviour
 			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
 			
 			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, 0);
-		//}
-
-		/*
-		else // Just MouseX.
-
-		if (axes == RotationAxes.MouseX && GameController.instance.isPaused == false)
-		{
-			transform.Rotate (0, playerActions.CamRot.Value.x * sensitivity.x, 0);
 		}
-		
-		else // Just MouseY.
-		
-		{
-			if (GameController.instance.isPaused == false)
-			{
-				rotationY += playerActions.CamRot.Value.y * sensitivity.y;
-				rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
-				transform.localEulerAngles = new Vector3 (-rotationY, transform.localEulerAngles.y, 0);
-			}
-		}
-		*/
 	}
 }

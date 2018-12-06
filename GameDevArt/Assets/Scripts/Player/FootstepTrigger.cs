@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
-using CityBashers;
 
-public class FootstepTrigger : MonoBehaviour 
+namespace CityBashers
 {
-	public string[] tags = new string[] {"Ground", "Scenery"};
-
-	void OnTriggerEnter (Collider other)
+	public class FootstepTrigger : MonoBehaviour 
 	{
-		if (other.tag == "Ground")
+		public string[] tags = new string[] {"Ground", "Scenery"};
+
+		void OnTriggerEnter (Collider other)
 		{
-			PlayerController.instance.OnFootstep.Invoke ();
+			for (int i = 0; i < tags.Length; i++)
+			{
+				if (other.tag == tags[i])
+				{
+					PlayerController.instance.OnFootstep.Invoke ();
+					break;
+				}
+			}
 		}
 	}
 }
