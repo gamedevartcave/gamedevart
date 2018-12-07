@@ -486,7 +486,7 @@ namespace CityBashers
 			case 1: // Medium setting. Good quality but some optimizations.
 				main_postProcessing.ambientOcclusion.enabled = true;
 				main_postProcessing.antialiasing.enabled = false;
-				main_postProcessing.bloom.enabled = true;
+				main_postProcessing.bloom.enabled = false;
 				main_postProcessing.chromaticAberration.enabled = false;
 				main_postProcessing.colorGrading.enabled = true;
 				main_postProcessing.depthOfField.enabled = true;
@@ -498,12 +498,12 @@ namespace CityBashers
 				main_postProcessing.vignette.enabled = false;
 				//volLightRend.enabled = false;
 				sunShafts.enabled = true;
-				camera_UI_PostProcessing.bloom.enabled = false;
+				camera_UI_PostProcessing.bloom.enabled = true;
 				break;
 			case 2: // High setting. Most things are enabled and on high/highest settings.
 				main_postProcessing.ambientOcclusion.enabled = true;
 				main_postProcessing.antialiasing.enabled = true;
-				main_postProcessing.bloom.enabled = true;
+				main_postProcessing.bloom.enabled = false;
 				main_postProcessing.chromaticAberration.enabled = true;
 				main_postProcessing.colorGrading.enabled = true;
 				main_postProcessing.depthOfField.enabled = true;
