@@ -2,9 +2,10 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.PostProcessing;
+//using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
-using UnityStandardAssets.ImageEffects;
+//using UnityStandardAssets.ImageEffects;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace CityBashers
 {
@@ -22,10 +23,13 @@ namespace CityBashers
 
 		[Header ("Settings Data")]
 		public Camera cam; // Camera to use to change settings.
-		public PostProcessingProfile main_postProcessing;
-		public PostProcessingProfile camera_UI_PostProcessing;
-		//public VolumetricLightRenderer volLightRend;
-		public SunShafts sunShafts;
+		private PostProcessLayer postProcessLayer;
+		//public PostProcessingProfile main_postProcessing;
+		//public PostProcessingProfile camera_UI_PostProcessing;
+
+		public PostProcessProfile mainPostProcess;
+		public VolumetricLightRenderer volLightRend;
+		public UnityStandardAssets.ImageEffects.SunShafts sunShafts;
 		// Screen resolution will be independent of quality settings.
 		public int targetResolutionWidth = 1920;
 		public int targetResolutionHeight = 1080;
@@ -64,8 +68,8 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.LoadPlayerData ();
 
 			cam = Camera.main;
-			//volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
-			sunShafts = cam.GetComponent<SunShafts> ();
+			volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
+			sunShafts = cam.GetComponent<UnityStandardAssets.ImageEffects.SunShafts> ();
 
 			SaveAndLoadScript.Instance.LoadSettingsData ();
 		}
@@ -308,8 +312,8 @@ namespace CityBashers
 			 || File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 			{
 				QualitySettings.SetQualityLevel (QualitySettingsIndex);
-				//targetResolutionWidth = Screen.currentResolution.width; 
-				//targetResolutionHeight = Screen.currentResolution.height;
+				targetResolutionWidth = Screen.currentResolution.width; 
+				targetResolutionHeight = Screen.currentResolution.height;
 
 				if (QualitySettingsIndex == 0) 
 				{
@@ -464,9 +468,58 @@ namespace CityBashers
 		{
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
 
+			if (postProcessLayer == null)
+			{
+				postProcessLayer = PostProcessCamera.instance.postProcessLayer;
+			}
+
+			Bloom bloomLayer = null;
+			ColorGrading colorGradingLayer = null;
+			LensDistortion lensDistortionLayer = null;
+			MotionBlur motionBlurLayer = null;
+			AutoExposure autoExposureLayer = null;
+			Vignette vignetteLayer = null;
+			ScreenSpaceReflections screenSpaceReflectionsLayer = null;
+			AmbientOcclusion ambientOcclusionLayer = null;
+			ChromaticAberration chromaticAberrationLayer = null;
+			DepthOfField depthOfFieldLayer = null;
+			Grain grainLayer = null;
+
+			mainPostProcess.TryGetSettings (out bloomLayer);
+			mainPostProcess.TryGetSettings (out colorGradingLayer);
+			mainPostProcess.TryGetSettings (out lensDistortionLayer);
+			mainPostProcess.TryGetSettings (out motionBlurLayer);
+			mainPostProcess.TryGetSettings (out autoExposureLayer);
+			mainPostProcess.TryGetSettings (out vignetteLayer);
+			mainPostProcess.TryGetSettings (out screenSpaceReflectionsLayer);
+			mainPostProcess.TryGetSettings (out ambientOcclusionLayer);
+			mainPostProcess.TryGetSettings (out chromaticAberrationLayer);
+			mainPostProcess.TryGetSettings (out depthOfFieldLayer);
+			mainPostProcess.TryGetSettings (out grainLayer);
+
 			switch (QualitySettingsIndex)
 			{
 			case 0: // Low setting. In the dire hopes it works on integrated graphics.
+
+				bloomLayer.enabled.value = false;
+				colorGradingLayer.enabled.value = false;
+				lensDistortionLayer.enabled.value = false;
+				motionBlurLayer.enabled.value = false;
+				autoExposureLayer.enabled.value = false;
+				vignetteLayer.enabled.value = false;
+				screenSpaceReflectionsLayer.enabled.value = false;
+				ambientOcclusionLayer.enabled.value = false;
+				chromaticAberrationLayer.enabled.value = false;
+				depthOfFieldLayer.enabled.value = false;
+				grainLayer.enabled.value = false;
+
+				postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
+				postProcessLayer.fog.enabled = false;
+
+				volLightRend.enabled = false;
+				sunShafts.enabled = false;
+
+				/*
 				main_postProcessing.ambientOcclusion.enabled = false;
 				main_postProcessing.antialiasing.enabled = false;
 				main_postProcessing.bloom.enabled = false;
@@ -479,11 +532,31 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = false;
 				main_postProcessing.screenSpaceReflection.enabled = false;
 				main_postProcessing.vignette.enabled = false;
-				//volLightRend.enabled = false;
-				sunShafts.enabled = false;
-				camera_UI_PostProcessing.bloom.enabled = false;
+				*/
+
+				//camera_UI_PostProcessing.bloom.enabled = false;
 				break;
 			case 1: // Medium setting. Good quality but some optimizations.
+
+				bloomLayer.enabled.value = true;
+				colorGradingLayer.enabled.value = true;
+				lensDistortionLayer.enabled.value = false;
+				motionBlurLayer.enabled.value = true;
+				autoExposureLayer.enabled.value = true;
+				vignetteLayer.enabled.value = false;
+				screenSpaceReflectionsLayer.enabled.value = false;
+				ambientOcclusionLayer.enabled.value = true;
+				chromaticAberrationLayer.enabled.value = true;
+				depthOfFieldLayer.enabled.value = true;
+				grainLayer.enabled.value = true;
+
+				postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
+				postProcessLayer.fog.enabled = true;
+
+				volLightRend.enabled = false;
+				sunShafts.enabled = false;
+
+				/*
 				main_postProcessing.ambientOcclusion.enabled = true;
 				main_postProcessing.antialiasing.enabled = false;
 				main_postProcessing.bloom.enabled = false;
@@ -496,12 +569,30 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = true;
 				main_postProcessing.screenSpaceReflection.enabled = false;
 				main_postProcessing.vignette.enabled = false;
-				//volLightRend.enabled = false;
-				sunShafts.enabled = true;
-				camera_UI_PostProcessing.bloom.enabled = true;
+				*/
+				//camera_UI_PostProcessing.bloom.enabled = true;
 				break;
 			case 2: // High setting. Most things are enabled and on high/highest settings.
-				main_postProcessing.ambientOcclusion.enabled = true;
+				
+				bloomLayer.enabled.value = true;
+				colorGradingLayer.enabled.value = true;
+				lensDistortionLayer.enabled.value = true;
+				motionBlurLayer.enabled.value = true;
+				autoExposureLayer.enabled.value = true;
+				vignetteLayer.enabled.value = true;
+				screenSpaceReflectionsLayer.enabled.value = true;
+				ambientOcclusionLayer.enabled.value = true;
+				chromaticAberrationLayer.enabled.value = true;
+				depthOfFieldLayer.enabled.value = true;
+				grainLayer.enabled.value = true;
+
+				postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
+				postProcessLayer.fog.enabled = true;
+
+				volLightRend.enabled = false;
+				sunShafts.enabled = false;
+
+				/*main_postProcessing.ambientOcclusion.enabled = true;
 				main_postProcessing.antialiasing.enabled = true;
 				main_postProcessing.bloom.enabled = false;
 				main_postProcessing.chromaticAberration.enabled = true;
@@ -513,9 +604,8 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = true;
 				main_postProcessing.screenSpaceReflection.enabled = true;
 				main_postProcessing.vignette.enabled = true;
-				//volLightRend.enabled = true;
-				sunShafts.enabled = true;
-				camera_UI_PostProcessing.bloom.enabled = true;
+				*/
+				//camera_UI_PostProcessing.bloom.enabled = true;
 				break;
 			}
 
