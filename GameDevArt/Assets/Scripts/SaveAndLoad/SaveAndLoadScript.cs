@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-//using UnityEngine.PostProcessing;
+using UnityEngine.PostProcessing;
 using UnityEngine.SceneManagement;
-//using UnityStandardAssets.ImageEffects;
-using UnityEngine.Rendering.PostProcessing;
+using UnityStandardAssets.ImageEffects;
 
 namespace CityBashers
 {
@@ -15,46 +15,37 @@ namespace CityBashers
 
 		public bool AllowLoading = true;
 		public bool AllowSaving = true;
-		public bool TestMode;
 
 		[Header ("Player Data")]
 		public string Username = "default"; // For multiple profiles.
-		public int ExperiencePoints;
+		public string defaultUsername = "default";
 
-		[Header ("Settings Data")]
+		[Header ("Effects components")]
 		public Camera cam; // Camera to use to change settings.
-		private PostProcessLayer postProcessLayer;
-		//public PostProcessingProfile main_postProcessing;
-		//public PostProcessingProfile camera_UI_PostProcessing;
-
-		public PostProcessProfile mainPostProcess;
+		public PostProcessingProfile main_postProcessing;
 		public VolumetricLightRenderer volLightRend;
-		public UnityStandardAssets.ImageEffects.SunShafts sunShafts;
-		// Screen resolution will be independent of quality settings.
-		public int targetResolutionWidth = 1920;
-		public int targetResolutionHeight = 1080;
+		public SunShafts sunShafts;
 
-		[Space (10)]
+		[Header ("Visual settings")]
 		public int QualitySettingsIndex;
+		public int targetResolutionWidth = 1920; // Screen resolution will be independent of quality settings.
+		public int targetResolutionHeight = 1080;
 		public bool isFullscreen;
-		[Space (10)]
 		public bool limitFramerate;
 		public int targetFrameRate;
 		public float averageFpsTimer;
-		[Space (10)]
-		[Range (0, 2)]
-		public float ParticleEmissionMultiplier = 1;
-		[Space (10)]
+
+		[Header ("Audio settings")]
 		public float MasterVolume = 1; // Using volume multiplier applied to AudioListener.
 		public float SoundtrackVolume = 0; // Using dB scale (-80, 0)
 		public float EffectsVolume = 0;  // Using dB scale (-80, 0)
+
+		[Header ("Gameplay settings")]
 		public bool invertYAxis;
 		public float MouseSensitivityMultplier = 1;
 
-		[HideInInspector]
-		public playerData PlayerData;
-		[HideInInspector]
-		public settingsData SettingsData;
+		[HideInInspector] public playerData PlayerData;
+		[HideInInspector] public settingsData SettingsData;
 
 		#region Singleton
 		void Awake ()
@@ -63,30 +54,42 @@ namespace CityBashers
 		}
 		#endregion
 
+		/// <summary>
+		/// Initializes the app.
+		/// </summary>
 		public void InitializeLoad ()
 		{
 			SaveAndLoadScript.Instance.LoadPlayerData ();
 
 			cam = Camera.main;
 			volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
-			sunShafts = cam.GetComponent<UnityStandardAssets.ImageEffects.SunShafts> ();
+			sunShafts = cam.GetComponent<SunShafts> ();
 
 			SaveAndLoadScript.Instance.LoadSettingsData ();
 		}
 
+		/// <summary>
+		/// Raises the application quit event.
+		/// </summary>
 		void OnApplicationQuit ()
 		{
 			SaveSettingsData ();
 		}
 
+		/// <summary>
+		/// Checks the username from data.
+		/// </summary>
 		void CheckUsername ()
 		{
-			if (Username == null || Username == "") 
+			// Checks if username field is null or empty.
+			// If so sets default value.
+			if (string.IsNullOrEmpty (Username) == false) 
 			{
-				Username = "default";
+				Username = defaultUsername;
 			}
 
-			if (Username == "default") 
+			// When username is default username.
+			if (Username == defaultUsername) 
 			{
 				/*
 				Debug.Log (
@@ -99,7 +102,9 @@ namespace CityBashers
 			}
 		}
 			
-		// Gets variables from this script = variables in other scripts.
+		/// <summary>
+		/// Gets variables from this script = variables in other scripts.
+		/// </summary>
 		void GetPlayerData ()
 		{
 			#if !UNITY_EDITOR
@@ -126,8 +131,10 @@ namespace CityBashers
 			}
 			#endif
 		}
-
-		// Save PlayerData Main.
+			
+		/// <summary>
+		/// Save PlayerData Main.
+		/// </summary>
 		public void SavePlayerData ()
 		{
 			if (AllowSaving == true) 
@@ -139,25 +146,22 @@ namespace CityBashers
 				BinaryFormatter bf = new BinaryFormatter ();
 
 				#if !UNITY_EDITOR
-					FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
+				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 
-					Debug.Log (
-						"Successfully saved to " +
-						Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
-					); 
+				Debug.Log ("Successfully saved to " +
+					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"); 
 				#endif
 
 				#if UNITY_EDITOR
-					FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
+				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
 
-					Debug.Log (
-						"Successfully saved to " +
-						Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"
-					); 
+				Debug.Log ("Successfully saved to " +
+					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"); 
 				#endif
 
-				// Does the saving
+				// Does the saving.
 				playerData data = new playerData ();
+
 				SetPlayerData (data);
 
 				// Serializes and closes the file.
@@ -165,65 +169,78 @@ namespace CityBashers
 				file.Close ();
 			}
 		}
-
-		// Sets data.[variable] = [variable] from this script.
+			
+		/// <summary>
+		/// Sets data.[variable] = [variable] from this script.
+		/// </summary>
+		/// <param name="data">Data.</param>
 		void SetPlayerData (playerData data)
 		{
 			data.Username = Username;
 		}
 
+		/// <summary>
+		/// Deletes the editor player data.
+		/// </summary>
 		public void DeletePlayerDataEditor ()
 		{
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat") == true)
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
 
-				Debug.Log (
-					"Successfully deleted file " +
+				Debug.Log ("Successfully deleted file " +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"
 				);
 			}
 		}
 
+		/// <summary>
+		/// Deletes the main player data.
+		/// </summary>
 		public void DeletePlayerDataMain ()
 		{
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat") == true) 
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 
-				Debug.Log (
-					"Successfully deleted file " +
+				Debug.Log ("Successfully deleted file " +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
 				);
 			}
 		}
 
+		/// <summary>
+		/// Deletes the editor settings data.
+		/// </summary>
 		public void DeleteSettingsDataEditor ()
 		{
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
 
-				Debug.Log (
-					"Successfully deleted file " +
+				Debug.Log ("Successfully deleted file " +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"
 				);
 			}
 		}
 
+		/// <summary>
+		/// Deletes the main settings data.
+		/// </summary>
 		public void DeleteSettingsDataMain ()
 		{
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true)
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
-				Debug.Log (
-					"Successfully deleted file " +
+				Debug.Log ("Successfully deleted file " +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"
 				);
 			}
 		}
 			
-		// Load PlayerData main.
+		/// <summary>
+		/// Load PlayerData main.
+		/// </summary>
 		public void LoadPlayerData ()
 		{
 			#if !UNITY_EDITOR
@@ -235,8 +252,7 @@ namespace CityBashers
 					BinaryFormatter bf = new BinaryFormatter ();
 					FileStream file = File.Open (
 						Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat", 
-						FileMode.Open
-					);
+						FileMode.Open);
 
 					// Processes the save data into memory.
 					playerData data = (playerData)bf.Deserialize (file);
@@ -265,10 +281,10 @@ namespace CityBashers
 				{
 					// Opens the save data.
 					BinaryFormatter bf = new BinaryFormatter ();
+
 					FileStream file = File.Open (
 						Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat", 
-						FileMode.Open
-					);
+						FileMode.Open);
 
 					// Processes the save data into memory.
 					playerData data = (playerData)bf.Deserialize (file);
@@ -291,12 +307,18 @@ namespace CityBashers
 			#endif
 		}
 
-		// Sets variables in this script by getting data from save file. 
+		/// <summary>
+		/// Sets variables in this script by getting data from save file.
+		/// </summary>
+		/// <param name="data">Data.</param>
 		void LoadPlayerDataContents (playerData data)
 		{
 			Username = data.Username;
 		}
 			
+		/// <summary>
+		/// Stores the player data in game.
+		/// </summary>
 		public void StorePlayerDataInGame ()
 		{
 			if (SceneManager.GetActiveScene ().name != "menu")
@@ -304,33 +326,29 @@ namespace CityBashers
 
 			}
 		}
-
-		// Gets variables from this script = variables in other scripts.
+			
+		/// <summary>
+		/// Gets variables from this script = variables in other scripts.
+		/// </summary>
 		void GetSettingsData ()
 		{
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true
 			 || File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 			{
+				// Visual settings.
 				QualitySettings.SetQualityLevel (QualitySettingsIndex);
 				targetResolutionWidth = Screen.currentResolution.width; 
 				targetResolutionHeight = Screen.currentResolution.height;
 
-				if (QualitySettingsIndex == 0) 
-				{
-					ParticleEmissionMultiplier = 0.25f;
-				}
-
-				if (QualitySettingsIndex == 1) 
-				{
-					ParticleEmissionMultiplier = 1.0f;
-				}
-
+				// Audio settings.
 				MasterVolume = Mathf.Clamp (AudioListener.volume, 0, 1);
 				targetFrameRate = Application.targetFrameRate;
 			}
 		}
-
-		// Save Settings Main.
+			
+		/// <summary>
+		/// Save Settings Main.
+		/// </summary>
 		public void SaveSettingsData ()
 		{
 			if (AllowSaving == true) 
@@ -342,25 +360,22 @@ namespace CityBashers
 				BinaryFormatter bf = new BinaryFormatter ();
 
 				#if !UNITY_EDITOR
-					FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
-					
-					Debug.Log (
-						"Successfully saved to " +
-						Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"
-					); 
+				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
+				
+				Debug.Log ("Successfully saved to " +
+					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"); 
 				#endif
 
 				#if UNITY_EDITOR
-					FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
+				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
 
-					Debug.Log (
-						"Successfully saved to " +
-						Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"
-					); 
+				Debug.Log ("Successfully saved to " +
+					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"); 
 				#endif
 
 				// Does the saving
 				settingsData data = new settingsData ();
+
 				SetSettingsData (data);
 
 				// Serializes and closes the file.
@@ -368,24 +383,34 @@ namespace CityBashers
 				file.Close ();
 			}
 		}
-
-		// Sets data.[variable] = [variable] from this script.
+			
+		/// <summary>
+		/// Sets data.[variable] = [variable] from this script.
+		/// </summary>
+		/// <param name="data">Data.</param>
 		void SetSettingsData (settingsData data)
 		{
-			data.QualitySettingsIndex = QualitySettingsIndex;
-			data.targetResolutionWidth = targetResolutionWidth;
+			// Visual settings.
+			data.QualitySettingsIndex 	= QualitySettingsIndex;
+			data.targetResolutionWidth  = targetResolutionWidth;
 			data.targetResolutionHeight = targetResolutionHeight;
-			data.isFullscreen = isFullscreen;
-			data.limitFramerate = limitFramerate;
-			data.ParticleEmissionMultiplier = ParticleEmissionMultiplier;
-			data.targetFrameRate  = targetFrameRate;
+			data.isFullscreen 			= isFullscreen;
+			data.limitFramerate 		= limitFramerate;
+			data.targetFrameRate  		= targetFrameRate;
+
+			// Audio settings.
 			data.MasterVolume 	  = Mathf.Clamp (MasterVolume, 	     0, 1);
 			data.SoundtrackVolume = Mathf.Clamp (SoundtrackVolume, -80, 0);
 			data.EffectsVolume 	  = Mathf.Clamp (EffectsVolume,    -80, 0);
+
+			// Gameplay settings.
 			data.invertYAxis = invertYAxis;
 			data.MouseSensitivityMultplier = MouseSensitivityMultplier;
 		}
 
+		/// <summary>
+		/// Loads the settings data.
+		/// </summary>
 		public void LoadSettingsData ()
 		{
 			if (AllowLoading == true)
@@ -403,6 +428,7 @@ namespace CityBashers
 
 					// Processes the save data into memory.
 					settingsData data = (settingsData)bf.Deserialize (file);
+					
 					file.Close ();
 
 					LoadSettingsDataContents (data);
@@ -430,6 +456,7 @@ namespace CityBashers
 
 					// Processes the save data into memory.
 					settingsData data = (settingsData)bf.Deserialize (file);
+
 					file.Close ();
 
 					LoadSettingsDataContents (data);
@@ -445,81 +472,45 @@ namespace CityBashers
 				#endif
 			}
 		}
-
-		// Sets variables in this script by getting data from save file. 
+			
+		/// <summary>
+		/// Sets variables in this script by getting data from save file. 
+		/// </summary>
+		/// <param name="data">Data.</param>
 		void LoadSettingsDataContents (settingsData data)
 		{
-			QualitySettingsIndex = data.QualitySettingsIndex;
-			targetResolutionWidth = data.targetResolutionWidth;
-			targetResolutionHeight = data.targetResolutionHeight;
-			isFullscreen = data.isFullscreen;
-			limitFramerate = data.limitFramerate;
-			ParticleEmissionMultiplier = data.ParticleEmissionMultiplier;
-			targetFrameRate = data.targetFrameRate;
-			MasterVolume = data.MasterVolume;
+			// Visual settings.
+			QualitySettingsIndex 	= data.QualitySettingsIndex;
+			targetResolutionWidth 	= data.targetResolutionWidth;
+			targetResolutionHeight  = data.targetResolutionHeight;
+			isFullscreen 			= data.isFullscreen;
+			limitFramerate 			= data.limitFramerate;
+			targetFrameRate 		= data.targetFrameRate;
+
+			// Audio settings.
+			MasterVolume 	 = data.MasterVolume;
 			SoundtrackVolume = data.SoundtrackVolume;
-			EffectsVolume = data.EffectsVolume;
+			EffectsVolume 	 = data.EffectsVolume;
+
+			// Gameplay settings.
 			invertYAxis = data.invertYAxis;
 			MouseSensitivityMultplier = data.MouseSensitivityMultplier;
 		}
-
-		// Puts new data into relevant scripts.
+			
+		/// <summary>
+		/// Puts new data into relevant scripts.
+		/// </summary>
 		void StoreSettingsDataInGame ()
 		{
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
-
-			if (postProcessLayer == null)
-			{
-				postProcessLayer = PostProcessCamera.instance.postProcessLayer;
-			}
-
-			Bloom bloomLayer = null;
-			ColorGrading colorGradingLayer = null;
-			LensDistortion lensDistortionLayer = null;
-			MotionBlur motionBlurLayer = null;
-			AutoExposure autoExposureLayer = null;
-			Vignette vignetteLayer = null;
-			ScreenSpaceReflections screenSpaceReflectionsLayer = null;
-			AmbientOcclusion ambientOcclusionLayer = null;
-			ChromaticAberration chromaticAberrationLayer = null;
-			DepthOfField depthOfFieldLayer = null;
-			Grain grainLayer = null;
-
-			mainPostProcess.TryGetSettings (out bloomLayer);
-			mainPostProcess.TryGetSettings (out colorGradingLayer);
-			mainPostProcess.TryGetSettings (out lensDistortionLayer);
-			mainPostProcess.TryGetSettings (out motionBlurLayer);
-			mainPostProcess.TryGetSettings (out autoExposureLayer);
-			mainPostProcess.TryGetSettings (out vignetteLayer);
-			mainPostProcess.TryGetSettings (out screenSpaceReflectionsLayer);
-			mainPostProcess.TryGetSettings (out ambientOcclusionLayer);
-			mainPostProcess.TryGetSettings (out chromaticAberrationLayer);
-			mainPostProcess.TryGetSettings (out depthOfFieldLayer);
-			mainPostProcess.TryGetSettings (out grainLayer);
 
 			switch (QualitySettingsIndex)
 			{
 			case 0: // Low setting. In the dire hopes it works on integrated graphics.
 
-				bloomLayer.enabled.value = false;
-				colorGradingLayer.enabled.value = false;
-				lensDistortionLayer.enabled.value = false;
-				motionBlurLayer.enabled.value = false;
-				autoExposureLayer.enabled.value = false;
-				vignetteLayer.enabled.value = false;
-				screenSpaceReflectionsLayer.enabled.value = false;
-				ambientOcclusionLayer.enabled.value = false;
-				chromaticAberrationLayer.enabled.value = false;
-				depthOfFieldLayer.enabled.value = false;
-				grainLayer.enabled.value = false;
-
-				postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
-				postProcessLayer.fog.enabled = false;
-
 				volLightRend.enabled = false;
 				sunShafts.enabled = false;
 
-				/*
 				main_postProcessing.ambientOcclusion.enabled = false;
 				main_postProcessing.antialiasing.enabled = false;
 				main_postProcessing.bloom.enabled = false;
@@ -532,69 +523,35 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = false;
 				main_postProcessing.screenSpaceReflection.enabled = false;
 				main_postProcessing.vignette.enabled = false;
-				*/
-
-				//camera_UI_PostProcessing.bloom.enabled = false;
 				break;
+			
 			case 1: // Medium setting. Good quality but some optimizations.
-
-				bloomLayer.enabled.value = true;
-				colorGradingLayer.enabled.value = true;
-				lensDistortionLayer.enabled.value = false;
-				motionBlurLayer.enabled.value = true;
-				autoExposureLayer.enabled.value = true;
-				vignetteLayer.enabled.value = false;
-				screenSpaceReflectionsLayer.enabled.value = false;
-				ambientOcclusionLayer.enabled.value = true;
-				chromaticAberrationLayer.enabled.value = true;
-				depthOfFieldLayer.enabled.value = true;
-				grainLayer.enabled.value = true;
-
-				postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
-				postProcessLayer.fog.enabled = true;
 
 				volLightRend.enabled = false;
 				sunShafts.enabled = false;
 
-				/*
 				main_postProcessing.ambientOcclusion.enabled = true;
 				main_postProcessing.antialiasing.enabled = false;
-				main_postProcessing.bloom.enabled = false;
+				main_postProcessing.bloom.enabled = true;
 				main_postProcessing.chromaticAberration.enabled = false;
 				main_postProcessing.colorGrading.enabled = true;
 				main_postProcessing.depthOfField.enabled = true;
-				main_postProcessing.eyeAdaptation.enabled = true;
-				main_postProcessing.fog.enabled = true;
+				main_postProcessing.eyeAdaptation.enabled = false;
+				main_postProcessing.fog.enabled = false;
 				main_postProcessing.grain.enabled = true;
 				main_postProcessing.motionBlur.enabled = true;
 				main_postProcessing.screenSpaceReflection.enabled = false;
 				main_postProcessing.vignette.enabled = false;
-				*/
-				//camera_UI_PostProcessing.bloom.enabled = true;
 				break;
+			
 			case 2: // High setting. Most things are enabled and on high/highest settings.
-				
-				bloomLayer.enabled.value = true;
-				colorGradingLayer.enabled.value = true;
-				lensDistortionLayer.enabled.value = true;
-				motionBlurLayer.enabled.value = true;
-				autoExposureLayer.enabled.value = true;
-				vignetteLayer.enabled.value = true;
-				screenSpaceReflectionsLayer.enabled.value = true;
-				ambientOcclusionLayer.enabled.value = true;
-				chromaticAberrationLayer.enabled.value = true;
-				depthOfFieldLayer.enabled.value = true;
-				grainLayer.enabled.value = true;
-
-				postProcessLayer.antialiasingMode = PostProcessLayer.Antialiasing.None;
-				postProcessLayer.fog.enabled = true;
 
 				volLightRend.enabled = false;
 				sunShafts.enabled = false;
 
-				/*main_postProcessing.ambientOcclusion.enabled = true;
+				main_postProcessing.ambientOcclusion.enabled = true;
 				main_postProcessing.antialiasing.enabled = true;
-				main_postProcessing.bloom.enabled = false;
+				main_postProcessing.bloom.enabled = true;
 				main_postProcessing.chromaticAberration.enabled = true;
 				main_postProcessing.colorGrading.enabled = true;
 				main_postProcessing.depthOfField.enabled = true;
@@ -604,12 +561,8 @@ namespace CityBashers
 				main_postProcessing.motionBlur.enabled = true;
 				main_postProcessing.screenSpaceReflection.enabled = true;
 				main_postProcessing.vignette.enabled = true;
-				*/
-				//camera_UI_PostProcessing.bloom.enabled = true;
 				break;
 			}
-
-			Screen.SetResolution (targetResolutionWidth, targetResolutionHeight, Screen.fullScreen, 60);
 
 			AudioListener.volume = Mathf.Clamp (MasterVolume, 0, 1);
 
@@ -618,6 +571,14 @@ namespace CityBashers
 				AudioSettingsManager.instance.GetAudioSettings ();
 			}
 
+			SetTargetFramerate ();
+		}
+
+		/// <summary>
+		/// Sets the target framerate.
+		/// </summary>
+		void SetTargetFramerate ()
+		{
 			if (limitFramerate == true)
 			{
 				if (targetFrameRate < 30 && targetFrameRate >= 0)
@@ -626,41 +587,43 @@ namespace CityBashers
 				} 
 
 				else
-				
+
 				{
 					TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
 				}
 			} 
 
 			else
-			
+
 			{
 				targetFrameRate = -1;
 			}
 		}
 
 		// Variables stored in data files.
-		[System.Serializable]
+		[Serializable]
 		public class playerData
 		{
 			public string Username;
-			public int ExperiencePoints;
 		}
 
-		[System.Serializable]
+		[Serializable]
 		public class settingsData
 		{
+			// VISUAL SETTINGS
 			public int QualitySettingsIndex;
 			public int targetResolutionWidth = 1920;
 			public int targetResolutionHeight = 1080;
 			public bool isFullscreen;
 			public bool limitFramerate;
-			[Range (0, 2)]
-			public float ParticleEmissionMultiplier = 1;
 			public int targetFrameRate = 60;
+
+			// AUDIO SETTINGS
 			public float MasterVolume = 1;
 			public float SoundtrackVolume = 0;
 			public float EffectsVolume = 0;
+
+			// GAMEPLAY SETTINGS
 			public bool invertYAxis;
 			public float MouseSensitivityMultplier = 1;
 		}

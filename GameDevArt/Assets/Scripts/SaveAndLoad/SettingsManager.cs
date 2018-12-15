@@ -10,12 +10,6 @@ namespace CityBashers
 		public static SettingsManager Instance { get; private set; }
 
 		[Header ("Visual Settings")]
-		public Camera cam;
-
-		public Button HighEndQualityButton;
-		public Button MediumQualityButton;
-		public Button LowEndQualityButton;
-
 		public Toggle FullscreenToggle;
 		public Toggle LimitFramerateToggle;
 
@@ -23,13 +17,13 @@ namespace CityBashers
 		public Button MasterVolumeButtonUp;
 		public Button MasterVolumeButtonDown;
 		public TextMeshProUGUI MasterVolumeValueText;
-
+		[Space (10)]
 		public AudioMixer SoundtrackVolMix;
 		private float curSoundtrackVol;
 		public Button SoundtrackVolumeButtonUp;
 		public Button SoundtrackVolumeButtonDown;
 		public TextMeshProUGUI SoundtrackVolumeValueText;
-
+		[Space (10)]
 		public AudioMixer EffectsVolMix;
 		private float curEffectsVol;
 		public Button EffectsVolumeButtonUp;
@@ -37,7 +31,6 @@ namespace CityBashers
 		public TextMeshProUGUI EffectsVolumeValueText;
 
 		[Header ("Gameplay Settings")]
-		public bool invertMouse;
 		public Toggle invertToggle;
 		public Slider MouseSensitivitySlider;
 
@@ -49,8 +42,6 @@ namespace CityBashers
 
 		void Start ()
 		{
-			SaveAndLoadScript.Instance.cam = cam;
-
 			UpdateVisuals ();
 			UpdateVolumeTextValues ();
 			UpdateGameplayValues ();
@@ -58,7 +49,6 @@ namespace CityBashers
 			InvokeRepeating ("GetSoundtrackVolumeValue", 0, 1);
 			InvokeRepeating ("GetEffectsVolumeValue", 0, 1);
 		}
-
 
 		#region Video
 		public void OnQualitySettingsButtonClick (int QualityIndex)
@@ -73,24 +63,18 @@ namespace CityBashers
 			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 0) 
 			{
 				QualitySettings.SetQualityLevel (0);
-
-				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 0.25f;
 			}
 
 			// Medium visual quality settings.
 			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 1) 
 			{
 				QualitySettings.SetQualityLevel (1);
-
-				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
 			}
 
 			// High visual quality settings.
 			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 2) 
 			{
 				QualitySettings.SetQualityLevel (2);
-
-				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
 			}
 		}
 
