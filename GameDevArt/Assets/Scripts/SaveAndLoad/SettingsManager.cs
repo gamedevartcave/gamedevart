@@ -305,9 +305,9 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.invertYAxis = invertToggle.isOn;
 		}
 
-		public void SetMouseSens ()
+		public void SetMouseSensSliderValue ()
 		{
-
+			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 		}
 		#endregion
 			
