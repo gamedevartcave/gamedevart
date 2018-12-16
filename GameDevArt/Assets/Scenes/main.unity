@@ -7243,6 +7243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165718426}
   - component: {fileID: 165718427}
+  - component: {fileID: 165718428}
   m_Layer: 5
   m_Name: MasterVolumeSlider
   m_TagString: Untagged
@@ -7286,7 +7287,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 1985567062}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 0
@@ -7331,6 +7332,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &165718428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 165718425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  moveAmount: 0.01
+  menuNav: {fileID: 659109324}
+  slider: {fileID: 165718427}
+  selectable: {fileID: 165718427}
 --- !u!1001 &166789792
 Prefab:
   m_ObjectHideFlags: 0
@@ -17635,6 +17652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3952ae46ea22a8541b743bb98fa08fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveMenu: 0
   scrollSpeed: 0.25
   backButton: {fileID: 757261642}
   firstSelectable: {fileID: 981493283}
@@ -17900,7 +17918,7 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 754206051}
+  m_Material: {fileID: 1105089619}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
@@ -17936,7 +17954,7 @@ MonoBehaviour:
   MaskArea: {fileID: 276436733}
   graphic: {fileID: 276436734}
   useInputTexture: 0
-  AlphaMask: {fileID: 689437843}
+  AlphaMask: {fileID: 1676603932}
   AlphaGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 0}
@@ -35487,6 +35505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 618292620}
   - component: {fileID: 618292621}
+  - component: {fileID: 618292622}
   m_Layer: 5
   m_Name: EffectsVolumeSlider
   m_TagString: Untagged
@@ -35529,7 +35548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 1985567062}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -35575,6 +35594,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &618292622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 618292619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  moveAmount: 1
+  menuNav: {fileID: 659109324}
+  slider: {fileID: 618292621}
+  selectable: {fileID: 618292621}
 --- !u!1 &622125791
 GameObject:
   m_ObjectHideFlags: 0
@@ -36083,6 +36118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3952ae46ea22a8541b743bb98fa08fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveMenu: 0
   scrollSpeed: 0.25
   backButton: {fileID: 458242985}
   firstSelectable: {fileID: 165718427}
@@ -41667,45 +41703,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3123da49cb81147489b444f2749aba47, type: 2}
   m_IsPrefabAsset: 0
---- !u!28 &689437843
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  serializedVersion: 2
-  m_Width: 32
-  m_Height: 1
-  m_CompleteImageSize: 252
-  m_TextureFormat: 4
-  m_MipCount: 6
-  m_IsReadable: 1
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_LightmapFormat: 0
-  m_ColorSpace: 1
-  image data: 252
-  _typelessdata: ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff10ffffff2affffff45ffffff60ffffff7affffff95ffffffafffffffcaffffffe4ffffffffffffffe4ffffffcaffffffafffffff95ffffff7affffff60ffffff45ffffff2bffffff10ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff08ffffff37ffffff6dffffffa2ffffffd7fffffff1ffffffbcffffff87ffffff52ffffff1dffffff00ffffff00ffffff00ffffff00ffffff04ffffff52ffffffbcffffffd6ffffff6cffffff0effffff00ffffff02ffffff87ffffffa1ffffff07ffffff44ffffff54ffffff4c
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &693883175
 GameObject:
   m_ObjectHideFlags: 0
@@ -41785,6 +41782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3952ae46ea22a8541b743bb98fa08fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveMenu: 0
   scrollSpeed: 0.25
   backButton: {fileID: 531715331}
   firstSelectable: {fileID: 531715333}
@@ -47364,45 +47362,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000010227208682, guid: 8edb62778d3ea1e489bc191b81b2fc46,
     type: 2}
   m_PrefabInternal: {fileID: 1514716520}
---- !u!21 &754206051
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: UI Extensions/SoftMaskShader
-  m_Shader: {fileID: 4800000, guid: 947afae4d36f1274ea2e4098262ceef6, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaMask:
-        m_Texture: {fileID: 689437843}
-        m_Scale: {x: 0.0009765625, y: 0.031249642}
-        m_Offset: {x: 0.5, y: -14.625959}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _ColorMask: 15
-    - _CutOff: 0
-    - _FlipAlphaMask: 0
-    - _HardBlend: 0
-    - _NoOuterClip: 0
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &757261642
 GameObject:
   m_ObjectHideFlags: 0
@@ -54568,6 +54527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3952ae46ea22a8541b743bb98fa08fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveMenu: 0
   scrollSpeed: 0.25
   backButton: {fileID: 1746431039}
   firstSelectable: {fileID: 1186106494}
@@ -63321,17 +63281,6 @@ MonoBehaviour:
           m_StringArgument: Pressed
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 263335521}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1790950419}
         m_MethodName: SetActiveMenu
         m_Mode: 2
@@ -64519,6 +64468,45 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1096270628}
   m_CullTransparentMesh: 0
+--- !u!21 &1105089619
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UI Extensions/SoftMaskShader
+  m_Shader: {fileID: 4800000, guid: 947afae4d36f1274ea2e4098262ceef6, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaMask:
+        m_Texture: {fileID: 1676603932}
+        m_Scale: {x: 0.0009765625, y: 0.031249434}
+        m_Offset: {x: 0.5, y: -14.625869}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ColorMask: 15
+    - _CutOff: 0
+    - _FlipAlphaMask: 0
+    - _HardBlend: 0
+    - _NoOuterClip: 0
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1109894261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4247517302465094, guid: cbea631553e579f4db0813e22c25623b,
@@ -67433,6 +67421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3952ae46ea22a8541b743bb98fa08fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveMenu: 0
   scrollSpeed: 0.25
   backButton: {fileID: 499494215}
   firstSelectable: {fileID: 1854538361}
@@ -79084,6 +79073,45 @@ RectTransform:
   m_AnchoredPosition: {x: 959.99994, y: 277.65857}
   m_SizeDelta: {x: 425.7, y: 55.59}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!28 &1676603932
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 2
+  m_Width: 32
+  m_Height: 1
+  m_CompleteImageSize: 252
+  m_TextureFormat: 4
+  m_MipCount: 6
+  m_IsReadable: 1
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  image data: 252
+  _typelessdata: ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff10ffffff2affffff45ffffff60ffffff7affffff95ffffffafffffffcaffffffe4ffffffffffffffe4ffffffcaffffffafffffff95ffffff7affffff60ffffff45ffffff2bffffff10ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff08ffffff37ffffff6dffffffa2ffffffd7fffffff1ffffffbcffffff87ffffff52ffffff1dffffff00ffffff00ffffff00ffffff00ffffff04ffffff52ffffffbcffffffd6ffffff6cffffff0effffff00ffffff02ffffff87ffffffa1ffffff07ffffff44ffffff54ffffff4c
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1688670404
 GameObject:
   m_ObjectHideFlags: 0
@@ -79627,6 +79655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3952ae46ea22a8541b743bb98fa08fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveMenu: 0
   scrollSpeed: 0.25
   backButton: {fileID: 0}
   firstSelectable: {fileID: 1667086126}
@@ -99202,6 +99231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985567061}
   - component: {fileID: 1985567062}
+  - component: {fileID: 1985567063}
   m_Layer: 5
   m_Name: SoundtrackVolumeSlider
   m_TagString: Untagged
@@ -99244,8 +99274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 165718427}
+    m_SelectOnDown: {fileID: 618292621}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 0
@@ -99290,6 +99320,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1985567063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1985567060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  moveAmount: 1
+  menuNav: {fileID: 659109324}
+  slider: {fileID: 1985567062}
+  selectable: {fileID: 1985567062}
 --- !u!1 &1994431943
 GameObject:
   m_ObjectHideFlags: 0
