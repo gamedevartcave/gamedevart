@@ -44,7 +44,7 @@ namespace CityBashers
 				
 					if (playerActions.Move.Value.x != 0)
 					{
-						slider.value += moveAmount * playerActions.Move.Value.x;
+						slider.value += moveAmount * playerActions.Move.Value.x * Time.unscaledDeltaTime;
 					}
 				} 
 

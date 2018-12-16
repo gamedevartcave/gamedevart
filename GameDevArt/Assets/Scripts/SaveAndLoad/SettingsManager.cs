@@ -15,22 +15,16 @@ namespace CityBashers
 
 		[Header ("Audio Settings")]
 		public Slider MasterVolSlider;
-		public Button MasterVolumeButtonUp;
-		public Button MasterVolumeButtonDown;
 		public TextMeshProUGUI MasterVolumeValueText;
 		[Space (10)]
 		public AudioMixer SoundtrackVolMix;
 		private float curSoundtrackVol;
 		public Slider SoundtrackVolSlider;
-		public Button SoundtrackVolumeButtonUp;
-		public Button SoundtrackVolumeButtonDown;
 		public TextMeshProUGUI SoundtrackVolumeValueText;
 		[Space (10)]
 		public AudioMixer EffectsVolMix;
 		private float curEffectsVol;
 		public Slider EffectsVolSlider;
-		public Button EffectsVolumeButtonUp;
-		public Button EffectsVolumeButtonDown;
 		public TextMeshProUGUI EffectsVolumeValueText;
 
 		[Header ("Gameplay Settings")]
