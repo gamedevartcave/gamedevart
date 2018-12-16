@@ -341,7 +341,7 @@ namespace CityBashers
 				targetResolutionHeight = Screen.currentResolution.height;
 
 				// Audio settings.
-				MasterVolume = Mathf.Clamp (AudioListener.volume, 0, 1);
+				//MasterVolume = Mathf.Clamp (AudioListener.volume, 0, 1);
 				targetFrameRate = Application.targetFrameRate;
 			}
 		}
@@ -565,11 +565,7 @@ namespace CityBashers
 			}
 
 			AudioListener.volume = Mathf.Clamp (MasterVolume, 0, 1);
-
-			if (AudioSettingsManager.instance != null)
-			{
-				AudioSettingsManager.instance.GetAudioSettings ();
-			}
+			SettingsManager.Instance.LoadAudioVolumes ();
 
 			SetTargetFramerate ();
 		}

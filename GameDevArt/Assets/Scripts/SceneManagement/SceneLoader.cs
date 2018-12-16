@@ -108,7 +108,7 @@ namespace CityBashers
 			while (!async.isDone) 
 			{
 				float asyncprogress = Mathf.Round (1.1111f * async.progress * 100);
-				AudioListener.volume -= 0.2f * Time.unscaledDeltaTime;
+				//AudioListener.volume -= 0.2f * Time.unscaledDeltaTime;
 
 				// UI checks load progress and displays for the player.
 				SmoothProgress = Mathf.Lerp (SmoothProgress, async.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
