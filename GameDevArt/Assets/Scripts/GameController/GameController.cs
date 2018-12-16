@@ -4,6 +4,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.PostProcessing;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace CityBashers
 {
@@ -76,10 +77,13 @@ namespace CityBashers
 
 		[Header ("Post processing")]
 		public PostProcessingProfile postProcessing;
+		//public PostProcessVolume postProcessVolume;
 		public float targetDofDistance;
 		public float dofSmoothing = 5.0f;
 
 		private PlayerActions playerActions;
+
+		//private DepthOfField depthOfFieldLayer;
 
 		void Awake ()
 		{
@@ -97,6 +101,7 @@ namespace CityBashers
 			displayComboScore = 0;
 			targetComboScore = 0;
 			comboScoreText.text = string.Empty;
+			//depthOfFieldLayer = ScriptableObject.CreateInstance<DepthOfField> ();
 		}
 
 		void Update ()
@@ -162,7 +167,6 @@ namespace CityBashers
 		void GetDepthOfField ()
 		{
 			var dofSettings = postProcessing.depthOfField.settings;
-
 			RaycastHit hit;
 
 			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
@@ -180,6 +184,13 @@ namespace CityBashers
 						PlayerController.instance.transform.position);
 				}
 			}
+
+			/*
+			depthOfFieldLayer.focusDistance.value = Mathf.Lerp (
+				depthOfFieldLayer.focusDistance.value, 
+				targetDofDistance, 
+				Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
+			);*/
 
 			dofSettings.focusDistance = Mathf.Lerp (
 				dofSettings.focusDistance, 

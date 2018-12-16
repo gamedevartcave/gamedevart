@@ -7,6 +7,7 @@ namespace CityBashers
 	public class MenuNavigation : MonoBehaviour 
 	{
 		public static MenuNavigation activeMenu { get; protected set; }
+		[ReadOnlyAttribute] public bool isActiveMenu;
 
 		// Scrolling
 		public float scrollSpeed;
@@ -77,10 +78,26 @@ namespace CityBashers
 			else
 			
 			{
-				if (GameController.instance.activeMenu != this &&
-					GameController.instance.activeMenu != null)
+				if (GameController.instance.activeMenu != this)
 				{
-					return;
+					if (GameController.instance.activeMenu != null)
+					{
+						if (isActiveMenu == true)
+						{
+							isActiveMenu = false;
+						}
+
+						return;
+					}
+				} 
+
+				else
+				
+				{
+					if (isActiveMenu == false)
+					{
+						isActiveMenu = true;
+					}
 				}
 			}
 

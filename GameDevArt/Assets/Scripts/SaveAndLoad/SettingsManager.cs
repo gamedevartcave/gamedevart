@@ -10,34 +10,24 @@ namespace CityBashers
 		public static SettingsManager Instance { get; private set; }
 
 		[Header ("Visual Settings")]
-		public Camera cam;
-
-		public Button HighEndQualityButton;
-		public Button MediumQualityButton;
-		public Button LowEndQualityButton;
-
 		public Toggle FullscreenToggle;
 		public Toggle LimitFramerateToggle;
 
 		[Header ("Audio Settings")]
-		public Button MasterVolumeButtonUp;
-		public Button MasterVolumeButtonDown;
+		public Slider MasterVolSlider;
 		public TextMeshProUGUI MasterVolumeValueText;
-
+		[Space (10)]
 		public AudioMixer SoundtrackVolMix;
 		private float curSoundtrackVol;
-		public Button SoundtrackVolumeButtonUp;
-		public Button SoundtrackVolumeButtonDown;
+		public Slider SoundtrackVolSlider;
 		public TextMeshProUGUI SoundtrackVolumeValueText;
-
+		[Space (10)]
 		public AudioMixer EffectsVolMix;
 		private float curEffectsVol;
-		public Button EffectsVolumeButtonUp;
-		public Button EffectsVolumeButtonDown;
+		public Slider EffectsVolSlider;
 		public TextMeshProUGUI EffectsVolumeValueText;
 
 		[Header ("Gameplay Settings")]
-		public bool invertMouse;
 		public Toggle invertToggle;
 		public Slider MouseSensitivitySlider;
 
@@ -49,8 +39,6 @@ namespace CityBashers
 
 		void Start ()
 		{
-			SaveAndLoadScript.Instance.cam = cam;
-
 			UpdateVisuals ();
 			UpdateVolumeTextValues ();
 			UpdateGameplayValues ();
@@ -58,7 +46,6 @@ namespace CityBashers
 			InvokeRepeating ("GetSoundtrackVolumeValue", 0, 1);
 			InvokeRepeating ("GetEffectsVolumeValue", 0, 1);
 		}
-
 
 		#region Video
 		public void OnQualitySettingsButtonClick (int QualityIndex)
@@ -69,28 +56,20 @@ namespace CityBashers
 
 		public void UpdateVisuals ()
 		{
-			// Low visual quality settings.
-			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 0) 
+			switch (SaveAndLoadScript.Instance.QualitySettingsIndex)
 			{
+			case 0:
 				QualitySettings.SetQualityLevel (0);
-
-				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 0.25f;
-			}
-
-			// Medium visual quality settings.
-			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 1) 
-			{
+				break;
+			case 1:
 				QualitySettings.SetQualityLevel (1);
-
-				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
-			}
-
-			// High visual quality settings.
-			if (SaveAndLoadScript.Instance.QualitySettingsIndex == 2) 
-			{
+				break;
+			case 2:
 				QualitySettings.SetQualityLevel (2);
-
-				SaveAndLoadScript.Instance.ParticleEmissionMultiplier = 1f;
+				break;
+			default:
+				QualitySettings.SetQualityLevel (2);
+				break;
 			}
 		}
 
@@ -151,6 +130,13 @@ namespace CityBashers
 				UpdateVolumeTextValues ();
 			}
 		}
+
+		public void MasterVolumeOnValueChanged ()
+		{
+			SaveAndLoadScript.Instance.MasterVolume = MasterVolSlider.value;
+			AudioListener.volume = SaveAndLoadScript.Instance.MasterVolume;
+			UpdateVolumeTextValues ();
+		}
 			
 		public void SoundtrackVolumeUpOnClick ()
 		{
@@ -161,6 +147,12 @@ namespace CityBashers
 		public void SoundtrackVolumeDownOnClick ()
 		{
 			SaveAndLoadScript.Instance.SoundtrackVolume -= 8f;
+			UpdateSoundtrackVol ();
+		}
+
+		public void SoundtrackVolumeOnValueChanged ()
+		{
+			SaveAndLoadScript.Instance.SoundtrackVolume = SoundtrackVolSlider.value;
 			UpdateSoundtrackVol ();
 		}
 
@@ -181,6 +173,12 @@ namespace CityBashers
 		public void EffectsVolumeDownOnClick ()
 		{
 			SaveAndLoadScript.Instance.EffectsVolume -= 8f;
+			UpdateEffectsVol ();
+		}
+
+		public void EffectsVolumeOnValueChanged ()
+		{
+			SaveAndLoadScript.Instance.EffectsVolume = EffectsVolSlider.value;
 			UpdateEffectsVol ();
 		}
 
@@ -248,23 +246,51 @@ namespace CityBashers
 		{
 			if (MasterVolumeValueText != null)
 			{
-				MasterVolumeValueText.text = System.Math.Round (
-					SaveAndLoadScript.Instance.MasterVolume, 1).ToString ();
+				MasterVolumeValueText.text = 
+					System.Math.Round (
+						Mathf.InverseLerp (
+							MasterVolSlider.minValue, 
+							MasterVolSlider.maxValue, 
+							MasterVolSlider.value
+						) * 100, 
+					0) 
+				+ " %";
 			}
 
 			if (SoundtrackVolumeValueText != null)
 			{
-				SoundtrackVolumeValueText.text = (1 +
-				System.Math.Round ((0.0125f * SaveAndLoadScript.Instance.SoundtrackVolume), 1)
-				).ToString ();
+				SoundtrackVolumeValueText.text = 
+					System.Math.Round (
+						Mathf.InverseLerp (
+							SoundtrackVolSlider.minValue, 
+							SoundtrackVolSlider.maxValue,
+							SoundtrackVolSlider.value
+						) * 100, 
+					0) 
+				+ " %";
 			}
 
 			if (EffectsVolumeValueText != null)
 			{
-				EffectsVolumeValueText.text = (1 +
-				System.Math.Round ((0.0125f * SaveAndLoadScript.Instance.EffectsVolume), 1)
-				).ToString ();
+				EffectsVolumeValueText.text = 
+					System.Math.Round (
+						Mathf.InverseLerp (
+							EffectsVolSlider.minValue, 
+							EffectsVolSlider.maxValue, 
+							EffectsVolSlider.value
+						) * 100, 
+					0) 
+				+ " %";
 			}
+		}
+
+		public void LoadAudioVolumes ()
+		{
+			MasterVolSlider.value = AudioListener.volume;
+			SoundtrackVolMix.SetFloat ("SoundtrackVolume", SaveAndLoadScript.Instance.SoundtrackVolume);
+			SoundtrackVolSlider.value = GetSoundtrackVolumeValue ();
+			EffectsVolMix.SetFloat ("EffectsVolume", SaveAndLoadScript.Instance.EffectsVolume);
+			EffectsVolSlider.value = GetEffectsVolumeValue ();
 		}
 		#endregion
 
@@ -279,9 +305,9 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.invertYAxis = invertToggle.isOn;
 		}
 
-		public void SetMouseSens ()
+		public void SetMouseSensSliderValue ()
 		{
-
+			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 		}
 		#endregion
 			
