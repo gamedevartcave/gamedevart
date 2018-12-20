@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.PostProcessing;
+//using UnityEngine.PostProcessing;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.ImageEffects;
 
@@ -22,7 +23,12 @@ namespace CityBashers
 
 		[Header ("Effects components")]
 		public Camera cam; // Camera to use to change settings.
-		public PostProcessingProfile main_postProcessing;
+		//public PostProcessingProfile main_postProcessing;
+		public PostProcessProfile postProcessProfile;
+		public PostProcessLayer postProcessLayer;
+		public PostProcessVolume postProcessVolume;
+		public QualitySetting[] qualitySettings;
+
 		public VolumetricLightRenderer volLightRend;
 		public SunShafts sunShafts;
 
@@ -502,67 +508,51 @@ namespace CityBashers
 		/// </summary>
 		void StoreSettingsDataInGame ()
 		{
+			if (postProcessLayer == null)
+			{
+				postProcessLayer = cam.GetComponent<PostProcessLayer> ();
+			}
+
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
 
-			switch (QualitySettingsIndex)
-			{
-			case 0: // Low setting. In the dire hopes it works on integrated graphics.
+			volLightRend.enabled = qualitySettings[QualitySettingsIndex].volumetricLighting;
+			sunShafts.enabled = qualitySettings[QualitySettingsIndex].sunShafts;
 
-				volLightRend.enabled = false;
-				sunShafts.enabled = false;
+			postProcessLayer.antialiasingMode = qualitySettings[QualitySettingsIndex].AntiAliasingMode;
+			postProcessLayer.fog.enabled = qualitySettings[QualitySettingsIndex].fog;
 
-				main_postProcessing.ambientOcclusion.enabled = false;
-				main_postProcessing.antialiasing.enabled = false;
-				main_postProcessing.bloom.enabled = false;
-				main_postProcessing.chromaticAberration.enabled = false;
-				main_postProcessing.colorGrading.enabled = false;
-				main_postProcessing.depthOfField.enabled = false;
-				main_postProcessing.eyeAdaptation.enabled = false;
-				main_postProcessing.fog.enabled = false;
-				main_postProcessing.grain.enabled = false;
-				main_postProcessing.motionBlur.enabled = false;
-				main_postProcessing.screenSpaceReflection.enabled = false;
-				main_postProcessing.vignette.enabled = false;
-				break;
+			postProcessVolume.profile.GetSetting <LensDistortion> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].lensDistortion;
 			
-			case 1: // Medium setting. Good quality but some optimizations.
-
-				volLightRend.enabled = false;
-				sunShafts.enabled = false;
-
-				main_postProcessing.ambientOcclusion.enabled = true;
-				main_postProcessing.antialiasing.enabled = false;
-				main_postProcessing.bloom.enabled = true;
-				main_postProcessing.chromaticAberration.enabled = false;
-				main_postProcessing.colorGrading.enabled = true;
-				main_postProcessing.depthOfField.enabled = true;
-				main_postProcessing.eyeAdaptation.enabled = false;
-				main_postProcessing.fog.enabled = false;
-				main_postProcessing.grain.enabled = true;
-				main_postProcessing.motionBlur.enabled = true;
-				main_postProcessing.screenSpaceReflection.enabled = false;
-				main_postProcessing.vignette.enabled = false;
-				break;
+			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.MotionBlur> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].motionBlur;
 			
-			case 2: // High setting. Most things are enabled and on high/highest settings.
-
-				volLightRend.enabled = false;
-				sunShafts.enabled = false;
-
-				main_postProcessing.ambientOcclusion.enabled = true;
-				main_postProcessing.antialiasing.enabled = true;
-				main_postProcessing.bloom.enabled = true;
-				main_postProcessing.chromaticAberration.enabled = true;
-				main_postProcessing.colorGrading.enabled = true;
-				main_postProcessing.depthOfField.enabled = true;
-				main_postProcessing.eyeAdaptation.enabled = true;
-				main_postProcessing.fog.enabled = true;
-				main_postProcessing.grain.enabled = true;
-				main_postProcessing.motionBlur.enabled = true;
-				main_postProcessing.screenSpaceReflection.enabled = true;
-				main_postProcessing.vignette.enabled = true;
-				break;
-			}
+			postProcessVolume.profile.GetSetting <AutoExposure> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].autoExposure;
+			
+			postProcessVolume.profile.GetSetting <Vignette> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].vignette;
+			
+			postProcessVolume.profile.GetSetting <ScreenSpaceReflections> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].screenSpaceReflections;
+			
+			postProcessVolume.profile.GetSetting <AmbientOcclusion> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].ambientOcclusion;
+			
+			postProcessVolume.profile.GetSetting <ChromaticAberration> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].chromaticAbberation;
+			
+			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.DepthOfField> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].depthOfField;
+			
+			postProcessVolume.profile.GetSetting <Grain> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].grain;
+			
+			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.Bloom> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].bloom;
+			
+			postProcessVolume.profile.GetSetting <ColorGrading> ().enabled.value = 
+				qualitySettings[QualitySettingsIndex].colorGrading;
 
 			AudioListener.volume = Mathf.Clamp (MasterVolume, 0, 1);
 			SettingsManager.Instance.LoadAudioVolumes ();

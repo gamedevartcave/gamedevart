@@ -20,6 +20,12 @@ namespace CityBashers
 			Instance = this;
 		}
 
+		void Start ()
+		{
+			//FadeOutLoaderUI ();
+			//BackgroundFader.instance.StartFade ();
+		}
+
 		public void LoadScene (string sceneName)
 		{
 			if (SceneLoadCommit == false)

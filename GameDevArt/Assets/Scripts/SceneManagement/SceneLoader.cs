@@ -123,7 +123,7 @@ namespace CityBashers
 					
 				if (asyncprogress < 100) 
 				{
-					Debug.Log ("Scene load async progress: " + Mathf.Round (1.1111f * (async.progress * 100)) + "%");
+					//Debug.Log ("Scene load async progress: " + Mathf.Round (1.1111f * (async.progress * 100)) + "%");
 				}
 
 				// Somehow async operations load up to 90% before loading the next scene,
@@ -195,8 +195,12 @@ namespace CityBashers
 
 			if (DontDestroyOnLoadInit.Instance != null)
 			{
-				DontDestroyOnLoadInit.Instance.OnInitialized ();
+				if (DontDestroyOnLoadInit.Instance.gameObject.activeInHierarchy == true)
+				{
+					DontDestroyOnLoadInit.Instance.OnInitialized ();
+				}
 			}
+				
 		}
 
 		public void SceneLoadUIDisappear ()

@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
-using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.PostProcessing;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace CityBashers
 {
@@ -76,14 +76,10 @@ namespace CityBashers
 		public UnityEvent OnUnpause;
 
 		[Header ("Post processing")]
-		public PostProcessingProfile postProcessing;
-		//public PostProcessVolume postProcessVolume;
 		public float targetDofDistance;
 		public float dofSmoothing = 5.0f;
 
 		private PlayerActions playerActions;
-
-		//private DepthOfField depthOfFieldLayer;
 
 		void Awake ()
 		{
@@ -101,7 +97,6 @@ namespace CityBashers
 			displayComboScore = 0;
 			targetComboScore = 0;
 			comboScoreText.text = string.Empty;
-			//depthOfFieldLayer = ScriptableObject.CreateInstance<DepthOfField> ();
 		}
 
 		void Update ()
@@ -166,7 +161,6 @@ namespace CityBashers
 
 		void GetDepthOfField ()
 		{
-			var dofSettings = postProcessing.depthOfField.settings;
 			RaycastHit hit;
 
 			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
@@ -185,20 +179,15 @@ namespace CityBashers
 				}
 			}
 
-			/*
-			depthOfFieldLayer.focusDistance.value = Mathf.Lerp (
-				depthOfFieldLayer.focusDistance.value, 
-				targetDofDistance, 
-				Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
-			);*/
-
-			dofSettings.focusDistance = Mathf.Lerp (
-				dofSettings.focusDistance, 
-				targetDofDistance, 
-				Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
-			);
-
-			postProcessing.depthOfField.settings = dofSettings;
+			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
+			{
+				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<DepthOfField> ().focusDistance.value = 
+				Mathf.Lerp (
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<DepthOfField> ().focusDistance.value, 
+					targetDofDistance, 
+					Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
+				);
+			}
 
 			#if UNITY_EDITOR
 			Debug.DrawRay (Camera.main.transform.position, Camera.main.transform.forward, Color.blue);

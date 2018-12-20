@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace CityBashers
 {
@@ -25,13 +26,6 @@ namespace CityBashers
 			Invoke ("DetectManagers", Delay);
 		}
 
-		public void SetInstance ()
-		{
-			//Instance = this;
-			//SceneLoader.Instance.OnSceneLoadComplete.AddListener (OnSceneLoadComplete);
-			//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
-		}
-
 		public void DetectManagers ()
 		{
 			// If there is no MANAGERS GameObject present,
@@ -41,12 +35,7 @@ namespace CityBashers
 				managers = Instantiate (ManagersPrefab); // Includes the InitManager.
 				managers.name = "MANAGERS";
 				DontDestroyOnLoad (managers.gameObject); 
-
 			}
-
-			//SceneLoader.Instance.OnInitialize.AddListener (OnInitialized);
-
-			//StartCoroutine (Initialize ());
 		}
 
 		IEnumerator Initialize ()
@@ -54,6 +43,7 @@ namespace CityBashers
 			yield return initializeWait;
 			OnInitialize.Invoke ();
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+			this.gameObject.SetActive (false);
 		}
 
 		public void LoadData ()
@@ -64,6 +54,11 @@ namespace CityBashers
 		public void OnInitialized ()
 		{
 			StartCoroutine (Initialize ());
+		}
+
+		public void AssignPostProcessVolume (PostProcessVolume newPostProcessVolume)
+		{
+			SaveAndLoadScript.Instance.postProcessVolume = newPostProcessVolume;
 		}
 	}
 }
