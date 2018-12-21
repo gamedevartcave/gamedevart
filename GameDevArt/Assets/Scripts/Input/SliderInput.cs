@@ -4,21 +4,43 @@ using InControl;
 
 namespace CityBashers
 {
+	[RequireComponent (typeof (Slider))]
 	public class SliderInput : MonoBehaviour 
 	{
-		[ReadOnlyAttribute] public bool active;
+		/// <summary>
+		/// Checks if selectable is currently selected.
+		/// </summary>
+		private bool active;
+		/// <summary>
+		/// How much slider value moves on input per second.
+		/// </summary>
 		public float moveAmount = 1;
-		[Space (10)]
+		/// <summary>
+		/// Parent menu navigation to determine if active.
+		/// </summary>
 		public MenuNavigation menuNav;
-		[Space (10)]
-		public Slider slider;
-		public Selectable selectable;
+
+		/// <summary>
+		/// The slider UI.
+		/// </summary>
+		private Slider slider;
+
+		/// <summary>
+		/// The selectable.
+		/// </summary>
+		private Selectable selectable;
 
 		public PlayerActions playerActions;
 
 		void Awake ()
 		{
 			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener (OnInitialize);
+		}
+
+		void Start ()
+		{
+			slider = GetComponent<Slider> ();
+			selectable = GetComponent<Selectable> ();
 		}
 
 		void OnInitialize ()

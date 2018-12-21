@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-//using UnityEngine.PostProcessing;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.ImageEffects;
@@ -23,14 +22,11 @@ namespace CityBashers
 
 		[Header ("Effects components")]
 		public Camera cam; // Camera to use to change settings.
-		//public PostProcessingProfile main_postProcessing;
+		public SunShafts sunShafts;
 		public PostProcessProfile postProcessProfile;
 		public PostProcessLayer postProcessLayer;
 		public PostProcessVolume postProcessVolume;
 		public QualitySetting[] qualitySettings;
-
-		public VolumetricLightRenderer volLightRend;
-		public SunShafts sunShafts;
 
 		[Header ("Visual settings")]
 		public int QualitySettingsIndex;
@@ -68,7 +64,6 @@ namespace CityBashers
 			SaveAndLoadScript.Instance.LoadPlayerData ();
 
 			cam = Camera.main;
-			volLightRend = cam.GetComponent<VolumetricLightRenderer> ();
 			sunShafts = cam.GetComponent<SunShafts> ();
 
 			SaveAndLoadScript.Instance.LoadSettingsData ();
@@ -515,7 +510,6 @@ namespace CityBashers
 
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
 
-			volLightRend.enabled = qualitySettings[QualitySettingsIndex].volumetricLighting;
 			sunShafts.enabled = qualitySettings[QualitySettingsIndex].sunShafts;
 
 			postProcessLayer.antialiasingMode = qualitySettings[QualitySettingsIndex].AntiAliasingMode;

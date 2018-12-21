@@ -2,7 +2,7 @@
 
 namespace CityBashers
 {
-	[CreateAssetMenu(fileName = "New Bitcrusher Parameters", menuName = "Bitcrusher/Bitcrusher Parameters", order = 4)]
+	[CreateAssetMenu(fileName = "New Bitcrusher Parameters", menuName = "Audio/Bitcrusher/Bitcrusher Parameters", order = 4)]
 	public class BitcrusherParameters : ScriptableObject
 	{
 		[Header ("Bitcrusher Parameters")]

@@ -2955,7 +2955,8 @@ AudioSource:
   m_GameObject: {fileID: 1085543960501846}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8ac7538851c65f4480cca12d4fca877,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.2
@@ -3050,7 +3051,8 @@ AudioSource:
   m_GameObject: {fileID: 1041245834866722}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8ac7538851c65f4480cca12d4fca877,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3145,7 +3147,8 @@ AudioSource:
   m_GameObject: {fileID: 1563473346460364}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8ac7538851c65f4480cca12d4fca877,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3240,7 +3243,8 @@ AudioSource:
   m_GameObject: {fileID: 1153381704815980}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: a8ac7538851c65f4480cca12d4fca877,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3391,16 +3395,16 @@ MonoBehaviour:
   thirdPersonUserControl: {fileID: 114339389852459282}
   m_MovingTurnSpeed: 720
   m_StationaryTurnSpeed: 360
-  m_JumpPower: 20
-  m_JumpPower_Forward: 1
+  m_JumpPower: 12
+  m_JumpPower_Forward: 0.1
   m_DoubleJumpPower: 16
-  m_AirControl: 1
-  m_GravityMultiplier: 5
+  m_AirControl: 0
+  m_GravityMultiplier: 3
   m_RunCycleLegOffset: 0.2
   m_MoveSpeedMultiplier: 1.5
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.28
-  terminalVelocity: 25
+  terminalVelocity: 60
   m_Animator: {fileID: 95884795619259730}
   moveMultiplier: 10
 --- !u!114 &114339389852459282
@@ -3414,7 +3418,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfe20afea440c2479f8121ee057b0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponChangeRate: 0.25
+  isChangingWeapon: 0
+  weaponChangeRate: 0.02
+  OnWeaponChangeTimeScale: 0.05
+  WeaponChangeModeTime: 1
+  WeaponChangeDuration: 1
+  OnWeaponChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetVisible
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: ResetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetInvisible
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  WeaponChangeEnded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetInvisible
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: ResetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetVisible
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   camRigSimpleFollow: {fileID: 0}
   camRigSimpleFollowRotNormal: {x: 5, y: 15, z: 0}
   camRigSimpleFollowRotAiming: {x: 100, y: 100, z: 0}
@@ -3521,15 +3583,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCol: {fileID: 136886608646034890}
-  DeathBarrier: {fileID: 0}
+  playerRb: {fileID: 54921349990239352}
   PlayerUI: {fileID: 0}
+  startingPoint: {fileID: 0}
   lostAllHealth: 0
   health: 0
   StartHealth: 100
   MaximumHealth: 100
   HealthSlider: {fileID: 0}
   HealthSlider_Smoothed: {fileID: 0}
-  healthSliderSmoothing: 3
+  healthSliderSmoothing: 1
   OnLostAllHealth:
     m_PersistentCalls:
       m_Calls:
@@ -3628,7 +3691,7 @@ MonoBehaviour:
   MaximumMagic: 100
   MagicSlider: {fileID: 0}
   MagicSlider_Smoothed: {fileID: 0}
-  magicSliderSmoothing: 3
+  magicSliderSmoothing: 1
   normalFov: 65
   aimFov: 45
   aimSmoothing: 10

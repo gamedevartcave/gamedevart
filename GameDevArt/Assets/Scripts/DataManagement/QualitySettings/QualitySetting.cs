@@ -3,11 +3,10 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace CityBashers
 {
-	[CreateAssetMenu (fileName = "New Quality Setting", menuName = "Quality Setting")]
+	[CreateAssetMenu (fileName = "New Quality Setting", menuName = "Video/Quality Setting", order = 1)]
 	public class QualitySetting : ScriptableObject
 	{
 		public bool sunShafts;
-		public bool volumetricLighting;
 		public PostProcessLayer.Antialiasing AntiAliasingMode;
 		public bool fog;
 		public bool lensDistortion;
