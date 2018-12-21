@@ -1,7 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.PostProcessing;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
