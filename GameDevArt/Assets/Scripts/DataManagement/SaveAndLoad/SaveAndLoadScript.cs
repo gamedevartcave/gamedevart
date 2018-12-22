@@ -151,14 +151,14 @@ namespace CityBashers
 				#if !UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 
-				Debug.Log ("Successfully saved to " +
+				Debug.Log ("<color=cyan>Saved player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"); 
 				#endif
 
 				#if UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
 
-				Debug.Log ("Successfully saved to " +
+				Debug.Log ("<color=cyan>Saved player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"); 
 				#endif
 
@@ -191,7 +191,7 @@ namespace CityBashers
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
 
-				Debug.Log ("Successfully deleted file " +
+				Debug.Log ("<color=red>Deleted player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"
 				);
 			}
@@ -206,7 +206,7 @@ namespace CityBashers
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 
-				Debug.Log ("Successfully deleted file " +
+				Debug.Log ("<color=red>Deleted player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
 				);
 			}
@@ -221,7 +221,7 @@ namespace CityBashers
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
 
-				Debug.Log ("Successfully deleted file " +
+				Debug.Log ("<color=red>Deleted settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"
 				);
 			}
@@ -235,7 +235,7 @@ namespace CityBashers
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true)
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
-				Debug.Log ("Successfully deleted file " +
+				Debug.Log ("<color=red>Deleted settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"
 				);
 			}
@@ -264,8 +264,8 @@ namespace CityBashers
 					LoadPlayerDataContents (data);
 					StorePlayerDataInGame ();
 
-					Debug.Log ("Successfully loaded from " +
-					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
+			Debug.Log ("<color=cyan>Loaded player data</color>\n" +
+						Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 				}
 
 				else
@@ -296,8 +296,8 @@ namespace CityBashers
 					LoadPlayerDataContents (data);
 					StorePlayerDataInGame ();
 
-					Debug.Log ("Successfully loaded from " +
-					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
+					Debug.Log ("<color=#00FF00>Loaded player data</color>\n" +
+						Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
 				}
 
 				else
@@ -344,7 +344,6 @@ namespace CityBashers
 				targetResolutionHeight = Screen.currentResolution.height;
 
 				// Audio settings.
-				//MasterVolume = Mathf.Clamp (AudioListener.volume, 0, 1);
 				targetFrameRate = Application.targetFrameRate;
 			}
 		}
@@ -365,14 +364,14 @@ namespace CityBashers
 				#if !UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 				
-				Debug.Log ("Successfully saved to " +
+				Debug.Log ("<color=cyan>Saved settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"); 
 				#endif
 
 				#if UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
 
-				Debug.Log ("Successfully saved to " +
+				Debug.Log ("<color=cyan>Saved settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"); 
 				#endif
 
@@ -426,8 +425,8 @@ namespace CityBashers
 
 					FileStream file = File.Open (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat", FileMode.Open);
 
-					Debug.Log ("Successfully loaded from " +
-					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
+					Debug.Log ("<color=#00FF00>Saved settings data</color>\n" +
+						Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 
 					// Processes the save data into memory.
 					settingsData data = (settingsData)bf.Deserialize (file);
@@ -454,8 +453,8 @@ namespace CityBashers
 
 					FileStream file = File.Open (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat", FileMode.Open);
 
-					Debug.Log ("Successfully loaded from " +
-					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
+					Debug.Log ("<color=#00FF00>Loaded settings data</color>\n" +
+						Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
 
 					// Processes the save data into memory.
 					settingsData data = (settingsData)bf.Deserialize (file);

@@ -125,7 +125,7 @@ Material:
     - WaveSpeed: {r: 1.086165, g: 4.440575, b: 12.105146, a: -3.0206447}
     - _AnimationDirection: {r: 2, g: 4, b: 2, a: -1}
     - _AnimationTiling: {r: 0.04582553, g: 0.0182, b: 0.045714468, a: 0.027129691}
-    - _BaseColor: {r: 0.16420376, g: 0.226304, b: 0.28301826, a: 0.9019608}
+    - _BaseColor: {r: 0.16419896, g: 0.22629893, b: 0.2830132, a: 0.9019608}
     - _BumpDirection: {r: 40, g: 40, b: 40, a: -40}
     - _BumpMap_ST: {r: 1, g: 1, b: 0, a: 0}
     - _BumpTiling: {r: 0.03, g: 0.07, b: 0.08, a: 0.06}
@@ -142,7 +142,7 @@ Material:
     - _GAmplitude: {r: 0.09, g: 0.07, b: 0.7, a: 1.1}
     - _GDirectionAB: {r: 1.73, g: 2.35, b: 1.36, a: 1.45}
     - _GDirectionCD: {r: 0.33, g: -0.16, b: -0.4, a: -0.04}
-    - _GFrequency: {r: 0.45, g: -0.14, b: 0.34, a: 0.14}
+    - _GFrequency: {r: 0.45, g: -0.14, b: 0.34, a: 0.39}
     - _GSpeed: {r: 1.62, g: 1.1, b: 3.51, a: 0.57}
     - _GSteepness: {r: 1.26, g: -0.49, b: 0.89, a: -0.54}
     - _HorizonColor: {r: 0.052907113, g: 0.24486735, b: 0.2835821, a: 1}
@@ -163,7 +163,7 @@ Material:
     - _UnderwaterColor: {r: 0.6950323, g: 0.89552236, b: 0.7502397, a: 1}
     - _WaveOffset: {r: 1, g: 1, b: -0.01, a: -0.01}
     - _WaveScale4: {r: 0.1, g: 0.1, b: 0.01, a: 0.01}
-    - _WorldLightDir: {r: -0.36960706, g: -0.9200269, b: -0.13015945, a: 0}
+    - _WorldLightDir: {r: -0.6508471, g: -0.7071069, b: -0.2764025, a: 0}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6
