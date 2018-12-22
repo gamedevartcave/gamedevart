@@ -68,7 +68,7 @@ namespace CityBashers
 			// Checks any camera (including Editor camera).
 			if (worldMeshRend.isVisible == true && 
 				GameController.instance.isPaused == false &&
-				Camera.main != null) // Object is visible on camera.
+				Camera.main != null)
 			{
 				// Calculate the position of the UI element
 				// 0,0 for the canvas is at the center of the screen, 

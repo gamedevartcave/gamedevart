@@ -318,11 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
   moveAmount: 100
   menuNav: {fileID: 1214284033}
-  slider: {fileID: 12445742}
-  selectable: {fileID: 12445742}
 --- !u!114 &12445742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1133,11 +1130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
   moveAmount: 1
   menuNav: {fileID: 1214284033}
-  slider: {fileID: 132397825}
-  selectable: {fileID: 132397825}
 --- !u!114 &132397825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5331,6 +5325,7 @@ GameObject:
   - component: {fileID: 740166837}
   - component: {fileID: 740166843}
   - component: {fileID: 740166841}
+  - component: {fileID: 740166840}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5398,6 +5393,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &740166840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740166836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730475ee64f9a894bbac0d9e6f22e813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 3
+  sensitivityDepth: 1
+  sensitivityNormals: 1
+  lumThreshold: 0.2
+  edgeExp: 1
+  sampleDist: 2
+  edgesOnly: 0
+  edgesOnlyBgColor: {r: 1, g: 1, b: 1, a: 1}
+  edgeDetectShader: {fileID: 4800000, guid: 0d1644bdf064147baa97f235fc5b4903, type: 3}
 --- !u!114 &740166841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13896,11 +13911,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
   moveAmount: 100
   menuNav: {fileID: 1214284033}
-  slider: {fileID: 1876062511}
-  selectable: {fileID: 1876062511}
 --- !u!1 &1883390999
 GameObject:
   m_ObjectHideFlags: 0
@@ -15994,11 +16006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
   moveAmount: 1
   menuNav: {fileID: 170149609}
-  slider: {fileID: 2105589271}
-  selectable: {fileID: 2105589271}
 --- !u!114 &2105589273
 MonoBehaviour:
   m_ObjectHideFlags: 0

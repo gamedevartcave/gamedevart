@@ -34,17 +34,26 @@ namespace CityBashers
 			playerActions = InControlActions.instance.playerActions;
 		}
 
-		// Settings Manager.
+		/// <summary>
+		/// Sets the invert axis.
+		/// </summary>
+		/// <param name="invert">If set to <c>true</c> invert.</param>
 		public void SetInvertAxis (bool invert)
 		{
 			SaveAndLoadScript.Instance.invertYAxis = invert;
 		}
 
+		/// <summary>
+		/// Sets the mouse sensitivity multiplier.
+		/// </summary>
 		public void SetMouseSensitivityMultiplier ()
 		{
 			SaveAndLoadScript.Instance.MouseSensitivityMultplier = MouseSensitivitySlider.value;
 		}
 
+		/// <summary>
+		/// Refreshes the mouse sensitivity value.
+		/// </summary>
 		public void RefreshMouseSensitivityValue ()
 		{
 			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;

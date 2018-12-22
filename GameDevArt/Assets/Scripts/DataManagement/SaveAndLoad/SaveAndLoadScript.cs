@@ -23,6 +23,7 @@ namespace CityBashers
 		[Header ("Effects components")]
 		public Camera cam; // Camera to use to change settings.
 		public SunShafts sunShafts;
+		public EdgeDetection edgeDetection;
 		public PostProcessProfile postProcessProfile;
 		public PostProcessLayer postProcessLayer;
 		public PostProcessVolume postProcessVolume;
@@ -65,6 +66,7 @@ namespace CityBashers
 
 			cam = Camera.main;
 			sunShafts = cam.GetComponent<SunShafts> ();
+			edgeDetection = cam.GetComponent<EdgeDetection> ();
 
 			SaveAndLoadScript.Instance.LoadSettingsData ();
 		}
@@ -510,43 +512,44 @@ namespace CityBashers
 
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
 
-			sunShafts.enabled = qualitySettings[QualitySettingsIndex].sunShafts;
+			sunShafts.enabled = qualitySettings [QualitySettingsIndex].sunShafts;
+			edgeDetection.enabled = qualitySettings [QualitySettingsIndex].edgeDetection;
 
-			postProcessLayer.antialiasingMode = qualitySettings[QualitySettingsIndex].AntiAliasingMode;
-			postProcessLayer.fog.enabled = qualitySettings[QualitySettingsIndex].fog;
+			postProcessLayer.antialiasingMode = qualitySettings [QualitySettingsIndex].AntiAliasingMode;
+			postProcessLayer.fog.enabled = qualitySettings [QualitySettingsIndex].fog;
 
 			postProcessVolume.profile.GetSetting <LensDistortion> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].lensDistortion;
+				qualitySettings [QualitySettingsIndex].lensDistortion;
 			
 			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.MotionBlur> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].motionBlur;
+				qualitySettings [QualitySettingsIndex].motionBlur;
 			
 			postProcessVolume.profile.GetSetting <AutoExposure> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].autoExposure;
+				qualitySettings [QualitySettingsIndex].autoExposure;
 			
 			postProcessVolume.profile.GetSetting <Vignette> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].vignette;
+				qualitySettings [QualitySettingsIndex].vignette;
 			
 			postProcessVolume.profile.GetSetting <ScreenSpaceReflections> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].screenSpaceReflections;
+				qualitySettings [QualitySettingsIndex].screenSpaceReflections;
 			
 			postProcessVolume.profile.GetSetting <AmbientOcclusion> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].ambientOcclusion;
+				qualitySettings [QualitySettingsIndex].ambientOcclusion;
 			
 			postProcessVolume.profile.GetSetting <ChromaticAberration> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].chromaticAbberation;
+				qualitySettings [QualitySettingsIndex].chromaticAbberation;
 			
 			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.DepthOfField> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].depthOfField;
+				qualitySettings [QualitySettingsIndex].depthOfField;
 			
 			postProcessVolume.profile.GetSetting <Grain> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].grain;
+				qualitySettings [QualitySettingsIndex].grain;
 			
 			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.Bloom> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].bloom;
+				qualitySettings [QualitySettingsIndex].bloom;
 			
 			postProcessVolume.profile.GetSetting <ColorGrading> ().enabled.value = 
-				qualitySettings[QualitySettingsIndex].colorGrading;
+				qualitySettings [QualitySettingsIndex].colorGrading;
 
 			AudioListener.volume = Mathf.Clamp (MasterVolume, 0, 1);
 			SettingsManager.Instance.LoadAudioVolumes ();

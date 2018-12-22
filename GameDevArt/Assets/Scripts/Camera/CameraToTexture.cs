@@ -1,55 +1,65 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Experimental.Rendering;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.UI;
 
-public class CameraToTexture : MonoBehaviour 
+namespace CityBashers
 {
-	private Camera cam;
-	public RawImage OutputGraphic;
-	private Texture2D renderedTexture;
-
-	public Camera[] cameras;
-
-	public UnityEvent OnCameraRenderedToTexture;
-
-	void Start ()
+	public class CameraToTexture : MonoBehaviour 
 	{
-		cam = GetComponent<Camera> ();
-	}
+		public RawImage OutputGraphic;
+		private Texture2D renderedTexture;
 
-	public void RenderCamToTexture ()
-	{
-		StartCoroutine (RenderCamera ());
-	}
+		public Camera[] cameras;
 
-	IEnumerator RenderCamera ()
-	{
-		yield return new WaitForEndOfFrame ();
-		renderedTexture = ScreenCapture.CaptureScreenshotAsTexture ();
-		OutputGraphic.texture = renderedTexture;
-		OutputGraphic.enabled = true;
-		OnCameraRenderedToTexture.Invoke ();
-	}
+		public UnityEvent OnCameraRenderedToTexture;
 
-	public void DestroyTexture ()
-	{
-		OutputGraphic.enabled = false;
-		OutputGraphic.texture = null;
-		Destroy (renderedTexture);
-
-		for (int i = 0; i < cameras.Length; i++)
+		/// <summary>
+		/// Starts render camera to texture process.
+		/// </summary>
+		public void RenderCamToTexture ()
 		{
-			cameras [i].enabled = true;
+			StartCoroutine (RenderCamera ());
 		}
-	}
 
-	public void DisableCameras ()
-	{
-		for (int i = 0; i < cameras.Length; i++)
+		/// <summary>
+		/// Renders the camera and assigns it to graphic.
+		/// </summary>
+		/// <returns>The camera.</returns>
+		IEnumerator RenderCamera ()
 		{
-			cameras [i].enabled = false;
+			yield return new WaitForEndOfFrame ();
+			renderedTexture = ScreenCapture.CaptureScreenshotAsTexture ();
+			OutputGraphic.texture = renderedTexture;
+			OutputGraphic.enabled = true;
+			OnCameraRenderedToTexture.Invoke ();
+		}
+
+		/// <summary>
+		/// Destroys the texture that was created.
+		/// </summary>
+		public void DestroyTexture ()
+		{
+			OutputGraphic.enabled = false;
+			OutputGraphic.texture = null;
+			Destroy (renderedTexture);
+
+			for (int i = 0; i < cameras.Length; i++)
+			{
+				cameras [i].enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// Disables the cameras in cameras array.
+		/// </summary>
+		public void DisableCameras ()
+		{
+			for (int i = 0; i < cameras.Length; i++)
+			{
+				cameras [i].enabled = false;
+			}
 		}
 	}
 }

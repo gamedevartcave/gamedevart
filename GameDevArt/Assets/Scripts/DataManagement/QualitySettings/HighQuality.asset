@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: HighQuality
   m_EditorClassIdentifier: 
   sunShafts: 1
-  volumetricLighting: 1
+  edgeDetection: 1
   AntiAliasingMode: 3
   fog: 1
   lensDistortion: 1

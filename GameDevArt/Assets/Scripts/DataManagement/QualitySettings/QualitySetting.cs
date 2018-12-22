@@ -7,6 +7,7 @@ namespace CityBashers
 	public class QualitySetting : ScriptableObject
 	{
 		public bool sunShafts;
+		public bool edgeDetection;
 		public PostProcessLayer.Antialiasing AntiAliasingMode;
 		public bool fog;
 		public bool lensDistortion;
