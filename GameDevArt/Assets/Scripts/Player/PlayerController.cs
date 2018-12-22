@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
-using System.Collections;
 
 namespace CityBashers
 {
@@ -51,6 +52,26 @@ namespace CityBashers
 		[Header ("Weapons")]
 		public int currentWeaponIndex;
 		public GameObject[] Weapons;
+
+		public RawImage DisplayedWeaponImage;
+		public TextMeshProUGUI DisplayedWeaponAmmoText;
+
+		[Header ("WeaponWheel")]
+		private bool weaponTexturesAssigned;
+		public TextMeshProUGUI currentSelectedWeaponAmmoText;
+		public RawImage CurrentSelectedWeaponImage;
+		public Texture2D[] weaponTextures;
+
+		[Space (10)]
+		public RawImage[] WeaponSelectionBackgrounds;
+		public RawImage[] WeaponSelectionImages;
+
+		public Color WeaponAvailableColor;
+		public Color WeaponAmmoOutColor;
+		[Space (10)]
+		public TextMeshProUGUI[] weaponWheelAmmoTexts;
+		public int[] currentAmmoAmounts;
+		public int[] maxAmmoAmounts;
 
 		[Header ("Using")]
 		public UnityEvent OnUse;
@@ -199,10 +220,37 @@ namespace CityBashers
 		#region Weapons
 		public void SetWeaponIndex (int index)
 		{
+			// Update all weapon selections.
 			for (int i = 0; i < Weapons.Length; i++)
 			{	
 				Weapons [i].SetActive ((index == i) ? true : false);
+				weaponWheelAmmoTexts [i].text = currentAmmoAmounts [i] + " / " + maxAmmoAmounts [i];
+				WeaponSelectionBackgrounds [i].enabled = ((index == i) ? true : false);
+
+				if (currentAmmoAmounts [i] <= 0)
+				{
+					WeaponSelectionImages [i].color = WeaponAmmoOutColor;
+				} 
+
+				else
+				
+				{
+					WeaponSelectionImages [i].color = WeaponAvailableColor;
+				}
+
+				if (weaponTexturesAssigned == false)
+				{
+					WeaponSelectionImages [i].texture = weaponTextures [i];
+				}
 			}
+
+			DisplayedWeaponImage.texture = weaponTextures [index];
+			DisplayedWeaponAmmoText.text = currentAmmoAmounts [index] + " / " + maxAmmoAmounts [index];
+				
+			// Update current ammo selection for center of wheel.
+			CurrentSelectedWeaponImage.texture = weaponTextures [index];
+			currentSelectedWeaponAmmoText.text = currentAmmoAmounts [index] + " / " + maxAmmoAmounts [index];
+			weaponTexturesAssigned = true;
 		}
 		#endregion
 
@@ -277,6 +325,11 @@ namespace CityBashers
 		public void OverridePlayerPosition (Transform newPos)
 		{
 			transform.position = newPos.position;
+		}
+
+		public void OverridePosition (Vector3 pos)
+		{
+			this.transform.position = pos;
 		}
 		#endregion
 

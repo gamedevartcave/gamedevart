@@ -184,7 +184,7 @@ namespace CityBashers
 				Mathf.Lerp (
 					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<DepthOfField> ().focusDistance.value, 
 					targetDofDistance, 
-					Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
+					Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f * Time.deltaTime)
 				);
 			}
 

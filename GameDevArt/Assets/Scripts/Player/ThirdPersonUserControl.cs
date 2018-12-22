@@ -246,7 +246,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (playerActions.NextWeapon.IsPressed == true && 
 				GameController.instance.isPaused == false)
 			{
-				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
+				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to next weapon.
 					if (PlayerController.instance.currentWeaponIndex < PlayerController.instance.Weapons.Length - 1)
@@ -272,7 +272,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (playerActions.PreviousWeapon.IsPressed == true && 
 				GameController.instance.isPaused == false)
 			{
-				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
+				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to previous weapon.
 					if (PlayerController.instance.currentWeaponIndex > 0)
