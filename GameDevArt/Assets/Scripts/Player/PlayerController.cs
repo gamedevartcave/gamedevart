@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace CityBashers
 {
@@ -26,6 +27,7 @@ namespace CityBashers
 		public Slider HealthSlider_Smoothed;
 		public float healthSliderSmoothing;
 		public UnityEvent OnLostAllHealth;
+		public PostProcessVolume postProcessUIVolume;
 
 		[Header ("Magic")]
 		public int magic;
@@ -174,6 +176,11 @@ namespace CityBashers
 				health, 
 				healthSliderSmoothing * Time.deltaTime
 			);
+
+			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = -0.005f * HealthSlider.value + 0.5f;
+			postProcessUIVolume.profile.GetSetting <MotionBlur> ().shutterAngle.value = -3.6f * HealthSlider.value + 360;
+			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().saturation.value = 
+				HealthSlider.value - 100;
 
 			if (health <= 0)
 			{

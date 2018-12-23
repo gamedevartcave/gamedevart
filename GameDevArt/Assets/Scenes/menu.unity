@@ -15801,6 +15801,11 @@ Prefab:
       propertyPath: initializeWaitTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
+        type: 2}
+      propertyPath: EventSystemGameObject
+      value: 
+      objectReference: {fileID: 506383990}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbea631553e579f4db0813e22c25623b, type: 2}
   m_IsPrefabAsset: 0

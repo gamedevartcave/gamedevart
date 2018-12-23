@@ -18,12 +18,16 @@ namespace CityBashers
 
 		private WaitForSeconds initializeWait;
 
+		public GameObject EventSystemGameObject;
+
 		void Awake ()
 		{
 			Instance = this;
 			Time.timeScale = 1;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
 			Invoke ("DetectManagers", Delay);
+
+			Destroy (EventSystemGameObject);
 		}
 
 		public void DetectManagers ()

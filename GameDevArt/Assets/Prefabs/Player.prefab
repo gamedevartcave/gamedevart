@@ -3448,6 +3448,17 @@ MonoBehaviour:
           m_StringArgument: SetInvisible
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   WeaponChangeEnded:
@@ -3475,10 +3486,21 @@ MonoBehaviour:
           m_StringArgument: SetVisible
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   camRigSimpleFollow: {fileID: 0}
-  camRigSimpleFollowRotNormal: {x: 5, y: 15, z: 0}
+  camRigSimpleFollowRotNormal: {x: 30, y: 30, z: 0}
   camRigSimpleFollowRotAiming: {x: 100, y: 100, z: 0}
   mouseLook: {fileID: 0}
   m_Cam: {fileID: 0}
@@ -3686,6 +3708,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  postProcessUIVolume: {fileID: 0}
   magic: 0
   StartingMagic: 100
   MaximumMagic: 100
@@ -3709,7 +3732,57 @@ MonoBehaviour:
   currentWeaponIndex: 0
   Weapons:
   - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  - {fileID: 1401470674311128}
+  DisplayedWeaponImage: {fileID: 0}
+  DisplayedWeaponAmmoText: {fileID: 0}
+  currentSelectedWeaponAmmoText: {fileID: 0}
+  CurrentSelectedWeaponImage: {fileID: 0}
+  weaponTextures:
+  - {fileID: 2800000, guid: f16e98e8f86670344b9775eec9fd2146, type: 3}
+  - {fileID: 2800000, guid: 105ba9578770c4dfd96f460302b9a12a, type: 3}
+  - {fileID: 2800000, guid: e554125136aec416e80c82bae87f5c41, type: 3}
+  - {fileID: 2800000, guid: a354bcb686ec6544bb340270e70b8f91, type: 3}
+  - {fileID: 2800000, guid: 1e2d444ae9d5a4ff1b47ffec28d5165c, type: 3}
+  - {fileID: 2800000, guid: 44129b51b5849444dbbf124320f77401, type: 3}
+  - {fileID: 2800000, guid: c080e12d534f64fc48bffb53d9f55fba, type: 3}
+  - {fileID: 2800000, guid: f178146a44de340829e1c25c4ee4c072, type: 3}
+  WeaponSelectionBackgrounds:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  WeaponSelectionImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  WeaponAvailableColor: {r: 1, g: 1, b: 1, a: 1}
+  WeaponAmmoOutColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+  weaponWheelAmmoTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentAmmoAmounts: 010000000a000000140000000000000000000000000000000000000046000000
+  maxAmmoAmounts: 6400000050000000460000003c000000c8000000b80b00008813000064000000
   OnUse:
     m_PersistentCalls:
       m_Calls: []
