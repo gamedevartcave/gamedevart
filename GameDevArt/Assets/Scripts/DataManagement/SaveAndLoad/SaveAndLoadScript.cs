@@ -264,7 +264,7 @@ namespace CityBashers
 					LoadPlayerDataContents (data);
 					StorePlayerDataInGame ();
 
-			Debug.Log ("<color=cyan>Loaded player data</color>\n" +
+					Debug.Log ("<color=cyan>Loaded player data</color>\n" +
 						Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 				}
 
@@ -512,7 +512,7 @@ namespace CityBashers
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
 
 			sunShafts.enabled = qualitySettings [QualitySettingsIndex].sunShafts;
-			edgeDetection.enabled = qualitySettings [QualitySettingsIndex].edgeDetection;
+			//edgeDetection.enabled = qualitySettings [QualitySettingsIndex].edgeDetection;
 
 			postProcessLayer.antialiasingMode = qualitySettings [QualitySettingsIndex].AntiAliasingMode;
 			postProcessLayer.fog.enabled = qualitySettings [QualitySettingsIndex].fog;

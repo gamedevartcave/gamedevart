@@ -99,7 +99,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			MeleeAction ();
 
-			WeaponChangeAction ();
+			// WeaponChangeAction ();
 
 			UseAction ();
 
@@ -198,11 +198,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
 
+				/*
 				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairIn") == true)
 				{
 					CrosshairAnim.ResetTrigger ("In");
 					CrosshairAnim.SetTrigger ("Out");
 				}
+				*/
 			}
 		}
 

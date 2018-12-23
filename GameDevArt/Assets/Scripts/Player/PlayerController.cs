@@ -179,9 +179,15 @@ namespace CityBashers
 
 			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = -0.005f * HealthSlider.value + 0.5f;
 			postProcessUIVolume.profile.GetSetting <MotionBlur> ().shutterAngle.value = -3.6f * HealthSlider.value + 360;
-			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().saturation.value = 
-				HealthSlider.value - 100;
+			//SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().saturation.value = 
+			//	HealthSlider.value - 100;
 
+			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerGreenOutGreenIn.value =
+				Mathf.Clamp (3 * HealthSlider.value, 0, 100);
+			
+			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerBlueOutBlueIn.value =
+				Mathf.Clamp (3 * HealthSlider.value, 0, 100);
+			
 			if (health <= 0)
 			{
 				if (lostAllHealth == false)
