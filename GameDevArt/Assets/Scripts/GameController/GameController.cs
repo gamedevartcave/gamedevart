@@ -77,6 +77,7 @@ namespace CityBashers
 		[Header ("Post processing")]
 		public float targetDofDistance;
 		public float dofSmoothing = 5.0f;
+		public float maxDofDistance = 1000;
 
 		private PlayerActions playerActions;
 
@@ -162,17 +163,23 @@ namespace CityBashers
 		{
 			RaycastHit hit;
 
-			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
+			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, maxDofDistance))
 			{
-				// While moving
-				if (playerActions.CamRot.Value.magnitude > 0.01f || playerActions.Move.Value.magnitude > 0.25f)
+				// While moving.
+				if (playerActions.CamRot.Value.magnitude > 0.05f || playerActions.Move.Value.magnitude > 0.25f)
 				{
-					targetDofDistance = Vector3.Distance (Camera.main.transform.position, hit.point);
+
+
+					targetDofDistance = Vector3.Distance (
+						Camera.main.transform.position, 
+						hit.point);
 				} 
 
-				else
+				else // Idling.
 				
 				{
+
+
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
 						PlayerController.instance.transform.position);
@@ -181,9 +188,12 @@ namespace CityBashers
 
 			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
 			{
+				float currentdof = 
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value;
+
 				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
-				Mathf.Lerp (
-					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value, 
+				Mathf.SmoothStep (
+					currentdof, 
 					targetDofDistance, 
 					Time.deltaTime * dofSmoothing
 				);

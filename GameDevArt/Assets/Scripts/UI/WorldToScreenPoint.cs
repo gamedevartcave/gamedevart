@@ -12,6 +12,7 @@ namespace CityBashers
 		public Transform WorldObject;
 		public Renderer worldMeshRend;
 		public Vector3 worldOffset;
+		public bool updateWhenOffScreen;
 
 		private Vector2 ViewportPosition;
 		private Vector2 WorldObject_ScreenPosition;
@@ -66,7 +67,8 @@ namespace CityBashers
 		void Update ()
 		{
 			// Checks any camera (including Editor camera).
-			if (worldMeshRend.isVisible == true && 
+			if (//updateWhenOffScreen &&
+				(worldMeshRend.isVisible || updateWhenOffScreen) && 
 				GameController.instance.isPaused == false &&
 				Camera.main != null)
 			{
