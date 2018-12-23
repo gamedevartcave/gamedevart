@@ -30,7 +30,7 @@ namespace CityBashers
 			}
 		}
 
-		[ReadOnlyAttribute] private bool isCountingScore;
+		//[ReadOnlyAttribute] private bool isCountingScore;
 		public TextMeshProUGUI scoreText;
 		public float scoreSmoothing;
 		public UnityEvent OnScoreCountStarted;
@@ -120,7 +120,7 @@ namespace CityBashers
 		{
 			if (targetScore - displayScore >= 0.5f)
 			{
-				isCountingScore = true;
+				//isCountingScore = true;
 				displayScore = Mathf.Lerp (displayScore, targetScore, scoreSmoothing * Time.deltaTime);
 				displayScore = Mathf.Clamp (displayScore, 0, Mathf.Infinity);
 				scoreText.text = Mathf.Round (displayScore).ToString ();

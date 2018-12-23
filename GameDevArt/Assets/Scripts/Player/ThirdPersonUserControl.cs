@@ -263,7 +263,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				isChangingWeapon = true;
 				WeaponChangeModeTime = WeaponChangeDuration;
-				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex, true);
 				OnWeaponChange.Invoke ();
 				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
@@ -289,7 +289,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				isChangingWeapon = true;
 				WeaponChangeModeTime = WeaponChangeDuration;
-				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex, false);
 				OnWeaponChange.Invoke ();
 				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;

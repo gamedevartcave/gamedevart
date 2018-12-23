@@ -1,7 +1,6 @@
 using UnityEngine;
 using InControl;
 using CityBashers;
-using InControl;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {

@@ -218,8 +218,63 @@ namespace CityBashers
 		#endregion
 
 		#region Weapons
-		public void SetWeaponIndex (int index)
+		public void SetWeaponIndex (int index, bool reverse)
 		{
+			bool runout = true;
+
+			for (int i = 0; i < Weapons.Length; i++)
+			{
+				// If there is ammo in any weapon.
+				if (currentAmmoAmounts [i] != 0)
+				{
+					runout = false;
+				}
+
+				// If there is no ammo in any weapon.
+				if (runout == true)
+				{
+					return;
+				}
+			}
+
+			// Scrolling down.
+			if (reverse == true)
+			{
+				// Check for ammo has run out.
+				// Then restart loop.
+				if (currentAmmoAmounts [index] <= 0)
+				{
+					currentWeaponIndex++;
+
+					if (currentWeaponIndex >= Weapons.Length)
+					{
+						currentWeaponIndex = 0;
+					}
+
+					SetWeaponIndex (currentWeaponIndex, true);
+					return;
+				}
+			}
+
+			else // Scrolling up
+
+			{
+				// Check for ammo has run out.
+				// Then restart loop.
+				if (currentAmmoAmounts [index] <= 0)
+				{
+					currentWeaponIndex--;
+
+					if (currentWeaponIndex < 0)
+					{
+						currentWeaponIndex = Weapons.Length - 1;
+					}
+
+					SetWeaponIndex (currentWeaponIndex, false);
+					return;
+				}
+			}
+
 			// Update all weapon selections.
 			for (int i = 0; i < Weapons.Length; i++)
 			{	
@@ -227,30 +282,34 @@ namespace CityBashers
 				weaponWheelAmmoTexts [i].text = currentAmmoAmounts [i] + " / " + maxAmmoAmounts [i];
 				WeaponSelectionBackgrounds [i].enabled = ((index == i) ? true : false);
 
+				// Sets all weapons without ammo to be not available.
 				if (currentAmmoAmounts [i] <= 0)
 				{
 					WeaponSelectionImages [i].color = WeaponAmmoOutColor;
 				} 
 
-				else
+				else // Weapon is available.
 				
 				{
 					WeaponSelectionImages [i].color = WeaponAvailableColor;
 				}
 
+				// Only called once to assign weapon textures.
 				if (weaponTexturesAssigned == false)
 				{
 					WeaponSelectionImages [i].texture = weaponTextures [i];
 				}
 			}
 
+			// Update displayed weapon.
 			DisplayedWeaponImage.texture = weaponTextures [index];
 			DisplayedWeaponAmmoText.text = currentAmmoAmounts [index] + " / " + maxAmmoAmounts [index];
 				
 			// Update current ammo selection for center of wheel.
 			CurrentSelectedWeaponImage.texture = weaponTextures [index];
 			currentSelectedWeaponAmmoText.text = currentAmmoAmounts [index] + " / " + maxAmmoAmounts [index];
-			weaponTexturesAssigned = true;
+
+			weaponTexturesAssigned = true; // Prevents assigning of weapon textures the next time.
 		}
 		#endregion
 
