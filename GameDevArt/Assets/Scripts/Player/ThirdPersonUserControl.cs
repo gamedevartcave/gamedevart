@@ -179,12 +179,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
 
+				/*
 				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairOut") == true)
 				{
 					CrosshairAnim.ResetTrigger ("Out");
 					CrosshairAnim.SetTrigger ("In");
 					//mouseLook.rotationY = 0;
 				}
+				*/
 			}
 
 			// Not aiming.

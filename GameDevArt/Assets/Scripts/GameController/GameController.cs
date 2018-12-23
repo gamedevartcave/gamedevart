@@ -164,7 +164,8 @@ namespace CityBashers
 
 			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
 			{
-				if (playerActions.CamRot.Value.magnitude > 0.25f || playerActions.Move.Value.magnitude > 0.25f)
+				// While moving
+				if (playerActions.CamRot.Value.magnitude > 0.01f || playerActions.Move.Value.magnitude > 0.25f)
 				{
 					targetDofDistance = Vector3.Distance (Camera.main.transform.position, hit.point);
 				} 
@@ -180,11 +181,11 @@ namespace CityBashers
 
 			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
 			{
-				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<DepthOfField> ().focusDistance.value = 
+				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
 				Mathf.Lerp (
-					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<DepthOfField> ().focusDistance.value, 
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value, 
 					targetDofDistance, 
-					Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f * Time.deltaTime)
+					Time.deltaTime * dofSmoothing
 				);
 			}
 
