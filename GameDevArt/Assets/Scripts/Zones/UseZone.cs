@@ -23,7 +23,7 @@ namespace CityBashers
 		public AudioSource useEndSound;
 		public AudioSource useDenySound;
 
-		public Collider playerCol;
+		[Space (10)]
 		public UnityEvent UseEvent;
 		public UnityEvent OnUseEnded;
 		public UnityEvent OnUseDeny;
@@ -35,7 +35,7 @@ namespace CityBashers
 
 		void OnTriggerEnter (Collider other)
 		{
-			if (other == playerCol)
+			if (other == PlayerController.instance.playerCol)
 			{
 				canUse = true;
 
@@ -53,7 +53,7 @@ namespace CityBashers
 
 		void OnTriggerExit (Collider other)
 		{
-			if (other == playerCol)
+			if (other == PlayerController.instance.playerCol)
 			{
 				canUse = false;
 			}

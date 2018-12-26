@@ -9,8 +9,20 @@ namespace CityBashers
 		public static BackgroundFader instance { get; private set; }
 
 		public RawImage background;
+
+		/// <summary>
+		/// The amount of smoothing for the fade.
+		/// </summary>
 		public float fadeSmoothing = 3;
+
+		/// <summary>
+		/// The start color.
+		/// </summary>
 		public Color StartColor;
+
+		/// <summary>
+		/// The end color.
+		/// </summary>
 		public Color EndColor;
 
 		void Awake ()

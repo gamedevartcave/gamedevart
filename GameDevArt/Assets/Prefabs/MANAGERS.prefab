@@ -177,7 +177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1552685884134750
 GameObject:
   m_ObjectHideFlags: 1
@@ -428,7 +428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1961637826847236
 GameObject:
   m_ObjectHideFlags: 1
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logDebugInfo: 1
+  logDebugInfo: 0
   invertYAxis: 0
   useFixedUpdate: 0
   dontDestroyOnLoad: 0
@@ -1589,22 +1589,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllowLoading: 1
   AllowSaving: 1
-  TestMode: 0
   Username: default
-  ExperiencePoints: 0
+  defaultUsername: default
   cam: {fileID: 0}
-  main_postProcessing: {fileID: 11400000, guid: 833c81bb5d3e2134eb9b93159cf05709,
-    type: 2}
-  volLightRend: {fileID: 0}
   sunShafts: {fileID: 0}
+  edgeDetection: {fileID: 0}
+  postProcessProfile: {fileID: 11400000, guid: efd8f1d72cfc74e418c57da179a5142c, type: 2}
+  postProcessLayer: {fileID: 0}
+  postProcessVolume: {fileID: 0}
+  qualitySettings:
+  - {fileID: 11400000, guid: 35266ee186286b84f95242275c0834a6, type: 2}
+  - {fileID: 11400000, guid: c96de988cc9281c4ca08be49f10eafd3, type: 2}
+  - {fileID: 11400000, guid: d89c0e7a3419fbb46a7bb3990fb6e988, type: 2}
+  QualitySettingsIndex: 2
   targetResolutionWidth: 1920
   targetResolutionHeight: 1080
-  QualitySettingsIndex: 2
   isFullscreen: 0
   limitFramerate: 0
   targetFrameRate: 60
   averageFpsTimer: 0
-  ParticleEmissionMultiplier: 1
   MasterVolume: 1
   SoundtrackVolume: 0
   EffectsVolume: 0
@@ -1612,14 +1615,12 @@ MonoBehaviour:
   MouseSensitivityMultplier: 1
   PlayerData:
     Username: 
-    ExperiencePoints: 0
   SettingsData:
     QualitySettingsIndex: 0
     targetResolutionWidth: 1920
     targetResolutionHeight: 1080
     isFullscreen: 0
     limitFramerate: 0
-    ParticleEmissionMultiplier: 1
     targetFrameRate: 0
     MasterVolume: 0
     SoundtrackVolume: 0
@@ -1650,7 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 3
-  m_AspectRatio: 2
+  m_AspectRatio: 1
 --- !u!198 &198052940456786208
 ParticleSystem:
   m_ObjectHideFlags: 1

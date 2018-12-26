@@ -99,7 +99,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			MeleeAction ();
 
-			WeaponChangeAction ();
+			// WeaponChangeAction ();
 
 			UseAction ();
 
@@ -179,12 +179,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
 
+				/*
 				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairOut") == true)
 				{
 					CrosshairAnim.ResetTrigger ("Out");
 					CrosshairAnim.SetTrigger ("In");
 					//mouseLook.rotationY = 0;
 				}
+				*/
 			}
 
 			// Not aiming.
@@ -198,11 +200,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
 
+				/*
 				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairIn") == true)
 				{
 					CrosshairAnim.ResetTrigger ("In");
 					CrosshairAnim.SetTrigger ("Out");
 				}
+				*/
 			}
 		}
 
@@ -246,7 +250,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (playerActions.NextWeapon.IsPressed == true && 
 				GameController.instance.isPaused == false)
 			{
-				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
+				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to next weapon.
 					if (PlayerController.instance.currentWeaponIndex < PlayerController.instance.Weapons.Length - 1)
@@ -263,7 +267,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				isChangingWeapon = true;
 				WeaponChangeModeTime = WeaponChangeDuration;
-				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex, true);
 				OnWeaponChange.Invoke ();
 				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
@@ -272,7 +276,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (playerActions.PreviousWeapon.IsPressed == true && 
 				GameController.instance.isPaused == false)
 			{
-				if (Time.time > nextWeaponChange && GameController.instance.isPaused == false)
+				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to previous weapon.
 					if (PlayerController.instance.currentWeaponIndex > 0)
@@ -289,7 +293,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				isChangingWeapon = true;
 				WeaponChangeModeTime = WeaponChangeDuration;
-				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex);
+				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex, false);
 				OnWeaponChange.Invoke ();
 				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;

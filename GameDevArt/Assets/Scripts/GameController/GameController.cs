@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
-using UnityStandardAssets.Characters.ThirdPerson;
-using UnityEngine.PostProcessing;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace CityBashers
 {
@@ -31,7 +30,7 @@ namespace CityBashers
 			}
 		}
 
-		[ReadOnlyAttribute] private bool isCountingScore;
+		//[ReadOnlyAttribute] private bool isCountingScore;
 		public TextMeshProUGUI scoreText;
 		public float scoreSmoothing;
 		public UnityEvent OnScoreCountStarted;
@@ -76,14 +75,11 @@ namespace CityBashers
 		public UnityEvent OnUnpause;
 
 		[Header ("Post processing")]
-		public PostProcessingProfile postProcessing;
-		//public PostProcessVolume postProcessVolume;
 		public float targetDofDistance;
 		public float dofSmoothing = 5.0f;
+		public float maxDofDistance = 1000;
 
 		private PlayerActions playerActions;
-
-		//private DepthOfField depthOfFieldLayer;
 
 		void Awake ()
 		{
@@ -101,7 +97,6 @@ namespace CityBashers
 			displayComboScore = 0;
 			targetComboScore = 0;
 			comboScoreText.text = string.Empty;
-			//depthOfFieldLayer = ScriptableObject.CreateInstance<DepthOfField> ();
 		}
 
 		void Update ()
@@ -126,7 +121,7 @@ namespace CityBashers
 		{
 			if (targetScore - displayScore >= 0.5f)
 			{
-				isCountingScore = true;
+				//isCountingScore = true;
 				displayScore = Mathf.Lerp (displayScore, targetScore, scoreSmoothing * Time.deltaTime);
 				displayScore = Mathf.Clamp (displayScore, 0, Mathf.Infinity);
 				scoreText.text = Mathf.Round (displayScore).ToString ();
@@ -166,39 +161,43 @@ namespace CityBashers
 
 		void GetDepthOfField ()
 		{
-			var dofSettings = postProcessing.depthOfField.settings;
 			RaycastHit hit;
 
-			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000))
+			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, maxDofDistance))
 			{
-				if (playerActions.CamRot.Value.magnitude > 0.25f || playerActions.Move.Value.magnitude > 0.25f)
+				// While moving.
+				if (playerActions.CamRot.Value.magnitude > 0.05f || playerActions.Move.Value.magnitude > 0.25f)
 				{
-					targetDofDistance = Vector3.Distance (Camera.main.transform.position, hit.point);
+
+
+					targetDofDistance = Vector3.Distance (
+						Camera.main.transform.position, 
+						hit.point);
 				} 
 
-				else
+				else // Idling.
 				
 				{
+
+
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
 						PlayerController.instance.transform.position);
 				}
 			}
 
-			/*
-			depthOfFieldLayer.focusDistance.value = Mathf.Lerp (
-				depthOfFieldLayer.focusDistance.value, 
-				targetDofDistance, 
-				Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
-			);*/
+			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
+			{
+				float currentdof = 
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value;
 
-			dofSettings.focusDistance = Mathf.Lerp (
-				dofSettings.focusDistance, 
-				targetDofDistance, 
-				Mathf.Clamp (Time.deltaTime * dofSmoothing, 0, 0.2f)
-			);
-
-			postProcessing.depthOfField.settings = dofSettings;
+				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
+				Mathf.SmoothStep (
+					currentdof, 
+					targetDofDistance, 
+					Time.deltaTime * dofSmoothing
+				);
+			}
 
 			#if UNITY_EDITOR
 			Debug.DrawRay (Camera.main.transform.position, Camera.main.transform.forward, Color.blue);

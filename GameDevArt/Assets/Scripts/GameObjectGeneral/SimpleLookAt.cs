@@ -8,6 +8,7 @@ namespace CityBashers
 		[Tooltip ("Position to look at.")]
 		public Transform LookAtPos;
 		public Vector3 Offset;
+
 		[Tooltip ("How to look at the Transform.")]
 		public lookType LookMethod;
 		public enum lookType
@@ -18,7 +19,11 @@ namespace CityBashers
 
 		[Tooltip ("Find up direction instead of forward direction.")]
 		public bool useUpDirection;
+
+		[Tooltip ("Option to add smoothed time")]
 		public bool useSmoothing;
+
+		[Tooltip ("How much smoothing we want.")]
 		public float SmoothingAmount;
 
 		void LateUpdate ()
@@ -35,17 +40,13 @@ namespace CityBashers
 				// Look towards.
 				if (LookMethod == lookType.LookTowards && LookAtPos != null) 
 				{
-					transform.LookAt (
-						LookAtPos.position, useUpDirection ? Vector3.up : transform.forward 
-					);
+					transform.LookAt (LookAtPos.position, useUpDirection ? Vector3.up : transform.forward);
 				}
 
 				// Look away.
 				if (LookMethod == lookType.LookAway) 
 				{
-					transform.LookAt (
-						LookAtPos.position, useUpDirection ? -Vector3.up : -transform.forward
-					);
+					transform.LookAt (LookAtPos.position, useUpDirection ? -Vector3.up : -transform.forward);
 				}
 			}
 		}

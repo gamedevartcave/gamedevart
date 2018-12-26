@@ -4,27 +4,32 @@ using UnityEngine.UI;
 namespace CityBashers
 {
 	[ExecuteInEditMode]
+	[RequireComponent (typeof (AspectRatioFitter))]
+	[RequireComponent (typeof (Graphic))]
 	public class AspectRatioFitterRefresh : MonoBehaviour 
 	{
 		private AspectRatioFitter aspectFitter;
 		private Graphic graphic;
-
-		void Awake ()
-		{
-			aspectFitter = GetComponent<AspectRatioFitter> ();
-			graphic = GetComponent<Graphic> ();
-		}
+		private float ratio;
 
 		void OnEnable ()
 		{
-			RefreshAspectRatio ();
+			if (aspectFitter == null) aspectFitter = GetComponent<AspectRatioFitter> ();
+			if (graphic == null) graphic = GetComponent<Graphic> ();
+			
+			RefreshAspectRatio (graphic);
 		}
 
-		public void RefreshAspectRatio ()
+		/// <summary>
+		/// Refreshs the aspect ratio for the graphic.
+		/// </summary>
+		public void RefreshAspectRatio (Graphic _graphic)
 		{
-			if (graphic.mainTexture != null)
+			if (_graphic.mainTexture != null)
 			{
-				aspectFitter.aspectRatio = graphic.mainTexture.width / graphic.mainTexture.height;
+				// Get width and height ratio, set aspect ratio in fitter.
+				ratio = _graphic.mainTexture.width / _graphic.mainTexture.height;
+				aspectFitter.aspectRatio = ratio;
 				//Debug.Log ("New aspect ratio: " + aspectFitter.aspectRatio);
 			}
 		}

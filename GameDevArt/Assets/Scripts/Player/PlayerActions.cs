@@ -25,7 +25,7 @@ public class PlayerActions : PlayerActionSet
 	// Main actions.
 	public PlayerAction Jump;
 	public PlayerAction Use;
-	public PlayerAction Crouch; // This isn't used yet.
+	public PlayerAction Crouch; // This isn't used.
 
 	// Attack actions.
 	public PlayerAction Aim;
@@ -171,7 +171,7 @@ public class PlayerActions : PlayerActionSet
 		playerActions.PreviousWeapon.AddDefaultBinding (Mouse.NegativeScrollWheel);
 		playerActions.PreviousWeapon.AddDefaultBinding (InputControlType.DPadDown);
 
-		Debug.Log ("Created Player Actions.");
+		//Debug.Log ("Created Player Actions.");
 		return playerActions;
 	}
 }

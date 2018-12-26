@@ -13,9 +13,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public ThirdPersonUserControl thirdPersonUserControl;
 		[SerializeField] public float m_MovingTurnSpeed = 360;
 		[SerializeField] public float m_StationaryTurnSpeed = 180;
-		[SerializeField] float m_JumpPower = 12f;
+		[SerializeField] public float m_JumpPower = 12f;
 		[SerializeField] float m_JumpPower_Forward = 2f;
-		[SerializeField] float m_DoubleJumpPower = 1.5f;
+		[SerializeField] public float m_DoubleJumpPower = 1.5f;
 		[SerializeField] float m_AirControl = 5;
 		[Range(1f, 10f)]
 		[SerializeField] float m_GravityMultiplier = 2f;
@@ -62,6 +62,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void FixedUpdate ()
 		{
+			float fallMult = 2.5f;
+
+			// If we are falling.
+			if (m_Rigidbody.velocity.y < 0)
+			{
+				m_Rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMult - 1) * Time.deltaTime;
+			}
+			else if (m_Rigidbody.velocity.y > 0 && InControlActions.instance.playerActions.Jump.IsPressed == false)
+			{
+				m_Rigidbody.velocity += Vector3.up * Physics.gravity.y * (m_JumpPower - 1) * Time.deltaTime;
+			}
+
 			m_Rigidbody.velocity = Vector3.ClampMagnitude (m_Rigidbody.velocity, terminalVelocity);
 		}
 

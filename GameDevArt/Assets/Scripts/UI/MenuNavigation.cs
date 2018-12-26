@@ -27,14 +27,10 @@ namespace CityBashers
 		void Awake ()
 		{
 			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener (OnInitialize);
-			//activeMenu = this;
-			//this.enabled = false;
 		}
 
 		void OnEnable ()
 		{
-			//activeMenu = this;
-
 			if (activeMenu == this)
 			{
 				ButtonEnter (currentSelectable);
@@ -178,26 +174,37 @@ namespace CityBashers
 				BackButton ();
 			}
 		}
-
-		// Invoke Pointer Enter (BaseEventData) from EventTrigger.
+			
+		/// <summary>
+		/// Invoke Pointer Enter (BaseEventData) from EventTrigger.
+		/// </summary>
+		/// <param name="_selectable">Selectable.</param>
 		void ButtonEnter (Selectable _selectable)
 		{
 			ExecuteEvents.Execute (_selectable.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
 		}
-
-		// Invoke Pointer Exit (BaseEventData) from EventTrigger.
+			
+		/// <summary>
+		/// Invoke Pointer Exit (BaseEventData) from EventTrigger.
+		/// </summary>
+		/// <param name="_selectable">Selectable.</param>
 		void ButtonExit (Selectable _selectable)
 		{
 			ExecuteEvents.Execute (_selectable.gameObject, eventData, ExecuteEvents.pointerExitHandler);
 		}
 
-		// Get current active button and send OnClick() event.
+		/// <summary>
+		/// Get current active button and send OnClick () event.
+		/// </summary>
+		/// <param name="_selectable">Selectable.</param>
 		void SubmitButton (Selectable _selectable)
 		{
 			ExecuteEvents.Execute (_selectable.gameObject, eventData, ExecuteEvents.pointerClickHandler);
 		}
-
-		// Execute OnClick() event at any button index.
+			
+		/// <summary>
+		/// Execute OnClick () event at any button index.
+		/// </summary>
 		void BackButton ()
 		{
 			ExecuteEvents.Execute (backButton, eventData, ExecuteEvents.pointerClickHandler);

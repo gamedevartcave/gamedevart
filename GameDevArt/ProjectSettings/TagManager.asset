@@ -9,6 +9,7 @@ TagManager:
   - CamOverride
   - Ground
   - DontDestroyOnLoadInit
+  - PostProcessVolume
   layers:
   - Default
   - TransparentFX

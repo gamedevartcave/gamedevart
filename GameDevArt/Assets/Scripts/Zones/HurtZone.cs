@@ -19,7 +19,7 @@ namespace CityBashers
 		public float damageStartWaitTime = 1;
 		private WaitForSeconds damageStartWait;
 
-		[Header ("HitStun")]
+		[Space (10)]
 		public bool isHitStunZone;
 
 		void Start ()
@@ -28,6 +28,7 @@ namespace CityBashers
 			damageWait = new WaitForSeconds (damageRate);
 		}
 
+		#region Enter
 		void OnCollisionEnter (Collision other)
 		{
 			if (other.collider == playerCol)
@@ -49,7 +50,9 @@ namespace CityBashers
 				StartCoroutine (TakeDamage ());
 			}
 		}
+		#endregion
 
+		#region Stay
 		void OnCollisionStay (Collision other)
 		{
 			if (other.collider == playerCol)
@@ -69,7 +72,9 @@ namespace CityBashers
 				HitStunSequence ();
 			}
 		}
+		#endregion
 			
+		#region Exit
 		void OnCollisionExit (Collision other)
 		{
 			if (other.collider == playerCol)
@@ -91,6 +96,7 @@ namespace CityBashers
 				StopCoroutine (TakeDamage ());
 			}
 		}
+		#endregion
 
 		IEnumerator TakeDamage ()
 		{
