@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
 
-public class FootstepTrigger : MonoBehaviour 
+namespace CityBashers
 {
-	public string[] tags = new string[] {"Ground", "Scenery"};
-
-	void OnTriggerEnter (Collider other)
+	public class FootstepTrigger : MonoBehaviour 
 	{
-		if (other.tag == "Ground")
+		/// <summary>
+		/// The tags which allow the player to make sounds when walking on them.
+		/// </summary>
+		public string[] tags = new string[] {"Ground", "Scenery"};
+
+		void OnTriggerEnter (Collider other)
 		{
-			PlayerController.instance.OnFootstep.Invoke ();
+			for (int i = 0; i < tags.Length; i++)
+			{
+				if (other.tag == tags[i])
+				{
+					PlayerController.instance.OnFootstep.Invoke ();
+					break;
+				}
+			}
 		}
 	}
 }

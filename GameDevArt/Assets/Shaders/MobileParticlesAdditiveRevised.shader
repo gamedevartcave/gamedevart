@@ -31,17 +31,15 @@ Shader "Custom/Mobile/Particles/Additive"
         UNITY_FOG_COORDS(1)
     };
 
-
     v2f vert(appdata_t v)
     {
         v2f o;
         o.position = UnityObjectToClipPos(v.position);
         o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
         o.color = v.color;
-        UNITY_TRANSFER_FOG(o, o.vertex);
+        //UNITY_TRANSFER_FOG(o, o.vertex);
         return o;
     }
-
 
     fixed4 frag(v2f i) : SV_Target
     {

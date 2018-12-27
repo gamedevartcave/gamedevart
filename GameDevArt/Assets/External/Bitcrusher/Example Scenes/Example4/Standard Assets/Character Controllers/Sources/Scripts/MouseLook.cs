@@ -1,64 +1,78 @@
 using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.UI;
 
-/// MouseLook rotates the transform based on the mouse delta.
-/// Minimum and Maximum values can be used to constrain the possible rotation
-
-/// To make an FPS style character:
-/// - Create a capsule.
-/// - Add the MouseLook script to the capsule.
-///   -> Set the mouse look to use LookX. (You want to only turn character but not tilt it)
-/// - Add FPSInputController script to the capsule
-///   -> A CharacterMotor and a CharacterController component will be automatically added.
-
-/// - Create a camera. Make the camera a child of the capsule. Reset it's transform.
-/// - Add a MouseLook script to the camera.
-///   -> Set the mouse look to use LookY. (You want the camera to tilt up and down like a head. The character already turns.)
-[AddComponentMenu("Camera-Control/Mouse Look")]
-public class MouseLook : MonoBehaviour 
+namespace CityBashers
 {
-	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-	public RotationAxes axes = RotationAxes.MouseXAndY;
-
-	public float sensitivityX = 15F;
-	public float sensitivityY = 15F;
-
-	public float minimumX = -360F;
-	public float maximumX = 360F;
-
-	public float minimumY = -60F;
-	public float maximumY = 60F;
-
-	float rotationY = 0F;
-	public float rotYDeadZone = 0.25f;
-
-	private PlayerActions playerActions;
-
-	void Start ()
+	[AddComponentMenu("Camera-Control/Mouse Look")]
+	public class MouseLook : MonoBehaviour 
 	{
-		playerActions = InControlActions.instance.playerActions;
+		public static MouseLook instance { get; private set; }
 
-		// Make the rigid body not change rotation
-		if (GetComponent<Rigidbody> () != null)
+		public Vector2 sensitivity = new Vector2 (15, 15);
+
+		// Minimum and Maximum values can be used to constrain the possible rotation
+		public Vector2 minimum = new Vector2 (-360, 360);
+		public Vector2 maximum = new Vector2 (-60, 60);
+
+		public float rotationX = 0;
+		public float rotationY = 0;
+		[Range (0.0f, 1.0f)]
+		public float rotYDeadZone = 0.25f;
+
+		public Slider MouseSensitivitySlider;
+
+		private PlayerActions playerActions;
+
+		void Awake ()
 		{
-			GetComponent<Rigidbody> ().freezeRotation = true;
+			instance = this;
+			this.enabled = false;
 		}
-	}
 
-	void Update ()
-	{
-		if (axes == RotationAxes.MouseXAndY && GameController.instance.isPaused == false)
+		void Start ()
 		{
-			float rotationX = transform.localEulerAngles.y + playerActions.CamRot.Value.x * sensitivityX;
+			playerActions = InControlActions.instance.playerActions;
+		}
 
-			//rotationY += playerActions.CamRot.Value.y * 
-			//	(playerActions.Aim.Value > 0.5f ? -sensitivityY : sensitivityY);
+		/// <summary>
+		/// Sets the invert axis.
+		/// </summary>
+		/// <param name="invert">If set to <c>true</c> invert.</param>
+		public void SetInvertAxis (bool invert)
+		{
+			SaveAndLoadScript.Instance.invertYAxis = invert;
+		}
+
+		/// <summary>
+		/// Sets the mouse sensitivity multiplier.
+		/// </summary>
+		public void SetMouseSensitivityMultiplier ()
+		{
+			SaveAndLoadScript.Instance.MouseSensitivityMultplier = MouseSensitivitySlider.value;
+		}
+
+		/// <summary>
+		/// Refreshes the mouse sensitivity value.
+		/// </summary>
+		public void RefreshMouseSensitivityValue ()
+		{
+			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+		}
+
+		void Update ()
+		{
+			rotationX = 
+				transform.localEulerAngles.y + 
+				playerActions.CamRot.Value.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 
 			// While aiming.
 			if (playerActions.Aim.Value > 0.5f)
 			{
 				// Don't use deadzone.
-				rotationY += playerActions.CamRot.Value.y * -sensitivityY;
+				rotationY += 
+					playerActions.CamRot.Value.y * 
+					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y) 
+					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 			}
 
 			// Not aiming.
@@ -68,31 +82,15 @@ public class MouseLook : MonoBehaviour
 				if (playerActions.CamRot.Value.y > rotYDeadZone ||
 				    playerActions.CamRot.Value.y < -rotYDeadZone)
 				{
-					rotationY += playerActions.CamRot.Value.y * -sensitivityY;
+					rotationY += 
+						playerActions.CamRot.Value.y * 
+						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
 				}
 			}
 
-			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
 			
-			transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-		}
-
-		else 
-
-		if (axes == RotationAxes.MouseX && GameController.instance.isPaused == false)
-		{
-			transform.Rotate (0, playerActions.CamRot.Value.x * sensitivityX, 0);
-		}
-		
-		else
-		
-		{
-			if (GameController.instance.isPaused == false)
-			{
-				rotationY += playerActions.CamRot.Value.y * sensitivityY;
-				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-				transform.localEulerAngles = new Vector3 (-rotationY, transform.localEulerAngles.y, 0);
-			}
+			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, 0);
 		}
 	}
 }

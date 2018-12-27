@@ -1,40 +1,43 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class CameraOverride : MonoBehaviour 
+namespace CityBashers
 {
-	public Collider playerCol;
-	public Camera playerCam;
-	public Camera overrideCam;
-	public float releaseDelay = 1;
-
-	void OnTriggerEnter (Collider other)
+	public class CameraOverride : MonoBehaviour 
 	{
-		if (other == playerCol)
+		public Collider playerCol;
+		public Camera playerCam;
+		public Camera overrideCam;
+		public float releaseDelay = 1;
+
+		void OnTriggerEnter (Collider other)
 		{
-			if (IsInvoking ("ReleaseOverride") == true)
+			if (other == playerCol)
 			{
-				CancelInvoke ("ReleaseOverride");
+				if (IsInvoking ("ReleaseOverride") == true)
+				{
+					CancelInvoke ("ReleaseOverride");
+				}
+
+				ThirdPersonUserControl.instance.m_Cam = overrideCam;
+				playerCam.enabled = false;
+				overrideCam.enabled = true;
 			}
-
-			ThirdPersonUserControl.instance.m_Cam = overrideCam;
-			playerCam.enabled = false;
-			overrideCam.enabled = true;
 		}
-	}
 
-	void OnTriggerExit (Collider other)
-	{
-		if (other == playerCol)
+		void OnTriggerExit (Collider other)
 		{
-			Invoke ("ReleaseOverride", releaseDelay);
+			if (other == playerCol)
+			{
+				Invoke ("ReleaseOverride", releaseDelay);
+			}
 		}
-	}
 
-	void ReleaseOverride ()
-	{
-		ThirdPersonUserControl.instance.m_Cam = playerCam;
-		playerCam.enabled = true;
-		overrideCam.enabled = false;
+		void ReleaseOverride ()
+		{
+			ThirdPersonUserControl.instance.m_Cam = playerCam;
+			playerCam.enabled = true;
+			overrideCam.enabled = false;
+		}
 	}
 }

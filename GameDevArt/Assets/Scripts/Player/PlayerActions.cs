@@ -3,51 +3,89 @@ using InControl;
 
 public class PlayerActions : PlayerActionSet
 {
-	public PlayerAction Jump;
-	public PlayerAction Crouch;
-	public PlayerAction Aim;
-	public PlayerAction Use;
-	public PlayerAction Pause;
-	public PlayerAction Shoot;
-	public PlayerAction Melee;
-
+	// Movement actions.
 	public PlayerAction Left;
 	public PlayerAction Right;
 	public PlayerAction Up;
 	public PlayerAction Down;
-
 	public PlayerTwoAxisAction Move;
 
+	// Camera actions.
+	public PlayerAction CameraChange;
 	public PlayerAction CamLeft;
 	public PlayerAction CamRight;
 	public PlayerAction CamUp;
 	public PlayerAction CamDown;
-
 	public TwoAxisInputControl CamRot;
-	public PlayerAction CameraChange;
+
+	public PlayerAction LockOnLeft;
+	public PlayerAction LockOnRight;
+	public OneAxisInputControl LockOn;
+
+	// Main actions.
+	public PlayerAction Jump;
+	public PlayerAction Use;
+	public PlayerAction Crouch; // This isn't used.
+
+	// Attack actions.
+	public PlayerAction Aim;
+	public PlayerAction Shoot;
+	public PlayerAction Melee;
+	public PlayerAction Ability;
+	public PlayerAction NextWeapon;
+	public PlayerAction PreviousWeapon;
+
+	// Dodge actions.
+	public PlayerAction DodgeLeft;
+	public PlayerAction DodgeRight;
+	public OneAxisInputControl Dodge;
+
+	// Menu actions.
+	public PlayerAction Pause;
+	public PlayerAction Submit;
+	public PlayerAction Back;
 
 	public PlayerActions()
 	{
-		Jump = CreatePlayerAction ("Jump");
-		Crouch = CreatePlayerAction ("Crouch");
-		Aim = CreatePlayerAction ("Aim");
-		Use = CreatePlayerAction ("Use");
-		Pause = CreatePlayerAction ("Pause");
-		Shoot = CreatePlayerAction ("Shoot");
-		Melee = CreatePlayerAction ("Melee");
+		Left  		   = CreatePlayerAction ("Move Left");
+		Right 		   = CreatePlayerAction ("Move Right");
+		Up    		   = CreatePlayerAction ("Move Up");
+		Down  		   = CreatePlayerAction ("Move Down");
 
-		Left = CreatePlayerAction ("Move Left");
-		Right = CreatePlayerAction ("Move Right");
-		Up = CreatePlayerAction ("Move Up");
-		Down = CreatePlayerAction ("Move Down");
-		Move = CreateTwoAxisPlayerAction (Left, Right, Down, Up);
+		Move  		   = CreateTwoAxisPlayerAction (Left, Right, Down, Up);
 
-		CamLeft = CreatePlayerAction ("CamLeft");
-		CamRight = CreatePlayerAction ("CamRight");
-		CamUp = CreatePlayerAction ("CamUp");
-		CamDown = CreatePlayerAction ("CamDown");
-		CamRot = CreateTwoAxisPlayerAction (CamLeft, CamRight, CamUp, CamDown);
-		CameraChange = CreatePlayerAction ("CameraChange");
+		CamLeft        = CreatePlayerAction ("CamLeft");
+		CamRight       = CreatePlayerAction ("CamRight");
+		CamUp          = CreatePlayerAction ("CamUp");
+		CamDown        = CreatePlayerAction ("CamDown");
+
+		CamRot         = CreateTwoAxisPlayerAction (CamLeft, CamRight, CamUp, CamDown);
+
+		CameraChange   = CreatePlayerAction ("CameraChange");
+
+		LockOnLeft     = CreatePlayerAction ("LockOnLeft");
+		LockOnRight    = CreatePlayerAction ("LockOnRight");
+		LockOn         = CreateOneAxisPlayerAction (Left, Right);
+
+		Jump 		   = CreatePlayerAction ("Jump");
+		Use            = CreatePlayerAction ("Use");
+		Crouch   	   = CreatePlayerAction ("Crouch");
+
+		Aim 		   = CreatePlayerAction ("Aim");
+		Shoot 		   = CreatePlayerAction ("Shoot");
+		Melee 		   = CreatePlayerAction ("Melee");
+		Ability 	   = CreatePlayerAction ("Ability");
+
+		NextWeapon     = CreatePlayerAction ("NextWeapon");
+		PreviousWeapon = CreatePlayerAction ("PreviousWeapon");
+
+		DodgeLeft 	   = CreatePlayerAction ("DodgeLeft");
+		DodgeRight 	   = CreatePlayerAction ("DodgeRight");
+		Dodge 		   = CreateOneAxisPlayerAction (DodgeLeft, DodgeRight);
+
+		Pause 		   = CreatePlayerAction ("Pause");
+		Submit 		   = CreatePlayerAction ("Submit");
+		Back 		   = CreatePlayerAction ("Back");
 	}
 
 	public static PlayerActions CreateWithDefaultBindings()
@@ -63,18 +101,32 @@ public class PlayerActions : PlayerActionSet
 		playerActions.Aim.AddDefaultBinding (Mouse.RightButton);
 		playerActions.Aim.AddDefaultBinding (InputControlType.LeftTrigger);
 
-		playerActions.Use.AddDefaultBinding (Key.E);
 		playerActions.Use.AddDefaultBinding (Key.F);
 		playerActions.Use.AddDefaultBinding (InputControlType.Action3);
 
 		playerActions.Pause.AddDefaultBinding (Key.Escape);
 		playerActions.Pause.AddDefaultBinding (InputControlType.Command);
 
+		playerActions.Submit.AddDefaultBinding (Key.Return);
+		playerActions.Submit.AddDefaultBinding (InputControlType.Action1);
+
+		playerActions.Back.AddDefaultBinding (Key.Escape);
+		playerActions.Back.AddDefaultBinding (InputControlType.Action2);
+
 		playerActions.Shoot.AddDefaultBinding (Mouse.LeftButton);
 		playerActions.Shoot.AddDefaultBinding (InputControlType.RightTrigger);
 
-		playerActions.Melee.AddDefaultBinding (Mouse.LeftButton);
+		playerActions.Melee.AddDefaultBinding (Mouse.MiddleButton);
 		playerActions.Melee.AddDefaultBinding (InputControlType.Action4);
+
+		playerActions.Ability.AddDefaultBinding (Key.LeftAlt);
+		playerActions.Ability.AddDefaultBinding (InputControlType.RightStickButton);
+
+		playerActions.DodgeLeft.AddDefaultBinding (Key.Q);
+		playerActions.DodgeLeft.AddDefaultBinding (InputControlType.LeftBumper);
+
+		playerActions.DodgeRight.AddDefaultBinding (Key.E);
+		playerActions.DodgeRight.AddDefaultBinding (InputControlType.RightBumper);
 
 		playerActions.Up.AddDefaultBinding (Key.UpArrow);
 		playerActions.Up.AddDefaultBinding (Key.W);
@@ -99,13 +151,25 @@ public class PlayerActions : PlayerActionSet
 		playerActions.CamRight.AddDefaultBinding (InputControlType.RightStickRight);
 
 		playerActions.CamUp.AddDefaultBinding (Mouse.NegativeY);
-		playerActions.CamUp.AddDefaultBinding (InputControlType.RightStickUp );
+		playerActions.CamUp.AddDefaultBinding (InputControlType.RightStickUp);
 
 		playerActions.CamDown.AddDefaultBinding (Mouse.PositiveY);
 		playerActions.CamDown.AddDefaultBinding (InputControlType.RightStickDown);
 
 		playerActions.CameraChange.AddDefaultBinding (Key.Tab);
 		playerActions.CameraChange.AddDefaultBinding (InputControlType.LeftStickButton);
+
+		playerActions.LockOnLeft.AddDefaultBinding (Key.V);
+		playerActions.LockOnLeft.AddDefaultBinding (InputControlType.DPadLeft);
+
+		playerActions.LockOnRight.AddDefaultBinding (Key.B);
+		playerActions.LockOnRight.AddDefaultBinding (InputControlType.DPadRight);
+
+		playerActions.NextWeapon.AddDefaultBinding (Mouse.PositiveScrollWheel);
+		playerActions.NextWeapon.AddDefaultBinding (InputControlType.DPadUp);
+
+		playerActions.PreviousWeapon.AddDefaultBinding (Mouse.NegativeScrollWheel);
+		playerActions.PreviousWeapon.AddDefaultBinding (InputControlType.DPadDown);
 
 		//Debug.Log ("Created Player Actions.");
 		return playerActions;

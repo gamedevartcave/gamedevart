@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 
-public class PitchSync : MonoBehaviour 
+namespace CityBashers
 {
-	public AudioSource master; // The AudioSource to follow.
-	public AudioSource slave; // The following AudioSource.
-
-	// Syncronizes audio source timing with another audio source.
-	void LateUpdate () 
+	public class PitchSync : MonoBehaviour 
 	{
-		// Checks if either audio source is playing.
-		if (slave.isPlaying == true || master.isPlaying == true)
+		public AudioSource master; // The AudioSource to follow.
+		public AudioSource slave; // The following AudioSource.
+
+		// Syncronizes audio source timing with another audio source.
+		void LateUpdate () 
 		{
-			slave.pitch = master.pitch; // Match pitches.
+			// Checks if either audio source is playing.
+			if (slave.isPlaying == true || master.isPlaying == true)
+			{
+				slave.pitch = master.pitch; // Match pitches.
+			}
 		}
 	}
 }

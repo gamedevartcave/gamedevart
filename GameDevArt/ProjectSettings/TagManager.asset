@@ -9,6 +9,7 @@ TagManager:
   - CamOverride
   - Ground
   - DontDestroyOnLoadInit
+  - PostProcessVolume
   layers:
   - Default
   - TransparentFX
@@ -24,8 +25,8 @@ TagManager:
   - Player
   - Footstep
   - UseZone
-  - 
-  - 
+  - TimerZone
+  - HurtZone
   - 
   - 
   - 

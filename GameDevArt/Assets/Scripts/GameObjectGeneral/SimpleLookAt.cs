@@ -1,68 +1,52 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
-public class SimpleLookAt : MonoBehaviour 
+namespace CityBashers
 {
-	[Tooltip ("Position to look at.")]
-	public Transform LookAtPos;
-	[Tooltip ("How to look at the Transform.")]
-	public lookType LookMethod;
-	public enum lookType
+	[ExecuteInEditMode]
+	public class SimpleLookAt : MonoBehaviour 
 	{
-		LookTowards,
-		LookAway
-	}
+		[Tooltip ("Position to look at.")]
+		public Transform LookAtPos;
+		public Vector3 Offset;
 
-	[Tooltip ("Find up direction instead of forward direction.")]
-	public bool useUpDirection;
-
-	public bool useSmoothing;
-	public float SmoothingAmount;
-	public Vector3 Offset;
-
-	void OnEnable ()
-	{
-		//LookAtPos = Camera.main.transform;
-	}
-
-	void LateUpdate ()
-	{
-		if (useSmoothing == true) 
+		[Tooltip ("How to look at the Transform.")]
+		public lookType LookMethod;
+		public enum lookType
 		{
-			Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset);
-
-			transform.rotation = Quaternion.Slerp (transform.rotation, lookPos, SmoothingAmount * Time.deltaTime);
-
-			return;
+			LookTowards,
+			LookAway
 		}
 
-		if (useSmoothing == false) 
-		{
-			// Look towards.
-			if (LookMethod == lookType.LookTowards && LookAtPos != null) 
-			{
-				if (useUpDirection == false) 
-				{
-					transform.LookAt (LookAtPos.position, Vector3.forward);
-				}
+		[Tooltip ("Find up direction instead of forward direction.")]
+		public bool useUpDirection;
 
-				if (useUpDirection == true) 
-				{
-					transform.LookAt (LookAtPos.position, Vector3.up);
-				}
+		[Tooltip ("Option to add smoothed time")]
+		public bool useSmoothing;
+
+		[Tooltip ("How much smoothing we want.")]
+		public float SmoothingAmount;
+
+		void LateUpdate ()
+		{
+			if (useSmoothing == true) 
+			{
+				Quaternion lookPos = Quaternion.LookRotation (LookAtPos.position - transform.position - Offset, Vector3.up);
+				transform.rotation = Quaternion.Slerp (transform.rotation, lookPos, SmoothingAmount * Time.deltaTime);
+				return;
 			}
 
-			// Look away.
-			if (LookMethod == lookType.LookAway) 
+			if (useSmoothing == false) 
 			{
-				if (useUpDirection == false) 
+				// Look towards.
+				if (LookMethod == lookType.LookTowards && LookAtPos != null) 
 				{
-					transform.LookAt (LookAtPos.position, -Vector3.forward);
+					transform.LookAt (LookAtPos.position, useUpDirection ? Vector3.up : transform.forward);
 				}
 
-				if (useUpDirection == true) 
+				// Look away.
+				if (LookMethod == lookType.LookAway) 
 				{
-					transform.LookAt (LookAtPos.position, -Vector3.up);
+					transform.LookAt (LookAtPos.position, useUpDirection ? -Vector3.up : -transform.forward);
 				}
 			}
 		}
