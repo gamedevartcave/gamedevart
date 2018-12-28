@@ -39,7 +39,7 @@ namespace CityBashers
 
 				if (sceneName == "menu") 
 				{
-					InitManager.Instance.LoadingMissionText.text = "";
+					//InitManager.Instance.LoadingMissionText.text = "";
 				}
 
 				SceneLoadCommit = true;
@@ -59,13 +59,14 @@ namespace CityBashers
 
 				if (ActiveSceneName == "menu") 
 				{
-					InitManager.Instance.LoadingMissionText.text = "";
+					//InitManager.Instance.LoadingMissionText.text = "";
 				}
-
+					
 				SceneLoadCommit = true;
 			}
 		}
 
+		/*
 		void Update ()
 		{
 			if (Input.GetKeyDown (KeyCode.R))
@@ -73,6 +74,7 @@ namespace CityBashers
 				LoadScene (ActiveSceneName);
 			}
 		}
+		*/
 
 		void SceneLoadSequence ()
 		{
@@ -84,11 +86,17 @@ namespace CityBashers
 		{
 			if (SceneLoader.Instance != null)
 			{
-				if (SceneLoader.Instance.async != null)
+				if (SceneLoader.Instance.asyncOp != null)
 				{
 					SceneLoader.Instance.ActivateScene ();
 				}
 			}
+		}
+
+		public void SetMissionText (string newText)
+		{
+			SceneLoader.Instance.missionText = newText;
+			SceneLoader.Instance.LoadingMissionText.text = newText;
 		}
 
 		public void DestroyCurrentLoadedObjects ()

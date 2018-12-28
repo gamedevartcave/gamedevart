@@ -18,8 +18,8 @@ namespace CityBashers
 
 		void Start ()
 		{
-			LoadingMissionText.text = "";
-			LoadingMissionText.gameObject.SetActive (false);
+			//LoadingMissionText.text = "";
+			//LoadingMissionText.gameObject.SetActive (false);
 		}
 
 		void OnApplicationQuit ()

@@ -938,11 +938,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoading: 0
-  delay: 3
+  delay: 0.5
   SceneName: menu
   ProgressBarSmoothTime: 20
   SmoothProgress: 0
@@ -1609,6 +1609,8 @@ MonoBehaviour:
   LoadParticlesAnim: {fileID: 95689383679820770}
   LoadSlider: {fileID: 114412835366459592}
   loadScreenBackground: {fileID: 114416536664530100}
+  LoadingMissionText: {fileID: 114172367723598714}
+  missionText: Loading
   OnInitialize:
     m_PersistentCalls:
       m_Calls: []
@@ -1639,17 +1641,6 @@ MonoBehaviour:
           m_StringArgument: Appear
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 95435993928599896}
-        m_MethodName: ResetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Disappear
-          m_BoolArgument: 1
-        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnSceneLoadComplete:
@@ -1675,6 +1666,28 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Appear
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114507946513632190}
+        m_MethodName: ClearMissionText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 95435993928599896}
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Disappear
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
