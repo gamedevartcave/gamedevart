@@ -27434,6 +27434,11 @@ PrefabInstance:
       objectReference: {fileID: 626687714}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
       propertyPath: OutputGraphic
       value: 
       objectReference: {fileID: 1271815352}
@@ -27442,6 +27447,36 @@ PrefabInstance:
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 693883176}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 693883176}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: ResetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_StringArgument
+      value: SetInvisible
+      objectReference: {fileID: 0}
     - target: {fileID: 4074300922465350, guid: a5f33cbd171cc37449a573793c7c3f6a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
@@ -111055,6 +111090,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 693883176}
+        m_MethodName: ResetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetInvisible
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnUnpause:
@@ -111124,6 +111170,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 693883176}
+        m_MethodName: ResetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetVisible
           m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,

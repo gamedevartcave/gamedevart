@@ -108,11 +108,14 @@ namespace CityBashers
 			}
 			*/
 
+			//SceneManager.UnloadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
+
 			yield return WaitDelay;
 
 			GC.Collect ();
 
 			asyncOp = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
+
 
 			//yield return WaitDelay;
 			//asyncOp.allowSceneActivation = false; // Prevents the loading scene from activating.
@@ -192,7 +195,7 @@ namespace CityBashers
 
 		IEnumerator LoadSceneDelay ()
 		{
-			yield return WaitDelay;
+			//yield return WaitDelay;
 
 			// Finally, we can activate the newly loaded scene.
 			if (asyncOp != null)
@@ -204,10 +207,14 @@ namespace CityBashers
 			//Shader.WarmupAllShaders ();
 			OnSceneLoadComplete.Invoke ();
 
+			/*
 			if (SceneName == "menu")
 			{
 				SceneLoadUIDisappear ();
 			}
+			*/
+
+			SceneLoadUIDisappear ();
 
 			if (DontDestroyOnLoadInit.Instance != null)
 			{
@@ -219,8 +226,10 @@ namespace CityBashers
 
 			if (asyncOp != null)
 			{
-				asyncOp = null;
+				//asyncOp = null;
 			}
+
+			yield return null;
 		}
 
 		public void SceneLoadUIDisappear ()
