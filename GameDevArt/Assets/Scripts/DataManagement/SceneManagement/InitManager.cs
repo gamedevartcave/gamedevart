@@ -13,7 +13,7 @@ namespace CityBashers
 		void Awake ()
 		{
 			Instance = this;
-			DontDestroyOnLoad (gameObject);
+			//DontDestroyOnLoad (gameObject);
 		}
 
 		void Start ()

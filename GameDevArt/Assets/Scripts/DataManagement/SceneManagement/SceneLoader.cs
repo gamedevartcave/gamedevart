@@ -108,17 +108,20 @@ namespace CityBashers
 			}
 			*/
 
-			//SceneManager.UnloadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
+			if (LocalSceneLoader.Instance != null)
+			{
+				AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync (LocalSceneLoader.Instance.gameObject.scene);
 
-			yield return WaitDelay;
+				yield return unloadAsync;
+			}
 
 			GC.Collect ();
 
-			asyncOp = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
-
+			//asyncOp = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
+			asyncOp = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Additive);
 
 			//yield return WaitDelay;
-			//asyncOp.allowSceneActivation = false; // Prevents the loading scene from activating.
+			asyncOp.allowSceneActivation = false; // Prevents the loading scene from activating.
 
 			while (!asyncOp.isDone) 
 			{

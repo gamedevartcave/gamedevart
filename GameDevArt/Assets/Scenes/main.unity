@@ -27446,26 +27446,26 @@ PrefabInstance:
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 693883176}
+      objectReference: {fileID: 271851622}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 693883176}
+      objectReference: {fileID: 271851619}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: ResetTrigger
+      value: DisableCameras
       objectReference: {fileID: 0}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
@@ -27475,7 +27475,102 @@ PrefabInstance:
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 271851619}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: DisableCameras
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 693883176}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: SetVisible
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 693883176}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ResetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: SetInvisible
+      objectReference: {fileID: 0}
+    - target: {fileID: 20105250787580356, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 20105250787580356, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: m_AllowDynamicResolution
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4074300922465350, guid: a5f33cbd171cc37449a573793c7c3f6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27602,6 +27697,11 @@ PrefabInstance:
     - target: {fileID: 20953436440265894, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: m_AllowDynamicResolution
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20953436440265894, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: m_Depth
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -82135,6 +82235,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2065305134}
+        m_MethodName: SetMissionText
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Loading
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1094132715
@@ -88999,6 +89110,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: menu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2065305134}
+        m_MethodName: SetMissionText
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Loading
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -97700,7 +97822,7 @@ PrefabInstance:
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.size
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -97956,11 +98078,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[15].m_Target
       value: 
-      objectReference: {fileID: 1628706859}
+      objectReference: {fileID: 2065305134}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[15].m_MethodName
-      value: LoadData
+      value: FadeOutLoaderUI
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}

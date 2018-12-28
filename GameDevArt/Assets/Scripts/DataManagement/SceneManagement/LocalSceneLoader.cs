@@ -66,16 +66,6 @@ namespace CityBashers
 			}
 		}
 
-		/*
-		void Update ()
-		{
-			if (Input.GetKeyDown (KeyCode.R))
-			{
-				LoadScene (ActiveSceneName);
-			}
-		}
-		*/
-
 		void SceneLoadSequence ()
 		{
 			SceneLoader.Instance.StartLoadSequence ();

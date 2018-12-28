@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
 
 namespace CityBashers
 {
@@ -36,9 +37,10 @@ namespace CityBashers
 			// Create one and make it not destory on load.
 			if (InitManager.Instance == null)
 			{
-				managers = Instantiate (ManagersPrefab); // Includes the InitManager.
-				managers.name = "MANAGERS";
-				DontDestroyOnLoad (managers.gameObject); 
+				//managers = Instantiate (ManagersPrefab); // Includes the InitManager.
+				//managers.name = "MANAGERS";
+				//DontDestroyOnLoad (managers.gameObject); 
+				SceneManager.LoadSceneAsync (0, LoadSceneMode.Additive);
 			}
 		}
 
