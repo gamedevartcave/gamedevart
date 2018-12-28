@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 1ec10a1c6f6d6f84f910ad48fd8b0ce7
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400010: Player Actions/Move
+    11400012: Player Actions/Look
+    11400014: Player Actions/Shoot
+    11400016: Player Actions/Aim
+    11400018: Player Actions/Jump
+    11400020: Player Actions/Dodge
+    11400022: Player Actions/Use
+    11400024: UI Actions/Move
+    11400026: UI Actions/Select
+    11400028: UI Actions/Back
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 0
+  wrapperCodePath: 
+  wrapperClassName: 
+  wrapperCodeNamespace: 
+  generateActionEvents: 0
+  generateInterfaces: 0
+  actionGuids: []
+  actionMapGuids: []

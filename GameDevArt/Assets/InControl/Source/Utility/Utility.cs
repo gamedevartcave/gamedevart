@@ -10,7 +10,6 @@ namespace InControl
 	using System.Threading.Tasks;
 #endif
 
-
 	public static class Utility
 	{
 		public const float Epsilon = 1.0e-7f;
@@ -452,12 +451,13 @@ namespace InControl
 		{
 			try
 			{
-				var rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey( path );
-				if (rk == null)
-				{
+				
+				//var rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey( path );
+				//if (rk == null)
+				//{
 					return "";
-				}
-				return (string) rk.GetValue( key );
+				//}
+				//return (string) rk.GetValue( key );
 			}
 			catch
 			{
