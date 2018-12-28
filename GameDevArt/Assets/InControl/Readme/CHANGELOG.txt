@@ -1,3 +1,9 @@
+### v1.7.1
+* Added additional controllers supported by 360Controller 0.16.8 on Mac.
+* Added NVIDIA Shield remote Android profile.
+* Fixed PlayStation 4 profile for console.
+* BREAKING CHANGE: The singleton enforcement for InControlManager and TouchManager components was far too aggressive. It will now no longer destroy duplicate components automatically and, if redundant instances are detected in play mode, a warning will be shown in the console and the components will be disabled.
+
 ### v1.7.0
 * Added additional controllers supported by 360Controller 0.16.6 on Mac.
 * Added Xiaomi Remote profile for Android TV.

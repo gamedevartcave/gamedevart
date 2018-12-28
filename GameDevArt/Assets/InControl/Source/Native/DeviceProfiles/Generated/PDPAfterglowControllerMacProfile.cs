@@ -29,6 +29,10 @@ namespace InControl.NativeProfile
 					ProductID = 0x02e6,
 				},
 				new NativeInputDeviceMatcher {
+					VendorID = 0x1bad,
+					ProductID = 0x0300,
+				},
+				new NativeInputDeviceMatcher {
 					VendorID = 0x0e6f,
 					ProductID = 0x0413,
 				},

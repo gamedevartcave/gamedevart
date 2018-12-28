@@ -13,12 +13,12 @@ namespace InControl
 #endif
 
 
-	public class InControlManager : SingletonMonoBehavior<InControlManager, MonoBehaviour>
+	public class InControlManager : SingletonMonoBehavior<InControlManager>
 	{
 		public bool logDebugInfo = true;
 		public bool invertYAxis = false;
 		public bool useFixedUpdate = false;
-		public bool dontDestroyOnLoad = false;
+		public bool dontDestroyOnLoad = true;
 		public bool suspendInBackground = false;
 
 		public bool enableICade = false;
@@ -40,7 +40,7 @@ namespace InControl
 
 		void OnEnable()
 		{
-			if (EnforceSingleton() == false)
+			if (EnforceSingleton)
 			{
 				return;
 			}
@@ -99,20 +99,18 @@ namespace InControl
 
 		void OnDisable()
 		{
+			if (IsNotTheSingleton) return;
 #if UNITY_5_4_OR_NEWER
 			SceneManager.sceneLoaded -= OnSceneWasLoaded;
 #endif
-
-			if (InControlManager.Instance == this)
-			{
-				InputManager.ResetInternal();
-			}
+			InputManager.ResetInternal();
 		}
 
 
 #if UNITY_ANDROID && INCONTROL_OUYA && !UNITY_EDITOR
 		void Start()
 		{
+			if (IsNotTheSingleton) return;
 			StartCoroutine( CheckForOuyaEverywhereSupport() );
 		}
 
@@ -135,6 +133,7 @@ namespace InControl
 
 		void Update()
 		{
+			if (IsNotTheSingleton) return;
 			if (!useFixedUpdate || Utility.IsZero( Time.timeScale ))
 			{
 				InputManager.UpdateInternal();
@@ -144,6 +143,7 @@ namespace InControl
 
 		void FixedUpdate()
 		{
+			if (IsNotTheSingleton) return;
 			if (useFixedUpdate)
 			{
 				InputManager.UpdateInternal();
@@ -153,18 +153,21 @@ namespace InControl
 
 		void OnApplicationFocus( bool focusState )
 		{
+			if (IsNotTheSingleton) return;
 			InputManager.OnApplicationFocus( focusState );
 		}
 
 
 		void OnApplicationPause( bool pauseState )
 		{
+			if (IsNotTheSingleton) return;
 			InputManager.OnApplicationPause( pauseState );
 		}
 
 
 		void OnApplicationQuit()
 		{
+			if (IsNotTheSingleton) return;
 			InputManager.OnApplicationQuit();
 		}
 
@@ -172,11 +175,13 @@ namespace InControl
 #if UNITY_5_4_OR_NEWER
 		void OnSceneWasLoaded( Scene scene, LoadSceneMode loadSceneMode )
 		{
+			if (IsNotTheSingleton) return;
 			InputManager.OnLevelWasLoaded();
 		}
 #else
 		void OnLevelWasLoaded( int level )
 		{
+			if (IsNotTheSingleton) return;
 			InputManager.OnLevelWasLoaded();
 		}
 #endif
@@ -194,6 +199,8 @@ namespace InControl
 					break;
 				case LogMessageType.Error:
 					Debug.LogError( logMessage.text );
+					break;
+				default:
 					break;
 			}
 		}

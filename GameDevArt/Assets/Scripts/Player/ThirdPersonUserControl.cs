@@ -115,6 +115,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			float h = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.x;
 			float v = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.y;
 
+			//Debug.Log (playerActions.Move.Value);
+
 			//bool crouch = playerActions.Crouch.IsPressed;
 
             // calculate move direction to pass to character

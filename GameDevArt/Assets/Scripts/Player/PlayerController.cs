@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
@@ -17,6 +18,8 @@ namespace CityBashers
 		public Rigidbody playerRb;
 		public Animator PlayerUI;
 		public Transform startingPoint;
+
+		//public InputMaster controls;
 
 		[Header ("Health")]
 		[ReadOnlyAttribute] public bool lostAllHealth;

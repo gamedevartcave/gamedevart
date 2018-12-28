@@ -27437,7 +27437,7 @@ PrefabInstance:
     - target: {fileID: 114117583370482024, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114117583370482024, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
@@ -27473,17 +27473,22 @@ PrefabInstance:
         type: 3}
       propertyPath: sunShaftsShader
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4800000, guid: d3b1c8c1036784176946f5cfbfb7fe4c, type: 3}
     - target: {fileID: 114117583370482024, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: simpleClearShader
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4800000, guid: f688f89ed5eb847c5b19c934a0f1e772, type: 3}
     - target: {fileID: 114991872395936308, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: LookAtPos
       value: 
       objectReference: {fileID: 816786509}
+    - target: {fileID: 20953436440265894, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: m_AllowDynamicResolution
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5f33cbd171cc37449a573793c7c3f6a, type: 3}
 --- !u!1 &458242985

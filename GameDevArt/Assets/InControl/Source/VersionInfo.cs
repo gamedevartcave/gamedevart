@@ -64,8 +64,8 @@ namespace InControl
 			{
 				Major = 1,
 				Minor = 7,
-				Patch = 0,
-				Build = 9320
+				Patch = 1,
+				Build = 9323
 			};
 		}
 
