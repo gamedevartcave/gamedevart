@@ -87,10 +87,10 @@ QualitySettings:
     shadowResolution: 3
     shadowProjection: 1
     shadowCascades: 4
-    shadowDistance: 300
+    shadowDistance: 500
     shadowNearPlaneOffset: 50
     shadowCascade2Split: 0.28814676
-    shadowCascade4Split: {x: 0.10821149, y: 0.29875004, z: 0.5125412}
+    shadowCascade4Split: {x: 0.10821149, y: 0.8280295, z: 0.8841628}
     shadowmaskMode: 1
     blendWeights: 4
     textureQuality: 0
@@ -117,4 +117,7 @@ QualitySettings:
     excludedTargetPlatforms:
     - iPhone
     - Android
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Android: 0
+    Standalone: 2
+    Windows Store Apps: 0

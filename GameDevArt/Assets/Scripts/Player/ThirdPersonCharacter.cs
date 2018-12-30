@@ -308,7 +308,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					);
 					ThirdPersonUserControl.instance.m_DoubleJump = false;
 					ThirdPersonUserControl.instance.doubleJumped = false;
-					PlayerController.instance.OnLand.Invoke ();
+
+					if (DontDestroyOnLoadInit.Instance.initialized == true)
+					{
+						PlayerController.instance.OnLand.Invoke ();
+					}
+
 					m_Animator.applyRootMotion = true;
 				}
 			}

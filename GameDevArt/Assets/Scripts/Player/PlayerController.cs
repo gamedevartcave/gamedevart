@@ -379,7 +379,7 @@ namespace CityBashers
 
 		void OnLanded ()
 		{
-			GetLandingSound ();
+			//GetLandingSound ();
 		}
 		#endregion
 
@@ -422,7 +422,8 @@ namespace CityBashers
 			isInHitStun = true;
 			OnHitStunBegin.Invoke ();
 
-			while (Time.time < hitStunCurrentTime + hitStunDuration)
+			// Toggle skinned mesh renderer enabled.
+			while (Time.time < hitStunCurrentTime + hitStunDuration && health > 0)
 			{
 				for (int i = 0; i < skinnedMeshes.Length; i++)
 				{
@@ -432,6 +433,7 @@ namespace CityBashers
 				yield return hitStunYield;
 			}
 
+			// Always re enable skinned mesh renderers.
 			for (int i = 0; i < skinnedMeshes.Length; i++)
 			{
 				// Always end with skinned mesh renderers enabled.

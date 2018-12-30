@@ -441,7 +441,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				{
 					dodgeTimeRemain -= Time.unscaledDeltaTime;
 					Vector3 relativeDodgeDir = 
-						transform.InverseTransformDirection (Camera.main.transform.right * m_Character.m_Animator.GetFloat ("DodgeDir") * dodgeSpeed * Time.unscaledDeltaTime);
+
+						transform.InverseTransformDirection (
+							//Camera.main.transform.right * 
+							transform.forward * 
+							//m_Character.m_Animator.GetFloat ("DodgeDir") * 
+							(playerActions.Move.Value.sqrMagnitude > 0 ? 1 : -1) * 
+							dodgeSpeed * Time.unscaledDeltaTime
+						);
 
 					transform.Translate (relativeDodgeDir, Space.Self);
 

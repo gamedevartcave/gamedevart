@@ -9,7 +9,7 @@ namespace CityBashers
 	public class DontDestroyOnLoadInit : MonoBehaviour 
 	{
 		public static DontDestroyOnLoadInit Instance { get; private set; }
-
+		[ReadOnlyAttribute] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
 		public float Delay;
@@ -48,6 +48,7 @@ namespace CityBashers
 		{
 			yield return initializeWait;
 			OnInitialize.Invoke ();
+			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			this.gameObject.SetActive (false);
 		}

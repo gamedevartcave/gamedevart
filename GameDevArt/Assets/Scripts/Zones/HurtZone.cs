@@ -106,11 +106,17 @@ namespace CityBashers
 			} 
 
 			// Inflict inside hurt zone periodically.
-			while (isInsideHurtZone == true)
+			while (isInsideHurtZone == true && PlayerController.instance.health > 0)
 			{
 				PlayerController.instance.health -= damageAmount;
 				PlayerUI.SetTrigger ("Show");
 				yield return damageWait;
+			}
+
+			if (PlayerController.instance.health <= 0)
+			{
+				PlayerController.instance.health = 0;
+				this.enabled = false;
 			}
 		}
 
