@@ -76,7 +76,8 @@ namespace CityBashers
 
 		[Header ("Post processing")]
 		public float targetDofDistance;
-		public float dofSmoothing = 5.0f;
+		public float dofSmoothingIn = 5.0f;
+		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;
 
 		private PlayerActions playerActions;
@@ -195,12 +196,27 @@ namespace CityBashers
 				float currentdof = 
 					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value;
 
-				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
-				Mathf.Lerp (
-					currentdof, 
-					Mathf.Clamp (targetDofDistance, 0, maxDofDistance), 
-					Time.deltaTime * dofSmoothing
-				);
+				// Distance is decreasing.
+				if (currentdof > targetDofDistance)
+				{
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
+					Mathf.SmoothStep (
+						currentdof, 
+						Mathf.Clamp (targetDofDistance, 0, maxDofDistance), 
+						Time.deltaTime * dofSmoothingIn
+					);
+				}
+
+				else // Distance is increasing.
+				
+				{
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
+					Mathf.SmoothStep (
+						currentdof, 
+						Mathf.Clamp (targetDofDistance, 0, maxDofDistance), 
+						Time.deltaTime * dofSmoothingOut
+					);
+				}
 			}
 
 			#if UNITY_EDITOR
