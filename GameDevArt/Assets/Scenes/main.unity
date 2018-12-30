@@ -21459,7 +21459,7 @@ PrefabInstance:
         type: 3}
       propertyPath: postProcessUIVolume
       value: 
-      objectReference: {fileID: 1521116691}
+      objectReference: {fileID: 639754338}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: MagicSlider
@@ -61786,8 +61786,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835040727}
-  m_LocalRotation: {x: -0.18791954, y: -1e-45, z: 1e-45, w: 0.98218447}
-  m_LocalPosition: {x: 0, y: -34.86, z: -2.5}
+  m_LocalRotation: {x: -0.20787175, y: 0.2378678, z: 0.052193414, w: 0.94735634}
+  m_LocalPosition: {x: -4.124594, y: -34.217987, z: -3.35796}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1220239129}

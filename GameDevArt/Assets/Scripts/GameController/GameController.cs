@@ -168,8 +168,6 @@ namespace CityBashers
 				// While moving.
 				if (playerActions.CamRot.Value.magnitude > 0.05f || playerActions.Move.Value.magnitude > 0.25f)
 				{
-
-
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
 						hit.point);
@@ -178,12 +176,18 @@ namespace CityBashers
 				else // Idling.
 				
 				{
-
-
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
 						PlayerController.instance.transform.position);
 				}
+			}
+
+			else // Idling.
+
+			{
+				targetDofDistance = Vector3.Distance (
+					Camera.main.transform.position, 
+					PlayerController.instance.transform.position);
 			}
 
 			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
@@ -192,16 +196,16 @@ namespace CityBashers
 					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value;
 
 				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
-				Mathf.SmoothStep (
+				Mathf.Lerp (
 					currentdof, 
-					targetDofDistance, 
+					Mathf.Clamp (targetDofDistance, 0, maxDofDistance), 
 					Time.deltaTime * dofSmoothing
 				);
 			}
 
 			#if UNITY_EDITOR
 			Debug.DrawRay (Camera.main.transform.position, Camera.main.transform.forward, Color.blue);
-			Debug.DrawLine (Camera.main.transform.position, hit.point, Color.gray);
+			//Debug.DrawLine (Camera.main.transform.position, hit.point, Color.gray);
 			#endif
 		}
 
