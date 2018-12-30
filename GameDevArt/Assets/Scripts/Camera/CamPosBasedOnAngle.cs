@@ -2,7 +2,7 @@
 
 namespace CityBashers
 {
-	[ExecuteInEditMode]
+	//[ExecuteInEditMode]
 	public class CamPosBasedOnAngle : MonoBehaviour
 	{
 		public AnimationCurve yPos;

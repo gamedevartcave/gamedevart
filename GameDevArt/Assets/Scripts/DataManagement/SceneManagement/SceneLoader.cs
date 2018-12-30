@@ -11,7 +11,7 @@ namespace CityBashers
 	public class SceneLoader : MonoBehaviour 
 	{
 		public static SceneLoader Instance { get; private set; }
-		public AsyncOperation async = null; // The async operation variable. 
+		public AsyncOperation asyncOp = null; // The async operation variable. 
 
 		public bool isLoading;
 		public float delay; // How long before the actual loading of the next scene starts.
@@ -27,6 +27,8 @@ namespace CityBashers
 		public Animator LoadParticlesAnim;
 		public Slider LoadSlider;
 		public RawImage loadScreenBackground;
+		public TextMeshProUGUI LoadingMissionText;
+		public string missionText;
 
 		private WaitForSecondsRealtime WaitDelay;
 		public UnityEvent OnInitialize;
@@ -53,13 +55,19 @@ namespace CityBashers
 			// Checks if the currently loaded scene is the init scene.
 			if (SceneManager.GetActiveScene ().name == "init") 
 			{
-				InitManager.Instance.LoadingMissionText.gameObject.SetActive (false);
+				//InitManager.Instance.LoadingMissionText.gameObject.SetActive (false);
 
 				if (SceneManager.GetSceneByName (SceneName).isLoaded == false)
 				{
 					OnSceneLoadBegin.Invoke ();
 				}
 			}
+		}
+
+		public void ClearMissionText ()
+		{
+			missionText = string.Empty;
+			LoadingMissionText.text = string.Empty;
 		}
 
 		public void StartLoadSequence ()
@@ -86,10 +94,12 @@ namespace CityBashers
 			LoadProgressText.text = "0%";
 			LoadSlider.value = 0;
 
+			/*
 			if (LoadParticlesAnim.gameObject.activeInHierarchy == true)
 			{
 				//LoadParticlesAnim.Play ("LoadingParticlesLoop");
 			}
+			*/
 
 			/*
 			foreach (ParticleSystem loadParticle in LoadingParticles) 
@@ -98,32 +108,40 @@ namespace CityBashers
 			}
 			*/
 
-			yield return WaitDelay;
+			if (LocalSceneLoader.Instance != null)
+			{
+				AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync (LocalSceneLoader.Instance.gameObject.scene);
+
+				yield return unloadAsync;
+			}
 
 			GC.Collect ();
 
-			async = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
-			async.allowSceneActivation = false; // Prevents the loading scene from activating.
+			//asyncOp = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Single);
+			asyncOp = SceneManager.LoadSceneAsync (SceneName, LoadSceneMode.Additive);
 
-			while (!async.isDone) 
+			//yield return WaitDelay;
+			asyncOp.allowSceneActivation = false; // Prevents the loading scene from activating.
+
+			while (!asyncOp.isDone) 
 			{
-				float asyncprogress = Mathf.Round (1.1111f * async.progress * 100);
+				float asyncprogress = Mathf.Round (1.1111f * asyncOp.progress * 100);
 				//AudioListener.volume -= 0.2f * Time.unscaledDeltaTime;
 
 				// UI checks load progress and displays for the player.
-				SmoothProgress = Mathf.Lerp (SmoothProgress, async.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
+				SmoothProgress = Mathf.Lerp (SmoothProgress, asyncOp.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
 
 				/*
 				foreach (ParticleSystem loadParticle in LoadingParticles) 
 				{
 					var ParticleStartLifetimeMain = loadParticle.main;
-					ParticleStartLifetimeMain.startLifetime = async.progress + 0.5f;
+					ParticleStartLifetimeMain.startLifetime = asyncOp.progress + 0.5f;
 				}
 				*/
 					
 				if (asyncprogress < 100) 
 				{
-					//Debug.Log ("Scene load async progress: " + Mathf.Round (1.1111f * (async.progress * 100)) + "%");
+					//Debug.Log ("Scene load async progress: " + Mathf.Round (1.1111f * (asyncOp.progress * 100)) + "%");
 				}
 
 				// Somehow async operations load up to 90% before loading the next scene,
@@ -167,7 +185,7 @@ namespace CityBashers
 
 			if (SceneManager.GetActiveScene ().name == "init")
 			{
-				//
+				
 			}
 
 			ActivateScene ();
@@ -180,18 +198,26 @@ namespace CityBashers
 
 		IEnumerator LoadSceneDelay ()
 		{
-			yield return WaitDelay;
+			//yield return WaitDelay;
 
 			// Finally, we can activate the newly loaded scene.
-			async.allowSceneActivation = true;
+			if (asyncOp != null)
+			{
+				asyncOp.allowSceneActivation = true;
+			}
+
 			GC.Collect ();
-			Shader.WarmupAllShaders ();
+			//Shader.WarmupAllShaders ();
 			OnSceneLoadComplete.Invoke ();
 
+			/*
 			if (SceneName == "menu")
 			{
 				SceneLoadUIDisappear ();
 			}
+			*/
+
+			SceneLoadUIDisappear ();
 
 			if (DontDestroyOnLoadInit.Instance != null)
 			{
@@ -200,13 +226,20 @@ namespace CityBashers
 					DontDestroyOnLoadInit.Instance.OnInitialized ();
 				}
 			}
-				
+
+			if (asyncOp != null)
+			{
+				//asyncOp = null;
+			}
+
+			yield return null;
 		}
 
 		public void SceneLoadUIDisappear ()
 		{
 			SceneLoaderUI.ResetTrigger ("Appear");
-			SceneLoaderUI.SetTrigger ("Disappear");
+			//SceneLoaderUI.SetTrigger ("Disappear");
+			SceneLoaderUI.ResetTrigger ("Disappear");
 		}
 
 		public void SetLoadedSceneActive ()

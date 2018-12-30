@@ -76,7 +76,8 @@ namespace CityBashers
 
 		[Header ("Post processing")]
 		public float targetDofDistance;
-		public float dofSmoothing = 5.0f;
+		public float dofSmoothingIn = 5.0f;
+		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;
 
 		private PlayerActions playerActions;
@@ -168,8 +169,6 @@ namespace CityBashers
 				// While moving.
 				if (playerActions.CamRot.Value.magnitude > 0.05f || playerActions.Move.Value.magnitude > 0.25f)
 				{
-
-
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
 						hit.point);
@@ -178,12 +177,18 @@ namespace CityBashers
 				else // Idling.
 				
 				{
-
-
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
 						PlayerController.instance.transform.position);
 				}
+			}
+
+			else // Idling.
+
+			{
+				targetDofDistance = Vector3.Distance (
+					Camera.main.transform.position, 
+					PlayerController.instance.transform.position);
 			}
 
 			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
@@ -191,17 +196,32 @@ namespace CityBashers
 				float currentdof = 
 					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value;
 
-				SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
-				Mathf.SmoothStep (
-					currentdof, 
-					targetDofDistance, 
-					Time.deltaTime * dofSmoothing
-				);
+				// Distance is decreasing.
+				if (currentdof > targetDofDistance)
+				{
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
+					Mathf.SmoothStep (
+						currentdof, 
+						Mathf.Clamp (targetDofDistance, 0, maxDofDistance), 
+						Time.deltaTime * dofSmoothingIn
+					);
+				}
+
+				else // Distance is increasing.
+				
+				{
+					SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting <DepthOfField> ().focusDistance.value = 
+					Mathf.SmoothStep (
+						currentdof, 
+						Mathf.Clamp (targetDofDistance, 0, maxDofDistance), 
+						Time.deltaTime * dofSmoothingOut
+					);
+				}
 			}
 
 			#if UNITY_EDITOR
 			Debug.DrawRay (Camera.main.transform.position, Camera.main.transform.forward, Color.blue);
-			Debug.DrawLine (Camera.main.transform.position, hit.point, Color.gray);
+			//Debug.DrawLine (Camera.main.transform.position, hit.point, Color.gray);
 			#endif
 		}
 

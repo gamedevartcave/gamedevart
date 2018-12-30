@@ -13,13 +13,13 @@ namespace CityBashers
 		void Awake ()
 		{
 			Instance = this;
-			DontDestroyOnLoad (gameObject);
+			//DontDestroyOnLoad (gameObject);
 		}
 
 		void Start ()
 		{
-			LoadingMissionText.text = "";
-			LoadingMissionText.gameObject.SetActive (false);
+			//LoadingMissionText.text = "";
+			//LoadingMissionText.gameObject.SetActive (false);
 		}
 
 		void OnApplicationQuit ()

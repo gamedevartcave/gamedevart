@@ -90,8 +90,13 @@ namespace UnityEngine.UI
             Set(m_IsOn, false);
             PlayEffect(toggleTransition == ToggleTransition.None);
 
-            var prefabType = UnityEditor.PrefabUtility.GetPrefabType(this);
-            if (prefabType != UnityEditor.PrefabType.Prefab && !Application.isPlaying)
+			//var prefabType = UnityEditor.PrefabUtility.GetPrefabType(this);
+
+			var prefabType = UnityEditor.PrefabUtility.GetPrefabAssetType (this);
+
+			if (//prefabType != UnityEditor.PrefabType.Prefab && 
+				prefabType == UnityEditor.PrefabAssetType.NotAPrefab && 
+				!Application.isPlaying)
                 CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
         }
 

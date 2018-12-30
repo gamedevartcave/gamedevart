@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
@@ -17,6 +18,8 @@ namespace CityBashers
 		public Rigidbody playerRb;
 		public Animator PlayerUI;
 		public Transform startingPoint;
+
+		//public InputMaster controls;
 
 		[Header ("Health")]
 		[ReadOnlyAttribute] public bool lostAllHealth;
@@ -179,8 +182,6 @@ namespace CityBashers
 
 			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = -0.005f * HealthSlider.value + 0.5f;
 			postProcessUIVolume.profile.GetSetting <MotionBlur> ().shutterAngle.value = -3.6f * HealthSlider.value + 360;
-			//SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().saturation.value = 
-			//	HealthSlider.value - 100;
 
 			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerGreenOutGreenIn.value =
 				Mathf.Clamp (3 * HealthSlider.value, 0, 100);

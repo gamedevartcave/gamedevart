@@ -88,6 +88,7 @@ namespace InControl
 			"InControl.NexusPlayerWinProfile",
 			"InControl.NVidiaShield2016AndroidProfile",
 			"InControl.NVidiaShield2017AndroidProfile",
+			"InControl.NvidiaShieldRemoteAndroidProfile",
 			"InControl.NVidiaShieldWin10Profile",
 			"InControl.NVidiaShieldWinProfile",
 			"InControl.NykoPlayPadProAmazonProfile",
