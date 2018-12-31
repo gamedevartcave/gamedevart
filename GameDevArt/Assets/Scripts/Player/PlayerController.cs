@@ -181,6 +181,7 @@ namespace CityBashers
 		public float DodgeTimeDuration;
 		public float dodgeTimeScale = 0.25f;
 		public float dodgeSpeedupFactor = 20;
+		public int dodgeMagicCost = 10;
 		public UnityEvent OnDodgeBegan;
 		public UnityEvent OnDodgeEnded;
 		public LayerMask dodgeLayerMask;
@@ -440,13 +441,9 @@ namespace CityBashers
 
 		void HandleGroundedMovement (bool jump)
 		{
-			// check whether conditions are right to allow a jump:
-			if (jump == true
-				//&& 
-				//playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Grounded")
-			)
+			// Check whether conditions are right to allow a jump.
+			if (jump == true)
 			{
-				// jump!
 				playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
 				isGrounded = false;
 				playerAnim.applyRootMotion = false;
@@ -456,50 +453,58 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Applies extra turn rotation when turning.
+		/// </summary>
 		void ApplyExtraTurnRotation ()
 		{
 			// Help the character turn faster (this is in addition to root rotation in the animation).
-			float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
+			float turnSpeed = Mathf.Lerp (stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
 			transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
 		}
 
+		/// <summary>
+		/// Essential for movement.
+		/// </summary>
 		public void OnAnimatorMove ()
 		{
-			// we implement this function to override the default root motion.
-			// this allows us to modify the positional speed before it's applied.
+			// Overrides the default root motion.
+			// Allows us to modify the positional speed before it's applied.
 			if (isGrounded == true && Time.deltaTime > 0)
 			{
 				Vector3 v = (playerAnim.deltaPosition * moveSpeedMultiplier) / Time.deltaTime;
 
-				// we preserve the existing y part of the current velocity.
+				// Preserve the existing y part of the current velocity.
 				v.y = playerRb.velocity.y;
 				playerRb.velocity = v;
 			}
 		}
 
+		/// <summary>
+		/// Checks the current ground status.
+		/// </summary>
 		void CheckGroundStatus ()
 		{
 			RaycastHit hitInfo;
 
-			#if UNITY_EDITOR
-			// helper to visualise the ground check ray in the scene view
+#if UNITY_EDITOR
 			Debug.DrawLine (
 				transform.position + (Vector3.up * 0.1f), 
 				transform.position + (Vector3.up * 0.1f) + (Vector3.down * groundCheckDistance));
-			#endif
+#endif
 
 			// 0.1f is a small offset to start the ray from inside the character
 			// it is also good to note that the transform position in the sample assets is at the base of the character
 			if (Physics.Raycast (transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, groundCheckDistance))
 			{
-				//groundNormal = hitInfo.normal;
-				groundNormal = Vector3.up;
+				//groundNormal = hitInfo.normal; // For slope detection.
+				groundNormal = Vector3.up; // We don't need slope detection.
 
 				// Get grounded.
 				if (isGrounded == false)
 				{
 					isGrounded = true;
-					playerRb.velocity = Vector3.zero;
+					//playerRb.velocity = Vector3.zero;
 
 					/*
 					playerRb.velocity = new Vector3 (
@@ -599,6 +604,8 @@ namespace CityBashers
 					playerAnim.SetFloat ("DodgeDir", playerActions.Dodge.Value);
 					playerAnim.SetTrigger ("Dodge");
 					playerAnim.SetBool ("Dodging", true);
+					magic -= dodgeMagicCost;
+					PlayerUI.SetTrigger ("Show");
 
 					moveMultiplier *= dodgeSpeedupFactor;
 					animSpeedMultiplier *= dodgeSpeedupFactor;

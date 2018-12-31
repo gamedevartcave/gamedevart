@@ -1196,7 +1196,7 @@ GameObject:
   - component: {fileID: 42246229}
   - component: {fileID: 42246228}
   m_Layer: 0
-  m_Name: Cube (17)
+  m_Name: Scenery_Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1661,7 +1661,7 @@ GameObject:
   - component: {fileID: 70856530}
   - component: {fileID: 70856529}
   m_Layer: 9
-  m_Name: Cube (42)
+  m_Name: Road
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18451,7 +18451,7 @@ GameObject:
   - component: {fileID: 252342798}
   - component: {fileID: 252342797}
   m_Layer: 9
-  m_Name: Cube
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20210,7 +20210,7 @@ GameObject:
   - component: {fileID: 331791523}
   - component: {fileID: 331791522}
   m_Layer: 9
-  m_Name: Cube (42)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29317,7 +29317,7 @@ GameObject:
   - component: {fileID: 515297109}
   - component: {fileID: 515297108}
   m_Layer: 9
-  m_Name: Cube (16)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30070,7 +30070,7 @@ GameObject:
   - component: {fileID: 542518361}
   - component: {fileID: 542518360}
   m_Layer: 9
-  m_Name: Cube (45)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30273,7 +30273,7 @@ GameObject:
   - component: {fileID: 559205845}
   - component: {fileID: 559205844}
   m_Layer: 9
-  m_Name: Cube (31)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36433,7 +36433,7 @@ GameObject:
   - component: {fileID: 595066186}
   - component: {fileID: 595066185}
   m_Layer: 9
-  m_Name: Cube (29)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38015,7 +38015,7 @@ GameObject:
   - component: {fileID: 658563402}
   - component: {fileID: 658563401}
   m_Layer: 9
-  m_Name: Cube (44)
+  m_Name: Road
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43576,7 +43576,7 @@ GameObject:
   - component: {fileID: 680717083}
   - component: {fileID: 680717082}
   m_Layer: 9
-  m_Name: Cube (10)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44166,7 +44166,7 @@ GameObject:
   - component: {fileID: 697165696}
   - component: {fileID: 697165695}
   m_Layer: 9
-  m_Name: Cube (14)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44826,7 +44826,7 @@ GameObject:
   - component: {fileID: 725009025}
   - component: {fileID: 725009024}
   m_Layer: 9
-  m_Name: Cube (34)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67113,7 +67113,7 @@ GameObject:
   - component: {fileID: 875789143}
   - component: {fileID: 875789142}
   m_Layer: 9
-  m_Name: Cube (46)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67517,7 +67517,7 @@ GameObject:
   - component: {fileID: 888065261}
   - component: {fileID: 888065260}
   m_Layer: 9
-  m_Name: Cube (4)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78904,7 +78904,7 @@ GameObject:
   - component: {fileID: 981157581}
   - component: {fileID: 981157580}
   m_Layer: 9
-  m_Name: Cube (11)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79826,7 +79826,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: GAME OVER
+  m_text: YOU DIED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -79835,8 +79835,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -79895,7 +79895,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1009080532}
-    characterCount: 9
+    characterCount: 8
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
@@ -80140,7 +80140,7 @@ GameObject:
   - component: {fileID: 1015060930}
   - component: {fileID: 1015060929}
   m_Layer: 9
-  m_Name: Cube (43)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80466,7 +80466,7 @@ GameObject:
   - component: {fileID: 1053731381}
   - component: {fileID: 1053731380}
   m_Layer: 9
-  m_Name: Cube (2)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84665,7 +84665,7 @@ GameObject:
   - component: {fileID: 1198234724}
   - component: {fileID: 1198234723}
   m_Layer: 9
-  m_Name: Cube (15)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86996,7 +86996,7 @@ GameObject:
   - component: {fileID: 1294482981}
   - component: {fileID: 1294482980}
   m_Layer: 9
-  m_Name: Cube (5)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87087,7 +87087,7 @@ GameObject:
   - component: {fileID: 1297502232}
   - component: {fileID: 1297502231}
   m_Layer: 9
-  m_Name: Cube (37)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88111,7 +88111,7 @@ GameObject:
   - component: {fileID: 1341571608}
   - component: {fileID: 1341571607}
   m_Layer: 9
-  m_Name: Cube (39)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89101,7 +89101,7 @@ GameObject:
   - component: {fileID: 1414218887}
   - component: {fileID: 1414218886}
   m_Layer: 9
-  m_Name: Cube (13)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89516,7 +89516,7 @@ GameObject:
   - component: {fileID: 1449751610}
   - component: {fileID: 1449751609}
   m_Layer: 9
-  m_Name: Cube (25)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89681,7 +89681,7 @@ GameObject:
   - component: {fileID: 1458854191}
   - component: {fileID: 1458854190}
   m_Layer: 9
-  m_Name: Cube (33)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98904,7 +98904,7 @@ GameObject:
   - component: {fileID: 1693069174}
   - component: {fileID: 1693069173}
   m_Layer: 9
-  m_Name: Cube (27)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105035,7 +105035,7 @@ GameObject:
   - component: {fileID: 1728605096}
   - component: {fileID: 1728605095}
   m_Layer: 9
-  m_Name: Cube (3)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118091,7 +118091,7 @@ GameObject:
   - component: {fileID: 1899210375}
   - component: {fileID: 1899210374}
   m_Layer: 9
-  m_Name: Cube (36)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118182,7 +118182,7 @@ GameObject:
   - component: {fileID: 1900261628}
   - component: {fileID: 1900261627}
   m_Layer: 9
-  m_Name: Cube (1)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119003,7 +119003,7 @@ GameObject:
   - component: {fileID: 1923730976}
   - component: {fileID: 1923730975}
   m_Layer: 9
-  m_Name: Cube (40)
+  m_Name: Building
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135338,7 +135338,7 @@ GameObject:
   - component: {fileID: 2059571994}
   - component: {fileID: 2059571993}
   m_Layer: 9
-  m_Name: Cube (12)
+  m_Name: Scenery_Main
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137437,7 +137437,7 @@ GameObject:
   - component: {fileID: 2124535230}
   - component: {fileID: 2124535229}
   m_Layer: 9
-  m_Name: Cube (43)
+  m_Name: Road
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
