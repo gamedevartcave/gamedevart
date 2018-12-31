@@ -2789,24 +2789,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capsuleHeight: 0
+  capsuleCenter: {x: 0, y: 0, z: 0}
   playerCol: {fileID: 136886608646034890}
-  playerRb: {fileID: 54921349990239352}
   PlayerUI: {fileID: 0}
   startingPoint: {fileID: 0}
-  m_MovingTurnSpeed: 720
-  m_StationaryTurnSpeed: 360
-  m_JumpPower: 16
-  m_JumpPower_Forward: 2
-  m_DoubleJumpPower: 1.5
-  m_AirControl: 5
-  m_GravityMultiplier: 2
-  m_RunCycleLegOffset: 0.2
-  m_MoveSpeedMultiplier: 1
-  m_AnimSpeedMultiplier: 1
-  m_GroundCheckDistance: 0.3
-  terminalVelocity: 10
-  m_Animator: {fileID: 95884795619259730}
+  move: {x: 0, y: 0, z: 0}
+  movingTurnSpeed: 360
+  stationaryTurnSpeed: 180
   moveMultiplier: 0
+  runCycleLegOffset: 0.2
+  moveSpeedMultiplier: 1
+  animSpeedMultiplier: 1
   lostAllHealth: 0
   health: 0
   StartHealth: 100
@@ -2908,12 +2902,14 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   postProcessUIVolume: {fileID: 0}
+  healthUIVisibilityThreshold: 50
   magic: 0
   StartingMagic: 50
   MaximumMagic: 100
   MagicSlider: {fileID: 0}
   MagicSlider_Smoothed: {fileID: 0}
   magicSliderSmoothing: 1
+  magicUIVisibilityThreshold: 50
   normalFov: 65
   aimFov: 45
   aimSmoothing: 10
@@ -2925,7 +2921,7 @@ MonoBehaviour:
   camRigSimpleFollowRotNormal: {x: 5, y: 15, z: 0}
   camRigSimpleFollowRotAiming: {x: 60, y: 60, z: 0}
   mouseLook: {fileID: 0}
-  m_Cam: {fileID: 0}
+  cam: {fileID: 0}
   CrosshairAnim: {fileID: 0}
   CamFollow: {fileID: 0}
   cameraOffset: {x: -0.25, y: 0.25}
@@ -3023,16 +3019,21 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  jumpPower: 12
+  jumpPower_Forward: 2
+  airControl: 5
+  gravityMultiplier: 2
   jumpAudioSource: {fileID: 82895562210044388}
   jumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
-  m_DoubleJump: 0
+  doubleJump: 0
   doubleJumped: 0
   OnJump:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  doubleJumpPower: 1.5
   doubleJumpAudioSource: {fileID: 82122157416134476}
   doubleJumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
@@ -3041,6 +3042,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  groundCheckDistance: 0.1
+  terminalVelocity: 10
+  fallMult: 2.5
+  isGrounded: 0
   landingAudioSource: {fileID: 82234244739353980}
   landingClips:
   - {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}

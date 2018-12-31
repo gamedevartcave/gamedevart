@@ -17,42 +17,37 @@ namespace CityBashers
 		public static PlayerController instance { get; private set; }
 
 		[Header ("General")]
-		public Collider playerCol;
-		public Rigidbody playerRb;
+		public float capsuleHeight;
+		public Vector3 capsuleCenter;
+		[HideInInspector] public CapsuleCollider playerCol;
+		private Rigidbody playerRb;
+		private Animator playerAnim;
 		public Animator PlayerUI;
 		public Transform startingPoint;
-		private Vector3 m_Move; // the world-relative desired move direction, calculated from camForward and user input.
 
-		[SerializeField] public float m_MovingTurnSpeed = 360;
-		[SerializeField] public float m_StationaryTurnSpeed = 180;
-		[SerializeField] public float m_JumpPower = 12f;
-		[SerializeField] float m_JumpPower_Forward = 2f;
-		[SerializeField] public float m_DoubleJumpPower = 1.5f;
-		[SerializeField] float m_AirControl = 5;
-		[Range(1f, 10f)]
-		[SerializeField] float m_GravityMultiplier = 2f;
-		[SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
-		[SerializeField] float m_MoveSpeedMultiplier = 1f;
-		[SerializeField] public float m_AnimSpeedMultiplier = 1f;
-		[SerializeField] float m_GroundCheckDistance = 0.1f;
-		public float terminalVelocity = 10;
+		[Header ("Movement")]
+		[ReadOnlyAttribute]
+		public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
+		private float hInput;
+		private float vInput;
 
-		Rigidbody m_Rigidbody;
-		public Animator m_Animator;
-		bool m_IsGrounded;
-		float m_OrigGroundCheckDistance;
-		const float k_Half = 0.5f;
-		float m_TurnAmount;
-		float m_ForwardAmount;
+		public float movingTurnSpeed = 360;
+		public float stationaryTurnSpeed = 180;
 		public float moveMultiplier;
-		Vector3 m_GroundNormal;
-		float m_CapsuleHeight;
-		Vector3 m_CapsuleCenter;
-		CapsuleCollider m_Capsule;
-		bool m_Crouching;
+
+		public float runCycleLegOffset = 0.2f; // Specific to the character in sample assets, will need to be modified to work with others
+		public float moveSpeedMultiplier = 1f;
+		public float animSpeedMultiplier = 1f;
+
+		private float origGroundCheckDistance;
+		const float k_Half = 0.5f;
+		private float turnAmount;
+		private float forwardAmount;
+		private Vector3 groundNormal;
 
 		[Header ("Health")]
-		[ReadOnlyAttribute] public bool lostAllHealth;
+		[ReadOnlyAttribute] 
+		public bool lostAllHealth;
 		public int health;
 		public int StartHealth = 100;
 		public int MaximumHealth = 100;
@@ -61,6 +56,7 @@ namespace CityBashers
 		public float healthSliderSmoothing;
 		public UnityEvent OnLostAllHealth;
 		public PostProcessVolume postProcessUIVolume;
+		public float healthUIVisibilityThreshold = 50;
 
 		[Header ("Magic")]
 		public int magic;
@@ -69,6 +65,7 @@ namespace CityBashers
 		public Slider MagicSlider;
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
+		public float magicUIVisibilityThreshold = 50;
 
 		[Header ("Aiming")]
 		public float normalFov = 65;
@@ -84,8 +81,8 @@ namespace CityBashers
 		public Vector3 camRigSimpleFollowRotNormal = new Vector3 (5, 15, 0);
 		public Vector3 camRigSimpleFollowRotAiming;
 		public MouseLook mouseLook;
-		public Camera m_Cam; // A reference to the main camera in the scenes transform
-		private Vector3 m_CamForward; // The current forward direction of the camera
+		public Camera cam; // A reference to the main camera in the scenes transform
+		private Vector3 camForwardDirection; // The current forward direction of the camera
 		public Animator CrosshairAnim;
 
 		[Header ("Camera offset")]
@@ -145,21 +142,31 @@ namespace CityBashers
 		public UnityEvent OnFootstep;
 
 		[Header ("Jumping")]
+		public float jumpPower = 12f;
+		public float jumpPower_Forward = 2f;
+		[Space (10)]
+		public float airControl = 5;
+		public float gravityMultiplier = 2f;
 		public AudioSource jumpAudioSource;
 		public AudioClip[] jumpClips;
 		private int jumpSoundIndex;
-		private bool m_Jump; // Jump state.
-		[HideInInspector] public bool m_DoubleJump; // Double jump input state.
-		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state.m_Rigidbody.velocity.z.
+		private bool jump; // Jump state.
+		[HideInInspector] public bool doubleJump; // Double jump input state.
+		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state playerRb.velocity.z
 		public UnityEvent OnJump;
 
 		[Header ("Double jumping")]
+		public float doubleJumpPower = 1.5f;
 		public AudioSource doubleJumpAudioSource;
 		public AudioClip[] doubleJumpClips;
 		private int doubleJumpSoundIndex;
 		public UnityEvent OnDoubleJump;
 
 		[Header ("Landing")]
+		public float groundCheckDistance = 0.1f;
+		public float terminalVelocity = 10;
+		public float fallMult = 2.5f;
+		[ReadOnlyAttribute] public bool isGrounded;
 		public AudioSource landingAudioSource;
 		public AudioClip[] landingClips;
 		private int landingSoundIndex;
@@ -176,6 +183,7 @@ namespace CityBashers
 		public float dodgeSpeedupFactor = 20;
 		public UnityEvent OnDodgeBegan;
 		public UnityEvent OnDodgeEnded;
+		public LayerMask dodgeLayerMask;
 
 		[Header ("Hit stun")]
 		[ReadOnlyAttribute] public bool isInHitStun;
@@ -203,51 +211,58 @@ namespace CityBashers
 
 		void Start ()
 		{
-			m_Animator = GetComponent<Animator>();
-			m_Rigidbody = GetComponent<Rigidbody>();
-			m_Capsule = GetComponent<CapsuleCollider>();
-			m_CapsuleHeight = m_Capsule.height;
-			m_CapsuleCenter = m_Capsule.center;
+			// Find some components.
+			playerAnim = GetComponent<Animator>();
+			playerRb = GetComponent<Rigidbody>();
+			playerCol = GetComponent<CapsuleCollider>();
+			capsuleHeight = playerCol.height;
+			capsuleCenter = playerCol.center;
 
-			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-			m_OrigGroundCheckDistance = m_GroundCheckDistance;
+			// Set Rigidbody constraints.
+			playerRb.constraints = 
+				RigidbodyConstraints.FreezeRotationX | 
+				RigidbodyConstraints.FreezeRotationY | 
+				RigidbodyConstraints.FreezeRotationZ;
+			
+			origGroundCheckDistance = groundCheckDistance; // Log original ground check distance.
 
-			// get the transform of the main camera
-			if (Camera.main != null)
+			// Get the transform of the main camera
+			if (Camera.main != null) cam = Camera.main;
+			else // Camera was not found.
 			{
-				m_Cam = Camera.main;
-			}
-
-			else
-
-			{
-				Debug.LogWarning(
-					"Warning: no main camera found. " + 
+				Debug.LogWarning("Warning: no main camera found.\n" +
 					"Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.", 
-					gameObject
-				);
+					gameObject);
 			}
 
+			// Set start health attributes.
 			health = StartHealth;
 			HealthSlider.value = health;
 			HealthSlider_Smoothed.value = health;
 
+			// Set start magic attributes.
 			magic = StartingMagic;
 			MagicSlider.value = magic;
 			MagicSlider_Smoothed.value = magic;
 
+			// Add listeners for events.
 			OnFootstep.AddListener (OnFootStep);
 			OnJump.AddListener (OnJumpBegan);
 			OnDoubleJump.AddListener (OnDoubleJumpBegan);
 			OnLand.AddListener (OnLanded);
 
+			// Add yield times here.
 			hitStunYield = new WaitForSeconds (HitStunRenderToggleWait);
 
+			// Add quick reference for InControl player actions.
 			playerActions = InControlActions.instance.playerActions;
 		}
 
 		void Update ()
 		{
+			ReadMovementInput ();
+
+			// Actions.
 			JumpAction ();
 			DodgeAction ();
 			AimAction ();
@@ -256,6 +271,8 @@ namespace CityBashers
 			UseAction ();
 			CameraChangeAction ();
 			AbilityAction ();
+
+			// UI updates.
 			CheckHealthSliders ();
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
@@ -263,323 +280,269 @@ namespace CityBashers
 
 		void FixedUpdate ()
 		{
-			float fallMult = 2.5f;
-
-			// If we are falling.
-			if (m_Rigidbody.velocity.y < 0)
-			{
-				m_Rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMult - 1) * Time.deltaTime;
-			}
-			else if (m_Rigidbody.velocity.y > 0 && InControlActions.instance.playerActions.Jump.IsPressed == false)
-			{
-				m_Rigidbody.velocity += Vector3.up * Physics.gravity.y * (m_JumpPower - 1) * Time.deltaTime;
-			}
-
-			m_Rigidbody.velocity = Vector3.ClampMagnitude (m_Rigidbody.velocity, terminalVelocity);
-
-			float h = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.x;
-			float v = playerActions.Shoot.Value > 0.5f ? 0 : playerActions.Move.Value.y;
-
-			//Debug.Log (playerActions.Move.Value);
-
-			//bool crouch = playerActions.Crouch.IsPressed;
-
-			// calculate move direction to pass to character
-			if (m_Cam != null)
-			{
-				// Using self-relative controls.
-				// calculate camera relative direction to move:
-				m_CamForward = Vector3.Scale (m_Cam.transform.forward, new Vector3 (1, 0, 1)).normalized;
-				m_Move = v * m_CamForward + h * m_Cam.transform.right;
-			}
-
-			else // calculate move direction in world space
-
-			{
-				// we use world-relative directions in the case of no main camera
-				m_Move = v*Vector3.forward + h*Vector3.right;
-			}
-
-			//#if !MOBILE_INPUT
-			// walk speed multiplier
-			//if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
-			//#endif
-
-			// pass all parameters to the character control script
-			//Move(m_Move, crouch, m_Jump, m_DoubleJump);
-			Move (m_Move, false, m_Jump, m_DoubleJump);
-			m_Jump = false;
-			m_DoubleJump = false;
+			GetBetterJumpVelocity ();
+			ClampVelocity (playerRb, terminalVelocity);
+			CalculateRelativeMoveDirection ();
+	
+			// Pass all parameters to the character control script.
+			Move (move, false, jump, doubleJump);
+			jump = false;
+			doubleJump = false;
 		}
 
 		#region Movement
 
-		public void Move(Vector3 move, bool crouch, bool jump, bool doubleJump)
+		void ReadMovementInput ()
 		{
-			// convert the world relative moveInput vector into a local-relative
-			// turn amount and forward amount required to head in the desired direction.
-			if (move.magnitude > 1f)
-			{
-				move.Normalize ();
-			}
-
-			move = transform.InverseTransformDirection(move);
-			CheckGroundStatus();
-			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-			m_TurnAmount = Mathf.Atan2(move.x, move.z);
-			m_ForwardAmount = move.z;
-
-			ApplyExtraTurnRotation();
-
-			// control and velocity handling is different when grounded and airborne:
-			if (m_IsGrounded)
-			{
-				HandleGroundedMovement(false, jump);
-
-				if (PlayerController.instance.doubleJumped)
-				{
-					PlayerController.instance.doubleJumped = false;
-				}
-			}
-
-			else
-
-			{
-				HandleAirborneMovement(doubleJump);
-			}
-
-			//ScaleCapsuleForCrouching(crouch);
-			PreventStandingInLowHeadroom();
-
-			// send input and other state parameters to the animator
-			UpdateAnimator(move);
+			// Read input shorthand.
+			hInput = 
+				//playerActions.Shoot.Value > 0.5f ? 0 : 
+				playerActions.Move.Value.x;
+			vInput = 
+				//playerActions.Shoot.Value > 0.5f ? 0 : 
+				playerActions.Move.Value.y;
 		}
 
-		void ScaleCapsuleForCrouching(bool crouch)
+		// Calculate move direction to pass to character.
+		void CalculateRelativeMoveDirection ()
 		{
-			if (m_IsGrounded && crouch)
+			// Using self-relative controls.
+			// Calculate camera relative direction to move.
+			if (cam != null)
 			{
-				if (m_Crouching) return;
-				m_Capsule.height = 0.5f * m_Capsule.height;
-				m_Capsule.center = 0.5f * m_Capsule.center;
-				m_Crouching = true;
+				camForwardDirection = Vector3.Scale (cam.transform.forward, new Vector3 (1, 0, 1)).normalized;
+				move = vInput * camForwardDirection + hInput * cam.transform.right;
 			}
 
-			else
+			else // Calculate move direction in world space
 
 			{
-				Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
-				float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-
-				if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-				{
-					m_Crouching = true;
-					return;
-				}
-
-				m_Capsule.height = m_CapsuleHeight;
-				m_Capsule.center = m_CapsuleCenter;
-				m_Crouching = false;
+				// Use world-relative directions in the case of no main camera.
+				move = vInput * Vector3.forward + hInput * Vector3.right;
 			}
 		}
 
-		void PreventStandingInLowHeadroom()
+		public void Move (Vector3 move, bool crouch, bool jump, bool doubleJump)
 		{
-			// prevent standing up in crouch-only zones
-			if (!m_Crouching)
-			{
-				Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
-				float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
+			// Vonvert the world relative moveInput vector into a local-relative
+			// Turn amount and forward amount required to head in the desired direction.
+			if (move.magnitude > 1f) move.Normalize ();
+			move = transform.InverseTransformDirection (move);
+			move = Vector3.ProjectOnPlane (move, groundNormal);
 
-				if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-				{
-					m_Crouching = true;
-				}
+			// Update turning.
+			turnAmount = Mathf.Atan2 (move.x, move.z);
+			ApplyExtraTurnRotation ();
+			forwardAmount = move.z;
+	
+			// Check ground status.
+			CheckGroundStatus ();
+
+			// Control and velocity handling is different when grounded and airborne.
+			if (isGrounded == true)
+			{
+				HandleGroundedMovement (jump);
+				if (doubleJumped == true) doubleJumped = false;
 			}
+
+			else // Is airborne.
+
+			{
+				HandleAirborneMovement (doubleJump);
+			}
+
+			// Send input and other state parameters to the animator
+			UpdateAnimator (move);
 		}
 
-		void UpdateAnimator(Vector3 move)
+		/// <summary>
+		/// Clamps the velocity on a given Rigidbody.
+		/// </summary>
+		/// <param name="rb">Rb.</param>
+		/// <param name="_terminalVelocity">Terminal velocity.</param>
+		void ClampVelocity (Rigidbody rb, float _terminalVelocity)
 		{
-			// update the animator parameters
-			m_Animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
-			m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
-			//m_Animator.SetBool("Crouch", m_Crouching);
-			m_Animator.SetBool("OnGround", m_IsGrounded);
+			rb.velocity = Vector3.ClampMagnitude (rb.velocity, _terminalVelocity);
+		}
 
-			if (m_IsGrounded == false)
-			{
-				m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
-			}
+		void UpdateAnimator (Vector3 move)
+		{
+			// Update the animator parameters.
+			playerAnim.SetFloat ("Forward", forwardAmount, 0.1f, Time.deltaTime);
+			playerAnim.SetFloat ("Turn", turnAmount, 0.1f, Time.deltaTime);
 
-			// calculate which leg is behind, so as to leave that leg trailing in the jump animation
+			// Update grounded state.
+			playerAnim.SetBool ("OnGround", isGrounded);
+			if (isGrounded == false) playerAnim.SetFloat ("Jump", playerRb.velocity.y);
+
+			// Calculate which leg is behind, so as to leave that leg trailing in the jump animation.
 			// (This code is reliant on the specific run cycle offset in our animations,
 			// and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
-			float runCycle = Mathf.Repeat(
-				m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
-			float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
+			float runCycle = Mathf.Repeat (
+				playerAnim.GetCurrentAnimatorStateInfo (0).normalizedTime + runCycleLegOffset, 1);
+			float jumpLeg = (runCycle < k_Half ? 1 : -1) * forwardAmount;
 
-			if (m_IsGrounded == true)
+			if (isGrounded == true)
 			{
-				m_Animator.SetFloat ("JumpLeg", jumpLeg);
-				m_Animator.SetFloat ("Jump", 0);
+				playerAnim.SetFloat ("JumpLeg", jumpLeg);
+				playerAnim.SetFloat ("Jump", 0);
 			}
 
-			// the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
-			// which affects the movement speed because of the root motion.
-			if (m_Animator.GetBool ("Dodging") == false)
+			// The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
+			// Which affects the movement speed because of the root motion.
+			if (playerAnim.GetBool ("Dodging") == false)
 			{
-				if (m_IsGrounded && move.magnitude > 0)
+				if (isGrounded == true && move.magnitude > 0)
 				{
-					m_Animator.speed = m_AnimSpeedMultiplier;
+					playerAnim.speed = animSpeedMultiplier;
 				}
 
 				else
 
 				{
-					// don't use that while airborne
-					m_Animator.speed = 1;
+					// Don't use that while airborne.
+					playerAnim.speed = 1;
 				}
 			}
 		}
 
-		void HandleAirborneMovement(bool doubleJump)
+		void HandleAirborneMovement (bool doubleJump)
 		{
-			// apply extra gravity from multiplier:
-			Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-			m_Rigidbody.AddForce (extraGravityForce);
+			// Apply extra gravity from multiplier:
+			Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
+			playerRb.AddForce (extraGravityForce);
 
-			float airControlForce = m_AirControl * InControlActions.instance.playerActions.Move.Value.magnitude;
+			// Handle air control.
+			float airControlForce = airControl * playerActions.Move.Value.magnitude;
+			playerRb.AddRelativeForce (
+				new Vector3 (0, 0, Mathf.Abs (airControlForce)),
+				ForceMode.VelocityChange);
 
-			m_Rigidbody.AddRelativeForce (new Vector3 (0, 0, Mathf.Abs (airControlForce * 0.05f)),
-				ForceMode.VelocityChange
-			);
-
-			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+			// Check ground distance based on velocity.
+			groundCheckDistance = playerRb.velocity.y < 0 ? origGroundCheckDistance : 0.01f;
 
 			// check whether conditions are right to allow a double jump:
-			if (doubleJump && m_IsGrounded == false)
+			if (doubleJump == true && isGrounded == false)
 			{
 				// Override vertical velocity.
-				m_Rigidbody.velocity = new Vector3 (
-					m_Rigidbody.velocity.x,
-					m_DoubleJumpPower,
-					m_Rigidbody.velocity.z
-				);
+				playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
 				// Add forward force.
-				m_Rigidbody.AddRelativeForce (
-					0, 
-					0, 
-					m_JumpPower_Forward, 
-					ForceMode.VelocityChange
-				);
+				playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-				m_IsGrounded = false;
-				m_Animator.applyRootMotion = false;
-				m_GroundCheckDistance = 0.1f;
-				PlayerController.instance.OnDoubleJump.Invoke ();
+				isGrounded = false;
+				playerAnim.applyRootMotion = false;
+				groundCheckDistance = 0.1f;
+
+				OnDoubleJump.Invoke ();
 			}
 		}
 
-		void HandleGroundedMovement(bool crouch, bool jump)
+		void HandleGroundedMovement (bool jump)
 		{
 			// check whether conditions are right to allow a jump:
-			if (jump 
+			if (jump == true
 				//&& 
-				//!crouch && 
-				//m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded")
+				//playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Grounded")
 			)
 			{
 				// jump!
-				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
-				m_IsGrounded = false;
-				m_Animator.applyRootMotion = false;
-				//m_GroundCheckDistance = 0.1f;
-				PlayerController.instance.OnJump.Invoke ();
+				playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+				isGrounded = false;
+				playerAnim.applyRootMotion = false;
+				//groundCheckDistance = 0.1f;
+
+				OnJump.Invoke ();
 			}
 		}
 
-		void ApplyExtraTurnRotation()
+		void ApplyExtraTurnRotation ()
 		{
-			// help the character turn faster (this is in addition to root rotation in the animation)
-			float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
-			transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
+			// Help the character turn faster (this is in addition to root rotation in the animation).
+			float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
+			transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
 		}
 
-		public void OnAnimatorMove()
+		public void OnAnimatorMove ()
 		{
 			// we implement this function to override the default root motion.
 			// this allows us to modify the positional speed before it's applied.
-			if (m_IsGrounded && Time.deltaTime > 0)
+			if (isGrounded == true && Time.deltaTime > 0)
 			{
-				Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
+				Vector3 v = (playerAnim.deltaPosition * moveSpeedMultiplier) / Time.deltaTime;
 
 				// we preserve the existing y part of the current velocity.
-				v.y = m_Rigidbody.velocity.y;
-				m_Rigidbody.velocity = v;
+				v.y = playerRb.velocity.y;
+				playerRb.velocity = v;
 			}
 		}
 
-		void CheckGroundStatus()
+		void CheckGroundStatus ()
 		{
 			RaycastHit hitInfo;
+
 			#if UNITY_EDITOR
 			// helper to visualise the ground check ray in the scene view
-			Debug.DrawLine (transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
+			Debug.DrawLine (
+				transform.position + (Vector3.up * 0.1f), 
+				transform.position + (Vector3.up * 0.1f) + (Vector3.down * groundCheckDistance));
 			#endif
+
 			// 0.1f is a small offset to start the ray from inside the character
 			// it is also good to note that the transform position in the sample assets is at the base of the character
-			if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
+			if (Physics.Raycast (transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, groundCheckDistance))
 			{
-				m_GroundNormal = hitInfo.normal;
+				//groundNormal = hitInfo.normal;
+				groundNormal = Vector3.up;
 
 				// Get grounded.
-				if (m_IsGrounded == false)
+				if (isGrounded == false)
 				{
-					m_IsGrounded = true;
-					//m_Rigidbody.velocity = Vector3.zero;
-					m_Rigidbody.velocity = new Vector3 (
-						0.05f * m_Rigidbody.velocity.x, 
-						m_Rigidbody.velocity.y, 
-						0.05f * m_Rigidbody.velocity.z
+					isGrounded = true;
+					playerRb.velocity = Vector3.zero;
+
+					/*
+					playerRb.velocity = new Vector3 (
+						0.05f * playerRb.velocity.x, 
+						playerRb.velocity.y, 
+						0.05f * playerRb.velocity.z
 					);
+					*/
 
-					PlayerController.instance.m_DoubleJump = false;
-					PlayerController.instance.doubleJumped = false;
+					doubleJump = false;
+					doubleJumped = false;
 
-					if (DontDestroyOnLoadInit.Instance.initialized == true)
-					{
-						PlayerController.instance.OnLand.Invoke ();
-					}
+					OnLand.Invoke ();
 
-					m_Animator.applyRootMotion = true;
+					playerAnim.applyRootMotion = true;
 				}
 			}
 
-			else // is in air.
+			else // Is in air.
 
 			{
-				m_IsGrounded = false;
-				m_GroundNormal = Vector3.up;
-				m_Animator.applyRootMotion = false;
+				isGrounded = false;
+				groundNormal = Vector3.up;
+				playerAnim.applyRootMotion = false;
 			}
 		}
 
 		#endregion
 
 		#region Actions
+		// TODO: Improve this.
 		void JumpAction ()
 		{
 			// Jumping.
-			if (!m_Jump && doubleJumped == false)
+			if (jump == false && doubleJumped == false)
 			{
-				m_Jump = playerActions.Jump.WasPressed;
+				jump = playerActions.Jump.WasPressed;
 			}
 
-			// Double jumping.
-			if (m_Jump && doubleJumped == false)
+			// Checks if we can double jump.
+			if (jump && doubleJumped == false)
 			{
-				m_DoubleJump = playerActions.Jump.WasPressed;
+				doubleJump = playerActions.Jump.WasPressed;
 
 				if (playerActions.Jump.WasPressed)
 				{
@@ -588,30 +551,69 @@ namespace CityBashers
 			}
 		}
 
+		void GetBetterJumpVelocity ()
+		{
+			// If we are falling.
+			if (playerRb.velocity.y < 0)
+			{
+				playerRb.velocity += Vector3.up * Physics.gravity.y * (fallMult - 1) * Time.deltaTime;
+			}
+
+			// If we are moving up and not holding jump.
+			else if (playerRb.velocity.y > 0 && InControlActions.instance.playerActions.Jump.IsPressed == false)
+			{
+				playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
+			}
+		}
+
 		void DodgeAction ()
 		{
 			if (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed)
 			{
+				// Bypass dodging if near scenery collider. That way we cannot pass through it.
+				if (playerActions.Move.Value.magnitude > 0)
+				{
+					if (Physics.Raycast (transform.position + new Vector3 (0, 1, 0), transform.forward, 3, dodgeLayerMask))
+					{
+						Debug.DrawRay (transform.position + new Vector3 (0, 1, 0), transform.forward * 3, Color.red, 1);
+						return;
+					}
+				} 
+
+				else // Not moving, check backwards.
+				
+				{
+					if (Physics.Raycast (transform.position + new Vector3 (0, 1, 0), -transform.forward, 3, dodgeLayerMask))
+					{
+						Debug.DrawRay (transform.position + new Vector3 (0, 1, 0), transform.forward * 3, Color.red, 1);
+						return;
+					}
+				}
+
 				// Get dodge angle.
 				// Assign to player animation.
 				if (Time.time > nextDodge)
 				{
 					isDodging = true;
-					m_Animator.SetFloat ("DodgeDir", playerActions.Dodge.Value);
-					m_Animator.SetTrigger ("Dodge");
-					m_Animator.SetBool ("Dodging", true);
+
+					playerAnim.SetFloat ("DodgeDir", playerActions.Dodge.Value);
+					playerAnim.SetTrigger ("Dodge");
+					playerAnim.SetBool ("Dodging", true);
+
 					moveMultiplier *= dodgeSpeedupFactor;
-					m_AnimSpeedMultiplier *= dodgeSpeedupFactor;
-					m_MovingTurnSpeed *= dodgeSpeedupFactor;
-					m_StationaryTurnSpeed *= dodgeSpeedupFactor;
-					m_Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+					animSpeedMultiplier *= dodgeSpeedupFactor;
+					movingTurnSpeed *= dodgeSpeedupFactor;
+					stationaryTurnSpeed *= dodgeSpeedupFactor;
+
+					playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
 
 					dodgeTimeRemain = DodgeTimeDuration;
 					TimescaleController.instance.targetTimeScale = dodgeTimeScale;
 
 					OnDodgeBegan.Invoke ();
 					nextDodge = Time.time + dodgeRate;
-					Debug.Log ("Dodged " + playerActions.Dodge.Value);
+
+					//Debug.Log ("Dodged " + playerActions.Dodge.Value);
 				}
 
 				else // Not able to dodge yet.
@@ -620,27 +622,31 @@ namespace CityBashers
 				}
 			}
 
+			// Dodge time ran out.
 			if (dodgeTimeRemain <= 0)
 			{
+				// If is dodging.
 				if (isDodging == true)
 				{
+					// Game is not paused.
 					if (GameController.instance.isPaused == false)
 					{
-						TimescaleController.instance.targetTimeScale = 1;
-						isDodging = false;
+						TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
 
-						// Reset dodging.
-						m_Animator.SetFloat ("DodgeDir", 0);
-						m_Animator.ResetTrigger ("Dodge");
-						m_Animator.SetBool ("Dodging", false);
+						// Reset dodging animation parameters.
+						playerAnim.SetFloat ("DodgeDir", 0);
+						playerAnim.ResetTrigger ("Dodge");
+						playerAnim.SetBool ("Dodging", false);
 
 						moveMultiplier /= dodgeSpeedupFactor;
-						m_AnimSpeedMultiplier /= dodgeSpeedupFactor;
-						m_MovingTurnSpeed /= dodgeSpeedupFactor;
-						m_StationaryTurnSpeed /= dodgeSpeedupFactor;
-						m_Animator.updateMode = AnimatorUpdateMode.Normal;
+						animSpeedMultiplier /= dodgeSpeedupFactor;
+						movingTurnSpeed /= dodgeSpeedupFactor;
+						stationaryTurnSpeed /= dodgeSpeedupFactor;
+
+						playerAnim.updateMode = AnimatorUpdateMode.Normal;
 
 						OnDodgeEnded.Invoke ();
+						isDodging = false;
 					}
 				}
 			} 
@@ -648,22 +654,20 @@ namespace CityBashers
 			else // There is dodge time.
 
 			{
+				// Game is not paused.
 				if (GameController.instance.isPaused == false)
 				{
+					// Decrease time left of dodging.
 					dodgeTimeRemain -= Time.unscaledDeltaTime;
-					Vector3 relativeDodgeDir = 
 
-						transform.InverseTransformDirection (
-							//Camera.main.transform.right * 
-							transform.forward * 
-							//m_Animator.GetFloat ("DodgeDir") * 
-							(playerActions.Move.Value.sqrMagnitude > 0 ? 1 : -1) * 
-							dodgeSpeed * Time.unscaledDeltaTime
-						);
+					Vector3 relativeDodgeDir = transform.InverseTransformDirection (
+						transform.forward *
+						(playerActions.Move.Value.sqrMagnitude > 0 ? 1 : -1) * 
+						dodgeSpeed * Time.unscaledDeltaTime);
 
 					transform.Translate (relativeDodgeDir, Space.Self);
 
-					m_Animator.SetBool ("Dodging", true);
+					playerAnim.SetBool ("Dodging", true);
 				}
 			}
 		}
@@ -673,42 +677,15 @@ namespace CityBashers
 			// Aiming.
 			if (playerActions.Aim.Value > 0.5f)
 			{
-				m_Cam.fieldOfView = Mathf.Lerp (
-					m_Cam.fieldOfView, 
-					PlayerController.instance.aimFov, 
-					PlayerController.instance.aimSmoothing * Time.deltaTime
-				);
-
+				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
-
-				/*
-				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairOut") == true)
-				{
-					CrosshairAnim.ResetTrigger ("Out");
-					CrosshairAnim.SetTrigger ("In");
-					//mouseLook.rotationY = 0;
-				}
-				*/
 			}
 
 			// Not aiming.
 			if (playerActions.Aim.Value <= 0.5f)
 			{
-				m_Cam.fieldOfView = Mathf.Lerp (
-					m_Cam.fieldOfView, 
-					PlayerController.instance.normalFov,
-					PlayerController.instance.aimSmoothing * Time.deltaTime
-				);
-
+				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, normalFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
-
-				/*
-				if (CrosshairAnim.GetCurrentAnimatorStateInfo (0).IsName ("CrosshairIn") == true)
-				{
-					CrosshairAnim.ResetTrigger ("In");
-					CrosshairAnim.SetTrigger ("Out");
-				}
-				*/
 			}
 		}
 
@@ -716,15 +693,12 @@ namespace CityBashers
 		{
 			if (playerActions.Shoot.Value > 0.5f)
 			{
-				if (Time.time > PlayerController.instance.nextFire && GameController.instance.isPaused == false)
+				if (Time.time > nextFire && GameController.instance.isPaused == false)
 				{
-					PlayerController.instance.transform.rotation = Quaternion.LookRotation (
-						PlayerController.instance.AimNoPitchDir, 
-						Vector3.up
-					);
+					transform.rotation = Quaternion.LookRotation (AimNoPitchDir, Vector3.up);
 
-					PlayerController.instance.Shoot ();
-					PlayerController.instance.nextFire = Time.time + PlayerController.instance.currentFireRate;
+					Shoot ();
+					nextFire = Time.time + currentFireRate;
 
 					GameController.instance.camShakeScript.shakeDuration = 1;
 					GameController.instance.camShakeScript.shakeAmount = 0.1f;
@@ -732,7 +706,7 @@ namespace CityBashers
 
 					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
 
-					Debug.Log ("Shooting from weapon " + PlayerController.instance.currentWeaponIndex);
+					Debug.Log ("Attacking from weapon " + currentWeaponIndex);
 				}
 			}
 		}
@@ -755,22 +729,23 @@ namespace CityBashers
 				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to next weapon.
-					if (PlayerController.instance.currentWeaponIndex < PlayerController.instance.Weapons.Length - 1)
+					if (currentWeaponIndex < Weapons.Length - 1)
 					{
-						PlayerController.instance.currentWeaponIndex++;
+						currentWeaponIndex++;
 					} 
 
 					else
 
 					{
-						PlayerController.instance.currentWeaponIndex = 0;
+						currentWeaponIndex = 0;
 					}
 				}
 
 				isChangingWeapon = true;
-				WeaponChangeModeTime = WeaponChangeDuration;
-				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex, true);
+				SetWeaponIndex (currentWeaponIndex, true);
 				OnWeaponChange.Invoke ();
+
+				WeaponChangeModeTime = WeaponChangeDuration;
 				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
 			}
@@ -781,22 +756,23 @@ namespace CityBashers
 				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
 				{
 					// Change to previous weapon.
-					if (PlayerController.instance.currentWeaponIndex > 0)
+					if (currentWeaponIndex > 0)
 					{
-						PlayerController.instance.currentWeaponIndex--;
+						currentWeaponIndex--;
 					} 
 
 					else
 
 					{
-						PlayerController.instance.currentWeaponIndex = PlayerController.instance.Weapons.Length - 1;
+						currentWeaponIndex = Weapons.Length - 1;
 					}
 				}
 
 				isChangingWeapon = true;
-				WeaponChangeModeTime = WeaponChangeDuration;
-				PlayerController.instance.SetWeaponIndex (PlayerController.instance.currentWeaponIndex, false);
+				SetWeaponIndex (currentWeaponIndex, false);
 				OnWeaponChange.Invoke ();
+
+				WeaponChangeModeTime = WeaponChangeDuration;
 				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
 				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
 			}
@@ -825,7 +801,7 @@ namespace CityBashers
 		{
 			if (playerActions.Use.WasPressed == true)
 			{
-				PlayerController.instance.OnUse.Invoke ();
+				OnUse.Invoke ();
 			}
 		}
 
@@ -843,15 +819,9 @@ namespace CityBashers
 		{
 			if (isRight == false)
 			{
-				CamFollow.localPosition = Vector3.Lerp (
-					CamFollow.localPosition, 
-					new Vector3 (
-						cameraOffset.x,
-						CamFollow.localPosition.y,
-						CamFollow.localPosition.z
-					), 
-					cameraOffsetSmoothing * Time.deltaTime
-				);
+				CamFollow.localPosition = Vector3.Lerp (CamFollow.localPosition, 
+					new Vector3 (cameraOffset.x, CamFollow.localPosition.y, CamFollow.localPosition.z), 
+					cameraOffsetSmoothing * Time.deltaTime);
 
 				return;
 			} 
@@ -859,15 +829,9 @@ namespace CityBashers
 			else
 
 			{
-				CamFollow.localPosition = Vector3.Lerp (
-					CamFollow.localPosition,
-					new Vector3 (
-						cameraOffset.y,
-						CamFollow.localPosition.y,
-						CamFollow.localPosition.z
-					),
-					cameraOffsetSmoothing * Time.deltaTime
-				);
+				CamFollow.localPosition = Vector3.Lerp (CamFollow.localPosition,
+					new Vector3 (cameraOffset.y, CamFollow.localPosition.y, CamFollow.localPosition.z),
+					cameraOffsetSmoothing * Time.deltaTime);
 
 				return;
 			}
@@ -883,19 +847,19 @@ namespace CityBashers
 
 		#endregion
 
-		#region Health
+		#region Health and Magic
 		void CheckHealthSliders ()
 		{
+			// Update health slider values.
 			HealthSlider.value = Mathf.Clamp (health, 0, MaximumHealth);
-			HealthSlider_Smoothed.value = Mathf.Lerp (
-				HealthSlider_Smoothed.value, 
-				health, 
-				healthSliderSmoothing * Time.deltaTime
-			);
+			HealthSlider_Smoothed.value = Mathf.Lerp (HealthSlider_Smoothed.value, health, 
+				healthSliderSmoothing * Time.deltaTime);
 
+			// Update post process UI effects.
 			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = -0.005f * HealthSlider.value + 0.5f;
 			postProcessUIVolume.profile.GetSetting <MotionBlur> ().shutterAngle.value = -3.6f * HealthSlider.value + 360;
 
+			// Update regular post process effects.
 			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerGreenOutGreenIn.value =
 				Mathf.Clamp (3 * HealthSlider.value, 0, 100);
 			
@@ -913,9 +877,19 @@ namespace CityBashers
 			}
 		}
 
+		void CheckMagicSliders ()
+		{
+			MagicSlider.value = Mathf.Clamp (magic, 0, MaximumMagic);
+			MagicSlider_Smoothed.value = Mathf.Lerp (MagicSlider_Smoothed.value, magic, 
+				magicSliderSmoothing * Time.deltaTime);
+		}
+
+		/// <summary>
+		/// Checks the health magic is low. Shows UI if it is
+		/// </summary>
 		void CheckHealthMagicIsLow ()
 		{
-			if (health < 25 || magic < 25)
+			if (health < healthUIVisibilityThreshold || magic < magicUIVisibilityThreshold)
 			{
 				if (PlayerUI.GetBool ("Low") == false)
 				{
@@ -923,7 +897,7 @@ namespace CityBashers
 				}
 			} 
 
-			else
+			else // Either is too low, show UI for it.
 
 			{
 				if (PlayerUI.GetBool ("Low") == true)
@@ -934,23 +908,11 @@ namespace CityBashers
 		}
 		#endregion
 
-		#region Magic
-		void CheckMagicSliders ()
-		{
-			MagicSlider.value = Mathf.Clamp (magic, 0, MaximumMagic);
-			MagicSlider_Smoothed.value = Mathf.Lerp (
-				MagicSlider_Smoothed.value, 
-				magic, 
-				magicSliderSmoothing * Time.deltaTime
-			);
-		}
-		#endregion
-
 		#region Shooting
 		public void Shoot ()
 		{
 			RaycastHit hit;
-			Ray ray = m_Cam.ScreenPointToRay (Input.mousePosition);
+			Ray ray = cam.ScreenPointToRay (Input.mousePosition);
 			AimDir = ray.direction;
 			AimNoPitchDir = new Vector3 (ray.direction.x, 0, ray.direction.z);
 
@@ -1112,7 +1074,6 @@ namespace CityBashers
 
 		void OnLanded ()
 		{
-			//GetLandingSound ();
 		}
 		#endregion
 

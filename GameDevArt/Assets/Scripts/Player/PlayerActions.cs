@@ -25,7 +25,6 @@ public class PlayerActions : PlayerActionSet
 	// Main actions.
 	public PlayerAction Jump;
 	public PlayerAction Use;
-	public PlayerAction Crouch; // This isn't used.
 
 	// Attack actions.
 	public PlayerAction Aim;
@@ -69,7 +68,6 @@ public class PlayerActions : PlayerActionSet
 
 		Jump 		   = CreatePlayerAction ("Jump");
 		Use            = CreatePlayerAction ("Use");
-		Crouch   	   = CreatePlayerAction ("Crouch");
 
 		Aim 		   = CreatePlayerAction ("Aim");
 		Shoot 		   = CreatePlayerAction ("Shoot");
@@ -94,9 +92,6 @@ public class PlayerActions : PlayerActionSet
 
 		playerActions.Jump.AddDefaultBinding (Key.Space);
 		playerActions.Jump.AddDefaultBinding (InputControlType.Action1);
-
-		//playerActions.Crouch.AddDefaultBinding(Key.C);
-		//playerActions.Crouch.AddDefaultBinding (InputControlType.Action2);
 
 		playerActions.Aim.AddDefaultBinding (Mouse.RightButton);
 		playerActions.Aim.AddDefaultBinding (InputControlType.LeftTrigger);
