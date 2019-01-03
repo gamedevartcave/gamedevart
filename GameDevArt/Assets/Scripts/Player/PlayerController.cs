@@ -938,7 +938,6 @@ namespace CityBashers
 
 			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<LensDistortion> ().intensity.value = 
 				0.5f * HealthSlider.value - 50f;
-
 			
 			if (health <= 0)
 			{
