@@ -91,7 +91,7 @@ namespace CityBashers
 		void Start ()
 		{
 			playerActions = InControlActions.instance.playerActions;
-			PlayerController.instance.OnWeaponChange.AddListener (OnWeaponChange);
+			//PlayerController.instance.OnWeaponChange.AddListener (OnWeaponChange);
 			displayScore = 0;
 			targetScore = 0;
 			scoreText.text = 0.ToString ();

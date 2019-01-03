@@ -2789,7 +2789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsuleHeight: 0
+  capsuleHeight: 1.6
   capsuleCenter: {x: 0, y: 0, z: 0}
   playerCol: {fileID: 136886608646034890}
   PlayerUI: {fileID: 0}
@@ -2798,9 +2798,10 @@ MonoBehaviour:
   movingTurnSpeed: 360
   stationaryTurnSpeed: 180
   moveMultiplier: 0
-  runCycleLegOffset: 0.2
-  moveSpeedMultiplier: 1
+  runCycleLegOffset: 0.5
+  moveSpeedMultiplier: 1.5
   animSpeedMultiplier: 1
+  groundNormal: {x: 0, y: 0, z: 0}
   lostAllHealth: 0
   health: 0
   StartHealth: 100
@@ -2936,72 +2937,7 @@ MonoBehaviour:
   currentWeaponIndex: 0
   Weapons:
   - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
   DisplayedWeaponImage: {fileID: 0}
-  DisplayedWeaponAmmoText: {fileID: 0}
-  currentSelectedWeaponAmmoText: {fileID: 0}
-  CurrentSelectedWeaponImage: {fileID: 0}
-  weaponTextures:
-  - {fileID: 2800000, guid: f16e98e8f86670344b9775eec9fd2146, type: 3}
-  - {fileID: 2800000, guid: 105ba9578770c4dfd96f460302b9a12a, type: 3}
-  - {fileID: 2800000, guid: e554125136aec416e80c82bae87f5c41, type: 3}
-  - {fileID: 2800000, guid: a354bcb686ec6544bb340270e70b8f91, type: 3}
-  - {fileID: 2800000, guid: 1e2d444ae9d5a4ff1b47ffec28d5165c, type: 3}
-  - {fileID: 2800000, guid: 44129b51b5849444dbbf124320f77401, type: 3}
-  - {fileID: 2800000, guid: c080e12d534f64fc48bffb53d9f55fba, type: 3}
-  - {fileID: 2800000, guid: f178146a44de340829e1c25c4ee4c072, type: 3}
-  WeaponSelectionBackgrounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  WeaponSelectionImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  WeaponAvailableColor: {r: 1, g: 1, b: 1, a: 1}
-  WeaponAmmoOutColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-  weaponWheelAmmoTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentAmmoAmounts: 010000000a000000140000000000000000000000000000000000000046000000
-  maxAmmoAmounts: 6400000050000000460000003c000000c8000000b80b00008813000064000000
-  isChangingWeapon: 0
-  weaponChangeRate: 0.25
-  OnWeaponChangeTimeScale: 0.05
-  WeaponChangeModeTime: 1
-  WeaponChangeDuration: 1
-  OnWeaponChange:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  WeaponChangeEnded:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnUse:
     m_PersistentCalls:
       m_Calls: []
@@ -3020,20 +2956,20 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   jumpPower: 12
-  jumpPower_Forward: 2
-  airControl: 5
-  gravityMultiplier: 2
+  jumpPower_Forward: 1
+  airControl: 0.1
+  gravityMultiplier: 4
   jumpAudioSource: {fileID: 82895562210044388}
   jumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
-  doubleJump: 0
+  jump: 0
   doubleJumped: 0
   OnJump:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  doubleJumpPower: 1.5
+  doubleJumpPower: 16
   doubleJumpAudioSource: {fileID: 82122157416134476}
   doubleJumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
@@ -3042,8 +2978,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  groundCheckDistance: 0.1
-  terminalVelocity: 10
+  groundCheckDistance: 0.2
+  terminalVelocity: 60
   fallMult: 2.5
   isGrounded: 0
   landingAudioSource: {fileID: 82234244739353980}
@@ -3067,10 +3003,14 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   isDodging: 0
   dodgeRate: 0.4
-  dodgeSpeed: 25
-  DodgeTimeDuration: 0.18
-  dodgeTimeScale: 0.1
-  dodgeSpeedupFactor: 20
+  dodgeSpeed: 28
+  DodgeTimeDuration: 0.15
+  dodgeTimeScale: 0.02
+  dodgeSpeedupFactor: 1
+  dodgeMagicCost: 10
+  dodgeLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   OnDodgeBegan:
     m_PersistentCalls:
       m_Calls: []
@@ -3082,9 +3022,10 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isInHitStun: 0
-  skinnedMeshes:
+  stunMeshes:
   - {fileID: 137893836330158196}
   - {fileID: 137417391442393214}
+  - {fileID: 23547109046083074}
   hitStunCurrentTime: 0
   hitStunDuration: 2
   HitStunRenderToggleWait: 0.1
@@ -3111,9 +3052,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &136886608646034890
 CapsuleCollider:
   m_ObjectHideFlags: 0

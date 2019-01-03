@@ -40,10 +40,9 @@ namespace CityBashers
 		public float animSpeedMultiplier = 1f;
 
 		private float origGroundCheckDistance;
-		const float k_Half = 0.5f;
 		private float turnAmount;
 		private float forwardAmount;
-		private Vector3 groundNormal;
+		public Vector3 groundNormal;
 
 		[Header ("Health")]
 		[ReadOnlyAttribute] 
@@ -96,13 +95,14 @@ namespace CityBashers
 		[HideInInspector] public float nextFire;
 		public UnityEvent OnShoot;
 
+
 		[Header ("Weapons")]
 		public int currentWeaponIndex;
 		public GameObject[] Weapons;
 
 		public RawImage DisplayedWeaponImage;
-		public TextMeshProUGUI DisplayedWeaponAmmoText;
-
+		//public TextMeshProUGUI DisplayedWeaponAmmoText;
+		/*
 		[Header ("WeaponWheel")]
 		private bool weaponTexturesAssigned;
 		public TextMeshProUGUI currentSelectedWeaponAmmoText;
@@ -119,7 +119,8 @@ namespace CityBashers
 		public TextMeshProUGUI[] weaponWheelAmmoTexts;
 		public int[] currentAmmoAmounts;
 		public int[] maxAmmoAmounts;
-
+		*/
+		/*
 		[Header ("Weapon changing")]
 		[ReadOnlyAttribute] public bool isChangingWeapon;
 		public float weaponChangeRate =  0.25f;
@@ -129,7 +130,8 @@ namespace CityBashers
 		public float WeaponChangeDuration = 1;
 		public UnityEvent OnWeaponChange;
 		public UnityEvent WeaponChangeEnded;
-
+		*/
+		
 		[Header ("Using")]
 		public UnityEvent OnUse;
 
@@ -150,8 +152,7 @@ namespace CityBashers
 		public AudioSource jumpAudioSource;
 		public AudioClip[] jumpClips;
 		private int jumpSoundIndex;
-		private bool jump; // Jump state.
-		[HideInInspector] public bool doubleJump; // Double jump input state.
+		[SerializeField] [ReadOnlyAttribute] public bool jump; // Jump state.
 		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state playerRb.velocity.z
 		public UnityEvent OnJump;
 
@@ -174,21 +175,28 @@ namespace CityBashers
 
 		[Header ("Dodging")]
 		[ReadOnlyAttribute] public bool isDodging;
+		[Tooltip ("Time between each dodge event.")]
 		public float dodgeRate = 0.5f;
+		[Tooltip ("Speed at which player moves while dodging.")]
 		public float dodgeSpeed = 15;
 		private float nextDodge;
 		private float dodgeTimeRemain;
+		[Tooltip ("How long in unscaled time the dodge time lasts.")]
 		public float DodgeTimeDuration;
+		[Tooltip ("The time scale during dodge time.")]
 		public float dodgeTimeScale = 0.25f;
+		[Tooltip ("Animator speed factor while in dodge mode.")]
 		public float dodgeSpeedupFactor = 20;
+		[Tooltip ("How much magic it costs per dodge.")]
 		public int dodgeMagicCost = 10;
+		[Tooltip ("Layers to look out for when checking colliders for a potential dodge.")]
+		public LayerMask dodgeLayerMask;
 		public UnityEvent OnDodgeBegan;
 		public UnityEvent OnDodgeEnded;
-		public LayerMask dodgeLayerMask;
 
 		[Header ("Hit stun")]
 		[ReadOnlyAttribute] public bool isInHitStun;
-		public Renderer[] skinnedMeshes;
+		public Renderer[] stunMeshes;
 		[ReadOnlyAttribute] [SerializeField] private float hitStunCurrentTime;
 		public float hitStunDuration = 2;
 		private WaitForSeconds hitStunYield;
@@ -202,9 +210,9 @@ namespace CityBashers
 		{
 			instance = this;
 
-			for (int i = 0; i < skinnedMeshes.Length; i++)
+			for (int i = 0; i < stunMeshes.Length; i++)
 			{
-				skinnedMeshes [i].enabled = false;
+				stunMeshes [i].enabled = false;
 			}
 
 			this.enabled = false;
@@ -213,9 +221,9 @@ namespace CityBashers
 		void Start ()
 		{
 			// Find some components.
-			playerAnim = GetComponent<Animator>();
-			playerRb = GetComponent<Rigidbody>();
-			playerCol = GetComponent<CapsuleCollider>();
+			playerAnim = GetComponent<Animator> ();
+			playerRb = GetComponent<Rigidbody> ();
+			playerCol = GetComponent<CapsuleCollider> ();
 			capsuleHeight = playerCol.height;
 			capsuleCenter = playerCol.center;
 
@@ -286,13 +294,14 @@ namespace CityBashers
 			CalculateRelativeMoveDirection ();
 	
 			// Pass all parameters to the character control script.
-			Move (move, false, jump, doubleJump);
-			jump = false;
-			doubleJump = false;
+			Move (move, false, jump, doubleJumped);
 		}
 
 		#region Movement
 
+		/// <summary>
+		/// Reads input movement.
+		/// </summary>
 		void ReadMovementInput ()
 		{
 			// Read input shorthand.
@@ -304,7 +313,9 @@ namespace CityBashers
 				playerActions.Move.Value.y;
 		}
 
-		// Calculate move direction to pass to character.
+		/// <summary>
+		/// Calculates the relative move direction.
+		/// </summary>
 		void CalculateRelativeMoveDirection ()
 		{
 			// Using self-relative controls.
@@ -315,7 +326,7 @@ namespace CityBashers
 				move = vInput * camForwardDirection + hInput * cam.transform.right;
 			}
 
-			else // Calculate move direction in world space
+			else // Calculate move direction in world space.
 
 			{
 				// Use world-relative directions in the case of no main camera.
@@ -323,11 +334,18 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Move for the specified move, crouch, jump and doubleJump.
+		/// </summary>
+		/// <param name="move">Move.</param>
+		/// <param name="crouch">If set to <c>true</c> crouch.</param>
+		/// <param name="jump">If set to <c>true</c> jump.</param>
+		/// <param name="doubleJump">If set to <c>true</c> double jump.</param>
 		public void Move (Vector3 move, bool crouch, bool jump, bool doubleJump)
 		{
 			// Vonvert the world relative moveInput vector into a local-relative
 			// Turn amount and forward amount required to head in the desired direction.
-			if (move.magnitude > 1f) move.Normalize ();
+			if (move.sqrMagnitude > 1f) move.Normalize ();
 			move = transform.InverseTransformDirection (move);
 			move = Vector3.ProjectOnPlane (move, groundNormal);
 
@@ -342,7 +360,6 @@ namespace CityBashers
 			// Control and velocity handling is different when grounded and airborne.
 			if (isGrounded == true)
 			{
-				HandleGroundedMovement (jump);
 				if (doubleJumped == true) doubleJumped = false;
 			}
 
@@ -366,47 +383,60 @@ namespace CityBashers
 			rb.velocity = Vector3.ClampMagnitude (rb.velocity, _terminalVelocity);
 		}
 
+		/// <summary>
+		/// Updates the animator.
+		/// </summary>
+		/// <param name="move">Move.</param>
 		void UpdateAnimator (Vector3 move)
 		{
+			// Calculate which leg is behind, so as to leave that leg trailing in the jump animation.
+			// (This code is reliant on the specific run cycle offset in our animations,
+			// and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
+			float runCycle = Mathf.Repeat (
+				playerAnim.GetCurrentAnimatorStateInfo (0).normalizedTime + runCycleLegOffset, 1);
+
+			float jumpLeg = (runCycle < 0.5f ? 1 : -1) * forwardAmount;
+
 			// Update the animator parameters.
 			playerAnim.SetFloat ("Forward", forwardAmount, 0.1f, Time.deltaTime);
 			playerAnim.SetFloat ("Turn", turnAmount, 0.1f, Time.deltaTime);
 
 			// Update grounded state.
 			playerAnim.SetBool ("OnGround", isGrounded);
-			if (isGrounded == false) playerAnim.SetFloat ("Jump", playerRb.velocity.y);
-
-			// Calculate which leg is behind, so as to leave that leg trailing in the jump animation.
-			// (This code is reliant on the specific run cycle offset in our animations,
-			// and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
-			float runCycle = Mathf.Repeat (
-				playerAnim.GetCurrentAnimatorStateInfo (0).normalizedTime + runCycleLegOffset, 1);
-			float jumpLeg = (runCycle < k_Half ? 1 : -1) * forwardAmount;
 
 			if (isGrounded == true)
 			{
 				playerAnim.SetFloat ("JumpLeg", jumpLeg);
 				playerAnim.SetFloat ("Jump", 0);
-			}
+			} 
 
+			else // Is in mid air.
+
+			{
+				playerAnim.SetFloat ("Jump", playerRb.velocity.y);
+			}
+				
 			// The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
 			// Which affects the movement speed because of the root motion.
 			if (playerAnim.GetBool ("Dodging") == false)
 			{
-				if (isGrounded == true && move.magnitude > 0)
+				if (isGrounded == true && move.sqrMagnitude > 0)
 				{
 					playerAnim.speed = animSpeedMultiplier;
 				}
 
-				else
+				else // Don't use anim speed while airborne.
 
 				{
-					// Don't use that while airborne.
 					playerAnim.speed = 1;
 				}
 			}
 		}
 
+		/// <summary>
+		/// Handles the airborne movement.
+		/// </summary>
+		/// <param name="doubleJump">If set to <c>true</c> double jump.</param>
 		void HandleAirborneMovement (bool doubleJump)
 		{
 			// Apply extra gravity from multiplier:
@@ -417,40 +447,10 @@ namespace CityBashers
 			float airControlForce = airControl * playerActions.Move.Value.magnitude;
 			playerRb.AddRelativeForce (
 				new Vector3 (0, 0, Mathf.Abs (airControlForce)),
-				ForceMode.VelocityChange);
+				ForceMode.Acceleration);
 
 			// Check ground distance based on velocity.
 			groundCheckDistance = playerRb.velocity.y < 0 ? origGroundCheckDistance : 0.01f;
-
-			// check whether conditions are right to allow a double jump:
-			if (doubleJump == true && isGrounded == false)
-			{
-				// Override vertical velocity.
-				playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
-
-				// Add forward force.
-				playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
-
-				isGrounded = false;
-				playerAnim.applyRootMotion = false;
-				groundCheckDistance = 0.1f;
-
-				OnDoubleJump.Invoke ();
-			}
-		}
-
-		void HandleGroundedMovement (bool jump)
-		{
-			// Check whether conditions are right to allow a jump.
-			if (jump == true)
-			{
-				playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-				isGrounded = false;
-				playerAnim.applyRootMotion = false;
-				//groundCheckDistance = 0.1f;
-
-				OnJump.Invoke ();
-			}
 		}
 
 		/// <summary>
@@ -460,7 +460,7 @@ namespace CityBashers
 		{
 			// Help the character turn faster (this is in addition to root rotation in the animation).
 			float turnSpeed = Mathf.Lerp (stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
-			transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
+			transform.Rotate (0, turnAmount * turnSpeed * Time.deltaTime, 0);
 		}
 
 		/// <summary>
@@ -487,47 +487,29 @@ namespace CityBashers
 		{
 			RaycastHit hitInfo;
 
-#if UNITY_EDITOR
-			Debug.DrawLine (
-				transform.position + (Vector3.up * 0.1f), 
-				transform.position + (Vector3.up * 0.1f) + (Vector3.down * groundCheckDistance));
-#endif
+			#if UNITY_EDITOR
+			Debug.DrawRay (transform.position, Vector3.down * groundCheckDistance, Color.yellow);
+			#endif
 
 			// 0.1f is a small offset to start the ray from inside the character
 			// it is also good to note that the transform position in the sample assets is at the base of the character
 			if (Physics.Raycast (transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, groundCheckDistance))
 			{
-				//groundNormal = hitInfo.normal; // For slope detection.
-				groundNormal = Vector3.up; // We don't need slope detection.
-
 				// Get grounded.
-				if (isGrounded == false)
+				if (isGrounded == false && jump == true)
 				{
-					isGrounded = true;
-					//playerRb.velocity = Vector3.zero;
-
-					/*
-					playerRb.velocity = new Vector3 (
-						0.05f * playerRb.velocity.x, 
-						playerRb.velocity.y, 
-						0.05f * playerRb.velocity.z
-					);
-					*/
-
-					doubleJump = false;
-					doubleJumped = false;
-
+					jump = false;
 					OnLand.Invoke ();
-
 					playerAnim.applyRootMotion = true;
 				}
+
+				isGrounded = true;
 			}
 
 			else // Is in air.
 
 			{
 				isGrounded = false;
-				groundNormal = Vector3.up;
 				playerAnim.applyRootMotion = false;
 			}
 		}
@@ -535,27 +517,53 @@ namespace CityBashers
 		#endregion
 
 		#region Actions
-		// TODO: Improve this.
+		/// <summary>
+		/// Action for jump.
+		/// </summary>
 		void JumpAction ()
 		{
-			// Jumping.
-			if (jump == false && doubleJumped == false)
+			if (playerActions.Jump.WasPressed == true)
 			{
-				jump = playerActions.Jump.WasPressed;
-			}
-
-			// Checks if we can double jump.
-			if (jump && doubleJumped == false)
-			{
-				doubleJump = playerActions.Jump.WasPressed;
-
-				if (playerActions.Jump.WasPressed)
+				// Is already in jump state.
+				if (jump == true)
 				{
-					doubleJumped = true;
+					// jump was pressed.
+					if (playerActions.Jump.WasPressed == true)
+					{
+						// has not double jumped while in air.
+						if (doubleJumped == false && isGrounded == false)
+						{
+							doubleJumped = true;
+
+							// Override vertical velocity.
+							playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+
+							// Add forward force.
+							playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
+
+							playerAnim.applyRootMotion = false;
+							groundCheckDistance = 0.1f;
+
+							OnDoubleJump.Invoke ();
+						}
+					}
+				} 
+
+				else // Is not already in jump state.
+				
+				{
+					jump = true;
+					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+					isGrounded = false;
+					playerAnim.applyRootMotion = false;
+					OnJump.Invoke ();
 				}
 			}
 		}
 
+		/// <summary>
+		/// Gets the better jump velocity.
+		/// </summary>
 		void GetBetterJumpVelocity ()
 		{
 			// If we are falling.
@@ -571,12 +579,16 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Dodges action.
+		/// </summary>
 		void DodgeAction ()
 		{
-			if (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed)
+			if (magic > dodgeMagicCost &&
+				(playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
 			{
 				// Bypass dodging if near scenery collider. That way we cannot pass through it.
-				if (playerActions.Move.Value.magnitude > 0)
+				if (playerActions.Move.Value.sqrMagnitude > 0)
 				{
 					if (Physics.Raycast (transform.position + new Vector3 (0, 1, 0), transform.forward, 3, dodgeLayerMask))
 					{
@@ -593,6 +605,11 @@ namespace CityBashers
 						Debug.DrawRay (transform.position + new Vector3 (0, 1, 0), transform.forward * 3, Color.red, 1);
 						return;
 					}
+
+					transform.eulerAngles = new Vector3 (
+						transform.eulerAngles.x, 
+						transform.eulerAngles.y + 180, 
+						transform.eulerAngles.z);
 				}
 
 				// Get dodge angle.
@@ -679,6 +696,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Aim action.
+		/// </summary>
 		void AimAction ()
 		{
 			// Aiming.
@@ -696,6 +716,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Shoot action.
+		/// </summary>
 		void ShootAction ()
 		{
 			if (playerActions.Shoot.Value > 0.5f)
@@ -718,16 +741,23 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Melee action.
+		/// </summary>
 		void MeleeAction ()
 		{
 			if (playerActions.Melee.WasPressed)
 			{
 				// TODO: Make combos.
 
-				Debug.Log ("Melee action was pressed.");
+				//Debug.Log ("Melee action was pressed.");
 			}
 		}
 
+		/// <summary>
+		/// Weapon change action.
+		/// </summary>
+		/*
 		void WeaponChangeAction ()
 		{
 			if (playerActions.NextWeapon.IsPressed == true && 
@@ -803,7 +833,11 @@ namespace CityBashers
 				}
 			}
 		}
+		*/
 
+		/// <summary>
+		/// Use action.
+		/// </summary>
 		void UseAction ()
 		{
 			if (playerActions.Use.WasPressed == true)
@@ -812,6 +846,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Camera change action.
+		/// </summary>
 		void CameraChangeAction ()
 		{
 			if (playerActions.CameraChange.WasPressed)
@@ -822,6 +859,9 @@ namespace CityBashers
 			GetCameraChangeSmoothing ();
 		}
 
+		/// <summary>
+		/// Gets the camera change smoothing.
+		/// </summary>
 		void GetCameraChangeSmoothing ()
 		{
 			if (isRight == false)
@@ -844,6 +884,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Ability action.
+		/// </summary>
 		void AbilityAction ()
 		{
 			if (playerActions.Ability.WasPressed)
@@ -855,6 +898,9 @@ namespace CityBashers
 		#endregion
 
 		#region Health and Magic
+		/// <summary>
+		/// Checks the health slider values.
+		/// </summary>
 		void CheckHealthSliders ()
 		{
 			// Update health slider values.
@@ -884,6 +930,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Checks the magic slider values.
+		/// </summary>
 		void CheckMagicSliders ()
 		{
 			MagicSlider.value = Mathf.Clamp (magic, 0, MaximumMagic);
@@ -892,7 +941,7 @@ namespace CityBashers
 		}
 
 		/// <summary>
-		/// Checks the health magic is low. Shows UI if it is
+		/// Checks the health magic is low. Shows UI if it is.
 		/// </summary>
 		void CheckHealthMagicIsLow ()
 		{
@@ -916,6 +965,9 @@ namespace CityBashers
 		#endregion
 
 		#region Shooting
+		/// <summary>
+		/// Shoot.
+		/// </summary>
 		public void Shoot ()
 		{
 			RaycastHit hit;
@@ -934,6 +986,12 @@ namespace CityBashers
 		#endregion
 
 		#region Weapons
+		/// <summary>
+		/// Sets the current weapon index.
+		/// </summary>
+		/// <param name="index">Index.</param>
+		/// <param name="reverse">If set to <c>true</c> reverse.</param>
+		/*
 		public void SetWeaponIndex (int index, bool reverse)
 		{
 			bool runout = true;
@@ -1027,9 +1085,13 @@ namespace CityBashers
 
 			weaponTexturesAssigned = true; // Prevents assigning of weapon textures the next time.
 		}
+		*/
 		#endregion
 
 		#region Footsteps
+		/// <summary>
+		/// Gets the foot step sound from a list.
+		/// </summary>
 		public void GetFootStepSound ()
 		{
 			if (Time.time > nextFootstepTime)
@@ -1041,6 +1103,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Raises the foot step event.
+		/// </summary>
 		void OnFootStep ()
 		{
 			GetFootStepSound ();
@@ -1048,6 +1113,9 @@ namespace CityBashers
 		#endregion
 
 		#region Jumping
+		/// <summary>
+		/// Gets the jump sound.
+		/// </summary>
 		public void GetJumpSound ()
 		{
 			jumpSoundIndex = Random.Range (0, jumpClips.Length);
@@ -1055,11 +1123,17 @@ namespace CityBashers
 			jumpAudioSource.Play ();
 		}
 
+		/// <summary>
+		/// Raises the jump began event.
+		/// </summary>
 		void OnJumpBegan ()
 		{
 			GetJumpSound ();
 		}
 
+		/// <summary>
+		/// Gets the double jump sound.
+		/// </summary>
 		public void GetDoubleJumpSound ()
 		{
 			doubleJumpSoundIndex = Random.Range (0, doubleJumpClips.Length);
@@ -1067,11 +1141,17 @@ namespace CityBashers
 			doubleJumpAudioSource.Play ();
 		}
 
+		/// <summary>
+		/// Raises the double jump began event.
+		/// </summary>
 		void OnDoubleJumpBegan ()
 		{
 			GetDoubleJumpSound ();
 		}
 
+		/// <summary>
+		/// Gets the landing sound.
+		/// </summary>
 		public void GetLandingSound ()
 		{
 			landingSoundIndex = Random.Range (0, landingClips.Length);
@@ -1079,15 +1159,18 @@ namespace CityBashers
 			landingAudioSource.Play ();
 		}
 
+		/// <summary>
+		/// Raises the landed event.
+		/// </summary>
 		void OnLanded ()
 		{
 		}
 		#endregion
 
 		#region Physics
-
-		// When player hits death barrier.
-		// Hard reset on positioning and movement.
+		/// <summary>
+		/// When player hits death barrier, hard reset on positioning and movement.
+		/// </summary>
 		public void DeathBarrier ()
 		{
 			transform.position = startingPoint.position;
@@ -1096,11 +1179,19 @@ namespace CityBashers
 		#endregion
 
 		#region Override
+		/// <summary>
+		/// Overrides the player position.
+		/// </summary>
+		/// <param name="newPos">New position.</param>
 		public void OverridePlayerPosition (Transform newPos)
 		{
 			transform.position = newPos.position;
 		}
 
+		/// <summary>
+		/// Overrides a Vector3 position.
+		/// </summary>
+		/// <param name="pos">Position.</param>
 		public void OverridePosition (Vector3 pos)
 		{
 			this.transform.position = pos;
@@ -1108,6 +1199,9 @@ namespace CityBashers
 		#endregion
 
 		#region Hit stun
+		/// <summary>
+		/// Does a hit stun.
+		/// </summary>
 		public void DoHitStun ()
 		{	
 			if (isInHitStun == false)
@@ -1116,6 +1210,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Hitstun player.
+		/// </summary>
 		public IEnumerator Hitstun ()
 		{
 			// Get current time.
@@ -1126,19 +1223,19 @@ namespace CityBashers
 			// Toggle skinned mesh renderer enabled.
 			while (Time.time < hitStunCurrentTime + hitStunDuration && health > 0)
 			{
-				for (int i = 0; i < skinnedMeshes.Length; i++)
+				for (int i = 0; i < stunMeshes.Length; i++)
 				{
-					skinnedMeshes [i].enabled = !skinnedMeshes [i].enabled;
+					stunMeshes [i].enabled = !stunMeshes [i].enabled;
 				}
 
 				yield return hitStunYield;
 			}
 
 			// Always re enable skinned mesh renderers.
-			for (int i = 0; i < skinnedMeshes.Length; i++)
+			for (int i = 0; i < stunMeshes.Length; i++)
 			{
 				// Always end with skinned mesh renderers enabled.
-				skinnedMeshes [i].enabled = true;
+				stunMeshes [i].enabled = true;
 			}
 				
 			OnHitStunEnded.Invoke ();
@@ -1146,11 +1243,14 @@ namespace CityBashers
 		}
 		#endregion
 
+		/// <summary>
+		/// Enables the skinned meshes from skinned meshes list.
+		/// </summary>
 		public void EnableSkinnedMeshes ()
 		{
-			for (int i = 0; i < skinnedMeshes.Length; i++)
+			for (int i = 0; i < stunMeshes.Length; i++)
 			{
-				skinnedMeshes [i].enabled = true;
+				stunMeshes [i].enabled = true;
 			}
 		}
 	}
