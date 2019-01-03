@@ -51,7 +51,7 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 0
+    m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 10
@@ -71,7 +71,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 1
-    m_BakeBackend: 2
+    m_BakeBackend: 0
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 1
     m_PVRSampleCount: 100
@@ -11672,6 +11672,11 @@ PrefabInstance:
       propertyPath: groundCheckDistance
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 137893836330158196, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9833d5f7e71e095409623a8f67279abb, type: 3}
 --- !u!137 &417043589 stripped
@@ -12964,6 +12969,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Depth
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114387206267970628, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: offsetMult
+      value: -0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5f33cbd171cc37449a573793c7c3f6a, type: 3}
@@ -74961,8 +74971,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.96896726, b: 0.9292453, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.9
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -74970,10 +74980,10 @@ Light:
     m_Type: 2
     m_Resolution: 3
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.6
     m_Bias: 0.045
-    m_NormalBias: 0.04
-    m_NearPlane: 0.28
+    m_NormalBias: 0.08
+    m_NearPlane: 0.71
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -74996,13 +75006,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974869141}
-  m_LocalRotation: {x: 0.18639342, y: -0.78492785, z: 0.28166318, w: 0.51943386}
+  m_LocalRotation: {x: 0.31653625, y: -0.6831188, z: 0.47832483, w: 0.45206067}
   m_LocalPosition: {x: 0.0002888441, y: 0.7876561, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1736638881}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 39.48, y: -113.01, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: -113.01, z: 0}
 --- !u!1 &1978035426
 GameObject:
   m_ObjectHideFlags: 0

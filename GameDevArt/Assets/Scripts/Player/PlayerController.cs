@@ -408,12 +408,22 @@ namespace CityBashers
 			{
 				playerAnim.SetFloat ("JumpLeg", jumpLeg);
 				playerAnim.SetFloat ("Jump", 0);
+
+				CamPosBasedOnAngle.instance.offset = new Vector2 (
+					CamPosBasedOnAngle.instance.offset.x, 
+					Mathf.Lerp (CamPosBasedOnAngle.instance.offset.y, 0, 2 * Time.deltaTime) 
+				);
 			} 
 
 			else // Is in mid air.
 
 			{
 				playerAnim.SetFloat ("Jump", playerRb.velocity.y);
+
+				CamPosBasedOnAngle.instance.offset = new Vector2 (
+					CamPosBasedOnAngle.instance.offset.x, 
+					Mathf.Lerp (CamPosBasedOnAngle.instance.offset.y, Mathf.Min (playerRb.velocity.y * CamPosBasedOnAngle.instance.offsetMult, 0), 2 * Time.deltaTime)
+				);
 			}
 				
 			// The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
@@ -909,15 +919,26 @@ namespace CityBashers
 				healthSliderSmoothing * Time.deltaTime);
 
 			// Update post process UI effects.
-			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = -0.005f * HealthSlider.value + 0.5f;
+
+			float vignetteVal = -0.005f * HealthSlider.value + 0.3f;
+			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = 
+				vignetteVal * Mathf.Sin ((0.05f * (-health + MaximumHealth)) * Time.time); 
+
 			postProcessUIVolume.profile.GetSetting <MotionBlur> ().shutterAngle.value = -3.6f * HealthSlider.value + 360;
 
 			// Update regular post process effects.
-			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerGreenOutGreenIn.value =
-				Mathf.Clamp (3 * HealthSlider.value, 0, 100);
+			//SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerGreenOutGreenIn.value =
+			//	Mathf.Clamp (3 * HealthSlider.value, 0, 100);
 			
-			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerBlueOutBlueIn.value =
-				Mathf.Clamp (3 * HealthSlider.value, 0, 100);
+			//SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerBlueOutBlueIn.value =
+			//	Mathf.Clamp (3 * HealthSlider.value, 0, 100);
+
+			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ChromaticAberration> ().intensity.value = 
+				-0.005f * HealthSlider.value + 0.5f;
+
+			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<LensDistortion> ().intensity.value = 
+				0.5f * HealthSlider.value - 50f;
+
 			
 			if (health <= 0)
 			{
