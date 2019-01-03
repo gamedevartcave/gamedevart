@@ -2749,8 +2749,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4244019061093062}
   - component: {fileID: 114938810846430798}
-  - component: {fileID: 114207120252397576}
-  - component: {fileID: 114339389852459282}
   - component: {fileID: 54921349990239352}
   - component: {fileID: 136886608646034890}
   - component: {fileID: 95884795619259730}
@@ -2791,10 +2789,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capsuleHeight: 1.6
+  capsuleCenter: {x: 0, y: 0, z: 0}
   playerCol: {fileID: 136886608646034890}
-  playerRb: {fileID: 54921349990239352}
   PlayerUI: {fileID: 0}
   startingPoint: {fileID: 0}
+  move: {x: 0, y: 0, z: 0}
+  movingTurnSpeed: 360
+  stationaryTurnSpeed: 180
+  moveMultiplier: 0
+  runCycleLegOffset: 0.5
+  moveSpeedMultiplier: 1.5
+  animSpeedMultiplier: 1
+  groundNormal: {x: 0, y: 0, z: 0}
   lostAllHealth: 0
   health: 0
   StartHealth: 100
@@ -2816,42 +2823,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114207120252397576}
+      - m_Target: {fileID: 95884795619259730}
         m_MethodName: set_enabled
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114339389852459282}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ShowCursor
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2872,11 +2846,22 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: SetActiveMenu
-        m_Mode: 2
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: CityBashers.MenuNavigation, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetVisible
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2891,17 +2876,41 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: SetActiveMenu
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: CityBashers.MenuNavigation, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: SetButtonIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   postProcessUIVolume: {fileID: 0}
+  healthUIVisibilityThreshold: 50
   magic: 0
-  StartingMagic: 100
+  StartingMagic: 50
   MaximumMagic: 100
   MagicSlider: {fileID: 0}
   MagicSlider_Smoothed: {fileID: 0}
   magicSliderSmoothing: 1
+  magicUIVisibilityThreshold: 50
   normalFov: 65
   aimFov: 45
   aimSmoothing: 10
@@ -2909,6 +2918,15 @@ MonoBehaviour:
   AimingOrigin: {fileID: 4320577710479646}
   AimDir: {x: 0, y: 0, z: 0}
   AimNoPitchDir: {x: 0, y: 0, z: 0}
+  camRigSimpleFollow: {fileID: 0}
+  camRigSimpleFollowRotNormal: {x: 5, y: 15, z: 0}
+  camRigSimpleFollowRotAiming: {x: 60, y: 60, z: 0}
+  mouseLook: {fileID: 0}
+  cam: {fileID: 0}
+  CrosshairAnim: {fileID: 0}
+  CamFollow: {fileID: 0}
+  cameraOffset: {x: -0.25, y: 0.25}
+  cameraOffsetSmoothing: 5
   currentFireRate: 0.1
   nextFire: 0
   OnShoot:
@@ -2919,57 +2937,7 @@ MonoBehaviour:
   currentWeaponIndex: 0
   Weapons:
   - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
-  - {fileID: 1401470674311128}
   DisplayedWeaponImage: {fileID: 0}
-  DisplayedWeaponAmmoText: {fileID: 0}
-  currentSelectedWeaponAmmoText: {fileID: 0}
-  CurrentSelectedWeaponImage: {fileID: 0}
-  weaponTextures:
-  - {fileID: 2800000, guid: f16e98e8f86670344b9775eec9fd2146, type: 3}
-  - {fileID: 2800000, guid: 105ba9578770c4dfd96f460302b9a12a, type: 3}
-  - {fileID: 2800000, guid: e554125136aec416e80c82bae87f5c41, type: 3}
-  - {fileID: 2800000, guid: a354bcb686ec6544bb340270e70b8f91, type: 3}
-  - {fileID: 2800000, guid: 1e2d444ae9d5a4ff1b47ffec28d5165c, type: 3}
-  - {fileID: 2800000, guid: 44129b51b5849444dbbf124320f77401, type: 3}
-  - {fileID: 2800000, guid: c080e12d534f64fc48bffb53d9f55fba, type: 3}
-  - {fileID: 2800000, guid: f178146a44de340829e1c25c4ee4c072, type: 3}
-  WeaponSelectionBackgrounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  WeaponSelectionImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  WeaponAvailableColor: {r: 1, g: 1, b: 1, a: 1}
-  WeaponAmmoOutColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-  weaponWheelAmmoTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentAmmoAmounts: 010000000a000000140000000000000000000000000000000000000046000000
-  maxAmmoAmounts: 6400000050000000460000003c000000c8000000b80b00008813000064000000
   OnUse:
     m_PersistentCalls:
       m_Calls: []
@@ -2987,14 +2955,21 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  jumpPower: 12
+  jumpPower_Forward: 1
+  airControl: 0.1
+  gravityMultiplier: 4
   jumpAudioSource: {fileID: 82895562210044388}
   jumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
+  jump: 0
+  doubleJumped: 0
   OnJump:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  doubleJumpPower: 16
   doubleJumpAudioSource: {fileID: 82122157416134476}
   doubleJumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
@@ -3003,18 +2978,54 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  groundCheckDistance: 0.2
+  terminalVelocity: 60
+  fallMult: 2.5
+  isGrounded: 0
   landingAudioSource: {fileID: 82234244739353980}
   landingClips:
   - {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   OnLand:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114938810846430798}
+        m_MethodName: GetLandingSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  isDodging: 0
+  dodgeRate: 0.4
+  dodgeSpeed: 28
+  DodgeTimeDuration: 0.15
+  dodgeTimeScale: 0.02
+  dodgeSpeedupFactor: 1
+  dodgeMagicCost: 10
+  dodgeLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  OnDodgeBegan:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDodgeEnded:
+    m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isInHitStun: 0
-  skinnedMeshes:
+  stunMeshes:
   - {fileID: 137893836330158196}
   - {fileID: 137417391442393214}
+  - {fileID: 23547109046083074}
   hitStunCurrentTime: 0
   hitStunDuration: 2
   HitStunRenderToggleWait: 0.1
@@ -3024,152 +3035,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnHitStunEnded:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &114207120252397576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745226132108084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b744773419aab18418e82b2ebe2e1a68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thirdPersonUserControl: {fileID: 114339389852459282}
-  m_MovingTurnSpeed: 720
-  m_StationaryTurnSpeed: 360
-  m_JumpPower: 12
-  m_JumpPower_Forward: 0.1
-  m_DoubleJumpPower: 16
-  m_AirControl: 0
-  m_GravityMultiplier: 3
-  m_RunCycleLegOffset: 0.2
-  m_MoveSpeedMultiplier: 1.5
-  m_AnimSpeedMultiplier: 1
-  m_GroundCheckDistance: 0.28
-  terminalVelocity: 60
-  m_Animator: {fileID: 95884795619259730}
-  moveMultiplier: 10
---- !u!114 &114339389852459282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745226132108084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdfe20afea440c2479f8121ee057b0e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isChangingWeapon: 0
-  weaponChangeRate: 0.02
-  OnWeaponChangeTimeScale: 0.05
-  WeaponChangeModeTime: 1
-  WeaponChangeDuration: 1
-  OnWeaponChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SetVisible
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ResetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SetInvisible
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  WeaponChangeEnded:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SetInvisible
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ResetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SetVisible
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  camRigSimpleFollow: {fileID: 0}
-  camRigSimpleFollowRotNormal: {x: 30, y: 30, z: 0}
-  camRigSimpleFollowRotAiming: {x: 100, y: 100, z: 0}
-  mouseLook: {fileID: 0}
-  m_Cam: {fileID: 0}
-  CrosshairAnim: {fileID: 0}
-  m_DoubleJump: 0
-  doubleJumped: 0
-  CamFollow: {fileID: 0}
-  cameraOffset: {x: -0.5, y: 0.5}
-  cameraOffsetSmoothing: 10
-  isDodging: 0
-  dodgeRate: 0.6
-  dodgeSpeed: 14
-  DodgeTimeDuration: 0.25
-  dodgeTimeScale: 0.1
-  OnDodgeBegan:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnDodgeEnded:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -3187,9 +3052,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &136886608646034890
 CapsuleCollider:
   m_ObjectHideFlags: 0

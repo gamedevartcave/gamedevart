@@ -91,13 +91,15 @@ namespace CityBashers
 		void Start ()
 		{
 			playerActions = InControlActions.instance.playerActions;
-			ThirdPersonUserControl.instance.OnWeaponChange.AddListener (OnWeaponChange);
+			//PlayerController.instance.OnWeaponChange.AddListener (OnWeaponChange);
 			displayScore = 0;
 			targetScore = 0;
 			scoreText.text = 0.ToString ();
 			displayComboScore = 0;
 			targetComboScore = 0;
 			comboScoreText.text = string.Empty;
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
 		}
 
 		void Update ()
