@@ -66,9 +66,8 @@ namespace CityBashers
 
 		void Update ()
 		{
-			// Checks any camera (including Editor camera).
-			if (//updateWhenOffScreen &&
-				(worldMeshRend.isVisible || updateWhenOffScreen) && 
+			// Note: Checks any camera (including Editor camera).
+			if ((worldMeshRend.isVisible || updateWhenOffScreen) && 
 				GameController.instance.isPaused == false &&
 				Camera.main != null)
 			{
@@ -138,15 +137,17 @@ namespace CityBashers
 			else // Object is not visible on camera.
 			
 			{
+				if (UI_Element_Image != null)
+				{
+					if (UI_Element_Image.enabled == true)
+					{
+						UI_Element_Image.enabled = false;
+					}
+				}
+
 				if (showDistance == true)
 				{
-					if (UI_Element_Image != null)
-					{
-						if (UI_Element_Image.enabled == true)
-						{
-							UI_Element_Image.enabled = false;
-						}
-					}
+					
 				} 
 
 				else
