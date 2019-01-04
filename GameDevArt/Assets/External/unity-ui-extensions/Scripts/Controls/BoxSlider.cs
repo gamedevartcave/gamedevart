@@ -139,9 +139,9 @@ namespace UnityEngine.UI.Extensions
             // Update rects since other things might affect them even if value didn't change.
             UpdateVisuals();
 
-            var prefabType = UnityEditor.PrefabUtility.GetPrefabType(this);
-            if (prefabType != UnityEditor.PrefabType.Prefab && !Application.isPlaying)
-                CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
+            //var prefabType = UnityEditor.PrefabUtility.GetPrefabAssetType(this);
+            //if (prefabType != UnityEditor.PrefabType.Prefab && !Application.isPlaying)
+            //    CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
         }
 
 #endif // if UNITY_EDITOR

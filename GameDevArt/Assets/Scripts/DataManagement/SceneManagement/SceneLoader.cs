@@ -30,7 +30,7 @@ namespace CityBashers
 		public TextMeshProUGUI LoadingMissionText;
 		public string missionText;
 
-		private WaitForSecondsRealtime WaitDelay;
+		//private WaitForSecondsRealtime WaitDelay;
 		public UnityEvent OnInitialize;
 		public UnityEvent OnSceneLoadBegin;
 		public UnityEvent OnSceneLoadComplete;
@@ -50,7 +50,7 @@ namespace CityBashers
 
 		void Start () 
 		{
-			WaitDelay = new WaitForSecondsRealtime (delay);
+			//WaitDelay = new WaitForSecondsRealtime (delay);
 
 			// Checks if the currently loaded scene is the init scene.
 			if (SceneManager.GetActiveScene ().name == "init") 

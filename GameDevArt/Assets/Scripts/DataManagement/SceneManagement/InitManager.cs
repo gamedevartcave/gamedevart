@@ -24,7 +24,7 @@ namespace CityBashers
 
 		void OnApplicationQuit ()
 		{
-			Debug.Log ("Application ended after " + Time.unscaledTime + " seconds.");
+			//Debug.Log ("Application ended after " + Time.unscaledTime + " seconds.");
 		}
 	}
 }

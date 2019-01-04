@@ -144,6 +144,7 @@ namespace CityBashers
 		public UnityEvent OnFootstep;
 
 		[Header ("Jumping")]
+		public int jumpState;
 		public float jumpPower = 12f;
 		public float jumpPower_Forward = 2f;
 		[Space (10)]
@@ -259,6 +260,7 @@ namespace CityBashers
 			OnJump.AddListener (OnJumpBegan);
 			OnDoubleJump.AddListener (OnDoubleJumpBegan);
 			OnLand.AddListener (OnLanded);
+			isGrounded = true;
 
 			// Add yield times here.
 			hitStunYield = new WaitForSeconds (HitStunRenderToggleWait);
@@ -460,7 +462,7 @@ namespace CityBashers
 				ForceMode.Acceleration);
 
 			// Check ground distance based on velocity.
-			groundCheckDistance = playerRb.velocity.y < 0 ? origGroundCheckDistance : 0.01f;
+			groundCheckDistance = playerRb.velocity.y < 0 ? origGroundCheckDistance : 0.1f;
 		}
 
 		/// <summary>
@@ -508,12 +510,8 @@ namespace CityBashers
 				// Get grounded.
 				if (isGrounded == false && jump == true)
 				{
-					jump = false;
 					OnLand.Invoke ();
-					playerAnim.applyRootMotion = true;
 				}
-
-				isGrounded = true;
 			}
 
 			else // Is in air.
@@ -534,6 +532,57 @@ namespace CityBashers
 		{
 			if (playerActions.Jump.WasPressed == true)
 			{
+				// 0: none, 1: jump, 2: double jump
+				if (jumpState < 2)
+				{
+					jumpState++;
+
+					switch (jumpState)
+					{
+					case 0:
+						jump = true;
+						isGrounded = false;
+						break;
+
+					case 1: // Jump.
+
+						jump = true;
+						playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+						isGrounded = false;
+						playerAnim.applyRootMotion = false;
+						OnJump.Invoke ();
+
+						break;
+
+					case 2: // Double jump.
+
+						// Override vertical velocity.
+						playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+
+						// Add forward force.
+						playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
+
+						playerAnim.applyRootMotion = false;
+						//groundCheckDistance = 0.1f;
+						doubleJumped = true;
+
+						OnDoubleJump.Invoke ();
+
+						break;
+					}
+				}
+
+				/*
+				// Jump #1
+				if (jump == false && doubleJumped == false)
+				{
+					jump = true;
+					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+					isGrounded = false;
+					playerAnim.applyRootMotion = false;
+					OnJump.Invoke ();
+				}
+
 				// Is already in jump state.
 				if (jump == true)
 				{
@@ -568,6 +617,7 @@ namespace CityBashers
 					playerAnim.applyRootMotion = false;
 					OnJump.Invoke ();
 				}
+				*/
 			}
 		}
 
@@ -1184,6 +1234,11 @@ namespace CityBashers
 		/// </summary>
 		void OnLanded ()
 		{
+			jumpState = 0;
+			jump = false;
+			doubleJumped = false;
+			isGrounded = true;
+			playerAnim.applyRootMotion = true;
 		}
 		#endregion
 
