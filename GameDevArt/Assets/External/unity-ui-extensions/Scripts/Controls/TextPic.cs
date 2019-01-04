@@ -138,10 +138,10 @@ namespace UnityEngine.UI.Extensions
         protected void UpdateQuadImage()
         {
 #if UNITY_EDITOR
-            if (UnityEditor.PrefabUtility.GetPrefabType(this) == UnityEditor.PrefabType.Prefab)
-            {
-                return;
-            }
+            //if (UnityEditor.PrefabUtility.GetPrefabType(this) == UnityEditor.PrefabType.Prefab)
+            //{
+            //    return;
+            //}
 #endif
             m_OutputText = GetOutputText();
             m_ImagesVertexIndex.Clear();

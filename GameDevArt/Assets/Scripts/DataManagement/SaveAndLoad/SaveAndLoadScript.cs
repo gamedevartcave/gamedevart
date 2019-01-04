@@ -34,7 +34,7 @@ namespace CityBashers
 		public int targetResolutionWidth = 1920; // Screen resolution will be independent of quality settings.
 		public int targetResolutionHeight = 1080;
 		public bool isFullscreen;
-		public bool limitFramerate;
+		public bool limitFramerate = true;
 		public int targetFrameRate;
 		public float averageFpsTimer;
 
@@ -565,7 +565,7 @@ namespace CityBashers
 			{
 				if (targetFrameRate < 30 && targetFrameRate >= 0)
 				{
-					targetFrameRate = 60;
+					targetFrameRate = Screen.currentResolution.refreshRate;
 				} 
 
 				else
@@ -580,6 +580,8 @@ namespace CityBashers
 			{
 				targetFrameRate = -1;
 			}
+
+			//Debug.Log ("Application.targetFrameRate = " + Application.targetFrameRate);
 		}
 
 		// Variables stored in data files.

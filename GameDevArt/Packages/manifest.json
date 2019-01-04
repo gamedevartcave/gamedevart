@@ -1,10 +1,6 @@
 {
   "dependencies": {
     "com.unity.assetbundlebrowser": "1.7.0",
-    "com.unity.cinemachine": "2.2.7",
-    "com.unity.collab-proxy": "1.2.15",
-    "com.unity.formats.fbx": "2.0.1-preview.2",
-    "com.unity.inputsystem": "0.1.2-preview",
     "com.unity.package-manager-ui": "2.0.3",
     "com.unity.postprocessing": "2.1.2",
     "com.unity.purchasing": "2.0.3",
