@@ -5,7 +5,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
@@ -17,17 +16,17 @@ namespace CityBashers
 		public static PlayerController instance { get; private set; }
 
 		[Header ("General")]
-		public float capsuleHeight;
-		public Vector3 capsuleCenter;
-		[HideInInspector] public CapsuleCollider playerCol;
+		[HideInInspector] 
+		public CapsuleCollider playerCol;
 		private Rigidbody playerRb;
 		private Animator playerAnim;
+
 		public Animator PlayerUI;
 		public Transform startingPoint;
+		public PostProcessVolume postProcessUIVolume;
 
 		[Header ("Movement")]
-		[ReadOnlyAttribute]
-		public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
+		[ReadOnlyAttribute] public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
 		private float hInput;
 		private float vInput;
 
@@ -39,32 +38,29 @@ namespace CityBashers
 		public float moveSpeedMultiplier = 1f;
 		public float animSpeedMultiplier = 1f;
 
-		private float origGroundCheckDistance;
 		private float turnAmount;
 		private float forwardAmount;
 		public Vector3 groundNormal;
 
-		[Header ("Health")]
-		[ReadOnlyAttribute] 
-		public bool lostAllHealth;
+		[Header ("Health")] 
+		[HideInInspector] public bool lostAllHealth;
 		public int health;
 		public int StartHealth = 100;
 		public int MaximumHealth = 100;
+		public float healthUIVisibilityThreshold = 50;
 		public Slider HealthSlider;
 		public Slider HealthSlider_Smoothed;
 		public float healthSliderSmoothing;
 		public UnityEvent OnLostAllHealth;
-		public PostProcessVolume postProcessUIVolume;
-		public float healthUIVisibilityThreshold = 50;
 
 		[Header ("Magic")]
 		public int magic;
 		public int StartingMagic = 100;
 		public int MaximumMagic = 100;
+		public float magicUIVisibilityThreshold = 50;
 		public Slider MagicSlider;
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
-		public float magicUIVisibilityThreshold = 50;
 
 		[Header ("Aiming")]
 		public float normalFov = 65;
@@ -77,10 +73,11 @@ namespace CityBashers
 
 		[Header ("Camera rig")]
 		public SimpleFollow camRigSimpleFollow;
-		public Vector3 camRigSimpleFollowRotNormal = new Vector3 (5, 15, 0);
-		public Vector3 camRigSimpleFollowRotAiming;
+		public Vector3 camRigSimpleFollowRotNormal = new Vector3 (25, 25, 0);
+		public Vector3 camRigSimpleFollowRotAiming = new Vector3 (60, 60, 0);
+		[Space (10)]
 		public MouseLook mouseLook;
-		public Camera cam; // A reference to the main camera in the scenes transform
+		[HideInInspector] public Camera cam; // A reference to the main camera in the scenes transform
 		private Vector3 camForwardDirection; // The current forward direction of the camera
 		public Animator CrosshairAnim;
 
@@ -95,12 +92,11 @@ namespace CityBashers
 		[HideInInspector] public float nextFire;
 		public UnityEvent OnShoot;
 
-
 		[Header ("Weapons")]
 		public int currentWeaponIndex;
+		public RawImage DisplayedWeaponImage;
 		public GameObject[] Weapons;
 
-		public RawImage DisplayedWeaponImage;
 		//public TextMeshProUGUI DisplayedWeaponAmmoText;
 		/*
 		[Header ("WeaponWheel")]
@@ -119,8 +115,7 @@ namespace CityBashers
 		public TextMeshProUGUI[] weaponWheelAmmoTexts;
 		public int[] currentAmmoAmounts;
 		public int[] maxAmmoAmounts;
-		*/
-		/*
+
 		[Header ("Weapon changing")]
 		[ReadOnlyAttribute] public bool isChangingWeapon;
 		public float weaponChangeRate =  0.25f;
@@ -153,8 +148,6 @@ namespace CityBashers
 		public AudioSource jumpAudioSource;
 		public AudioClip[] jumpClips;
 		private int jumpSoundIndex;
-		[SerializeField] [ReadOnlyAttribute] public bool jump; // Jump state.
-		[SerializeField] [ReadOnlyAttribute] public bool doubleJumped; // Double jump state playerRb.velocity.z
 		public UnityEvent OnJump;
 
 		[Header ("Double jumping")]
@@ -165,7 +158,6 @@ namespace CityBashers
 		public UnityEvent OnDoubleJump;
 
 		[Header ("Landing")]
-		public float groundCheckDistance = 0.1f;
 		public float terminalVelocity = 10;
 		public float fallMult = 2.5f;
 		[ReadOnlyAttribute] public bool isGrounded;
@@ -225,16 +217,12 @@ namespace CityBashers
 			playerAnim = GetComponent<Animator> ();
 			playerRb = GetComponent<Rigidbody> ();
 			playerCol = GetComponent<CapsuleCollider> ();
-			capsuleHeight = playerCol.height;
-			capsuleCenter = playerCol.center;
 
 			// Set Rigidbody constraints.
 			playerRb.constraints = 
 				RigidbodyConstraints.FreezeRotationX | 
 				RigidbodyConstraints.FreezeRotationY | 
 				RigidbodyConstraints.FreezeRotationZ;
-			
-			origGroundCheckDistance = groundCheckDistance; // Log original ground check distance.
 
 			// Get the transform of the main camera
 			if (Camera.main != null) cam = Camera.main;
@@ -296,7 +284,7 @@ namespace CityBashers
 			CalculateRelativeMoveDirection ();
 	
 			// Pass all parameters to the character control script.
-			Move (move, false, jump, doubleJumped);
+			Move (move);
 		}
 
 		#region Movement
@@ -343,7 +331,7 @@ namespace CityBashers
 		/// <param name="crouch">If set to <c>true</c> crouch.</param>
 		/// <param name="jump">If set to <c>true</c> jump.</param>
 		/// <param name="doubleJump">If set to <c>true</c> double jump.</param>
-		public void Move (Vector3 move, bool crouch, bool jump, bool doubleJump)
+		public void Move (Vector3 move)
 		{
 			// Vonvert the world relative moveInput vector into a local-relative
 			// Turn amount and forward amount required to head in the desired direction.
@@ -355,20 +343,17 @@ namespace CityBashers
 			turnAmount = Mathf.Atan2 (move.x, move.z);
 			ApplyExtraTurnRotation ();
 			forwardAmount = move.z;
-	
-			// Check ground status.
-			CheckGroundStatus ();
 
 			// Control and velocity handling is different when grounded and airborne.
 			if (isGrounded == true)
 			{
-				if (doubleJumped == true) doubleJumped = false;
+				jumpState = 0;
 			}
 
 			else // Is airborne.
 
 			{
-				HandleAirborneMovement (doubleJump);
+				HandleAirborneMovement ();
 			}
 
 			// Send input and other state parameters to the animator
@@ -449,7 +434,7 @@ namespace CityBashers
 		/// Handles the airborne movement.
 		/// </summary>
 		/// <param name="doubleJump">If set to <c>true</c> double jump.</param>
-		void HandleAirborneMovement (bool doubleJump)
+		void HandleAirborneMovement ()
 		{
 			// Apply extra gravity from multiplier:
 			Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
@@ -460,9 +445,6 @@ namespace CityBashers
 			playerRb.AddRelativeForce (
 				new Vector3 (0, 0, Mathf.Abs (airControlForce)),
 				ForceMode.Acceleration);
-
-			// Check ground distance based on velocity.
-			groundCheckDistance = playerRb.velocity.y < 0 ? origGroundCheckDistance : 0.1f;
 		}
 
 		/// <summary>
@@ -492,36 +474,6 @@ namespace CityBashers
 			}
 		}
 
-		/// <summary>
-		/// Checks the current ground status.
-		/// </summary>
-		void CheckGroundStatus ()
-		{
-			RaycastHit hitInfo;
-
-			#if UNITY_EDITOR
-			Debug.DrawRay (transform.position, Vector3.down * groundCheckDistance, Color.yellow);
-			#endif
-
-			// 0.1f is a small offset to start the ray from inside the character
-			// it is also good to note that the transform position in the sample assets is at the base of the character
-			if (Physics.Raycast (transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, groundCheckDistance))
-			{
-				// Get grounded.
-				if (isGrounded == false && jump == true)
-				{
-					OnLand.Invoke ();
-				}
-			}
-
-			else // Is in air.
-
-			{
-				isGrounded = false;
-				playerAnim.applyRootMotion = false;
-			}
-		}
-
 		#endregion
 
 		#region Actions
@@ -540,13 +492,11 @@ namespace CityBashers
 					switch (jumpState)
 					{
 					case 0:
-						jump = true;
 						isGrounded = false;
 						break;
 
 					case 1: // Jump.
-
-						jump = true;
+						
 						playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
 						isGrounded = false;
 						playerAnim.applyRootMotion = false;
@@ -563,61 +513,21 @@ namespace CityBashers
 						playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
 						playerAnim.applyRootMotion = false;
-						//groundCheckDistance = 0.1f;
-						doubleJumped = true;
 
 						OnDoubleJump.Invoke ();
 
 						break;
 					}
 				}
+			}
+		}
 
-				/*
-				// Jump #1
-				if (jump == false && doubleJumped == false)
-				{
-					jump = true;
-					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-					isGrounded = false;
-					playerAnim.applyRootMotion = false;
-					OnJump.Invoke ();
-				}
-
-				// Is already in jump state.
-				if (jump == true)
-				{
-					// jump was pressed.
-					if (playerActions.Jump.WasPressed == true)
-					{
-						// has not double jumped while in air.
-						if (doubleJumped == false && isGrounded == false)
-						{
-							doubleJumped = true;
-
-							// Override vertical velocity.
-							playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
-
-							// Add forward force.
-							playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
-
-							playerAnim.applyRootMotion = false;
-							groundCheckDistance = 0.1f;
-
-							OnDoubleJump.Invoke ();
-						}
-					}
-				} 
-
-				else // Is not already in jump state.
-				
-				{
-					jump = true;
-					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-					isGrounded = false;
-					playerAnim.applyRootMotion = false;
-					OnJump.Invoke ();
-				}
-				*/
+		void OnCollisionEnter (Collision col)
+		{
+			// Check for walkable scenery layer.
+			if (col.collider.gameObject.layer == 9)
+			{
+				OnLand.Invoke ();
 			}
 		}
 
@@ -1235,8 +1145,6 @@ namespace CityBashers
 		void OnLanded ()
 		{
 			jumpState = 0;
-			jump = false;
-			doubleJumped = false;
 			isGrounded = true;
 			playerAnim.applyRootMotion = true;
 		}
