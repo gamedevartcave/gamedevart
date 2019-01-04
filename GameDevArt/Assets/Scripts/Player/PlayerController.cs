@@ -273,7 +273,10 @@ namespace CityBashers
 			CheckHealthSliders ();
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
-		}
+
+		    playerAnim.SetBool("OnGround",isGrounded);
+
+        }
 
 		void FixedUpdate ()
 		{
