@@ -18,14 +18,19 @@ namespace CityBashers
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            if (pc == null)
+            {
+                pc = PlayerController.instance;
+            }
+
             DodgeAction(animator);
         }
 
         void DodgeAction(Animator playerAnim)
         {
-            if (pc.magic > pc.dodgeMagicCost &&
-                (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
-            {
+            //if (pc.magic > pc.dodgeMagicCost &&
+            //    (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
+            //{
                 // Bypass dodging if near scenery collider. That way we cannot pass through it.
                 if (pc.playerActions.Move.Value.sqrMagnitude > 0)
                 {
@@ -60,8 +65,8 @@ namespace CityBashers
                     pc.isDodging = true;
 
                     playerAnim.SetFloat("DodgeDir", pc.playerActions.Dodge.Value);
-                    playerAnim.SetBool("Dodging", true);
-                    playerAnim.SetTrigger("Dodge");
+                    //playerAnim.SetBool("Dodging", true);
+                    //playerAnim.SetTrigger("Dodge");
                     pc.magic -= pc.dodgeMagicCost;
                     pc.PlayerUI.SetTrigger("Show");
 
@@ -85,7 +90,7 @@ namespace CityBashers
 
                 {
                 }
-            }
+            //}
 
             // Dodge time ran out.
             if (dodgeTimeRemain <= 0)

@@ -59,6 +59,7 @@ namespace CityBashers
 		public Slider MagicSlider;
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
+	    public bool unlimtedMagic;
 
 		[Header ("Aiming")]
 		public float normalFov = 65;
@@ -260,8 +261,15 @@ namespace CityBashers
 		{
 			ReadMovementInput ();
 
-			// Actions.
-			JumpAction ();
+            // REWORK
+		    if ((magic > dodgeMagicCost || unlimtedMagic ) && (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
+		    {
+		        playerAnim.SetBool("Dodging", true);
+		        playerAnim.SetTrigger("Dodge");
+            }
+
+		    // Actions.
+                JumpAction ();
 			AimAction ();
 			ShootAction ();
 			MeleeAction ();
