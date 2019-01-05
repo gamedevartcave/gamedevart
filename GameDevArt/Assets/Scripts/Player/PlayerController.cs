@@ -18,7 +18,7 @@ namespace CityBashers
 		[Header ("General")]
 		[HideInInspector] 
 		public CapsuleCollider playerCol;
-		private Rigidbody playerRb;
+		public Rigidbody playerRb;
 		private Animator playerAnim;
 
 		public Animator PlayerUI;
@@ -26,23 +26,21 @@ namespace CityBashers
 		public PostProcessVolume postProcessUIVolume;
 
 		[Header ("Movement")]
-		[ReadOnlyAttribute] public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
+		public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
 		private float hInput;
 		private float vInput;
 
-		public float movingTurnSpeed = 360;
-		public float stationaryTurnSpeed = 180;
-		public float moveMultiplier;
+        //public float runCycleLegOffset = 0.2f; // Specific to the character in sample assets, will need to be modified to work with others
+        //public float moveSpeedMultiplier = 1f;
+        //public float animSpeedMultiplier = 1f;
+	    public float moveSpeedMultiplier = 1f;
+	    public float movingTurnSpeed = 360;
+	    public float stationaryTurnSpeed = 180;
+	    public float moveMultiplier;
+	    public float animSpeedMultiplier = 1f;
 
-		public float runCycleLegOffset = 0.2f; // Specific to the character in sample assets, will need to be modified to work with others
-		public float moveSpeedMultiplier = 1f;
-		public float animSpeedMultiplier = 1f;
 
-		private float turnAmount;
-		private float forwardAmount;
-		public Vector3 groundNormal;
-
-		[Header ("Health")] 
+        [Header ("Health")] 
 		[HideInInspector] public bool lostAllHealth;
 		public int health;
 		public int StartHealth = 100;
@@ -61,6 +59,7 @@ namespace CityBashers
 		public Slider MagicSlider;
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
+	    public bool unlimtedMagic;
 
 		[Header ("Aiming")]
 		public float normalFov = 65;
@@ -172,7 +171,7 @@ namespace CityBashers
 		public float dodgeRate = 0.5f;
 		[Tooltip ("Speed at which player moves while dodging.")]
 		public float dodgeSpeed = 15;
-		private float nextDodge;
+
 		private float dodgeTimeRemain;
 		[Tooltip ("How long in unscaled time the dodge time lasts.")]
 		public float DodgeTimeDuration;
@@ -197,27 +196,28 @@ namespace CityBashers
 		public UnityEvent OnHitStunBegin;
 		public UnityEvent OnHitStunEnded;
 
-		private PlayerActions playerActions;
+		public PlayerActions playerActions;
 
 		void Awake ()
 		{
 			instance = this;
-
+		    //move = Vector3.zero;
 			for (int i = 0; i < stunMeshes.Length; i++)
 			{
 				stunMeshes [i].enabled = false;
 			}
 
 			this.enabled = false;
-		}
+		    // Find some components.
+            playerAnim = GetComponent<Animator>();
+		    playerRb = GetComponent<Rigidbody>();
+		    playerCol = GetComponent<CapsuleCollider>();
+
+
+        }
 
 		void Start ()
 		{
-			// Find some components.
-			playerAnim = GetComponent<Animator> ();
-			playerRb = GetComponent<Rigidbody> ();
-			playerCol = GetComponent<CapsuleCollider> ();
-
 			// Set Rigidbody constraints.
 			playerRb.constraints = 
 				RigidbodyConstraints.FreezeRotationX | 
@@ -253,17 +253,23 @@ namespace CityBashers
 			// Add yield times here.
 			hitStunYield = new WaitForSeconds (HitStunRenderToggleWait);
 
-			// Add quick reference for InControl player actions.
-			playerActions = InControlActions.instance.playerActions;
-		}
+		    // Add quick reference for InControl player actions.
+		    playerActions = InControlActions.instance.playerActions;
+        }
 
 		void Update ()
 		{
 			ReadMovementInput ();
 
-			// Actions.
-			JumpAction ();
-			DodgeAction ();
+            // REWORK
+		    if ((magic > dodgeMagicCost || unlimtedMagic ) && (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
+		    {
+		        playerAnim.SetBool("Dodging", true);
+		        playerAnim.SetTrigger("Dodge");
+            }
+
+		    // Actions.
+                JumpAction ();
 			AimAction ();
 			ShootAction ();
 			MeleeAction ();
@@ -275,16 +281,16 @@ namespace CityBashers
 			CheckHealthSliders ();
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
-		}
+
+		    playerAnim.SetBool("OnGround",isGrounded);
+
+        }
 
 		void FixedUpdate ()
 		{
 			GetBetterJumpVelocity ();
 			ClampVelocity (playerRb, terminalVelocity);
 			CalculateRelativeMoveDirection ();
-	
-			// Pass all parameters to the character control script.
-			Move (move);
 		}
 
 		#region Movement
@@ -294,8 +300,8 @@ namespace CityBashers
 		/// </summary>
 		void ReadMovementInput ()
 		{
-			// Read input shorthand.
-			hInput = 
+			//Read input shorthand.
+			hInput  = 
 				//playerActions.Shoot.Value > 0.5f ? 0 : 
 				playerActions.Move.Value.x;
 			vInput = 
@@ -325,42 +331,6 @@ namespace CityBashers
 		}
 
 		/// <summary>
-		/// Move for the specified move, crouch, jump and doubleJump.
-		/// </summary>
-		/// <param name="move">Move.</param>
-		/// <param name="crouch">If set to <c>true</c> crouch.</param>
-		/// <param name="jump">If set to <c>true</c> jump.</param>
-		/// <param name="doubleJump">If set to <c>true</c> double jump.</param>
-		public void Move (Vector3 move)
-		{
-			// Vonvert the world relative moveInput vector into a local-relative
-			// Turn amount and forward amount required to head in the desired direction.
-			if (move.sqrMagnitude > 1f) move.Normalize ();
-			move = transform.InverseTransformDirection (move);
-			move = Vector3.ProjectOnPlane (move, groundNormal);
-
-			// Update turning.
-			turnAmount = Mathf.Atan2 (move.x, move.z);
-			ApplyExtraTurnRotation ();
-			forwardAmount = move.z;
-
-			// Control and velocity handling is different when grounded and airborne.
-			if (isGrounded == true)
-			{
-				jumpState = 0;
-			}
-
-			else // Is airborne.
-
-			{
-				HandleAirborneMovement ();
-			}
-
-			// Send input and other state parameters to the animator
-			UpdateAnimator (move);
-		}
-
-		/// <summary>
 		/// Clamps the velocity on a given Rigidbody.
 		/// </summary>
 		/// <param name="rb">Rb.</param>
@@ -371,91 +341,9 @@ namespace CityBashers
 		}
 
 		/// <summary>
-		/// Updates the animator.
-		/// </summary>
-		/// <param name="move">Move.</param>
-		void UpdateAnimator (Vector3 move)
-		{
-			// Calculate which leg is behind, so as to leave that leg trailing in the jump animation.
-			// (This code is reliant on the specific run cycle offset in our animations,
-			// and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
-			float runCycle = Mathf.Repeat (
-				playerAnim.GetCurrentAnimatorStateInfo (0).normalizedTime + runCycleLegOffset, 1);
-
-			float jumpLeg = (runCycle < 0.5f ? 1 : -1) * forwardAmount;
-
-			// Update the animator parameters.
-			playerAnim.SetFloat ("Forward", forwardAmount, 0.1f, Time.deltaTime);
-			playerAnim.SetFloat ("Turn", turnAmount, 0.1f, Time.deltaTime);
-
-			// Update grounded state.
-			playerAnim.SetBool ("OnGround", isGrounded);
-
-			if (isGrounded == true)
-			{
-				playerAnim.SetFloat ("JumpLeg", jumpLeg);
-				playerAnim.SetFloat ("Jump", 0);
-
-				CamPosBasedOnAngle.instance.offset = new Vector2 (
-					CamPosBasedOnAngle.instance.offset.x, 
-					Mathf.Lerp (CamPosBasedOnAngle.instance.offset.y, 0, 2 * Time.deltaTime) 
-				);
-			} 
-
-			else // Is in mid air.
-
-			{
-				playerAnim.SetFloat ("Jump", playerRb.velocity.y);
-
-				CamPosBasedOnAngle.instance.offset = new Vector2 (
-					CamPosBasedOnAngle.instance.offset.x, 
-					Mathf.Lerp (CamPosBasedOnAngle.instance.offset.y, Mathf.Min (playerRb.velocity.y * CamPosBasedOnAngle.instance.offsetMult, 0), 2 * Time.deltaTime)
-				);
-			}
-				
-			// The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
-			// Which affects the movement speed because of the root motion.
-			if (playerAnim.GetBool ("Dodging") == false)
-			{
-				if (isGrounded == true && move.sqrMagnitude > 0)
-				{
-					playerAnim.speed = animSpeedMultiplier;
-				}
-
-				else // Don't use anim speed while airborne.
-
-				{
-					playerAnim.speed = 1;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Handles the airborne movement.
-		/// </summary>
-		/// <param name="doubleJump">If set to <c>true</c> double jump.</param>
-		void HandleAirborneMovement ()
-		{
-			// Apply extra gravity from multiplier:
-			Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
-			playerRb.AddForce (extraGravityForce);
-
-			// Handle air control.
-			float airControlForce = airControl * playerActions.Move.Value.magnitude;
-			playerRb.AddRelativeForce (
-				new Vector3 (0, 0, Mathf.Abs (airControlForce)),
-				ForceMode.Acceleration);
-		}
-
-		/// <summary>
 		/// Applies extra turn rotation when turning.
 		/// </summary>
-		void ApplyExtraTurnRotation ()
-		{
-			// Help the character turn faster (this is in addition to root rotation in the animation).
-			float turnSpeed = Mathf.Lerp (stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
-			transform.Rotate (0, turnAmount * turnSpeed * Time.deltaTime, 0);
-		}
+
 
 		/// <summary>
 		/// Essential for movement.
@@ -552,120 +440,7 @@ namespace CityBashers
 		/// <summary>
 		/// Dodges action.
 		/// </summary>
-		void DodgeAction ()
-		{
-			if (magic > dodgeMagicCost &&
-				(playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
-			{
-				// Bypass dodging if near scenery collider. That way we cannot pass through it.
-				if (playerActions.Move.Value.sqrMagnitude > 0)
-				{
-					if (Physics.Raycast (transform.position + new Vector3 (0, 1, 0), transform.forward, 3, dodgeLayerMask))
-					{
-						Debug.DrawRay (transform.position + new Vector3 (0, 1, 0), transform.forward * 3, Color.red, 1);
-						return;
-					}
-				} 
-
-				else // Not moving, check backwards.
-				
-				{
-					if (Physics.Raycast (transform.position + new Vector3 (0, 1, 0), -transform.forward, 3, dodgeLayerMask))
-					{
-						Debug.DrawRay (transform.position + new Vector3 (0, 1, 0), transform.forward * 3, Color.red, 1);
-						return;
-					}
-
-					transform.eulerAngles = new Vector3 (
-						transform.eulerAngles.x, 
-						transform.eulerAngles.y + 180, 
-						transform.eulerAngles.z);
-				}
-
-				// Get dodge angle.
-				// Assign to player animation.
-				if (Time.time > nextDodge)
-				{
-					isDodging = true;
-
-					playerAnim.SetFloat ("DodgeDir", playerActions.Dodge.Value);
-					playerAnim.SetTrigger ("Dodge");
-					playerAnim.SetBool ("Dodging", true);
-					magic -= dodgeMagicCost;
-					PlayerUI.SetTrigger ("Show");
-
-					moveMultiplier *= dodgeSpeedupFactor;
-					animSpeedMultiplier *= dodgeSpeedupFactor;
-					movingTurnSpeed *= dodgeSpeedupFactor;
-					stationaryTurnSpeed *= dodgeSpeedupFactor;
-
-					playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
-
-					dodgeTimeRemain = DodgeTimeDuration;
-					TimescaleController.instance.targetTimeScale = dodgeTimeScale;
-
-					OnDodgeBegan.Invoke ();
-					nextDodge = Time.time + dodgeRate;
-
-					//Debug.Log ("Dodged " + playerActions.Dodge.Value);
-				}
-
-				else // Not able to dodge yet.
-
-				{
-				}
-			}
-
-			// Dodge time ran out.
-			if (dodgeTimeRemain <= 0)
-			{
-				// If is dodging.
-				if (isDodging == true)
-				{
-					// Game is not paused.
-					if (GameController.instance.isPaused == false)
-					{
-						TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
-
-						// Reset dodging animation parameters.
-						playerAnim.SetFloat ("DodgeDir", 0);
-						playerAnim.ResetTrigger ("Dodge");
-						playerAnim.SetBool ("Dodging", false);
-
-						moveMultiplier /= dodgeSpeedupFactor;
-						animSpeedMultiplier /= dodgeSpeedupFactor;
-						movingTurnSpeed /= dodgeSpeedupFactor;
-						stationaryTurnSpeed /= dodgeSpeedupFactor;
-
-						playerAnim.updateMode = AnimatorUpdateMode.Normal;
-
-						OnDodgeEnded.Invoke ();
-						isDodging = false;
-					}
-				}
-			} 
-
-			else // There is dodge time.
-
-			{
-				// Game is not paused.
-				if (GameController.instance.isPaused == false)
-				{
-					// Decrease time left of dodging.
-					dodgeTimeRemain -= Time.unscaledDeltaTime;
-
-					Vector3 relativeDodgeDir = transform.InverseTransformDirection (
-						transform.forward *
-						(playerActions.Move.Value.sqrMagnitude > 0 ? 1 : -1) * 
-						dodgeSpeed * Time.unscaledDeltaTime);
-
-					transform.Translate (relativeDodgeDir, Space.Self);
-
-					playerAnim.SetBool ("Dodging", true);
-				}
-			}
-		}
-
+		
 		/// <summary>
 		/// Aim action.
 		/// </summary>
