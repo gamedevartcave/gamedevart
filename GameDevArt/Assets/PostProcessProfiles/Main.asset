@@ -225,7 +225,7 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: 2
+    value: -2.1
   contrast:
     overrideState: 0
     value: -13.7
@@ -1625,22 +1625,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
   m_Name: AutoExposure
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   filtering:
     overrideState: 1
-    value: {x: 35.578293, y: 91.35326}
+    value: {x: 1, y: 99}
   minLuminance:
     overrideState: 1
-    value: -4
+    value: -3.5
   maxLuminance:
     overrideState: 1
     value: 9
   keyValue:
     overrideState: 1
-    value: 0.44
+    value: 1
   eyeAdaptation:
     overrideState: 1
     value: 0

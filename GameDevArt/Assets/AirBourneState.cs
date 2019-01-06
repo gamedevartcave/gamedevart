@@ -28,12 +28,12 @@ namespace CityBashers
         void HandleAirborneMovement()
         {
             // Apply extra gravity from multiplier:
-            Vector3 extraGravityForce = (Physics.gravity * playerController.gravityMultiplier) - Physics.gravity;
-            playerController.playerRb.AddForce(extraGravityForce);
+			Vector3 extraGravityForce = (Physics.gravity * playerController.gravityMultiplier) - Physics.gravity;
+			playerController.playerRb.AddForce(extraGravityForce);
 
             // Handle air control.
-            float airControlForce = playerController.airControl * playerController.playerActions.Move.Value.magnitude;
-            playerController.playerRb.AddRelativeForce(
+			float airControlForce = playerController.airControl * playerController.playerActions.Move.Value.magnitude;
+			playerController.playerRb.AddRelativeForce(
                 new Vector3(0, 0, Mathf.Abs(airControlForce)),
                 ForceMode.Acceleration);
         }
