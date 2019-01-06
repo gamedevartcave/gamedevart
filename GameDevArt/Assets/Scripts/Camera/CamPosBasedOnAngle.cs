@@ -11,7 +11,6 @@ namespace CityBashers
 		public float offsetMult = 0.1f;
 		public AnimationCurve yPos;
 		public AnimationCurve zPos;
-		private Transform Cam;
 		private Transform Checker;
 		private Vector2 Eval;
 			
@@ -22,7 +21,6 @@ namespace CityBashers
 
 		void Start ()
 		{
-			Cam = transform;
 			Checker = transform.parent;
 		}
 
@@ -40,8 +38,8 @@ namespace CityBashers
 			);
 
 			// Set new pos.
-			Cam.transform.localPosition = new Vector3 (
-				Cam.transform.localPosition.x,
+			transform.localPosition = new Vector3 (
+				transform.localPosition.x,
 				Eval.x + offset.x,
 				-Eval.y + offset.y
 			);
