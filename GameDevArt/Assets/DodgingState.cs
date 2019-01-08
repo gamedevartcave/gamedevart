@@ -17,7 +17,8 @@ namespace CityBashers
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {
+        {            
+            // TODO fix hack
             if (pc == null)
             {
                 pc = PlayerController.instance;
@@ -31,32 +32,7 @@ namespace CityBashers
             //if (pc.magic > pc.dodgeMagicCost &&
             //    (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
             //{
-                // Bypass dodging if near scenery collider. That way we cannot pass through it.
-                if (pc.playerActions.Move.Value.sqrMagnitude > 0)
-                {
-                    if (Physics.Raycast(pc.transform.position + new Vector3(0, 1, 0), pc.transform.forward, 3,
-                        pc.dodgeLayerMask))
-                    {
-                        Debug.DrawRay(pc.transform.position + new Vector3(0, 1, 0), pc.transform.forward * 3, Color.red, 1);
-                        return;
-                    }
-                }
-
-                else // Not moving, check backwards.
-
-                {
-                    if (Physics.Raycast(pc.transform.position + new Vector3(0, 1, 0), -pc.transform.forward, 3,
-                        pc.dodgeLayerMask))
-                    {
-                        Debug.DrawRay(pc.transform.position + new Vector3(0, 1, 0), pc.transform.forward * 3, Color.red, 1);
-                        return;
-                    }
-
-                    pc.transform.eulerAngles = new Vector3(
-                        pc.transform.eulerAngles.x,
-                        pc.transform.eulerAngles.y + 180,
-                        pc.transform.eulerAngles.z);
-                }
+                
 
                 // Get dodge angle.
                 // Assign to player animation.

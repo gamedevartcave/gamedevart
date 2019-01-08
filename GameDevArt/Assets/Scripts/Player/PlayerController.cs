@@ -40,6 +40,7 @@ namespace CityBashers
 	    public float animSpeedMultiplier = 1f;
 
 
+
         [Header ("Health")] 
 		[HideInInspector] public bool lostAllHealth;
 		public int health;
@@ -264,12 +265,44 @@ namespace CityBashers
             // REWORK
 		    if ((magic > dodgeMagicCost || unlimtedMagic ) && (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
 		    {
-		        playerAnim.SetBool("Dodging", true);
-		        playerAnim.SetTrigger("Dodge");
+		        // Bypass dodging if near scenery collider. That way we cannot pass through it.
+		        if (playerActions.Move.Value.sqrMagnitude > 0)
+		        {
+		            if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+		                dodgeLayerMask))
+		            {
+		                Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+		            }
+		            else
+		            {
+		                playerAnim.SetBool("Dodging", true);
+		                playerAnim.SetTrigger("Dodge");
+                    }
+		        }
+
+		        //else // Not moving, check backwards.
+
+		        //{
+		        //    if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
+		        //        dodgeLayerMask))
+		        //    {
+		        //        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+		        //    }
+		        //    else
+		        //    {
+		        //        playerAnim.SetBool("Dodging", true);
+		        //        playerAnim.SetTrigger("Dodge");
+                //    }
+
+		        //    transform.eulerAngles = new Vector3(
+		        //        transform.eulerAngles.x,
+		        //        transform.eulerAngles.y + 180,
+		        //        transform.eulerAngles.z);
+		        //}
             }
 
 		    // Actions.
-                JumpAction ();
+            JumpAction ();
 			AimAction ();
 			ShootAction ();
 			MeleeAction ();

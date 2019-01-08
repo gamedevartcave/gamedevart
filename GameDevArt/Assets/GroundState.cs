@@ -103,18 +103,6 @@ namespace CityBashers
                 );
             }
 
-            else // Is in mid air.
-
-            {
-                playerAnim.SetFloat("Jump", playerController.playerRb.velocity.y);
-
-                CamPosBasedOnAngle.instance.offset = new Vector2(
-                    CamPosBasedOnAngle.instance.offset.x,
-                    Mathf.Lerp(CamPosBasedOnAngle.instance.offset.y,
-                        Mathf.Min(playerController.playerRb.velocity.y * CamPosBasedOnAngle.instance.offsetMult, 0),
-                        2 * Time.deltaTime)
-                );
-            }
 
             // The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
             // Which affects the movement speed because of the root motion.

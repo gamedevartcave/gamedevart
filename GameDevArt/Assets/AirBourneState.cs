@@ -15,14 +15,16 @@ namespace CityBashers
         //}
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            // TODO fix hack
             if (playerController == null)
             {
                 playerController = PlayerController.instance;
             }
-
+            
             HandleAirborneMovement();
+            AirBourneAnimation(animator);
         }
 
         void HandleAirborneMovement()
@@ -36,6 +38,18 @@ namespace CityBashers
             playerController.playerRb.AddRelativeForce(
                 new Vector3(0, 0, Mathf.Abs(airControlForce)),
                 ForceMode.Acceleration);
+        }
+
+        void AirBourneAnimation(Animator playerAnim)
+        {
+            playerAnim.SetFloat("Jump", playerController.playerRb.velocity.y);
+
+            CamPosBasedOnAngle.instance.offset = new Vector2(
+                CamPosBasedOnAngle.instance.offset.x,
+                Mathf.Lerp(CamPosBasedOnAngle.instance.offset.y,
+                    Mathf.Min(playerController.playerRb.velocity.y * CamPosBasedOnAngle.instance.offsetMult, 0),
+                    2 * Time.deltaTime)
+            );
         }
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
