@@ -12047,6 +12047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
+      propertyPath: OnShoot.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
       propertyPath: PlayerUI
       value: 
       objectReference: {fileID: 1194102904}
@@ -12210,6 +12215,26 @@ PrefabInstance:
       propertyPath: hitStunDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: unlimtedMagic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: OnShoot.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: OnShoot.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: OnShoot.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1140426263}
     - target: {fileID: 137893836330158196, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: m_CastShadows
@@ -45179,7 +45204,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 417043588}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1140426263}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
@@ -49866,6 +49891,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136072637}
   m_CullTransparentMesh: 0
+--- !u!1 &1140426263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1745226132108084, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 417043588}
+  m_PrefabAsset: {fileID: 0}
 --- !u!21 &1144882841
 Material:
   serializedVersion: 6
