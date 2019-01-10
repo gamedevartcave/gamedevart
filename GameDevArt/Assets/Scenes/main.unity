@@ -1931,6 +1931,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83338928}
   m_Mesh: {fileID: 4300002, guid: e0381fb3635971844a2d6bdec20fdc64, type: 3}
+--- !u!82 &83667006 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82234244739353980, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &109311484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &109311487 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7527759853260317457, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &109311488 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7527759853269404913, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &114454399
 GameObject:
   m_ObjectHideFlags: 0
@@ -8717,7 +8747,7 @@ MonoBehaviour:
   updateWhenOffScreen: 0
   showDistance: 0
   distanceRange: {x: 1, y: 200}
-  distanceReferencePos: {fileID: 0}
+  distanceReferencePos: {fileID: 109311488}
   currentDistance: 0
   distanceText: {fileID: 1468509782}
   distanceUpdateTime: 0.25
@@ -11294,6 +11324,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376055417}
   m_CullTransparentMesh: 0
+--- !u!82 &382486321 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82122157416134476, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &386216902
 GameObject:
   m_ObjectHideFlags: 0
@@ -13127,17 +13163,17 @@ PrefabInstance:
         type: 3}
       propertyPath: FollowPosX.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 109311488}
     - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: FollowPosY.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 109311488}
     - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: FollowPosZ.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 109311488}
     - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: FollowRotX
@@ -21722,18 +21758,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770630036}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d6b49b874f878e46b0cf9af7eaf6dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldObject: {fileID: 0}
+  WorldObject: {fileID: 770630037}
   worldMeshRend: {fileID: 0}
   worldOffset: {x: 0, y: 0, z: 0}
   updateWhenOffScreen: 1
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
-  distanceReferencePos: {fileID: 0}
+  distanceReferencePos: {fileID: 109311488}
   currentDistance: 0
   distanceText: {fileID: 0}
   distanceUpdateTime: 0.5
@@ -32290,6 +32326,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 816609817}
   m_CullTransparentMesh: 0
+--- !u!1 &820167652 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7527759853269701015, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &821546510
 GameObject:
   m_ObjectHideFlags: 0
@@ -32421,7 +32463,7 @@ MonoBehaviour:
   updateWhenOffScreen: 0
   showDistance: 1
   distanceRange: {x: 1, y: 200}
-  distanceReferencePos: {fileID: 0}
+  distanceReferencePos: {fileID: 109311488}
   currentDistance: 0
   distanceText: {fileID: 1057242656}
   distanceUpdateTime: 0.25
@@ -45703,7 +45745,7 @@ MonoBehaviour:
   updateWhenOffScreen: 0
   showDistance: 1
   distanceRange: {x: 1, y: 50}
-  distanceReferencePos: {fileID: 0}
+  distanceReferencePos: {fileID: 109311488}
   currentDistance: 0
   distanceText: {fileID: 1861131475}
   distanceUpdateTime: 0.25
@@ -51853,6 +51895,12 @@ Transform:
   m_Father: {fileID: 1762772820}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &1246420031 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7527759853264494033, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1247797300
 GameObject:
   m_ObjectHideFlags: 0
@@ -63812,7 +63860,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 109311484}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -63847,7 +63895,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[7].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1246420031}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[8].m_Target
@@ -63872,11 +63920,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 109311487}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_MethodName
-      value: SetActive
+      value: set_enabled
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -64101,12 +64149,12 @@ PrefabInstance:
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
-      value: EnableSkinnedMeshes
+      value: set_enabled
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[7].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -64133,6 +64181,11 @@ PrefabInstance:
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[11].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1521116691}
+    - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
+        type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbea631553e579f4db0813e22c25623b, type: 3}
 --- !u!114 &1628706859 stripped
@@ -64928,6 +64981,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
+--- !u!82 &1693851523 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82895562210044388, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1697944953
 GameObject:
   m_ObjectHideFlags: 0
@@ -70028,18 +70087,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896488255}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d6b49b874f878e46b0cf9af7eaf6dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldObject: {fileID: 0}
+  WorldObject: {fileID: 1896488256}
   worldMeshRend: {fileID: 0}
   worldOffset: {x: 0, y: 0, z: 0}
   updateWhenOffScreen: 1
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
-  distanceReferencePos: {fileID: 0}
+  distanceReferencePos: {fileID: 109311488}
   currentDistance: 0
   distanceText: {fileID: 0}
   distanceUpdateTime: 0.5
@@ -77637,6 +77696,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2019388255}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &2020492775 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82073380394943222, guid: 9833d5f7e71e095409623a8f67279abb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7527759852519798137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2027127432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80774,7 +80839,7 @@ PrefabInstance:
         type: 3}
       propertyPath: AimingOrigin
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 109311488}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: camRigSimpleFollow
@@ -80804,41 +80869,51 @@ PrefabInstance:
         type: 3}
       propertyPath: Weapons.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 820167652}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: footstepAudioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020492775}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: jumpAudioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1693851523}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: doubleJumpAudioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 382486321}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: landingAudioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 83667006}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: stunMeshes.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1246420031}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: stunMeshes.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1246420031}
     - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
       propertyPath: stunMeshes.Array.data[2]
       value: 
+      objectReference: {fileID: 1246420031}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: DisplayedWeaponImage
+      value: 
+      objectReference: {fileID: 1103667893}
+    - target: {fileID: 114938810846430798, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7527759853269404913, guid: 9833d5f7e71e095409623a8f67279abb,
         type: 3}
@@ -80899,6 +80974,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UpdateWhenOffscreen
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7527759853260317457, guid: 9833d5f7e71e095409623a8f67279abb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9833d5f7e71e095409623a8f67279abb, type: 3}
