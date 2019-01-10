@@ -2789,11 +2789,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4127ccc8c3ef458ace2aa99730100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsuleHeight: 1.6
-  capsuleCenter: {x: 0, y: 0, z: 0}
   playerCol: {fileID: 136886608646034890}
   PlayerUI: {fileID: 0}
   startingPoint: {fileID: 0}
+  postProcessUIVolume: {fileID: 0}
   move: {x: 0, y: 0, z: 0}
   movingTurnSpeed: 360
   stationaryTurnSpeed: 180
@@ -2806,6 +2805,7 @@ MonoBehaviour:
   health: 0
   StartHealth: 100
   MaximumHealth: 100
+  healthUIVisibilityThreshold: 50
   HealthSlider: {fileID: 0}
   HealthSlider_Smoothed: {fileID: 0}
   healthSliderSmoothing: 1
@@ -2902,15 +2902,13 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  postProcessUIVolume: {fileID: 0}
-  healthUIVisibilityThreshold: 50
   magic: 0
   StartingMagic: 50
   MaximumMagic: 100
+  magicUIVisibilityThreshold: 50
   MagicSlider: {fileID: 0}
   MagicSlider_Smoothed: {fileID: 0}
   magicSliderSmoothing: 1
-  magicUIVisibilityThreshold: 50
   normalFov: 65
   aimFov: 45
   aimSmoothing: 10
@@ -2935,9 +2933,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentWeaponIndex: 0
+  DisplayedWeaponImage: {fileID: 0}
   Weapons:
   - {fileID: 1401470674311128}
-  DisplayedWeaponImage: {fileID: 0}
   OnUse:
     m_PersistentCalls:
       m_Calls: []
@@ -2955,6 +2953,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  jumpState: 0
   jumpPower: 12
   jumpPower_Forward: 1
   airControl: 0.1
@@ -2962,8 +2961,6 @@ MonoBehaviour:
   jumpAudioSource: {fileID: 82895562210044388}
   jumpClips:
   - {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
-  jump: 0
-  doubleJumped: 0
   OnJump:
     m_PersistentCalls:
       m_Calls: []
@@ -2978,7 +2975,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  groundCheckDistance: 0.2
   terminalVelocity: 60
   fallMult: 2.5
   isGrounded: 0
