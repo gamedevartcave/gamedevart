@@ -998,7 +998,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: jntPelvis
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
