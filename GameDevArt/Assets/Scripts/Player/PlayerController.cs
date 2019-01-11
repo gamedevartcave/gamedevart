@@ -38,6 +38,10 @@ namespace CityBashers
 	    public float stationaryTurnSpeed = 180;
 	    public float moveMultiplier;
 	    public float animSpeedMultiplier = 1f;
+	    public float turnAmount;
+	    public float forwardAmount;
+	    public Vector3 groundNormal;
+
 
 
         [Header ("Health")] 
@@ -264,12 +268,32 @@ namespace CityBashers
             // REWORK
 		    if ((magic > dodgeMagicCost || unlimtedMagic ) && (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
 		    {
-		        playerAnim.SetBool("Dodging", true);
-		        playerAnim.SetTrigger("Dodge");
+		        // Bypass dodging if near scenery collider. That way we cannot pass through it.
+		        if (playerActions.Move.Value.sqrMagnitude > 0)
+		        {
+		            if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+		                dodgeLayerMask))
+		            {
+		                Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+		            }
+		            else
+		            {
+		                playerAnim.SetBool("Dodging", true);
+		                playerAnim.SetTrigger("Dodge");
+                    }
+		        }
             }
+            // Update Move Variables.
+		    if (move.sqrMagnitude > 1f) move.Normalize();
+		    move = transform.InverseTransformDirection(move);
+		    move = Vector3.ProjectOnPlane(move, groundNormal);
+            turnAmount = Mathf.Atan2(move.x, move.z);
+		    ApplyExtraTurnRotation();
+		    forwardAmount = move.z;
 
-		    // Actions.
-                JumpAction ();
+
+            // Actions.
+            JumpAction ();
 			AimAction ();
 			ShootAction ();
 			MeleeAction ();
@@ -293,12 +317,18 @@ namespace CityBashers
 			CalculateRelativeMoveDirection ();
 		}
 
-		#region Movement
-
-		/// <summary>
-		/// Reads input movement.
-		/// </summary>
-		void ReadMovementInput ()
+        #region Movement
+	    void ApplyExtraTurnRotation()
+	    {
+	        // Help the character turn faster (this is in addition to root rotation in the animation).
+	        float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed,
+	            forwardAmount);
+	        transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
+	    }
+        /// <summary>
+        /// Reads input movement.
+        /// </summary>
+        void ReadMovementInput ()
 		{
 			//Read input shorthand.
 			hInput  = 
@@ -345,22 +375,6 @@ namespace CityBashers
 		/// </summary>
 
 
-		/// <summary>
-		/// Essential for movement.
-		/// </summary>
-		public void OnAnimatorMove ()
-		{
-			// Overrides the default root motion.
-			// Allows us to modify the positional speed before it's applied.
-			if (isGrounded == true && Time.deltaTime > 0)
-			{
-				Vector3 v = (playerAnim.deltaPosition * moveSpeedMultiplier) / Time.deltaTime;
-
-				// Preserve the existing y part of the current velocity.
-				v.y = playerRb.velocity.y;
-				playerRb.velocity = v;
-			}
-		}
 
 		#endregion
 
