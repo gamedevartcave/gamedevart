@@ -266,7 +266,8 @@ namespace CityBashers
 			ReadMovementInput ();
 
             // REWORK
-		    if ((magic > dodgeMagicCost || unlimtedMagic ) && (playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
+		    if ((magic > dodgeMagicCost || unlimtedMagic ) && 
+				(playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
 		    {
 		        // Bypass dodging if near scenery collider. That way we cannot pass through it.
 		        if (playerActions.Move.Value.sqrMagnitude > 0)
@@ -280,6 +281,7 @@ namespace CityBashers
 		            {
 		                playerAnim.SetBool("Dodging", true);
 		                playerAnim.SetTrigger("Dodge");
+						Debug.Log ("Dodging.");
                     }
 		        }
             }
@@ -290,6 +292,10 @@ namespace CityBashers
             turnAmount = Mathf.Atan2(move.x, move.z);
 		    ApplyExtraTurnRotation();
 		    forwardAmount = move.z;
+
+			//playerRb.velocity = transform.forward * forwardAmount;
+			//playerRb.AddForce (transform.forward * forwardAmount * moveSpeedMultiplier, ForceMode.VelocityChange);
+
 
 
             // Actions.
@@ -312,9 +318,17 @@ namespace CityBashers
 
 		void FixedUpdate ()
 		{
-			GetBetterJumpVelocity ();
-			ClampVelocity (playerRb, terminalVelocity);
 			CalculateRelativeMoveDirection ();
+
+			playerRb.velocity = new Vector3 (
+				transform.forward.x * forwardAmount * moveSpeedMultiplier * Time.deltaTime,
+				playerRb.velocity.y,
+				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.deltaTime
+			);
+
+			//GetBetterJumpVelocity ();
+			ClampVelocity (playerRb, terminalVelocity);
+
 		}
 
         #region Movement
@@ -415,6 +429,7 @@ namespace CityBashers
 						playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
 						playerAnim.applyRootMotion = false;
+						playerAnim.SetTrigger ("DoubleJump");
 
 						OnDoubleJump.Invoke ();
 
@@ -436,6 +451,8 @@ namespace CityBashers
 		/// <summary>
 		/// Gets the better jump velocity.
 		/// </summary>
+		/// 
+		/*
 		void GetBetterJumpVelocity ()
 		{
 			// If we are falling.
@@ -450,6 +467,7 @@ namespace CityBashers
 				playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
 			}
 		}
+		*/
 
 		/// <summary>
 		/// Dodges action.
@@ -495,7 +513,28 @@ namespace CityBashers
 
 					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
 
-					Debug.Log ("Attacking from weapon " + currentWeaponIndex);
+					//Debug.Log ("Attacking from weapon " + currentWeaponIndex);
+
+					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Grounded") == true)
+					{
+						playerAnim.SetTrigger ("Combo1");
+						playerAnim.ResetTrigger ("Combo2");
+						playerAnim.ResetTrigger ("Combo3");
+					}
+
+					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Combo1") == true)
+					{
+						playerAnim.SetTrigger ("Combo2");
+						playerAnim.ResetTrigger ("Combo1");
+						playerAnim.ResetTrigger ("Combo3");
+					}
+
+					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Combo2") == true)
+					{
+						playerAnim.SetTrigger ("Combo3");
+						playerAnim.ResetTrigger ("Combo1");
+						playerAnim.ResetTrigger ("Combo2");
+					}
 				}
 			}
 		}

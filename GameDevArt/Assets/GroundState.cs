@@ -7,18 +7,10 @@ using UnityEngine;
 
 namespace CityBashers
 {
-
-
-
     public class GroundState : StateMachineBehaviour
     {
         private PlayerController pc;
-
-
-
-
         public float  runCycleLegOffset = 0.2f; // Specific to the character in sample assets, will need to be modified to work with others
-
 
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
@@ -29,24 +21,30 @@ namespace CityBashers
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            pc.jumpState = 0;
+			if (pc != null)
+			{
+				pc.jumpState = 0;
+			}
         }
 
         //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             // TODO fix hack
-            if (pc == null)
-            {
-                pc = PlayerController.instance;
-            }
+            //if (pc == null)
+            //{
+            //    pc = PlayerController.instance;
+            //}
 
-            Move(pc.move, animator);
+            //Move(pc.move, animator);
+			Move(PlayerController.instance.move, animator);
         }
 
         public void Move(Vector3 move, Animator playerAnim)
         {
             UpdateAnimator(move, playerAnim);
+
+			//Debug.Log (pc);
         }
 
         void UpdateAnimator(Vector3 move, Animator playerAnim)
@@ -57,16 +55,16 @@ namespace CityBashers
             float runCycle = Mathf.Repeat(
                 playerAnim.GetCurrentAnimatorStateInfo(0).normalizedTime + runCycleLegOffset, 1);
 
-            float jumpLeg = (runCycle < 0.5f ? 1 : -1) * pc.forwardAmount;
+			float jumpLeg = (runCycle < 0.5f ? 1 : -1) * PlayerController.instance.forwardAmount;
 
             // Update the animator parameters.
-            playerAnim.SetFloat("Forward", pc.forwardAmount, 0.1f, Time.deltaTime);
-            playerAnim.SetFloat("Turn", pc.turnAmount, 0.1f, Time.deltaTime);
+			playerAnim.SetFloat("Forward", PlayerController.instance.forwardAmount, 0.1f, Time.deltaTime);
+            //playerAnim.SetFloat("Turn", pc.turnAmount, 0.1f, Time.deltaTime);
 
             // Update grounded state.
-            playerAnim.SetBool("OnGround", pc.isGrounded);
+			playerAnim.SetBool("OnGround", PlayerController.instance.isGrounded);
 
-            if (pc.isGrounded == true)
+			if (PlayerController.instance.isGrounded == true)
             {
                 playerAnim.SetFloat("JumpLeg", jumpLeg);
                 playerAnim.SetFloat("Jump", 0);
@@ -82,9 +80,9 @@ namespace CityBashers
             // Which affects the movement speed because of the root motion.
             if (playerAnim.GetBool("Dodging") == false)
             {
-                if (pc.isGrounded == true && move.sqrMagnitude > 0)
+				if (PlayerController.instance.isGrounded == true && move.sqrMagnitude > 0)
                 {
-                    playerAnim.speed = pc.animSpeedMultiplier;
+					playerAnim.speed = PlayerController.instance.animSpeedMultiplier;
                 }
 
                 else // Don't use anim speed while airborne.
@@ -108,15 +106,17 @@ namespace CityBashers
             // Allows us to modify the positional speed before it's applied.
             if (Time.deltaTime > 0)
             {
+				if (pc != null)
+				{
+					if (pc.isGrounded)
+					{
+						Vector3 v = (animator.deltaPosition * pc.moveSpeedMultiplier) / Time.deltaTime;
 
-                if (pc.isGrounded)
-                {
-                    Vector3 v = (animator.deltaPosition * pc.moveSpeedMultiplier) / Time.deltaTime;
-
-                    // Preserve the existing y part of the current velocity.
-                    v.y = pc.playerRb.velocity.y;
-                    pc.playerRb.velocity = v;
-                }
+						// Preserve the existing y part of the current velocity.
+						v.y = pc.playerRb.velocity.y;
+						pc.playerRb.velocity = v;
+					}
+				}
             }
         }
 

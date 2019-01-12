@@ -50,6 +50,7 @@ namespace CityBashers
 			OnInitialize.Invoke ();
 			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+			Time.timeScale = 1;
 			this.gameObject.SetActive (false);
 		}
 

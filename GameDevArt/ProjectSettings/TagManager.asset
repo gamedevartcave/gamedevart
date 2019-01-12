@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - DontDestroyOnLoadInit
   - PostProcessVolume
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - UseZone
   - TimerZone
   - HurtZone
-  - 
+  - Weapon
   - 
   - 
   - 

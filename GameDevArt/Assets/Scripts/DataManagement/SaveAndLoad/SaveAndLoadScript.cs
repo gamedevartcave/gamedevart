@@ -69,6 +69,8 @@ namespace CityBashers
 			edgeDetection = cam.GetComponent<EdgeDetection> ();
 
 			SaveAndLoadScript.Instance.LoadSettingsData ();
+
+			LocalSceneLoader.Instance.FadeOutLoaderUI ();
 		}
 
 		/// <summary>

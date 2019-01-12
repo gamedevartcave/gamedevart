@@ -15,9 +15,12 @@ namespace CityBashers
 
 		public override void OnInspectorGUI ()
 		{
-			if (GUILayout.Button ("Reset position"))
+			if (Application.isPlaying)
 			{
-				playerController.OverridePosition (playerController.startingPoint.position);
+				if (GUILayout.Button ("Reset position"))
+				{
+					playerController.OverridePosition (playerController.startingPoint.position);
+				}
 			}
 
 			DrawDefaultInspector ();

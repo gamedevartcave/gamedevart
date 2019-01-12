@@ -29,20 +29,19 @@ namespace CityBashers
 
         void DodgeAction(Animator playerAnim)
         {
-            //if (pc.magic > pc.dodgeMagicCost &&
-            //    (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
-            //{
-                
-
+            if (pc.magic > pc.dodgeMagicCost &&
+               (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
+            {
                 // Get dodge angle.
                 // Assign to player animation.
                 if (Time.time > nextDodge)
                 {
                     pc.isDodging = true;
 
-                    playerAnim.SetFloat("DodgeDir", pc.playerActions.Dodge.Value);
-                    //playerAnim.SetBool("Dodging", true);
-                    //playerAnim.SetTrigger("Dodge");
+                    //playerAnim.SetFloat("DodgeDir", pc.playerActions.Dodge.Value);
+                    playerAnim.SetBool("Dodging", true);
+
+                    playerAnim.SetTrigger("Dodge");
                     pc.magic -= pc.dodgeMagicCost;
                     pc.PlayerUI.SetTrigger("Show");
 
@@ -66,7 +65,7 @@ namespace CityBashers
 
                 {
                 }
-            //}
+            }
 
             // Dodge time ran out.
             if (dodgeTimeRemain <= 0)
@@ -80,7 +79,7 @@ namespace CityBashers
                         TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
 
                         // Reset dodging animation parameters.
-                        playerAnim.SetFloat("DodgeDir", 0);
+                        //playerAnim.SetFloat("DodgeDir", 0);
                         playerAnim.ResetTrigger("Dodge");
                         playerAnim.SetBool("Dodging", false);
 
@@ -100,6 +99,8 @@ namespace CityBashers
             else // There is dodge time.
 
             {
+
+				Debug.Log ("isDodge time");
                 // Game is not paused.
                 if (GameController.instance.isPaused == false)
                 {
@@ -113,7 +114,8 @@ namespace CityBashers
 
                     pc.transform.Translate(relativeDodgeDir, Space.Self);
 
-                    playerAnim.SetBool("Dodging", true);
+					playerAnim.SetBool("Dodging", true);
+					Debug.Log ("Dodging");
                 }
             }
         }
@@ -122,7 +124,6 @@ namespace CityBashers
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         //{
-        //    
         //}
 
         // OnStateMove is called right after Animator.OnAnimatorMove()
