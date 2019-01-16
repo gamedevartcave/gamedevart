@@ -571,10 +571,9 @@ namespace CityBashers
 					targetFrameRate = 60;
 				} 
 
-				else
+				else // Target framerate unlimited.
 
 				{
-					TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
 				}
 			} 
 
@@ -585,6 +584,7 @@ namespace CityBashers
 			}
 
 			//Debug.Log ("Application.targetFrameRate = " + Application.targetFrameRate);
+			TargetFPS.Instance.SetTargetFramerate(targetFrameRate);
 		}
 
 		// Variables stored in data files.
