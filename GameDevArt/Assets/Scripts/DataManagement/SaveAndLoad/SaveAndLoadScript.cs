@@ -567,7 +567,8 @@ namespace CityBashers
 			{
 				if (targetFrameRate < 30 && targetFrameRate >= 0)
 				{
-					targetFrameRate = Screen.currentResolution.refreshRate;
+					//targetFrameRate = Screen.currentResolution.refreshRate;
+					targetFrameRate = 60;
 				} 
 
 				else
