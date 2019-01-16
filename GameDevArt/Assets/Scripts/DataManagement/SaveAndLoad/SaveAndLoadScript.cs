@@ -419,7 +419,7 @@ namespace CityBashers
 		{
 			if (AllowLoading == true)
 			{
-				#if !UNITY_EDITOR
+#if !UNITY_EDITOR
 				if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true) 
 				{
 					// Opens the save data.
@@ -442,12 +442,13 @@ namespace CityBashers
 				else
 
 				{
+					targetFrameRate = 60;
 					SaveSettingsData ();
 					LoadSettingsData ();
 				}
-				#endif
+#endif
 
-				#if UNITY_EDITOR
+#if UNITY_EDITOR
 				if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 				{
 					// Opens the save data.
@@ -470,6 +471,7 @@ namespace CityBashers
 				else
 				
 				{
+					targetFrameRate = 60;
 					SaveSettingsData ();
 					LoadSettingsData ();
 				}
