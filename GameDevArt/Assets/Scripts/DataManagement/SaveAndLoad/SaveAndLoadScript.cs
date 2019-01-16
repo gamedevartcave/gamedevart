@@ -346,6 +346,8 @@ namespace CityBashers
 				targetResolutionHeight = Screen.currentResolution.height;
 
 				// Audio settings.
+
+				// Gameplay settings.
 				targetFrameRate = Application.targetFrameRate;
 			}
 		}
@@ -442,7 +444,8 @@ namespace CityBashers
 				else
 
 				{
-					targetFrameRate = 60;
+					Application.targetFrameRate = 60;
+					limitFramerate = true;
 					SaveSettingsData ();
 					LoadSettingsData ();
 				}
@@ -471,7 +474,8 @@ namespace CityBashers
 				else
 				
 				{
-					targetFrameRate = 60;
+					Application.targetFrameRate = 60;
+					limitFramerate = true;
 					SaveSettingsData ();
 					LoadSettingsData ();
 				}
