@@ -450,19 +450,19 @@ namespace InControl
 #if !NETFX_CORE && !UNITY_WEBPLAYER && !UNITY_EDITOR_OSX && (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
 		public static string HKLM_GetString( string path, string key )
 		{
-			try
-			{
-				var rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey( path );
-				if (rk == null)
-				{
-					return "";
-				}
-				return (string) rk.GetValue( key );
-			}
-			catch
-			{
+			//try
+			//{
+			//	//var rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey( path );
+			//	if (rk == null)
+			//	{
+			//		return "";
+			//	}
+			//	return (string) rk.GetValue( key );
+			//}
+			//catch
+			//{
 				return null;
-			}
+			//}
 		}
 
 		public static string GetWindowsVersion()

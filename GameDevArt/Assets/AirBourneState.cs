@@ -33,9 +33,9 @@ namespace CityBashers
             Vector3 extraGravityForce = (Physics.gravity * pc.gravityMultiplier) - Physics.gravity;
             pc.playerRb.AddForce(extraGravityForce);
 
-            // Handle air control.
-            float airControlForce = pc.airControl * pc.playerActions.Move.Value.magnitude;
-            pc.playerRb.AddRelativeForce(
+			// Handle air control.
+			float airControlForce = pc.airControl * pc.MoveAxis.magnitude;
+			pc.playerRb.AddRelativeForce(
                 new Vector3(0, 0, Mathf.Abs(airControlForce)),
                 ForceMode.Acceleration);
         }

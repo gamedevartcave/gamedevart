@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
@@ -23,6 +24,14 @@ namespace CityBashers
 		public Animator PlayerUI;
 		public Transform startingPoint;
 		public PostProcessVolume postProcessUIVolume;
+
+		[Header("Input")]
+		public PlayerControls playerControls;
+
+		public Vector2 MoveAxis;
+		public Vector2 LookAxis;
+		public bool aimInput;
+		public bool shootInput;
 
 		[Header ("Movement")]
 		public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
@@ -62,7 +71,7 @@ namespace CityBashers
 		public Slider MagicSlider;
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
-	    public bool unlimtedMagic;
+	    public bool unlimitedMagic;
 
 		[Header ("Aiming")]
 		public float normalFov = 65;
@@ -98,36 +107,6 @@ namespace CityBashers
 		public int currentWeaponIndex;
 		public RawImage DisplayedWeaponImage;
 		public GameObject[] Weapons;
-
-		//public TextMeshProUGUI DisplayedWeaponAmmoText;
-		/*
-		[Header ("WeaponWheel")]
-		private bool weaponTexturesAssigned;
-		public TextMeshProUGUI currentSelectedWeaponAmmoText;
-		public RawImage CurrentSelectedWeaponImage;
-		public Texture2D[] weaponTextures;
-
-		[Space (10)]
-		public RawImage[] WeaponSelectionBackgrounds;
-		public RawImage[] WeaponSelectionImages;
-
-		public Color WeaponAvailableColor;
-		public Color WeaponAmmoOutColor;
-		[Space (10)]
-		public TextMeshProUGUI[] weaponWheelAmmoTexts;
-		public int[] currentAmmoAmounts;
-		public int[] maxAmmoAmounts;
-
-		[Header ("Weapon changing")]
-		[ReadOnlyAttribute] public bool isChangingWeapon;
-		public float weaponChangeRate =  0.25f;
-		private float nextWeaponChange;
-		public float OnWeaponChangeTimeScale = 0.05f;
-		[ReadOnlyAttribute] public float WeaponChangeModeTime = 1;
-		public float WeaponChangeDuration = 1;
-		public UnityEvent OnWeaponChange;
-		public UnityEvent WeaponChangeEnded;
-		*/
 		
 		[Header ("Using")]
 		public UnityEvent OnUse;
@@ -172,6 +151,7 @@ namespace CityBashers
 		[ReadOnlyAttribute] public bool isDodging;
 		[Tooltip ("Time between each dodge event.")]
 		public float dodgeRate = 0.5f;
+		private float nextDodge;
 		[Tooltip ("Speed at which player moves while dodging.")]
 		public float dodgeSpeed = 15;
 
@@ -199,7 +179,73 @@ namespace CityBashers
 		public UnityEvent OnHitStunBegin;
 		public UnityEvent OnHitStunEnded;
 
-		public PlayerActions playerActions;
+		void OnEnable()
+		{
+			// Set up new input system events.
+			playerControls.Player.Move.performed += HandleMove;
+			playerControls.Player.Move.Enable();
+
+			playerControls.Player.Look.performed += HandleLook;
+			playerControls.Player.Look.Enable();
+
+			playerControls.Player.Jump.performed += HandleJump;
+			playerControls.Player.Jump.Enable();
+
+			playerControls.Player.Aim.performed += HandleAim;
+			playerControls.Player.Aim.Enable();
+
+			playerControls.Player.Dodge.performed += HandleDodge;
+			playerControls.Player.Dodge.Enable();
+
+			playerControls.Player.Attack.performed += HandleAttack;
+			playerControls.Player.Attack.Enable();
+
+			playerControls.Player.Shoot.performed += HandleShoot;
+			playerControls.Player.Shoot.Enable();
+
+			playerControls.Player.Use.performed += HandleUse;
+			playerControls.Player.Use.Enable();
+
+			playerControls.Player.CameraChange.performed += HandleCameraChange;
+			playerControls.Player.CameraChange.Enable();
+
+			playerControls.Player.Ability.performed += HandleAbility;
+			playerControls.Player.Ability.Enable();
+		}
+
+		void OnDisable()
+		{
+			// Deregister from new input system events.
+			playerControls.Player.Move.performed -= HandleMove;
+			playerControls.Player.Move.Disable();
+
+			playerControls.Player.Look.performed -= HandleLook;
+			playerControls.Player.Look.Disable();
+
+			playerControls.Player.Jump.performed -= HandleJump;
+			playerControls.Player.Jump.Disable();
+
+			playerControls.Player.Aim.performed -= HandleAim;
+			playerControls.Player.Aim.Disable();
+
+			playerControls.Player.Dodge.performed -= HandleDodge;
+			playerControls.Player.Dodge.Disable();
+
+			playerControls.Player.Attack.performed -= HandleAttack;
+			playerControls.Player.Attack.Disable();
+
+			playerControls.Player.Shoot.performed -= HandleShoot;
+			playerControls.Player.Shoot.Disable();
+
+			playerControls.Player.Use.performed -= HandleUse;
+			playerControls.Player.Use.Disable();
+
+			playerControls.Player.CameraChange.performed -= HandleCameraChange;
+			playerControls.Player.CameraChange.Disable();
+
+			playerControls.Player.Ability.performed -= HandleAbility;
+			playerControls.Player.Ability.Disable();
+		}
 
 		void Awake ()
 		{
@@ -215,17 +261,15 @@ namespace CityBashers
             playerAnim = GetComponent<Animator>();
 		    playerRb = GetComponent<Rigidbody>();
 		    playerCol = GetComponent<CapsuleCollider>();
-
-
         }
 
 		void Start ()
 		{
-			// Set Rigidbody constraints.
-			playerRb.constraints = 
-				RigidbodyConstraints.FreezeRotationX | 
-				RigidbodyConstraints.FreezeRotationY | 
-				RigidbodyConstraints.FreezeRotationZ;
+			//// Set Rigidbody constraints.
+			//playerRb.constraints = 
+			//	RigidbodyConstraints.FreezeRotationX | 
+			//	RigidbodyConstraints.FreezeRotationY | 
+			//	RigidbodyConstraints.FreezeRotationZ;
 
 			// Get the transform of the main camera
 			if (Camera.main != null) cam = Camera.main;
@@ -255,56 +299,202 @@ namespace CityBashers
 
 			// Add yield times here.
 			hitStunYield = new WaitForSeconds (HitStunRenderToggleWait);
-
-		    // Add quick reference for InControl player actions.
-		    playerActions = InControlActions.instance.playerActions;
         }
+
+		#region InputActions
+		/// <summary>
+		/// Handles movement.
+		/// </summary>
+		void HandleMove(InputAction.CallbackContext context)
+		{
+			MoveAxis = context.ReadValue<Vector2>();
+			//Debug.Log(MoveAxis_Horizontal);
+		}
+
+		void HandleLook(InputAction.CallbackContext context)
+		{
+			LookAxis = context.ReadValue<Vector2>();
+			//Debug.Log("Mouse Delta: " + LookAxis);
+		}
+
+		void HandleJump(InputAction.CallbackContext context)
+		{
+			//jumpInput = context.ReadValue<float>() == 1 ? true : false;
+			//Debug.Log("Jumped: " + jumpInput);
+			//Debug.Log("Jumped");
+			JumpAction();
+		}
+
+		void HandleAim(InputAction.CallbackContext context)
+		{
+			aimInput = context.ReadValue<float>() == 1 ? true : false;
+			Debug.Log("Aimed: " + aimInput);
+		}
+
+		void HandleDodge(InputAction.CallbackContext context)
+		{
+			if (magic > dodgeMagicCost || unlimitedMagic)
+			{
+				// Bypass dodging if near scenery collider. That way we cannot pass through it.
+				if (MoveAxis.sqrMagnitude > 0)
+				{
+					// Cannot dodge, show line of sight.
+					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+						dodgeLayerMask))
+					{
+						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+						return;
+					}
+				}
+
+				else // No movement
+
+				{
+					// Cannot dodge, show line of sight.
+					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
+						dodgeLayerMask))
+					{
+						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
+						return;
+					}
+				}
+
+				// Get dodge angle.
+				// Assign to player animation.
+				if (Time.time > nextDodge)
+				{
+					// Set dodge state.
+					isDodging = true;
+					playerAnim.SetBool("Dodging", true);
+					playerAnim.SetTrigger("Dodge");
+
+					// Update UI elements.
+					magic -= dodgeMagicCost;
+					PlayerUI.SetTrigger("Show");
+
+					// Tweak movement amounts.
+					moveMultiplier *= dodgeSpeedupFactor;
+					animSpeedMultiplier *= dodgeSpeedupFactor;
+					movingTurnSpeed *= dodgeSpeedupFactor;
+					stationaryTurnSpeed *= dodgeSpeedupFactor;
+
+					playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+					// Set dodge time.
+					dodgeTimeRemain = DodgeTimeDuration;
+					TimescaleController.instance.targetTimeScale = dodgeTimeScale;
+
+					// Call events.
+					OnDodgeBegan.Invoke();
+					nextDodge = Time.time + dodgeRate;
+				}
+
+				else // Not able to dodge yet.
+
+				{
+				}
+			}			
+		}
+
+		/// <summary>
+		/// Updates dodge timing.
+		/// </summary>
+		void DodgeUpdate()
+		{
+			// Dodge time ran out.
+			if (dodgeTimeRemain <= 0)
+			{
+				// If is dodging.
+				if (isDodging == true)
+				{
+					// Game is not paused.
+					if (GameController.instance.isPaused == false)
+					{
+						TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
+
+						// Reset dodging animation parameters.
+						playerAnim.ResetTrigger("Dodge");
+						playerAnim.SetBool("Dodging", false);
+						playerAnim.updateMode = AnimatorUpdateMode.Normal;
+
+						// Reset movement amounts.
+						moveMultiplier /= dodgeSpeedupFactor;
+						animSpeedMultiplier /= dodgeSpeedupFactor;
+						movingTurnSpeed /= dodgeSpeedupFactor;
+						stationaryTurnSpeed /= dodgeSpeedupFactor;
+
+						// Call end dodge event.
+						OnDodgeEnded.Invoke();
+						isDodging = false;
+					}
+				}
+			}
+
+			else // There is dodge time.
+
+			{
+				//Debug.Log("isDodge time");
+				// Game is not paused.
+				if (GameController.instance.isPaused == false)
+				{
+					// Decrease time left of dodging.
+					dodgeTimeRemain -= Time.unscaledDeltaTime;
+
+					Vector3 relativeDodgeDir = transform.InverseTransformDirection(
+						transform.forward *
+						(MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
+						dodgeSpeed * Time.unscaledDeltaTime);
+
+					transform.Translate(relativeDodgeDir, Space.Self);
+
+					playerAnim.SetBool("Dodging", true);
+					//Debug.Log("Dodging");
+				}
+			}
+		}
+
+		void HandleAttack(InputAction.CallbackContext context)
+		{
+			AttackAction();
+			Debug.Log("Attack");
+		}
+
+		void HandleShoot(InputAction.CallbackContext context)
+		{
+			shootInput = context.ReadValue<float>() == 1 ? true : false;
+			Debug.Log("Shoot: " + shootInput + ". Is aiming: " + aimInput);
+		}
+
+		void HandleUse(InputAction.CallbackContext context)
+		{
+			UseAction();
+			Debug.Log("Use");
+		}
+
+		void HandleCameraChange(InputAction.CallbackContext context)
+		{
+			CameraChangeAction();
+			Debug.Log("Camera change");
+		}
+
+		void HandleAbility(InputAction.CallbackContext context)
+		{
+			AbilityAction();
+		}
+		#endregion
 
 		void Update ()
 		{
 			ReadMovementInput ();
-
-            // REWORK
-		    if ((magic > dodgeMagicCost || unlimtedMagic ) && 
-				(playerActions.DodgeLeft.WasPressed || playerActions.DodgeRight.WasPressed))
-		    {
-		        // Bypass dodging if near scenery collider. That way we cannot pass through it.
-		        if (playerActions.Move.Value.sqrMagnitude > 0)
-		        {
-		            if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
-		                dodgeLayerMask))
-		            {
-		                Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
-		            }
-		            else
-		            {
-		                playerAnim.SetBool("Dodging", true);
-		                playerAnim.SetTrigger("Dodge");
-						Debug.Log ("Dodging.");
-                    }
-		        }
-            }
-            // Update Move Variables.
-		    if (move.sqrMagnitude > 1f) move.Normalize();
-		    move = transform.InverseTransformDirection(move);
-		    move = Vector3.ProjectOnPlane(move, groundNormal);
-            turnAmount = Mathf.Atan2(move.x, move.z);
+			CalculateRelativeMoveDirection();
+			ApplyMoveAndTurn();
 		    ApplyExtraTurnRotation();
-		    forwardAmount = move.z;
 
-			//playerRb.velocity = transform.forward * forwardAmount;
-			//playerRb.AddForce (transform.forward * forwardAmount * moveSpeedMultiplier, ForceMode.VelocityChange);
-
-
-
-            // Actions.
-            JumpAction ();
-			AimAction ();
-			ShootAction ();
-			MeleeAction ();
-			UseAction ();
-			CameraChangeAction ();
-			AbilityAction ();
+			// Actions.
+			AimAction(); // Done
+			ShootAction(); // Done
+			GetCameraChangeSmoothing();
+			DodgeUpdate();
 
 			// UI updates.
 			CheckHealthSliders ();
@@ -312,13 +502,10 @@ namespace CityBashers
 			CheckHealthMagicIsLow ();
 
 		    playerAnim.SetBool("OnGround",isGrounded);
-
         }
 
 		void FixedUpdate ()
 		{
-			CalculateRelativeMoveDirection ();
-
 			playerRb.velocity = new Vector3 (
 				transform.forward.x * forwardAmount * moveSpeedMultiplier * Time.deltaTime,
 				playerRb.velocity.y,
@@ -327,41 +514,38 @@ namespace CityBashers
 
 			//GetBetterJumpVelocity ();
 			ClampVelocity (playerRb, terminalVelocity);
-
 		}
 
-        #region Movement
-	    void ApplyExtraTurnRotation()
-	    {
-	        // Help the character turn faster (this is in addition to root rotation in the animation).
-	        float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed,
-	            forwardAmount);
-	        transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
-	    }
-        /// <summary>
-        /// Reads input movement.
-        /// </summary>
-        void ReadMovementInput ()
+		void OnCollisionEnter(Collision col)
+		{
+			// Check for walkable scenery layer.
+			if (col.collider.gameObject.layer == 9)
+			{
+				OnLand.Invoke();
+			}
+		}
+
+		#region Movement
+		/// <summary>
+		/// Reads input movement.
+		/// </summary>
+		void ReadMovementInput()
 		{
 			//Read input shorthand.
-			hInput  = 
-				//playerActions.Shoot.Value > 0.5f ? 0 : 
-				playerActions.Move.Value.x;
-			vInput = 
-				//playerActions.Shoot.Value > 0.5f ? 0 : 
-				playerActions.Move.Value.y;
+			hInput = MoveAxis.x;
+			vInput = MoveAxis.y;
 		}
 
 		/// <summary>
 		/// Calculates the relative move direction.
 		/// </summary>
-		void CalculateRelativeMoveDirection ()
+		void CalculateRelativeMoveDirection()
 		{
 			// Using self-relative controls.
 			// Calculate camera relative direction to move.
 			if (cam != null)
 			{
-				camForwardDirection = Vector3.Scale (cam.transform.forward, new Vector3 (1, 0, 1)).normalized;
+				camForwardDirection = Vector3.Scale(cam.transform.forward, new Vector3(1, 0, 1)).normalized;
 				move = vInput * camForwardDirection + hInput * cam.transform.right;
 			}
 
@@ -373,6 +557,25 @@ namespace CityBashers
 			}
 		}
 
+		void ApplyMoveAndTurn()
+		{
+			move = transform.InverseTransformDirection(move);
+			move = Vector3.ProjectOnPlane(move, groundNormal);
+			turnAmount = Mathf.Atan2(move.x, move.z);
+			forwardAmount = move.z;
+		}
+
+		/// <summary>
+		/// Applies extra turn rotation when turning.
+		/// </summary>
+		void ApplyExtraTurnRotation()
+	    {
+	        // Help the character turn faster (this is in addition to root rotation in the animation).
+	        float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed,
+	            forwardAmount);
+	        transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
+	    }
+
 		/// <summary>
 		/// Clamps the velocity on a given Rigidbody.
 		/// </summary>
@@ -383,12 +586,6 @@ namespace CityBashers
 			rb.velocity = Vector3.ClampMagnitude (rb.velocity, _terminalVelocity);
 		}
 
-		/// <summary>
-		/// Applies extra turn rotation when turning.
-		/// </summary>
-
-
-
 		#endregion
 
 		#region Actions
@@ -397,80 +594,63 @@ namespace CityBashers
 		/// </summary>
 		void JumpAction ()
 		{
-			if (playerActions.Jump.WasPressed == true)
+			// 0: none, 1: jump, 2: double jump
+			if (jumpState < 2)
 			{
-				// 0: none, 1: jump, 2: double jump
-				if (jumpState < 2)
+				jumpState++;
+
+				switch (jumpState)
 				{
-					jumpState++;
+				case 0:
+					isGrounded = false;
+					break;
 
-					switch (jumpState)
-					{
-					case 0:
-						isGrounded = false;
-						break;
-
-					case 1: // Jump.
+				case 1: // Jump.
 						
-						playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-						isGrounded = false;
-						playerAnim.applyRootMotion = false;
-						OnJump.Invoke ();
+					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+					isGrounded = false;
+					playerAnim.applyRootMotion = false;
+					OnJump.Invoke ();
 
-						break;
+					break;
 
-					case 2: // Double jump.
+				case 2: // Double jump.
 
-						// Override vertical velocity.
-						playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+					// Override vertical velocity.
+					playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-						// Add forward force.
-						playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
+					// Add forward force.
+					playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-						playerAnim.applyRootMotion = false;
-						playerAnim.SetTrigger ("DoubleJump");
+					playerAnim.applyRootMotion = false;
+					playerAnim.SetTrigger ("DoubleJump");
 
-						OnDoubleJump.Invoke ();
+					OnDoubleJump.Invoke ();
 
-						break;
-					}
+					break;
 				}
 			}
-		}
-
-		void OnCollisionEnter (Collision col)
-		{
-			// Check for walkable scenery layer.
-			if (col.collider.gameObject.layer == 9)
-			{
-				OnLand.Invoke ();
-			}
+			
 		}
 
 		/// <summary>
 		/// Gets the better jump velocity.
 		/// </summary>
 		/// 
-		/*
-		void GetBetterJumpVelocity ()
-		{
-			// If we are falling.
-			if (playerRb.velocity.y < 0)
-			{
-				playerRb.velocity += Vector3.up * Physics.gravity.y * (fallMult - 1) * Time.deltaTime;
-			}
+		//void GetBetterJumpVelocity ()
+		//{
+		//	// If we are falling.
+		//	if (playerRb.velocity.y < 0)
+		//	{
+		//		playerRb.velocity += Vector3.up * Physics.gravity.y * (fallMult - 1) * Time.deltaTime;
+		//	}
 
-			// If we are moving up and not holding jump.
-			else if (playerRb.velocity.y > 0 && InControlActions.instance.playerActions.Jump.IsPressed == false)
-			{
-				playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
-			}
-		}
-		*/
-
-		/// <summary>
-		/// Dodges action.
-		/// </summary>
+		//	// If we are moving up and not holding jump.
+		//	else if (playerRb.velocity.y > 0 && InControlActions.instance.playerActions.Jump.IsPressed == false)
+		//	{
+		//		playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
+		//	}
+		//}
 		
 		/// <summary>
 		/// Aim action.
@@ -478,14 +658,14 @@ namespace CityBashers
 		void AimAction ()
 		{
 			// Aiming.
-			if (playerActions.Aim.Value > 0.5f)
+			if (aimInput)
 			{
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
 			}
 
-			// Not aiming.
-			if (playerActions.Aim.Value <= 0.5f)
+			else    // Not aiming.
+
 			{
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, normalFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
@@ -493,154 +673,75 @@ namespace CityBashers
 		}
 
 		/// <summary>
-		/// Shoot action.
+		/// Melee action.
 		/// </summary>
-		void ShootAction ()
+		void AttackAction()
 		{
-			if (playerActions.Shoot.Value > 0.5f)
+			if (aimInput)
+			{
+				return;
+			}
+
+			else // Not aiming.
+
+			{
+				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Grounded") == true)
+				{
+					playerAnim.SetTrigger("Combo1");
+					playerAnim.ResetTrigger("Combo2");
+					playerAnim.ResetTrigger("Combo3");
+				}
+
+				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Combo1") == true)
+				{
+					playerAnim.SetTrigger("Combo2");
+					playerAnim.ResetTrigger("Combo1");
+					playerAnim.ResetTrigger("Combo3");
+				}
+
+				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Combo2") == true)
+				{
+					playerAnim.SetTrigger("Combo3");
+					playerAnim.ResetTrigger("Combo1");
+					playerAnim.ResetTrigger("Combo2");
+				}
+			}			
+		}
+
+		void ShootAction()
+		{
+			if (shootInput)
 			{
 				if (Time.time > nextFire && GameController.instance.isPaused == false)
 				{
-					transform.rotation = Quaternion.LookRotation (AimNoPitchDir, Vector3.up);
+					transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
 
-					Shoot ();
+					Shoot();
 					nextFire = Time.time + currentFireRate;
 
 					GameController.instance.camShakeScript.shakeDuration = 1;
 					GameController.instance.camShakeScript.shakeAmount = 0.1f;
-					GameController.instance.camShakeScript.Shake ();
+					GameController.instance.camShakeScript.Shake();
 
-					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
+					VibrateController.instance.Vibrate(0.25f, 0.25f, 0.25f, 1);
 
-					//Debug.Log ("Attacking from weapon " + currentWeaponIndex);
-
-					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Grounded") == true)
-					{
-						playerAnim.SetTrigger ("Combo1");
-						playerAnim.ResetTrigger ("Combo2");
-						playerAnim.ResetTrigger ("Combo3");
-					}
-
-					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Combo1") == true)
-					{
-						playerAnim.SetTrigger ("Combo2");
-						playerAnim.ResetTrigger ("Combo1");
-						playerAnim.ResetTrigger ("Combo3");
-					}
-
-					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Combo2") == true)
-					{
-						playerAnim.SetTrigger ("Combo3");
-						playerAnim.ResetTrigger ("Combo1");
-						playerAnim.ResetTrigger ("Combo2");
-					}
+					//Debug.Log ("Shooting from weapon " + currentWeaponIndex);
 				}
+			}
+
+			else // Not shooting.
+
+			{
+
 			}
 		}
-
-		/// <summary>
-		/// Melee action.
-		/// </summary>
-		void MeleeAction ()
-		{
-			if (playerActions.Melee.WasPressed)
-			{
-				// TODO: Make combos.
-
-				//Debug.Log ("Melee action was pressed.");
-			}
-		}
-
-		/// <summary>
-		/// Weapon change action.
-		/// </summary>
-		/*
-		void WeaponChangeAction ()
-		{
-			if (playerActions.NextWeapon.IsPressed == true && 
-				GameController.instance.isPaused == false)
-			{
-				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
-				{
-					// Change to next weapon.
-					if (currentWeaponIndex < Weapons.Length - 1)
-					{
-						currentWeaponIndex++;
-					} 
-
-					else
-
-					{
-						currentWeaponIndex = 0;
-					}
-				}
-
-				isChangingWeapon = true;
-				SetWeaponIndex (currentWeaponIndex, true);
-				OnWeaponChange.Invoke ();
-
-				WeaponChangeModeTime = WeaponChangeDuration;
-				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
-				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
-			}
-
-			if (playerActions.PreviousWeapon.IsPressed == true && 
-				GameController.instance.isPaused == false)
-			{
-				if (Time.unscaledTime > nextWeaponChange && GameController.instance.isPaused == false)
-				{
-					// Change to previous weapon.
-					if (currentWeaponIndex > 0)
-					{
-						currentWeaponIndex--;
-					} 
-
-					else
-
-					{
-						currentWeaponIndex = Weapons.Length - 1;
-					}
-				}
-
-				isChangingWeapon = true;
-				SetWeaponIndex (currentWeaponIndex, false);
-				OnWeaponChange.Invoke ();
-
-				WeaponChangeModeTime = WeaponChangeDuration;
-				TimescaleController.instance.targetTimeScale = OnWeaponChangeTimeScale;
-				nextWeaponChange = Time.unscaledTime + weaponChangeRate;
-			}
-
-			if (WeaponChangeModeTime <= 0)
-			{
-				if (isChangingWeapon == true)
-				{
-					isChangingWeapon = false;
-					TimescaleController.instance.targetTimeScale = 1;
-					WeaponChangeEnded.Invoke ();
-				}
-			} 
-
-			else // There is weapon changing time
-
-			{
-				if (GameController.instance.isPaused == false)
-				{
-					WeaponChangeModeTime -= Time.unscaledDeltaTime;
-				}
-			}
-		}
-		*/
 
 		/// <summary>
 		/// Use action.
 		/// </summary>
 		void UseAction ()
 		{
-			if (playerActions.Use.WasPressed == true)
-			{
-				OnUse.Invoke ();
-			}
+			OnUse.Invoke ();
 		}
 
 		/// <summary>
@@ -648,12 +749,7 @@ namespace CityBashers
 		/// </summary>
 		void CameraChangeAction ()
 		{
-			if (playerActions.CameraChange.WasPressed)
-			{
-				isRight = !isRight;
-			}
-
-			GetCameraChangeSmoothing ();
+			isRight = !isRight;
 		}
 
 		/// <summary>
@@ -661,6 +757,7 @@ namespace CityBashers
 		/// </summary>
 		void GetCameraChangeSmoothing ()
 		{
+			// Is left.
 			if (isRight == false)
 			{
 				CamFollow.localPosition = Vector3.Lerp (CamFollow.localPosition, 
@@ -670,7 +767,7 @@ namespace CityBashers
 				return;
 			} 
 
-			else
+			else // Is right.
 
 			{
 				CamFollow.localPosition = Vector3.Lerp (CamFollow.localPosition,
@@ -686,10 +783,7 @@ namespace CityBashers
 		/// </summary>
 		void AbilityAction ()
 		{
-			if (playerActions.Ability.WasPressed)
-			{
-				Debug.Log ("Ability pressed.");
-			}
+			Debug.Log ("Ability pressed.");
 		}
 
 		#endregion
@@ -706,26 +800,20 @@ namespace CityBashers
 				healthSliderSmoothing * Time.deltaTime);
 
 			// Update post process UI effects.
-
 			float vignetteVal = -0.005f * HealthSlider.value + 0.3f;
 			postProcessUIVolume.profile.GetSetting <Vignette> ().intensity.value = 
 				vignetteVal * Mathf.Sin ((0.05f * (-health + MaximumHealth)) * Time.time); 
 
 			postProcessUIVolume.profile.GetSetting <MotionBlur> ().shutterAngle.value = -3.6f * HealthSlider.value + 360;
 
-			// Update regular post process effects.
-			//SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerGreenOutGreenIn.value =
-			//	Mathf.Clamp (3 * HealthSlider.value, 0, 100);
-			
-			//SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ColorGrading> ().mixerBlueOutBlueIn.value =
-			//	Mathf.Clamp (3 * HealthSlider.value, 0, 100);
-
+			// Update main post process effects.
 			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<ChromaticAberration> ().intensity.value = 
 				-0.005f * HealthSlider.value + 0.5f;
 
 			SaveAndLoadScript.Instance.postProcessVolume.profile.GetSetting<LensDistortion> ().intensity.value = 
 				0.5f * HealthSlider.value - 50f;
 			
+			// On lost all health.
 			if (health <= 0)
 			{
 				if (lostAllHealth == false)
@@ -790,109 +878,6 @@ namespace CityBashers
 
 			OnShoot.Invoke ();
 		}
-		#endregion
-
-		#region Weapons
-		/// <summary>
-		/// Sets the current weapon index.
-		/// </summary>
-		/// <param name="index">Index.</param>
-		/// <param name="reverse">If set to <c>true</c> reverse.</param>
-		/*
-		public void SetWeaponIndex (int index, bool reverse)
-		{
-			bool runout = true;
-
-			for (int i = 0; i < Weapons.Length; i++)
-			{
-				// If there is ammo in any weapon.
-				if (currentAmmoAmounts [i] != 0)
-				{
-					runout = false;
-				}
-
-				// If there is no ammo in any weapon.
-				if (runout == true)
-				{
-					return;
-				}
-			}
-
-			// Scrolling down.
-			if (reverse == true)
-			{
-				// Check for ammo has run out.
-				// Then restart loop.
-				if (currentAmmoAmounts [index] <= 0)
-				{
-					currentWeaponIndex++;
-
-					if (currentWeaponIndex >= Weapons.Length)
-					{
-						currentWeaponIndex = 0;
-					}
-
-					SetWeaponIndex (currentWeaponIndex, true);
-					return;
-				}
-			}
-
-			else // Scrolling up
-
-			{
-				// Check for ammo has run out.
-				// Then restart loop.
-				if (currentAmmoAmounts [index] <= 0)
-				{
-					currentWeaponIndex--;
-
-					if (currentWeaponIndex < 0)
-					{
-						currentWeaponIndex = Weapons.Length - 1;
-					}
-
-					SetWeaponIndex (currentWeaponIndex, false);
-					return;
-				}
-			}
-
-			// Update all weapon selections.
-			for (int i = 0; i < Weapons.Length; i++)
-			{	
-				Weapons [i].SetActive ((index == i) ? true : false);
-				weaponWheelAmmoTexts [i].text = currentAmmoAmounts [i] + " / " + maxAmmoAmounts [i];
-				WeaponSelectionBackgrounds [i].enabled = ((index == i) ? true : false);
-
-				// Sets all weapons without ammo to be not available.
-				if (currentAmmoAmounts [i] <= 0)
-				{
-					WeaponSelectionImages [i].color = WeaponAmmoOutColor;
-				} 
-
-				else // Weapon is available.
-				
-				{
-					WeaponSelectionImages [i].color = WeaponAvailableColor;
-				}
-
-				// Only called once to assign weapon textures.
-				if (weaponTexturesAssigned == false)
-				{
-					WeaponSelectionImages [i].texture = weaponTextures [i];
-				}
-			}
-
-			// Update displayed weapon.
-			DisplayedWeaponImage.texture = weaponTextures [index];
-			DisplayedWeaponAmmoText.text = currentAmmoAmounts [index] + " / " + maxAmmoAmounts [index];
-				
-			// Update current ammo selection for center of wheel.
-			CurrentSelectedWeaponImage.texture = weaponTextures [index];
-			currentSelectedWeaponAmmoText.text = currentAmmoAmounts [index] + " / " + maxAmmoAmounts [index];
-
-			weaponTexturesAssigned = true; // Prevents assigning of weapon textures the next time.
-		}
-		*/
 		#endregion
 
 		#region Footsteps

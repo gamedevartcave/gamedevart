@@ -24,13 +24,13 @@ namespace CityBashers
                 pc = PlayerController.instance;
             }
 
-            DodgeAction(animator);
+            //DodgeAction(animator);
         }
 
         void DodgeAction(Animator playerAnim)
         {
-            if (pc.magic > pc.dodgeMagicCost &&
-               (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
+            if ((pc.magic > pc.dodgeMagicCost || pc.unlimitedMagic))// &&
+               //(pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
             {
                 // Get dodge angle.
                 // Assign to player animation.
@@ -109,7 +109,7 @@ namespace CityBashers
 
                     Vector3 relativeDodgeDir = pc.transform.InverseTransformDirection(
                         pc.transform.forward *
-                        (pc.playerActions.Move.Value.sqrMagnitude > 0 ? 1 : -1) *
+                        (pc.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
                         pc.dodgeSpeed * Time.unscaledDeltaTime);
 
                     pc.transform.Translate(relativeDodgeDir, Space.Self);
