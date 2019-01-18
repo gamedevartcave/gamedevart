@@ -65,13 +65,27 @@ namespace CityBashers
 			GUI.backgroundColor = new Color (1, 0.5f, 0.5f, 1);
 			if (GUILayout.Button ("Delete", style)) 
 			{
-				savescript.DeletePlayerDataMain ();
+				if (savescript != null)
+				{
+					savescript.DeletePlayerDataMain();
+				}
+				else
+				{
+					SaveAndLoadScript.DeletePlayerDataMainFile();
+				}
 			}
 
 			// DELETE (EDITOR)
 			if (GUILayout.Button ("Delete (Editor)", style)) 
 			{
-				savescript.DeletePlayerDataEditor ();
+				if (savescript != null)
+				{
+					savescript.DeletePlayerDataEditor();
+				}
+				else
+				{
+					SaveAndLoadScript.DeletePlayerDataEditorFile();
+				}
 			}
 
 			GUILayout.EndHorizontal ();
@@ -103,13 +117,27 @@ namespace CityBashers
 			GUI.backgroundColor = new Color (1, 0.5f, 0.5f, 1);
 			if (GUILayout.Button ("Delete", style)) 
 			{
-				savescript.DeleteSettingsDataMain ();
+				if (savescript != null)
+				{
+					savescript.DeleteSettingsDataMain();
+				}
+				else
+				{
+					SaveAndLoadScript.DeleteSettingsDataMainFile();
+				}
 			}
 
 			// DELETE (EDITOR)
 			if (GUILayout.Button ("Delete (Editor)", style)) 
 			{
-				savescript.DeleteSettingsDataEditor ();
+				if (savescript != null)
+				{
+					savescript.DeleteSettingsDataEditor();
+				}
+				else
+				{
+					SaveAndLoadScript.DeleteSettingsDataEditorFile();
+				}
 			}
 
 			GUILayout.EndHorizontal ();

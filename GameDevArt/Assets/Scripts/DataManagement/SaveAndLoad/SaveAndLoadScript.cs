@@ -199,6 +199,18 @@ namespace CityBashers
 			}
 		}
 
+		public static void DeletePlayerDataEditorFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_PlayerConfig_Editor.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_PlayerConfig_Editor.dat");
+
+				Debug.Log("<color=red>Deleted player data</color>\n" +
+					Application.persistentDataPath + "/default_PlayerConfig_Editor.dat"
+				);
+			}
+		}
+
 		/// <summary>
 		/// Deletes the main player data.
 		/// </summary>
@@ -210,6 +222,18 @@ namespace CityBashers
 
 				Debug.Log ("<color=red>Deleted player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
+				);
+			}
+		}
+
+		public static void DeletePlayerDataMainFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_PlayerConfig.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_PlayerConfig.dat");
+
+				Debug.Log("<color=red>Deleted player data</color>\n" +
+					Application.persistentDataPath + "/default_PlayerConfig.dat"
 				);
 			}
 		}
@@ -229,6 +253,18 @@ namespace CityBashers
 			}
 		}
 
+		public static void DeleteSettingsDataEditorFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_SettingsConfig_Editor.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_SettingsConfig_Editor.dat");
+
+				Debug.Log("<color=red>Deleted settings data</color>\n" +
+					Application.persistentDataPath + "/default_SettingsConfig_Editor.dat"
+				);
+			}
+		}
+
 		/// <summary>
 		/// Deletes the main settings data.
 		/// </summary>
@@ -239,6 +275,17 @@ namespace CityBashers
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 				Debug.Log ("<color=red>Deleted settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"
+				);
+			}
+		}
+
+		public static void DeleteSettingsDataMainFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_SettingsConfig.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_SettingsConfig.dat");
+				Debug.Log("<color=red>Deleted settings data</color>\n" +
+					Application.persistentDataPath + "/default_SettingsConfig.dat"
 				);
 			}
 		}
