@@ -45,7 +45,7 @@ namespace CityBashers
 		void Update ()
 		{
 			// While aiming.
-			if (playerActions.Aim.Value > 0.5f)
+			if (PlayerController.instance.aimInput)
 			{
 				// Pressed lock on button (left).
 				if (playerActions.LockOnLeft.WasPressed)

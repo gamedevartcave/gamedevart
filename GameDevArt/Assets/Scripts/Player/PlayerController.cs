@@ -211,6 +211,9 @@ namespace CityBashers
 
 			playerControls.Player.Ability.performed += HandleAbility;
 			playerControls.Player.Ability.Enable();
+
+			playerControls.Player.Pause.performed += HandlePause;
+			playerControls.Player.Pause.Enable();
 		}
 
 		void OnDisable()
@@ -245,6 +248,9 @@ namespace CityBashers
 
 			playerControls.Player.Ability.performed -= HandleAbility;
 			playerControls.Player.Ability.Disable();
+
+			playerControls.Player.Pause.performed -= HandlePause;
+			playerControls.Player.Pause.Disable();
 		}
 
 		void Awake ()
@@ -480,6 +486,17 @@ namespace CityBashers
 		void HandleAbility(InputAction.CallbackContext context)
 		{
 			AbilityAction();
+			Debug.Log("Ability button pressed.");
+		}
+
+		void HandlePause(InputAction.CallbackContext context)
+		{
+			if (lostAllHealth == false)
+			{
+				GameController.instance.CheckPause();
+			}
+
+			Debug.Log("Pause button pressed");
 		}
 		#endregion
 

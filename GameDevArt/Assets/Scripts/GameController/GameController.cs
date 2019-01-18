@@ -69,18 +69,18 @@ namespace CityBashers
 
 		[Header ("Pausing")]
 		[ReadOnlyAttribute] public bool isPaused;
+		public float unpauseCooldown = 0.25f;
+		private float nextUnpause;
 		public MenuNavigation activeMenu;
 		public MenuNavigation firstActiveMenu;
 		public UnityEvent OnPause;
 		public UnityEvent OnUnpause;
-
+		
 		[Header ("Post processing")]
 		public float targetDofDistance;
 		public float dofSmoothingIn = 5.0f;
 		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;
-
-		private PlayerActions playerActions;
 
 		void Awake ()
 		{
@@ -90,8 +90,6 @@ namespace CityBashers
 
 		void Start ()
 		{
-			playerActions = InControlActions.instance.playerActions;
-			//PlayerController.instance.OnWeaponChange.AddListener (OnWeaponChange);
 			displayScore = 0;
 			targetScore = 0;
 			scoreText.text = 0.ToString ();
@@ -104,14 +102,6 @@ namespace CityBashers
 
 		void Update ()
 		{
-			if (playerActions.Pause.WasPressed)
-			{
-				if (PlayerController.instance.lostAllHealth == false)
-				{
-					CheckPause ();
-				}
-			}
-
 			if (isPaused == false)
 			{
 				GetDepthOfField ();
@@ -120,6 +110,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Gets score value.
+		/// </summary>
 		void GetScore ()
 		{
 			if (targetScore - displayScore >= 0.5f)
@@ -141,6 +134,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Gets combo value.
+		/// </summary>
 		void GetCombo ()
 		{
 			if (targetComboScore - displayComboScore >= 0.5f)
@@ -162,6 +158,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Gets depth of field value to be used on post processing using raycasts.
+		/// </summary>
 		void GetDepthOfField ()
 		{
 			RaycastHit hit;
@@ -169,7 +168,8 @@ namespace CityBashers
 			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, maxDofDistance))
 			{
 				// While moving.
-				if (playerActions.CamRot.Value.magnitude > 0.05f || playerActions.Move.Value.magnitude > 0.25f)
+				if (PlayerController.instance.MoveAxis.sqrMagnitude > 0.05f ||
+					PlayerController.instance.LookAxis.normalized.sqrMagnitude > 0.25f)
 				{
 					targetDofDistance = Vector3.Distance (
 						Camera.main.transform.position, 
@@ -227,6 +227,9 @@ namespace CityBashers
 			#endif
 		}
 
+		/// <summary>
+		/// Starts tracking time.
+		/// </summary>
 		public void StartTrackingTime ()
 		{
 			if (trackTime == false)
@@ -238,6 +241,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Stops tracking time.
+		/// </summary>
 		public void StopTrackingTime ()
 		{
 			if (trackTime == true)
@@ -262,29 +268,42 @@ namespace CityBashers
 			}
 		}
 
-		void CheckPause ()
+		/// <summary>
+		/// Toggle pause and unpause state.
+		/// </summary>
+		public void CheckPause ()
 		{
-			if (activeMenu == firstActiveMenu)
+			if (Time.unscaledTime > nextUnpause)
 			{
-				isPaused = !isPaused;
-			}
+				if (activeMenu == firstActiveMenu)
+				{
+					isPaused = !isPaused;
+				}
 
-			if (isPaused && activeMenu == firstActiveMenu)
-			{
-				DoPause ();
-			}
+				if (isPaused && activeMenu == firstActiveMenu)
+				{
+					DoPause();
+				}
 
-			if (!isPaused && activeMenu == firstActiveMenu)
-			{
-				DoUnpause ();
+				if (!isPaused && activeMenu == firstActiveMenu)
+				{
+					DoUnpause();
+				}
 			}
 		}
 
+		/// <summary>
+		/// Sets chosen active menu.
+		/// </summary>
+		/// <param name="newActiveMenu"></param>
 		public void SetActiveMenu (MenuNavigation newActiveMenu)
 		{
 			activeMenu = newActiveMenu;
 		}
 
+		/// <summary>
+		/// Pauses the game.
+		/// </summary>
 		public void DoPause ()
 		{
 			isPaused = true;
@@ -294,18 +313,17 @@ namespace CityBashers
 			OnPause.Invoke ();
 		}
 
+		/// <summary>
+		/// Unpauses the game.
+		/// </summary>
 		public void DoUnpause ()
 		{
 			Time.timeScale = TimescaleController.instance.targetTimeScale;
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 			isPaused = false;
+			nextUnpause = Time.unscaledTime + unpauseCooldown;
 			OnUnpause.Invoke ();
-		}
-
-		public void OnWeaponChange ()
-		{
-			
 		}
 	}
 }

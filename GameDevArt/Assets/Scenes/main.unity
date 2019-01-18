@@ -8986,7 +8986,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveMenu: 0
-  scrollSpeed: 0.25
   backButton: {fileID: 757261642}
   firstSelectable: {fileID: 981493283}
   currentSelectable: {fileID: 0}
@@ -18304,7 +18303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveMenu: 0
-  scrollSpeed: 0.25
   backButton: {fileID: 458242985}
   firstSelectable: {fileID: 165718427}
   currentSelectable: {fileID: 0}
@@ -19356,7 +19354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveMenu: 0
-  scrollSpeed: 0.25
   backButton: {fileID: 531715331}
   firstSelectable: {fileID: 531715333}
   currentSelectable: {fileID: 0}
@@ -36623,7 +36620,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveMenu: 0
-  scrollSpeed: 0.25
   backButton: {fileID: 1746431039}
   firstSelectable: {fileID: 1186106494}
   currentSelectable: {fileID: 0}
@@ -50839,7 +50835,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveMenu: 0
-  scrollSpeed: 0.25
   backButton: {fileID: 499494215}
   firstSelectable: {fileID: 1854538361}
   currentSelectable: {fileID: 0}
@@ -65573,7 +65568,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveMenu: 0
-  scrollSpeed: 0.25
   backButton: {fileID: 0}
   firstSelectable: {fileID: 1667086126}
   currentSelectable: {fileID: 0}
@@ -69766,7 +69760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b766287519dfe346b1454953d50bfdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAmount: 1
+  moveAmount: 0.25
   menuNav: {fileID: 1247797302}
 --- !u!1 &1861131473
 GameObject:

@@ -9,10 +9,6 @@ namespace CityBashers
 		public static MenuNavigation activeMenu { get; protected set; }
 		[ReadOnlyAttribute] public bool isActiveMenu;
 
-		// Scrolling
-		public float scrollSpeed;
-		private float nextScroll;
-
 		// Button assets
 		public GameObject backButton;
 		public Selectable firstSelectable;
@@ -21,7 +17,6 @@ namespace CityBashers
 
 		// Misc
 		private CanvasGroup canvasGroup;
-		public PlayerActions playerActions;
 		public PointerEventData eventData;
 
 		void Awake ()
@@ -40,14 +35,25 @@ namespace CityBashers
 		void OnInitialize ()
 		{
 			FetchComponents ();
+			AddListeners();
 		}
 
 		void FetchComponents ()
 		{
 			if (eventData == null) eventData = new PointerEventData (EventSystem.current);
-			if (playerActions == null) playerActions = InControlActions.instance.playerActions;
 			if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup> ();
 			if (currentSelectable == null) currentSelectable = firstSelectable;
+		}
+
+		void AddListeners()
+		{
+			MenuInput.instance.OnScrollUp.AddListener(OnScrollUp);
+			MenuInput.instance.OnScrollDown.AddListener(OnScrollDown);
+			MenuInput.instance.OnScrollLeft.AddListener(OnScrollLeft);
+			MenuInput.instance.OnScrollRight.AddListener(OnScrollRight);
+
+			MenuInput.instance.OnConfirm.AddListener(OnConfirm);
+			MenuInput.instance.OnBack.AddListener(OnBack);
 		}
 			
 		public void SetButtonIndex (int index)
@@ -63,7 +69,87 @@ namespace CityBashers
 			ButtonEnter (buttons [index]);
 		}
 
-		void Update ()
+		void OnScrollUp()
+		{
+			CheckActiveMenu();
+
+			if (isActiveMenu)
+			{
+				if (currentSelectable.FindSelectableOnUp() != null)
+				{
+					ButtonExit(currentSelectable);
+					ButtonEnter(currentSelectable.FindSelectableOnUp());
+					currentSelectable = currentSelectable.FindSelectableOnUp();
+				}
+			}
+		}
+
+		void OnScrollDown()
+		{
+			CheckActiveMenu();
+
+			if (isActiveMenu)
+			{
+				if (currentSelectable.FindSelectableOnDown() != null)
+				{
+					ButtonExit(currentSelectable);
+					ButtonEnter(currentSelectable.FindSelectableOnDown());
+					currentSelectable = currentSelectable.FindSelectableOnDown();
+				}
+			}
+		}
+
+		void OnScrollLeft()
+		{
+			CheckActiveMenu();
+
+			if (isActiveMenu)
+			{
+				if (currentSelectable.FindSelectableOnLeft() != null)
+				{
+					ButtonExit(currentSelectable);
+					ButtonEnter(currentSelectable.FindSelectableOnLeft());
+					currentSelectable = currentSelectable.FindSelectableOnLeft();
+				}
+			}
+		}
+
+		void OnScrollRight()
+		{
+			CheckActiveMenu();
+
+			if (isActiveMenu)
+			{
+				if (currentSelectable.FindSelectableOnRight() != null)
+				{
+					ButtonExit(currentSelectable);
+					ButtonEnter(currentSelectable.FindSelectableOnRight());
+					currentSelectable = currentSelectable.FindSelectableOnRight();
+				}		
+			}
+		}
+
+		void OnConfirm()
+		{
+			CheckActiveMenu();
+
+			if (isActiveMenu)
+			{
+				SubmitButton(currentSelectable);
+			}
+		}
+
+		void OnBack()
+		{
+			CheckActiveMenu();
+
+			if (isActiveMenu)
+			{
+				BackButton();
+			}
+		}
+
+		void CheckActiveMenu ()
 		{
 			// Bail out if not fully visible.
 			if (GameController.instance == null)
@@ -74,10 +160,13 @@ namespace CityBashers
 			else
 			
 			{
+				// Is not active menu.
 				if (GameController.instance.activeMenu != this)
 				{
+					// There is an active menu.
 					if (GameController.instance.activeMenu != null)
 					{
+						// Don't be active menu.
 						if (isActiveMenu == true)
 						{
 							isActiveMenu = false;
@@ -87,91 +176,15 @@ namespace CityBashers
 					}
 				} 
 
-				else
+				else // Is active menu already.
 				
 				{
+					// Be active menu.
 					if (isActiveMenu == false)
 					{
 						isActiveMenu = true;
 					}
 				}
-			}
-
-			if (playerActions == null)
-			{
-				return;
-			}
-
-			// UP
-			if (playerActions.Up.Value > 0.5f)
-			{
-				if (Time.unscaledTime > nextScroll)
-				{
-					if (currentSelectable.FindSelectableOnUp () != null)
-					{
-						ButtonExit (currentSelectable);
-						ButtonEnter (currentSelectable.FindSelectableOnUp ());
-						currentSelectable = currentSelectable.FindSelectableOnUp ();					
-						nextScroll = Time.unscaledTime + scrollSpeed;
-					}
-				}
-			}
-
-			// DOWN
-			if (playerActions.Down.Value > 0.5f)
-			{
-				if (Time.unscaledTime > nextScroll)
-				{
-					if (currentSelectable.FindSelectableOnDown () != null)
-					{
-						ButtonExit (currentSelectable);
-						ButtonEnter (currentSelectable.FindSelectableOnDown ());
-						currentSelectable = currentSelectable.FindSelectableOnDown ();					
-						nextScroll = Time.unscaledTime + scrollSpeed;
-					}
-				}
-			}
-
-			// LEFT
-			if (playerActions.Left.Value > 0.5f)
-			{
-				if (Time.unscaledTime > nextScroll)
-				{
-					if (currentSelectable.FindSelectableOnLeft () != null)
-					{
-						ButtonExit (currentSelectable);
-						ButtonEnter (currentSelectable.FindSelectableOnLeft ());
-						currentSelectable = currentSelectable.FindSelectableOnLeft ();					
-						nextScroll = Time.unscaledTime + scrollSpeed;
-					}
-				}
-			}
-
-			// RIGHT
-			if (playerActions.Right.Value > 0.5f)
-			{
-				if (Time.unscaledTime > nextScroll)
-				{
-					if (currentSelectable.FindSelectableOnRight () != null)
-					{
-						ButtonExit (currentSelectable);
-						ButtonEnter (currentSelectable.FindSelectableOnRight ());
-						currentSelectable = currentSelectable.FindSelectableOnRight ();					
-						nextScroll = Time.unscaledTime + scrollSpeed;
-					}
-				}
-			}
-
-			// SUBMIT
-			if (playerActions.Submit.WasPressed)
-			{
-				SubmitButton (currentSelectable);
-			}
-
-			// BACK
-			if (playerActions.Back.WasPressed)
-			{
-				BackButton ();
 			}
 		}
 			

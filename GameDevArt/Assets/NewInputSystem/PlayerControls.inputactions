@@ -64,6 +64,12 @@
                     "id": "bfdbfe64-bd0d-49ce-a6f5-41862d837c59",
                     "expectedControlLayout": "",
                     "bindings": []
+                },
+                {
+                    "name": "Pause",
+                    "id": "c4b9c9ca-2358-4f0a-9448-2a52f33ebe66",
+                    "expectedControlLayout": "",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -242,6 +248,18 @@
                     "processors": "",
                     "groups": "MouseAndKeyboard",
                     "action": "Ability",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
