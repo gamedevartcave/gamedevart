@@ -22,66 +22,56 @@ namespace CityBashers
 		[Range (0.0f, 1.0f)]
 		public float rotYDeadZone = 0.25f;
 
+		public float rotationZSensitivity = 1;
+		public Vector2 rotationZBounds = new Vector2 (-10, 10);
+
 		public Slider MouseSensitivitySlider;
 
 		void Awake ()
 		{
 			Instance = this;
 			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener(OnInitialized);
-			GameController.Instance.OnPause.AddListener(OnPause);
-			GameController.Instance.OnUnpause.AddListener(OnUnpause);
 			enabled = false;
 		}
 
-		private void OnEnable()
+		void OnDestroy()
 		{
-			//RegisterControls();
-			//Debug.Log("Reg");
+			DeregisterControls();
 		}
 
-		private void OnDisable()
+		/// <summary>
+		/// Called when scene is fully initialized.
+		/// </summary>
+		void OnInitialized()
 		{
-			//DeregisterControls();
-			//Debug.Log("Dereg");
+			RegisterControls();
 		}
 
+		/// <summary>
+		/// Registers input controls.
+		/// </summary>
 		void RegisterControls()
 		{
 			playerControls.Player.Look.performed += HandleLook;
 			playerControls.Player.Look.Enable();
 		}
 
+		/// <summary>
+		/// Deregisters input controls.
+		/// </summary>
 		void DeregisterControls()
 		{
 			playerControls.Player.Look.performed -= HandleLook;
 			playerControls.Player.Look.Disable();
 		}
 
-		void OnInitialized()
-		{
-			RegisterControls();
-		}
-
-		private void OnPause()
-		{
-			//DeregisterControls();
-		}
-
-		void OnUnpause()
-		{
-			//RegisterControls();
-		}
-
-		private void OnDestroy()
-		{
-			DeregisterControls();
-		}
-
+		/// <summary>
+		/// Handle Look input.
+		/// </summary>
+		/// <param name="context"></param>
 		void HandleLook(InputAction.CallbackContext context)
 		{
 			LookAxis = context.ReadValue<Vector2>();
-			//UpdateLook();
-			//Debug.Log("Mouse Delta: " + LookAxis);
 		}
 
 		/// <summary>
@@ -140,8 +130,10 @@ namespace CityBashers
 			}
 
 			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
+			float rotationZ = PlayerController.Instance.aimInput ? 0 : 
+				Mathf.Clamp (-LookAxis.x * rotationZSensitivity, rotationZBounds.x, rotationZBounds.y);
 			
-			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, 0);
+			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, rotationZ);
 		}
 	}
 }

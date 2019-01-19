@@ -39,7 +39,7 @@ namespace CityBashers
 			menuControls.Menu.Back.Enable();
 		}
 
-		private void OnDisable()
+		private void OnDestroy()
 		{
 			menuControls.Menu.Nav.performed -= HandleNav;
 			menuControls.Menu.Nav.Disable();

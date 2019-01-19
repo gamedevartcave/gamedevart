@@ -270,7 +270,7 @@ namespace CityBashers
 			playerControls.Player.Pause.Enable();
 		}
 
-		void OnDisable()
+		void OnDestroy()
 		{
 			DeregisterControls();
 		}
@@ -962,7 +962,7 @@ namespace CityBashers
 		/// </summary>
 		void OnFootStep ()
 		{
-			if (isGrounded == true)
+			if (isGrounded == true && MoveAxis.sqrMagnitude > 0)
 			{
 				GetFootStepSound();
 			}
