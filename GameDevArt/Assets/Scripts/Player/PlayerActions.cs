@@ -30,7 +30,8 @@ public class PlayerActions : PlayerActionSet
 	public PlayerAction Aim;
 	public PlayerAction Shoot;
 	public PlayerAction Melee;
-	public PlayerAction Ability;
+	public PlayerAction HeavyMelee;
+    public PlayerAction Ability;
 	public PlayerAction NextWeapon;
 	public PlayerAction PreviousWeapon;
 
@@ -72,7 +73,8 @@ public class PlayerActions : PlayerActionSet
 		Aim 		   = CreatePlayerAction ("Aim");
 		Shoot 		   = CreatePlayerAction ("Shoot");
 		Melee 		   = CreatePlayerAction ("Melee");
-		Ability 	   = CreatePlayerAction ("Ability");
+        HeavyMelee     = CreatePlayerAction ("HeavyMelee");
+        Ability 	   = CreatePlayerAction ("Ability");
 
 		NextWeapon     = CreatePlayerAction ("NextWeapon");
 		PreviousWeapon = CreatePlayerAction ("PreviousWeapon");
@@ -114,7 +116,11 @@ public class PlayerActions : PlayerActionSet
 		playerActions.Melee.AddDefaultBinding (Mouse.MiddleButton);
 		playerActions.Melee.AddDefaultBinding (InputControlType.Action4);
 
-		playerActions.Ability.AddDefaultBinding (Key.LeftAlt);
+        // TODO: Fix what key/button should this be?
+	    playerActions.HeavyMelee.AddDefaultBinding (InputControlType.Action5);
+
+
+        playerActions.Ability.AddDefaultBinding (Key.LeftAlt);
 		playerActions.Ability.AddDefaultBinding (InputControlType.RightStickButton);
 
 		playerActions.DodgeLeft.AddDefaultBinding (Key.Q);

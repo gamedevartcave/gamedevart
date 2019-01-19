@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -201,7 +202,18 @@ namespace CityBashers
 
 		public PlayerActions playerActions;
 
-		void Awake ()
+	    [Header ("Melee Attacks")]
+	    public int ComboQueueSize = 3;
+	    public float TimeBetweenDeQueue = 0.2f;
+
+        private Queue<int> _comboQueue;
+        private float _timePassed = 0;
+
+
+
+
+
+	    void Awake ()
 		{
 			instance = this;
 		    //move = Vector3.zero;
@@ -216,7 +228,7 @@ namespace CityBashers
 		    playerRb = GetComponent<Rigidbody>();
 		    playerCol = GetComponent<CapsuleCollider>();
 
-
+            _comboQueue = new Queue<int>(ComboQueueSize);
         }
 
 		void Start ()
@@ -513,27 +525,6 @@ namespace CityBashers
 					VibrateController.instance.Vibrate (0.25f, 0.25f, 0.25f, 1);
 
 					//Debug.Log ("Attacking from weapon " + currentWeaponIndex);
-
-					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Grounded") == true)
-					{
-						playerAnim.SetTrigger ("Combo1");
-						playerAnim.ResetTrigger ("Combo2");
-						playerAnim.ResetTrigger ("Combo3");
-					}
-
-					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Combo1") == true)
-					{
-						playerAnim.SetTrigger ("Combo2");
-						playerAnim.ResetTrigger ("Combo1");
-						playerAnim.ResetTrigger ("Combo3");
-					}
-
-					if (playerAnim.GetCurrentAnimatorStateInfo (0).IsName ("Combo2") == true)
-					{
-						playerAnim.SetTrigger ("Combo3");
-						playerAnim.ResetTrigger ("Combo1");
-						playerAnim.ResetTrigger ("Combo2");
-					}
 				}
 			}
 		}
@@ -543,12 +534,73 @@ namespace CityBashers
 		/// </summary>
 		void MeleeAction ()
 		{
-			if (playerActions.Melee.WasPressed)
-			{
-				// TODO: Make combos.
+		    if (_comboQueue.Count < ComboQueueSize)
+		    {
+		        if (playerActions.Melee.WasPressed)
+		        {
+		            _comboQueue.Enqueue(1);
+		        }
 
-				//Debug.Log ("Melee action was pressed.");
-			}
+		        if (playerActions.HeavyMelee.WasPressed)
+		        {
+		            _comboQueue.Enqueue(2);
+		        }
+		    }
+
+		    if (isGrounded && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging"))
+		    {
+		        if (_comboQueue.Count > 0 && _timePassed >= TimeBetweenDeQueue)
+		        {
+		            switch (_comboQueue.Dequeue())
+		            {
+                        case 1:
+                            // Light attack
+                            playerAnim.SetTrigger("LiteAttack");
+                            break;
+                        case 2:
+                            // heavy attack
+                            playerAnim.SetTrigger("HeavyAttack");
+                            break;
+                        default:
+                            Debug.Log("Combo Queue Error");
+                            break;
+		            }
+
+		            _timePassed = 0f;
+		        }
+
+		        _timePassed += Time.deltaTime;
+
+		    }
+		    else
+            {
+                _comboQueue.Clear();
+                _timePassed = 0f;
+            }
+
+		    /* OLD CODE
+            if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Grounded") == true)
+                {
+                    playerAnim.SetTrigger("Combo1");
+                    playerAnim.ResetTrigger("Combo2");
+                    playerAnim.ResetTrigger("Combo3");
+                }
+
+                if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Combo1") == true)
+                {
+                    playerAnim.SetTrigger("Combo2");
+                    playerAnim.ResetTrigger("Combo1");
+                    playerAnim.ResetTrigger("Combo3");
+                }
+
+                if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Combo2") == true)
+                {
+                    playerAnim.SetTrigger("Combo3");
+                    playerAnim.ResetTrigger("Combo1");
+                    playerAnim.ResetTrigger("Combo2");
+                }
+            }
+            */
 		}
 
 		/// <summary>
