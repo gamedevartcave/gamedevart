@@ -70,6 +70,18 @@
                     "id": "c4b9c9ca-2358-4f0a-9448-2a52f33ebe66",
                     "expectedControlLayout": "",
                     "bindings": []
+                },
+                {
+                    "name": "LockOnLeft",
+                    "id": "8234b9ac-da9f-4164-9fb1-5e3783c80dee",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "LockOnRight",
+                    "id": "164b87da-6ec9-4acf-9489-700bdd9f9517",
+                    "expectedControlLayout": "",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -260,6 +272,30 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/v",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";MouseAndKeyboard",
+                    "action": "LockOnLeft",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/b",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";MouseAndKeyboard",
+                    "action": "LockOnRight",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

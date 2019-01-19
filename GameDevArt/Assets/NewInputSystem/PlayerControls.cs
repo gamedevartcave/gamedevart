@@ -31,6 +31,8 @@ public class PlayerControls : InputActionAssetReference
         m_Player_CameraChange = m_Player.GetAction("CameraChange");
         m_Player_Ability = m_Player.GetAction("Ability");
         m_Player_Pause = m_Player.GetAction("Pause");
+        m_Player_LockOnLeft = m_Player.GetAction("LockOnLeft");
+        m_Player_LockOnRight = m_Player.GetAction("LockOnRight");
         m_Initialized = true;
     }
     private void Uninitialize()
@@ -47,6 +49,8 @@ public class PlayerControls : InputActionAssetReference
         m_Player_CameraChange = null;
         m_Player_Ability = null;
         m_Player_Pause = null;
+        m_Player_LockOnLeft = null;
+        m_Player_LockOnRight = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
@@ -72,6 +76,8 @@ public class PlayerControls : InputActionAssetReference
     private InputAction m_Player_CameraChange;
     private InputAction m_Player_Ability;
     private InputAction m_Player_Pause;
+    private InputAction m_Player_LockOnLeft;
+    private InputAction m_Player_LockOnRight;
     public struct PlayerActions
     {
         private PlayerControls m_Wrapper;
@@ -87,6 +93,8 @@ public class PlayerControls : InputActionAssetReference
         public InputAction @CameraChange { get { return m_Wrapper.m_Player_CameraChange; } }
         public InputAction @Ability { get { return m_Wrapper.m_Player_Ability; } }
         public InputAction @Pause { get { return m_Wrapper.m_Player_Pause; } }
+        public InputAction @LockOnLeft { get { return m_Wrapper.m_Player_LockOnLeft; } }
+        public InputAction @LockOnRight { get { return m_Wrapper.m_Player_LockOnRight; } }
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }

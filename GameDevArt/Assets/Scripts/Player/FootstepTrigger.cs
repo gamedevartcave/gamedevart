@@ -15,7 +15,7 @@ namespace CityBashers
 			{
 				if (other.tag == tags[i])
 				{
-					PlayerController.instance.OnFootstep.Invoke ();
+					PlayerController.Instance.OnFootstep.Invoke ();
 					break;
 				}
 			}

@@ -2,21 +2,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.UI;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace CityBashers
 {
 	public class GameController : MonoBehaviour 
 	{
-		public static GameController instance { get; private set; }
+		public static GameController Instance { get; private set; }
 
 		public CameraShake camShakeScript;
 
 		[Header ("Scoring")]
-		[ReadOnlyAttribute] public float displayScore;
+		[ReadOnly] public float displayScore;
 		[SerializeField] private float targetScore;
-		public float score 
+		public float Score 
 		{
 			get 
 			{ 
@@ -37,9 +35,9 @@ namespace CityBashers
 		public UnityEvent OnScoreCountComplete;
 		[Space (10)]
 
-		[ReadOnlyAttribute] public float displayComboScore;
+		[ReadOnly] public float displayComboScore;
 		[SerializeField] private float targetComboScore;
-		public float comboScore 
+		public float ComboScore 
 		{
 			get 
 			{ 
@@ -53,7 +51,7 @@ namespace CityBashers
 			}
 		}
 
-		[ReadOnlyAttribute] private bool isCountingCombo;
+		[ReadOnly] private bool isCountingCombo;
 		public TextMeshProUGUI comboScoreText;
 		public float comboScoreSmoothing;
 
@@ -68,7 +66,7 @@ namespace CityBashers
 		private float startTime;
 
 		[Header ("Pausing")]
-		[ReadOnlyAttribute] public bool isPaused;
+		[ReadOnly] public bool isPaused;
 		public float unpauseCooldown = 0.25f;
 		private float nextUnpause;
 		public MenuNavigation activeMenu;
@@ -84,8 +82,8 @@ namespace CityBashers
 
 		void Awake ()
 		{
-			instance = this;
-			this.enabled = false;
+			Instance = this;
+			enabled = false;
 		}
 
 		void Start ()
@@ -102,6 +100,7 @@ namespace CityBashers
 
 		void Update ()
 		{
+			// Do this while not paused.
 			if (isPaused == false)
 			{
 				GetDepthOfField ();
@@ -163,34 +162,32 @@ namespace CityBashers
 		/// </summary>
 		void GetDepthOfField ()
 		{
-			RaycastHit hit;
-
-			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, maxDofDistance))
+			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance))
 			{
 				// While moving.
-				if (PlayerController.instance.MoveAxis.sqrMagnitude > 0.05f ||
-					PlayerController.instance.LookAxis.normalized.sqrMagnitude > 0.25f)
+				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.05f ||
+					MouseLook.Instance.LookAxis.normalized.sqrMagnitude > 0.25f)
 				{
-					targetDofDistance = Vector3.Distance (
-						Camera.main.transform.position, 
+					targetDofDistance = Vector3.Distance(
+						Camera.main.transform.position,
 						hit.point);
-				} 
+				}
 
 				else // Idling.
-				
+
 				{
-					targetDofDistance = Vector3.Distance (
-						Camera.main.transform.position, 
-						PlayerController.instance.transform.position);
+					targetDofDistance = Vector3.Distance(
+						Camera.main.transform.position,
+						PlayerController.Instance.transform.position);
 				}
 			}
 
 			else // Idling.
 
 			{
-				targetDofDistance = Vector3.Distance (
-					Camera.main.transform.position, 
-					PlayerController.instance.transform.position);
+				targetDofDistance = Vector3.Distance(
+					Camera.main.transform.position,
+					PlayerController.Instance.transform.position);
 			}
 
 			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)

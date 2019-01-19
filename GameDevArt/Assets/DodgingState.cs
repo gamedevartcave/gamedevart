@@ -12,7 +12,7 @@ namespace CityBashers
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
             base.OnStateMachineEnter(animator, stateMachinePathHash);
-            pc = PlayerController.instance;
+            pc = PlayerController.Instance;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,7 +21,7 @@ namespace CityBashers
             // TODO fix hack
             if (pc == null)
             {
-                pc = PlayerController.instance;
+                pc = PlayerController.Instance;
             }
 
             //DodgeAction(animator);
@@ -74,7 +74,7 @@ namespace CityBashers
                 if (pc.isDodging == true)
                 {
                     // Game is not paused.
-                    if (GameController.instance.isPaused == false)
+                    if (GameController.Instance.isPaused == false)
                     {
                         TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
 
@@ -102,7 +102,7 @@ namespace CityBashers
 
 				Debug.Log ("isDodge time");
                 // Game is not paused.
-                if (GameController.instance.isPaused == false)
+                if (GameController.Instance.isPaused == false)
                 {
                     // Decrease time left of dodging.
                     dodgeTimeRemain -= Time.unscaledDeltaTime;

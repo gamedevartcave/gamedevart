@@ -14,6 +14,8 @@ ScriptedImporter:
     11400018: Player/CameraChange
     11400020: Player/Ability
     11400022: Player/Pause
+    11400024: Player/LockOnLeft
+    11400026: Player/LockOnRight
   externalObjects: {}
   userData: 
   assetBundleName: 

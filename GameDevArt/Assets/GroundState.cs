@@ -15,7 +15,7 @@ namespace CityBashers
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
             base.OnStateMachineEnter(animator, stateMachinePathHash);
-            pc = PlayerController.instance;
+            pc = PlayerController.Instance;
         }
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -37,7 +37,7 @@ namespace CityBashers
             //}
 
             //Move(pc.move, animator);
-			Move(PlayerController.instance.move, animator);
+			Move(PlayerController.Instance.move, animator);
         }
 
         public void Move(Vector3 move, Animator playerAnim)
@@ -55,16 +55,16 @@ namespace CityBashers
             float runCycle = Mathf.Repeat(
                 playerAnim.GetCurrentAnimatorStateInfo(0).normalizedTime + runCycleLegOffset, 1);
 
-			float jumpLeg = (runCycle < 0.5f ? 1 : -1) * PlayerController.instance.forwardAmount;
+			float jumpLeg = (runCycle < 0.5f ? 1 : -1) * PlayerController.Instance.forwardAmount;
 
             // Update the animator parameters.
-			playerAnim.SetFloat("Forward", PlayerController.instance.forwardAmount, 0.1f, Time.deltaTime);
+			playerAnim.SetFloat("Forward", PlayerController.Instance.forwardAmount, 0.1f, Time.deltaTime);
             //playerAnim.SetFloat("Turn", pc.turnAmount, 0.1f, Time.deltaTime);
 
             // Update grounded state.
-			playerAnim.SetBool("OnGround", PlayerController.instance.isGrounded);
+			playerAnim.SetBool("OnGround", PlayerController.Instance.isGrounded);
 
-			if (PlayerController.instance.isGrounded == true)
+			if (PlayerController.Instance.isGrounded == true)
             {
                 playerAnim.SetFloat("JumpLeg", jumpLeg);
                 playerAnim.SetFloat("Jump", 0);
@@ -75,14 +75,13 @@ namespace CityBashers
                 );
             }
 
-
             // The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
             // Which affects the movement speed because of the root motion.
             if (playerAnim.GetBool("Dodging") == false)
             {
-				if (PlayerController.instance.isGrounded == true && move.sqrMagnitude > 0)
+				if (PlayerController.Instance.isGrounded == true && move.sqrMagnitude > 0)
                 {
-					playerAnim.speed = PlayerController.instance.animSpeedMultiplier;
+					playerAnim.speed = PlayerController.Instance.animSpeedMultiplier;
                 }
 
                 else // Don't use anim speed while airborne.

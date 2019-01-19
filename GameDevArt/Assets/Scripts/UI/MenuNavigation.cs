@@ -152,7 +152,7 @@ namespace CityBashers
 		void CheckActiveMenu ()
 		{
 			// Bail out if not fully visible.
-			if (GameController.instance == null)
+			if (GameController.Instance == null)
 			{
 				return;
 			} 
@@ -161,10 +161,10 @@ namespace CityBashers
 			
 			{
 				// Is not active menu.
-				if (GameController.instance.activeMenu != this)
+				if (GameController.Instance.activeMenu != this)
 				{
 					// There is an active menu.
-					if (GameController.instance.activeMenu != null)
+					if (GameController.Instance.activeMenu != null)
 					{
 						// Don't be active menu.
 						if (isActiveMenu == true)

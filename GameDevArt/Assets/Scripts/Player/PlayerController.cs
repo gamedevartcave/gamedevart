@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -13,7 +12,7 @@ namespace CityBashers
 	[RequireComponent(typeof(Animator))]
 	public class PlayerController : MonoBehaviour
 	{
-		public static PlayerController instance { get; private set; }
+		public static PlayerController Instance { get; private set; }
 
 		[Header ("General")]
 		[HideInInspector] 
@@ -27,20 +26,16 @@ namespace CityBashers
 
 		[Header("Input")]
 		public PlayerControls playerControls;
-
 		public Vector2 MoveAxis;
-		public Vector2 LookAxis;
 		public bool aimInput;
 		public bool shootInput;
 
 		[Header ("Movement")]
-		public Vector3 move; // The world-relative desired move direction, calculated from camForward and user input.
+		[Tooltip ("The world-relative desired move direction, calculated from camForward and user input.")]
+		public Vector3 move;
 		private float hInput;
 		private float vInput;
 
-        //public float runCycleLegOffset = 0.2f; // Specific to the character in sample assets, will need to be modified to work with others
-        //public float moveSpeedMultiplier = 1f;
-        //public float animSpeedMultiplier = 1f;
 	    public float moveSpeedMultiplier = 1f;
 	    public float movingTurnSpeed = 360;
 	    public float stationaryTurnSpeed = 180;
@@ -49,8 +44,6 @@ namespace CityBashers
 	    public float turnAmount;
 	    public float forwardAmount;
 	    public Vector3 groundNormal;
-
-
 
         [Header ("Health")] 
 		[HideInInspector] public bool lostAllHealth;
@@ -81,6 +74,7 @@ namespace CityBashers
 		public Transform AimingOrigin;
 		[HideInInspector] public Vector3 AimDir;
 		[HideInInspector] public Vector3 AimNoPitchDir;
+		public UnityEvent OnAimRelease;
 
 		[Header ("Camera rig")]
 		public SimpleFollow camRigSimpleFollow;
@@ -141,14 +135,14 @@ namespace CityBashers
 		[Header ("Landing")]
 		public float terminalVelocity = 10;
 		public float fallMult = 2.5f;
-		[ReadOnlyAttribute] public bool isGrounded;
+		[ReadOnly] public bool isGrounded;
 		public AudioSource landingAudioSource;
 		public AudioClip[] landingClips;
 		private int landingSoundIndex;
 		public UnityEvent OnLand;
 
 		[Header ("Dodging")]
-		[ReadOnlyAttribute] public bool isDodging;
+		[ReadOnly] public bool isDodging;
 		[Tooltip ("Time between each dodge event.")]
 		public float dodgeRate = 0.5f;
 		private float nextDodge;
@@ -170,23 +164,69 @@ namespace CityBashers
 		public UnityEvent OnDodgeEnded;
 
 		[Header ("Hit stun")]
-		[ReadOnlyAttribute] public bool isInHitStun;
+		[ReadOnly] public bool isInHitStun;
 		public Renderer[] stunMeshes;
-		[ReadOnlyAttribute] [SerializeField] private float hitStunCurrentTime;
+		[ReadOnly] [SerializeField] private float hitStunCurrentTime;
 		public float hitStunDuration = 2;
 		private WaitForSeconds hitStunYield;
 		public float HitStunRenderToggleWait = 0.07f;
 		public UnityEvent OnHitStunBegin;
 		public UnityEvent OnHitStunEnded;
 
+		void Awake()
+		{
+			Instance = this;
+
+			for (int i = 0; i < stunMeshes.Length; i++)
+			{
+				stunMeshes[i].enabled = false;
+			}
+			
+			// Find some components.
+			playerAnim = GetComponent<Animator>();
+			playerRb = GetComponent<Rigidbody>();
+			playerCol = GetComponent<CapsuleCollider>();
+
+			enabled = false;
+		}
+
+		void Start()
+		{
+			// Get the transform of the main camera
+			if (Camera.main != null) cam = Camera.main;
+			else // Camera was not found.
+			{
+				Debug.LogWarning("Warning: no main camera found.\n" +
+					"Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.",
+					gameObject);
+			}
+
+			// Set start health attributes.
+			health = StartHealth;
+			HealthSlider.value = health;
+			HealthSlider_Smoothed.value = health;
+
+			// Set start magic attributes.
+			magic = StartingMagic;
+			MagicSlider.value = magic;
+			MagicSlider_Smoothed.value = magic;
+
+			// Add listeners for events.
+			OnFootstep.AddListener(OnFootStep);
+			OnJump.AddListener(OnJumpBegan);
+			OnDoubleJump.AddListener(OnDoubleJumpBegan);
+			OnLand.AddListener(OnLanded);
+			isGrounded = true;
+
+			// Add yield times here.
+			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
+		}
+
 		void OnEnable()
 		{
 			// Set up new input system events.
 			playerControls.Player.Move.performed += HandleMove;
 			playerControls.Player.Move.Enable();
-
-			playerControls.Player.Look.performed += HandleLook;
-			playerControls.Player.Look.Enable();
 
 			playerControls.Player.Jump.performed += HandleJump;
 			playerControls.Player.Jump.Enable();
@@ -222,9 +262,6 @@ namespace CityBashers
 			playerControls.Player.Move.performed -= HandleMove;
 			playerControls.Player.Move.Disable();
 
-			playerControls.Player.Look.performed -= HandleLook;
-			playerControls.Player.Look.Disable();
-
 			playerControls.Player.Jump.performed -= HandleJump;
 			playerControls.Player.Jump.Disable();
 
@@ -253,59 +290,7 @@ namespace CityBashers
 			playerControls.Player.Pause.Disable();
 		}
 
-		void Awake ()
-		{
-			instance = this;
-		    //move = Vector3.zero;
-			for (int i = 0; i < stunMeshes.Length; i++)
-			{
-				stunMeshes [i].enabled = false;
-			}
-
-			this.enabled = false;
-		    // Find some components.
-            playerAnim = GetComponent<Animator>();
-		    playerRb = GetComponent<Rigidbody>();
-		    playerCol = GetComponent<CapsuleCollider>();
-        }
-
-		void Start ()
-		{
-			//// Set Rigidbody constraints.
-			//playerRb.constraints = 
-			//	RigidbodyConstraints.FreezeRotationX | 
-			//	RigidbodyConstraints.FreezeRotationY | 
-			//	RigidbodyConstraints.FreezeRotationZ;
-
-			// Get the transform of the main camera
-			if (Camera.main != null) cam = Camera.main;
-			else // Camera was not found.
-			{
-				Debug.LogWarning("Warning: no main camera found.\n" +
-					"Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.", 
-					gameObject);
-			}
-
-			// Set start health attributes.
-			health = StartHealth;
-			HealthSlider.value = health;
-			HealthSlider_Smoothed.value = health;
-
-			// Set start magic attributes.
-			magic = StartingMagic;
-			MagicSlider.value = magic;
-			MagicSlider_Smoothed.value = magic;
-
-			// Add listeners for events.
-			OnFootstep.AddListener (OnFootStep);
-			OnJump.AddListener (OnJumpBegan);
-			OnDoubleJump.AddListener (OnDoubleJumpBegan);
-			OnLand.AddListener (OnLanded);
-			isGrounded = true;
-
-			// Add yield times here.
-			hitStunYield = new WaitForSeconds (HitStunRenderToggleWait);
-        }
+		
 
 		#region InputActions
 		/// <summary>
@@ -315,12 +300,6 @@ namespace CityBashers
 		{
 			MoveAxis = context.ReadValue<Vector2>();
 			//Debug.Log(MoveAxis_Horizontal);
-		}
-
-		void HandleLook(InputAction.CallbackContext context)
-		{
-			LookAxis = context.ReadValue<Vector2>();
-			//Debug.Log("Mouse Delta: " + LookAxis);
 		}
 
 		void HandleJump(InputAction.CallbackContext context)
@@ -333,8 +312,18 @@ namespace CityBashers
 
 		void HandleAim(InputAction.CallbackContext context)
 		{
-			aimInput = context.ReadValue<float>() == 1 ? true : false;
-			Debug.Log("Aimed: " + aimInput);
+			var value = context.ReadValue<float>();
+			aimInput = value == 1 ? true : false;
+			//Debug.Log("Aimed: " + aimInput);
+
+			if (aimInput == false)
+			{
+				if (CameraLockOnController.instance.lockedOn == true)
+				{
+					OnAimRelease.Invoke();
+					//Debug.Log("Called OnAimRlease");
+				}
+			}
 		}
 
 		void HandleDodge(InputAction.CallbackContext context)
@@ -414,7 +403,7 @@ namespace CityBashers
 				if (isDodging == true)
 				{
 					// Game is not paused.
-					if (GameController.instance.isPaused == false)
+					if (GameController.Instance.isPaused == false)
 					{
 						TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
 
@@ -441,7 +430,7 @@ namespace CityBashers
 			{
 				//Debug.Log("isDodge time");
 				// Game is not paused.
-				if (GameController.instance.isPaused == false)
+				if (GameController.Instance.isPaused == false)
 				{
 					// Decrease time left of dodging.
 					dodgeTimeRemain -= Time.unscaledDeltaTime;
@@ -462,41 +451,41 @@ namespace CityBashers
 		void HandleAttack(InputAction.CallbackContext context)
 		{
 			AttackAction();
-			Debug.Log("Attack");
+			//Debug.Log("Attack");
 		}
 
 		void HandleShoot(InputAction.CallbackContext context)
 		{
 			shootInput = context.ReadValue<float>() == 1 ? true : false;
-			Debug.Log("Shoot: " + shootInput + ". Is aiming: " + aimInput);
+			//Debug.Log("Shoot: " + shootInput + ". Is aiming: " + aimInput);
 		}
 
 		void HandleUse(InputAction.CallbackContext context)
 		{
 			UseAction();
-			Debug.Log("Use");
+			//Debug.Log("Use");
 		}
 
 		void HandleCameraChange(InputAction.CallbackContext context)
 		{
 			CameraChangeAction();
-			Debug.Log("Camera change");
+			//Debug.Log("Camera change");
 		}
 
 		void HandleAbility(InputAction.CallbackContext context)
 		{
 			AbilityAction();
-			Debug.Log("Ability button pressed.");
+			//Debug.Log("Ability button pressed.");
 		}
 
 		void HandlePause(InputAction.CallbackContext context)
 		{
 			if (lostAllHealth == false)
 			{
-				GameController.instance.CheckPause();
+				GameController.Instance.CheckPause();
 			}
 
-			Debug.Log("Pause button pressed");
+			//Debug.Log("Pause button pressed");
 		}
 		#endregion
 
@@ -663,7 +652,7 @@ namespace CityBashers
 		//	}
 
 		//	// If we are moving up and not holding jump.
-		//	else if (playerRb.velocity.y > 0 && InControlActions.instance.playerActions.Jump.IsPressed == false)
+		//	else if (playerRb.velocity.y > 0 && Jump.IsPressed == false)
 		//	{
 		//		playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
 		//	}
@@ -729,18 +718,18 @@ namespace CityBashers
 		{
 			if (shootInput)
 			{
-				if (Time.time > nextFire && GameController.instance.isPaused == false)
+				if (Time.time > nextFire && GameController.Instance.isPaused == false)
 				{
 					transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
 
 					Shoot();
 					nextFire = Time.time + currentFireRate;
 
-					GameController.instance.camShakeScript.shakeDuration = 1;
-					GameController.instance.camShakeScript.shakeAmount = 0.1f;
-					GameController.instance.camShakeScript.Shake();
+					GameController.Instance.camShakeScript.shakeDuration = 1;
+					GameController.Instance.camShakeScript.shakeAmount = 0.1f;
+					GameController.Instance.camShakeScript.Shake();
 
-					VibrateController.instance.Vibrate(0.25f, 0.25f, 0.25f, 1);
+					VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.25f, 1);
 
 					//Debug.Log ("Shooting from weapon " + currentWeaponIndex);
 				}

@@ -12861,6 +12861,11 @@ PrefabInstance:
       propertyPath: LookAtPos
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114224790211075386, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: SmoothingAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 114117583370482024, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: sunTransform
@@ -17912,7 +17917,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ec2fe99d1108b9d0006a298d76c639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: {x: 3, y: 1.5}
+  playerControls:
+    m_Asset: {fileID: 11400000, guid: 15eaf76e0ccb2374f9ade9b1ac9faacf, type: 3}
+  LookAxis: {x: 0, y: 0}
+  sensitivity: {x: 0.1, y: 0.05}
   minimum: {x: -360, y: -60}
   maximum: {x: 360, y: 80}
   rotationX: 0
@@ -68154,6 +68162,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isPaused: 0
+  unpauseCooldown: 0.25
   activeMenu: {fileID: 693883179}
   firstActiveMenu: {fileID: 693883179}
   OnPause:
@@ -69482,6 +69491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171a19bf1097b464e9a86360ff0d0afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerControls:
+    m_Asset: {fileID: 11400000, guid: 15eaf76e0ccb2374f9ade9b1ac9faacf, type: 3}
   lockedOn: 0
   lockOnRate: 0.3
   activeLockOnIndex: 0
@@ -69493,7 +69504,7 @@ MonoBehaviour:
   - {fileID: 479064808}
   cam: {fileID: 794116995}
   camLookAt: {fileID: 794116993}
-  resetRotationSmoothing: 10
+  resetRotationSmoothing: 3
   mouseLook: {fileID: 626687715}
   cameraRig: {fileID: 1526636700}
   lockOnPitchAngle: -40
@@ -80828,7 +80839,6 @@ MonoBehaviour:
   playerControls:
     m_Asset: {fileID: 11400000, guid: 15eaf76e0ccb2374f9ade9b1ac9faacf, type: 3}
   MoveAxis: {x: 0, y: 0}
-  LookAxis: {x: 0, y: 0}
   aimInput: 0
   shootInput: 0
   move: {x: 0, y: 0, z: 0}
@@ -80956,6 +80966,11 @@ MonoBehaviour:
   AimingOrigin: {fileID: 794116995}
   AimDir: {x: 0, y: 0, z: 0}
   AimNoPitchDir: {x: 0, y: 0, z: 0}
+  OnAimRelease:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   camRigSimpleFollow: {fileID: 70154510}
   camRigSimpleFollowRotNormal: {x: 25, y: 25, z: 0}
   camRigSimpleFollowRotAiming: {x: 60, y: 60, z: 0}

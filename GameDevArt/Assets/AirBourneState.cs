@@ -20,7 +20,7 @@ namespace CityBashers
             // TODO fix hack
             if (pc == null)
             {
-                pc = PlayerController.instance;
+                pc = PlayerController.Instance;
             }
             
             HandleAirborneMovement();
