@@ -418,7 +418,7 @@
                 {
                     "name": "right",
                     "path": "<Gamepad>/start",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Pause",

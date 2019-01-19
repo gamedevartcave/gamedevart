@@ -27,25 +27,60 @@ namespace CityBashers
 		void Awake ()
 		{
 			Instance = this;
+			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener(OnInitialized);
+			GameController.Instance.OnPause.AddListener(OnPause);
+			GameController.Instance.OnUnpause.AddListener(OnUnpause);
 			enabled = false;
 		}
 
 		private void OnEnable()
 		{
+			//RegisterControls();
+			//Debug.Log("Reg");
+		}
+
+		private void OnDisable()
+		{
+			//DeregisterControls();
+			//Debug.Log("Dereg");
+		}
+
+		void RegisterControls()
+		{
 			playerControls.Player.Look.performed += HandleLook;
 			playerControls.Player.Look.Enable();
 		}
 
-		private void OnDisable()
+		void DeregisterControls()
 		{
 			playerControls.Player.Look.performed -= HandleLook;
 			playerControls.Player.Look.Disable();
 		}
 
+		void OnInitialized()
+		{
+			RegisterControls();
+		}
+
+		private void OnPause()
+		{
+			//DeregisterControls();
+		}
+
+		void OnUnpause()
+		{
+			//RegisterControls();
+		}
+
+		private void OnDestroy()
+		{
+			DeregisterControls();
+		}
+
 		void HandleLook(InputAction.CallbackContext context)
 		{
 			LookAxis = context.ReadValue<Vector2>();
-			UpdateLook();
+			//UpdateLook();
 			//Debug.Log("Mouse Delta: " + LookAxis);
 		}
 
@@ -74,7 +109,7 @@ namespace CityBashers
 			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 		}
 
-		void UpdateLook ()
+		void Update ()
 		{
 			rotationX = 
 				transform.localEulerAngles.y + 
@@ -86,7 +121,7 @@ namespace CityBashers
 				// Don't use deadzone.
 				rotationY += 
 					LookAxis.y * 
-					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y) 
+					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
 					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 			}
 
@@ -99,7 +134,8 @@ namespace CityBashers
 				{
 					rotationY += 
 						LookAxis.y * 
-						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
+						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
+						* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 				}
 			}
 

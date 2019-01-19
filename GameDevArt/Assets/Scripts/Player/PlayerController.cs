@@ -116,8 +116,6 @@ namespace CityBashers
 		public AudioSource footstepAudioSource;
 		public AudioClip[] footstepClips;
 		private int footstepSoundIndex;
-		public float footStepRate = 0.25f;
-		private float nextFootstepTime;
 		public UnityEvent OnFootstep;
 
 		[Header("Jumping")]
@@ -321,7 +319,7 @@ namespace CityBashers
 		void HandleMove(InputAction.CallbackContext context)
 		{
 			MoveAxis = context.ReadValue<Vector2>();
-			Debug.Log(context.ReadValue<Vector2> ());
+			//Debug.Log(context.ReadValue<Vector2> ());
 		}
 
 		void HandleJump(InputAction.CallbackContext context)
@@ -546,6 +544,15 @@ namespace CityBashers
 			if (col.collider.gameObject.layer == 9)
 			{
 				OnLand.Invoke();
+			}
+		}
+
+		private void OnCollisionStay(Collision col)
+		{
+			if (col.collider.gameObject.layer == 9)
+			{
+				isGrounded = true;
+				playerAnim.SetBool("OnGround", isGrounded);
 			}
 		}
 
@@ -943,15 +950,11 @@ namespace CityBashers
 		/// <summary>
 		/// Gets the foot step sound from a list.
 		/// </summary>
-		public void GetFootStepSound ()
+		private void GetFootStepSound ()
 		{
-			if (Time.time > nextFootstepTime)
-			{
-				footstepSoundIndex = Random.Range (0, footstepClips.Length);
-				footstepAudioSource.clip = footstepClips [footstepSoundIndex];
-				footstepAudioSource.Play ();
-				nextFootstepTime = Time.time + footStepRate;
-			}
+			footstepSoundIndex = Random.Range (0, footstepClips.Length);
+			footstepAudioSource.clip = footstepClips [footstepSoundIndex];
+			footstepAudioSource.Play ();
 		}
 
 		/// <summary>
@@ -959,7 +962,10 @@ namespace CityBashers
 		/// </summary>
 		void OnFootStep ()
 		{
-			GetFootStepSound ();
+			if (isGrounded == true)
+			{
+				GetFootStepSound();
+			}
 		}
 		#endregion
 

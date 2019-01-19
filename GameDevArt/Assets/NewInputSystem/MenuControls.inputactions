@@ -86,63 +86,15 @@
                     "modifiers": ""
                 },
                 {
-                    "name": "Dpad",
-                    "path": "Dpad",
-                    "interactions": "Press",
-                    "processors": "Normalize(min=-1,max=1)",
-                    "groups": "",
-                    "action": "Nav",
-                    "chainWithPrevious": false,
-                    "isComposite": true,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "up",
-                    "path": "<Gamepad>/leftStick/up",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Nav",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": true,
-                    "modifiers": ""
-                },
-                {
-                    "name": "down",
-                    "path": "<Gamepad>/leftStick/down",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Nav",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": true,
-                    "modifiers": ""
-                },
-                {
-                    "name": "left",
-                    "path": "<Gamepad>/leftStick/left",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Nav",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": true,
-                    "modifiers": ""
-                },
-                {
                     "name": "right",
-                    "path": "<Gamepad>/leftStick/right",
-                    "interactions": "Press",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "Gamepad",
                     "action": "Nav",
                     "chainWithPrevious": false,
                     "isComposite": false,
-                    "isPartOfComposite": true,
+                    "isPartOfComposite": false,
                     "modifiers": ""
                 },
                 {

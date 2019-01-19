@@ -59,13 +59,11 @@ namespace CityBashers
 		void HandleConfirm(InputAction.CallbackContext context)
 		{
 			OnConfirm.Invoke();
-			Debug.Log("Confirm");
 		}
 
 		void HandleBack(InputAction.CallbackContext context)
 		{
 			OnBack.Invoke();
-			Debug.Log("Back");
 		}
 
 		private void Update()
@@ -83,7 +81,6 @@ namespace CityBashers
 					OnScrollUp.Invoke();
 					nextScroll = Time.unscaledTime + ScrollRate;
 					Nav = Vector2.zero;
-					Debug.Log("Scroll up");
 					return;
 				}
 
@@ -93,7 +90,6 @@ namespace CityBashers
 					OnScrollDown.Invoke();
 					nextScroll = Time.unscaledTime + ScrollRate;
 					Nav = Vector2.zero;
-					Debug.Log("Scroll down");
 					return;
 				}
 
@@ -103,7 +99,6 @@ namespace CityBashers
 					OnScrollLeft.Invoke();
 					nextScroll = Time.unscaledTime + ScrollRate;
 					Nav = Vector2.zero;
-					Debug.Log("Scroll left");
 					return;
 				}
 
@@ -113,7 +108,6 @@ namespace CityBashers
 					OnScrollRight.Invoke();
 					nextScroll = Time.unscaledTime + ScrollRate;
 					Nav = Vector2.zero;
-					Debug.Log("Scroll right");
 					return;
 				}
 			}
