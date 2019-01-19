@@ -72,6 +72,10 @@ namespace CityBashers
 		void HandleLook(InputAction.CallbackContext context)
 		{
 			LookAxis = context.ReadValue<Vector2>();
+
+			// Could be used to optimize look code but as value will not change if no input changes, 
+			// the camera rig will stop moving.
+			//UpdateLook(); 
 		}
 
 		/// <summary>
@@ -99,8 +103,12 @@ namespace CityBashers
 			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 		}
 
+		/// <summary>
+		/// To update the rotation of an object so the camera rig will smoothly follow it.
+		/// </summary>
 		void Update ()
 		{
+			// Horizontal rotation.
 			rotationX = 
 				transform.localEulerAngles.y + 
 				LookAxis.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
@@ -109,6 +117,7 @@ namespace CityBashers
 			if (PlayerController.Instance.aimInput == true)
 			{
 				// Don't use deadzone.
+				// Vertical rotation.
 				rotationY += 
 					LookAxis.y * 
 					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
@@ -122,6 +131,7 @@ namespace CityBashers
 				if (LookAxis.y > rotYDeadZone ||
 				    LookAxis.y < -rotYDeadZone)
 				{
+					// Vertical rotation.
 					rotationY += 
 						LookAxis.y * 
 						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
@@ -129,10 +139,14 @@ namespace CityBashers
 				}
 			}
 
+			// Vertical rotation.
 			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
+
+			// Roll rotation.
 			float rotationZ = PlayerController.Instance.aimInput ? 0 : 
 				Mathf.Clamp (-LookAxis.x * rotationZSensitivity, rotationZBounds.x, rotationZBounds.y);
 			
+			// Assign rotation amounts to object.
 			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, rotationZ);
 		}
 	}
