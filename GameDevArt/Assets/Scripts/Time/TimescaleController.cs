@@ -4,10 +4,10 @@ namespace CityBashers
 {
 	public class TimescaleController : MonoBehaviour 
 	{
-		public static TimescaleController instance { get; private set; }
+		public static TimescaleController Instance { get; private set; }
 
 		// This is just to show in the inspector rather than having to navigate to TimeManager.
-		[SerializeField] [ReadOnlyAttribute] private float currentTimeScale;
+		[SerializeField] [ReadOnly] private float currentTimeScale;
 
 		// Set by other scripts so Time.timeScale can smoothly interpolate to this value.
 		[Range (0, 100)]
@@ -25,7 +25,7 @@ namespace CityBashers
 
 		void Awake ()
 		{
-			instance = this;
+			Instance = this;
 		}
 
 		void Start ()

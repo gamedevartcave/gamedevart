@@ -9,7 +9,7 @@ namespace CityBashers
 	public class DontDestroyOnLoadInit : MonoBehaviour 
 	{
 		public static DontDestroyOnLoadInit Instance { get; private set; }
-		[ReadOnlyAttribute] public bool initialized;
+		[ReadOnly] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
 		public float Delay;

@@ -69,9 +69,9 @@ namespace CityBashers
                 playerAnim.SetFloat("JumpLeg", jumpLeg);
                 playerAnim.SetFloat("Jump", 0);
 
-                CamPosBasedOnAngle.instance.offset = new Vector2(
-                    CamPosBasedOnAngle.instance.offset.x,
-                    Mathf.Lerp(CamPosBasedOnAngle.instance.offset.y, 0, 2 * Time.deltaTime)
+                CamPosBasedOnAngle.Instance.offset = new Vector2(
+                    CamPosBasedOnAngle.Instance.offset.x,
+                    Mathf.Lerp(CamPosBasedOnAngle.Instance.offset.y, 0, 2 * Time.deltaTime)
                 );
             }
 

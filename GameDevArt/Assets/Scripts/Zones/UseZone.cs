@@ -6,9 +6,9 @@ namespace CityBashers
 {
 	public class UseZone : MonoBehaviour 
 	{
-		[ReadOnlyAttribute] public bool canUse;
+		[ReadOnly] public bool canUse;
 		public bool denyUse;
-		[ReadOnlyAttribute] public bool used;
+		[ReadOnly] public bool used;
 		public bool oneOffUse;
 		public bool autoUse;
 		public bool toggleUse;

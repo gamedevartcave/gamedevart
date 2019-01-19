@@ -19,7 +19,7 @@ namespace CityBashers
 		public bool AutomaticallyFindPlayerPosObject;
 		public string LookForPosName = "Player";
 		[Space (10)]
-		[ReadOnlyAttribute] [SerializeField] private Vector3 targetPos;
+		[ReadOnly] [SerializeField] private Vector3 targetPos;
 		public Transform[] FollowPosX;
 		public Transform[] FollowPosY;
 		public Transform[] FollowPosZ;

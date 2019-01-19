@@ -47,8 +47,8 @@ namespace CityBashers
 
 		void AddListeners()
 		{
-			MenuInput.instance.OnScrollLeft.AddListener(OnScrollLeft);
-			MenuInput.instance.OnScrollRight.AddListener(OnScrollRight);
+			MenuInput.Instance.OnScrollLeft.AddListener(OnScrollLeft);
+			MenuInput.Instance.OnScrollRight.AddListener(OnScrollRight);
 		}
 
 		void OnScrollLeft()

@@ -5,7 +5,7 @@ namespace CityBashers
 	//[ExecuteInEditMode]
 	public class CamPosBasedOnAngle : MonoBehaviour
 	{
-		public static CamPosBasedOnAngle instance { get; private set; }
+		public static CamPosBasedOnAngle Instance { get; private set; }
 
 		public Vector2 offset;
 		public float offsetMult = 0.1f;
@@ -16,7 +16,7 @@ namespace CityBashers
 			
 		void Awake ()
 		{
-			instance = this;
+			Instance = this;
 		}
 
 		void Start ()

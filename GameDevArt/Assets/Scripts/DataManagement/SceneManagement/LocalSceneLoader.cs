@@ -23,7 +23,7 @@ namespace CityBashers
 		void Start ()
 		{
 			//FadeOutLoaderUI ();
-			//BackgroundFader.instance.StartFade ();
+			//BackgroundFader.Instance.StartFade ();
 		}
 
 		public void LoadScene (string sceneName)

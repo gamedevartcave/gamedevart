@@ -21,7 +21,7 @@ namespace CityBashers
 		public bool showDistance;
 		public Vector2 distanceRange = new Vector2 (1, 10000);
 		public Transform distanceReferencePos;
-		[ReadOnlyAttribute] public float currentDistance;
+		[ReadOnly] public float currentDistance;
 		public TextMeshProUGUI distanceText;
 		public WaitForSeconds DistanceUpdate;
 		public float distanceUpdateTime = 0.5f;
@@ -76,6 +76,7 @@ namespace CityBashers
 				// whereas WorldToViewPortPoint treats the lower left corner as 0,0. 
 				// Because of this, you need to subtract the height / width of the canvas * 0.5f to get the correct position.
 
+				//Debug.Log(worldMeshRend.isVisible);
 				ViewportPosition = Camera.main.WorldToViewportPoint (WorldObject.position + worldOffset);
 
 				WorldObject_ScreenPosition = new Vector2 (

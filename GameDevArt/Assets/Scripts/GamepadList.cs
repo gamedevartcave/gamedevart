@@ -3,11 +3,11 @@ using UnityEngine.Experimental.Input;
 
 public class GamepadList : MonoBehaviour
 {
-    public static GamepadList instance { get; private set; }
+    public static GamepadList Instance { get; private set; }
 
 	private void Awake()
 	{
-		instance = this;
+		Instance = this;
 		FetchGamepads();
 
 		InputSystem.onDeviceChange +=
@@ -42,10 +42,6 @@ public class GamepadList : MonoBehaviour
 	void FetchGamepads()
 	{
 		var allGamepads = Gamepad.all;
-		Debug.Log(allGamepads);
-
-		
+		//Debug.Log(allGamepads);
 	}
-
-
 }

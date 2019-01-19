@@ -6,7 +6,7 @@ namespace CityBashers
 {
 	public class HurtZone : MonoBehaviour 
 	{
-		[ReadOnlyAttribute] public bool isInsideHurtZone;
+		[ReadOnly] public bool isInsideHurtZone;
 		public Collider playerCol;
 		public Animator PlayerUI;
 		public bool damageOnEnter;
@@ -116,7 +116,7 @@ namespace CityBashers
 			if (PlayerController.Instance.health <= 0)
 			{
 				PlayerController.Instance.health = 0;
-				this.enabled = false;
+				enabled = false;
 			}
 		}
 

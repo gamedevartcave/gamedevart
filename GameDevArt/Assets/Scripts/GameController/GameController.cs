@@ -28,7 +28,7 @@ namespace CityBashers
 			}
 		}
 
-		//[ReadOnlyAttribute] private bool isCountingScore;
+		//[ReadOnly] private bool isCountingScore;
 		public TextMeshProUGUI scoreText;
 		public float scoreSmoothing;
 		public UnityEvent OnScoreCountStarted;
@@ -315,7 +315,7 @@ namespace CityBashers
 		/// </summary>
 		public void DoUnpause ()
 		{
-			Time.timeScale = TimescaleController.instance.targetTimeScale;
+			Time.timeScale = TimescaleController.Instance.targetTimeScale;
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 			isPaused = false;

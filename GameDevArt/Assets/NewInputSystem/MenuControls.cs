@@ -70,4 +70,24 @@ public class MenuControls : InputActionAssetReference
             return new MenuActions(this);
         }
     }
+    private int m_MouseAndKeyboardSchemeIndex = -1;
+    public InputControlScheme MouseAndKeyboardScheme
+    {
+        get
+
+        {
+            if (m_MouseAndKeyboardSchemeIndex == -1) m_MouseAndKeyboardSchemeIndex = asset.GetControlSchemeIndex("MouseAndKeyboard");
+            return asset.controlSchemes[m_MouseAndKeyboardSchemeIndex];
+        }
+    }
+    private int m_GamepadSchemeIndex = -1;
+    public InputControlScheme GamepadScheme
+    {
+        get
+
+        {
+            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.GetControlSchemeIndex("Gamepad");
+            return asset.controlSchemes[m_GamepadSchemeIndex];
+        }
+    }
 }

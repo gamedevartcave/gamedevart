@@ -6,7 +6,7 @@ namespace CityBashers
 {
 	public class BackgroundFader : MonoBehaviour
 	{
-		public static BackgroundFader instance { get; private set; }
+		public static BackgroundFader Instance { get; private set; }
 
 		public RawImage background;
 
@@ -27,8 +27,8 @@ namespace CityBashers
 
 		void Awake ()
 		{
-			instance = this;
-			this.enabled = false;
+			Instance = this;
+			enabled = false;
 		}
 
 		public void StartFade ()

@@ -53,7 +53,7 @@ namespace CityBashers
                     playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
 
                     dodgeTimeRemain = pc.DodgeTimeDuration;
-                    TimescaleController.instance.targetTimeScale = pc.dodgeTimeScale;
+                    TimescaleController.Instance.targetTimeScale = pc.dodgeTimeScale;
 
                     pc.OnDodgeBegan.Invoke();
                     nextDodge = Time.time + pc.dodgeRate;
@@ -76,7 +76,7 @@ namespace CityBashers
                     // Game is not paused.
                     if (GameController.Instance.isPaused == false)
                     {
-                        TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
+                        TimescaleController.Instance.targetTimeScale = 1; // Reset time scale.
 
                         // Reset dodging animation parameters.
                         //playerAnim.SetFloat("DodgeDir", 0);

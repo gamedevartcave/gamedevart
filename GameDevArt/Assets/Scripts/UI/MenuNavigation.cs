@@ -7,12 +7,12 @@ namespace CityBashers
 	public class MenuNavigation : MonoBehaviour 
 	{
 		public static MenuNavigation activeMenu { get; protected set; }
-		[ReadOnlyAttribute] public bool isActiveMenu;
+		[ReadOnly] public bool isActiveMenu;
 
 		// Button assets
 		public GameObject backButton;
 		public Selectable firstSelectable;
-		[ReadOnlyAttribute] public Selectable currentSelectable;
+		[ReadOnly] public Selectable currentSelectable;
 		public Selectable[] buttons;
 
 		// Misc
@@ -47,13 +47,13 @@ namespace CityBashers
 
 		void AddListeners()
 		{
-			MenuInput.instance.OnScrollUp.AddListener(OnScrollUp);
-			MenuInput.instance.OnScrollDown.AddListener(OnScrollDown);
-			MenuInput.instance.OnScrollLeft.AddListener(OnScrollLeft);
-			MenuInput.instance.OnScrollRight.AddListener(OnScrollRight);
+			MenuInput.Instance.OnScrollUp.AddListener(OnScrollUp);
+			MenuInput.Instance.OnScrollDown.AddListener(OnScrollDown);
+			MenuInput.Instance.OnScrollLeft.AddListener(OnScrollLeft);
+			MenuInput.Instance.OnScrollRight.AddListener(OnScrollRight);
 
-			MenuInput.instance.OnConfirm.AddListener(OnConfirm);
-			MenuInput.instance.OnBack.AddListener(OnBack);
+			MenuInput.Instance.OnConfirm.AddListener(OnConfirm);
+			MenuInput.Instance.OnBack.AddListener(OnBack);
 		}
 			
 		public void SetButtonIndex (int index)

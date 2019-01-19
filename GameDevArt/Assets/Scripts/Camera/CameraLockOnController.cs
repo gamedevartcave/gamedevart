@@ -7,10 +7,10 @@ namespace CityBashers
 {
 	public class CameraLockOnController : MonoBehaviour 
 	{
-		public static CameraLockOnController instance { get; private set; }
+		public static CameraLockOnController Instance { get; private set; }
 		public PlayerControls playerControls;
 
-		[ReadOnlyAttribute] public bool lockedOn;
+		[ReadOnly] public bool lockedOn;
 		public float lockOnRate = 0.3f;
 
 		[Header ("Lock on points")]
@@ -34,8 +34,8 @@ namespace CityBashers
 
 		void Awake()
 		{
-			instance = this;
-			this.enabled = false;
+			Instance = this;
+			enabled = false;
 		}
 
 		private void OnEnable()

@@ -44,10 +44,10 @@ namespace CityBashers
         {
             playerAnim.SetFloat("Jump", pc.playerRb.velocity.y);
 
-            CamPosBasedOnAngle.instance.offset = new Vector2(
-                CamPosBasedOnAngle.instance.offset.x,
-                Mathf.Lerp(CamPosBasedOnAngle.instance.offset.y,
-                    Mathf.Min(pc.playerRb.velocity.y * CamPosBasedOnAngle.instance.offsetMult, 0),
+            CamPosBasedOnAngle.Instance.offset = new Vector2(
+                CamPosBasedOnAngle.Instance.offset.x,
+                Mathf.Lerp(CamPosBasedOnAngle.Instance.offset.y,
+                    Mathf.Min(pc.playerRb.velocity.y * CamPosBasedOnAngle.Instance.offsetMult, 0),
                     2 * Time.deltaTime)
             );
         }

@@ -27,7 +27,7 @@ namespace CityBashers
 		void Awake ()
 		{
 			Instance = this;
-			this.enabled = false;
+			enabled = false;
 		}
 
 		private void OnEnable()
