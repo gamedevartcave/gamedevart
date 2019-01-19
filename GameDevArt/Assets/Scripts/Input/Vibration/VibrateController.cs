@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using XInputDotNetPure;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
@@ -20,7 +20,7 @@ namespace CityBashers
 		{
 			if (_priority >= priority)
 			{
-				GamePad.SetVibration(PlayerIndex.One, _leftMotor, _rightMotor);
+				Gamepad.current.SetMotorSpeeds(_leftMotor, _rightMotor);
 				StartCoroutine (VibrateTime (_vibrationTime));
 			}
 		}
@@ -28,7 +28,7 @@ namespace CityBashers
 		IEnumerator VibrateTime (float _time)
 		{
 			yield return new WaitForSeconds (_time);
-			GamePad.SetVibration(PlayerIndex.One, 0, 0);
+			Gamepad.current.SetMotorSpeeds(0, 0);
 			priority = 0;
 		}
 	}
