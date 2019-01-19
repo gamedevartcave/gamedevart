@@ -20,15 +20,23 @@ namespace CityBashers
 		{
 			if (_priority >= priority)
 			{
-				Gamepad.current.SetMotorSpeeds(_leftMotor, _rightMotor);
-				StartCoroutine (VibrateTime (_vibrationTime));
+				if (Gamepad.current != null)
+				{
+					Gamepad.current.SetMotorSpeeds(_leftMotor, _rightMotor);
+					StartCoroutine(VibrateTime(_vibrationTime));
+				}
 			}
 		}
 
 		IEnumerator VibrateTime (float _time)
 		{
 			yield return new WaitForSeconds (_time);
-			Gamepad.current.SetMotorSpeeds(0, 0);
+
+			if (Gamepad.current != null)
+			{
+				Gamepad.current.SetMotorSpeeds(0, 0);
+			}
+
 			priority = 0;
 		}
 	}

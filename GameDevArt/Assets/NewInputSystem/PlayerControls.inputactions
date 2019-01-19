@@ -82,6 +82,12 @@
                     "id": "164b87da-6ec9-4acf-9489-700bdd9f9517",
                     "expectedControlLayout": "",
                     "bindings": []
+                },
+                {
+                    "name": "HeavyAttack",
+                    "id": "a7b36601-357c-4734-a007-c5a757323ea8",
+                    "expectedControlLayout": "",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -296,6 +302,18 @@
                     "processors": "",
                     "groups": ";MouseAndKeyboard",
                     "action": "LockOnRight",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

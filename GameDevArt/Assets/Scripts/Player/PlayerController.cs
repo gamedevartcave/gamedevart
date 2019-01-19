@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -96,6 +97,13 @@ namespace CityBashers
 		public float currentFireRate;
 		[HideInInspector] public float nextFire;
 		public UnityEvent OnShoot;
+
+		[Header("Melee Attacks")]
+		public int ComboQueueSize = 3;
+		public float TimeBetweenDeQueue = 0.2f;
+
+		private Queue<int> _comboQueue;
+		private float _timePassed = 0;
 
 		[Header ("Weapons")]
 		public int currentWeaponIndex;
@@ -217,6 +225,7 @@ namespace CityBashers
 			OnDoubleJump.AddListener(OnDoubleJumpBegan);
 			OnLand.AddListener(OnLanded);
 			isGrounded = true;
+			_comboQueue = new Queue<int>(ComboQueueSize);
 
 			// Add yield times here.
 			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
@@ -239,6 +248,9 @@ namespace CityBashers
 
 			playerControls.Player.Attack.performed += HandleAttack;
 			playerControls.Player.Attack.Enable();
+
+			playerControls.Player.HeavyAttack.performed += HandleHeavyAttack;
+			playerControls.Player.HeavyAttack.Enable();
 
 			playerControls.Player.Shoot.performed += HandleShoot;
 			playerControls.Player.Shoot.Enable();
@@ -274,6 +286,9 @@ namespace CityBashers
 			playerControls.Player.Attack.performed -= HandleAttack;
 			playerControls.Player.Attack.Disable();
 
+			playerControls.Player.HeavyAttack.performed -= HandleHeavyAttack;
+			playerControls.Player.HeavyAttack.Disable();
+
 			playerControls.Player.Shoot.performed -= HandleShoot;
 			playerControls.Player.Shoot.Disable();
 
@@ -289,8 +304,6 @@ namespace CityBashers
 			playerControls.Player.Pause.performed -= HandlePause;
 			playerControls.Player.Pause.Disable();
 		}
-
-		
 
 		#region InputActions
 		/// <summary>
@@ -454,6 +467,12 @@ namespace CityBashers
 			//Debug.Log("Attack");
 		}
 
+		void HandleHeavyAttack(InputAction.CallbackContext context)
+		{
+			HeavyAttackAction();
+			//Debug.Log("Heavy attack");
+		}
+
 		void HandleShoot(InputAction.CallbackContext context)
 		{
 			shootInput = context.ReadValue<float>() == 1 ? true : false;
@@ -497,8 +516,9 @@ namespace CityBashers
 		    ApplyExtraTurnRotation();
 
 			// Actions.
-			AimAction(); // Done
-			ShootAction(); // Done
+			AimAction();
+			ShootAction();
+			MeleeActionUpdate();
 			GetCameraChangeSmoothing();
 			DodgeUpdate();
 
@@ -691,6 +711,12 @@ namespace CityBashers
 			else // Not aiming.
 
 			{
+				if (_comboQueue.Count < ComboQueueSize)
+				{
+					_comboQueue.Enqueue(1);
+				}
+
+				/*
 				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Grounded") == true)
 				{
 					playerAnim.SetTrigger("Combo1");
@@ -711,7 +737,61 @@ namespace CityBashers
 					playerAnim.ResetTrigger("Combo1");
 					playerAnim.ResetTrigger("Combo2");
 				}
+				*/
 			}			
+		}
+
+		void HeavyAttackAction()
+		{
+			if (aimInput)
+			{
+				return;
+			}
+
+			else // Not aiming.
+
+			{
+				if (_comboQueue.Count < ComboQueueSize)
+				{
+					_comboQueue.Enqueue(2);
+				}	
+			}
+		}
+
+		void MeleeActionUpdate()
+		{
+			if (isGrounded && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging"))
+			{
+				if (_comboQueue.Count > 0 && _timePassed >= TimeBetweenDeQueue)
+				{
+					switch (_comboQueue.Dequeue())
+					{
+						case 1:
+							// Light attack 
+							playerAnim.SetTrigger("LiteAttack");
+							break;
+						case 2:
+							// heavy attack 
+							playerAnim.SetTrigger("HeavyAttack");
+							break;
+						default:
+							Debug.Log("Combo Queue Error");
+							break;
+
+					}
+
+					_timePassed = 0f;
+				}
+
+				_timePassed += Time.deltaTime;
+			}
+
+			else
+
+			{
+				_comboQueue.Clear();
+				_timePassed = 0f;
+			}
 		}
 
 		void ShootAction()
