@@ -62971,6 +62971,11 @@ PrefabInstance:
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: set_enabled
       objectReference: {fileID: 0}
+    - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
+        type: 3}
+      propertyPath: Delay
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbea631553e579f4db0813e22c25623b, type: 3}
 --- !u!114 &1628706859 stripped

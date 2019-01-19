@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -62,15 +61,15 @@ namespace CityBashers
 		/// </summary>
 		public void InitializeLoad ()
 		{
-			SaveAndLoadScript.Instance.LoadPlayerData ();
+			Instance.LoadPlayerData ();
 
 			cam = Camera.main;
 			sunShafts = cam.GetComponent<SunShafts> ();
 			edgeDetection = cam.GetComponent<EdgeDetection> ();
 
-			SaveAndLoadScript.Instance.LoadSettingsData ();
+			Instance.LoadSettingsData ();
 
-			LocalSceneLoader.Instance.FadeOutLoaderUI ();
+			//LocalSceneLoader.Instance.FadeOutLoaderUI ();
 		}
 
 		/// <summary>

@@ -73,42 +73,55 @@ namespace CityBashers
 
 		void CheckNav()
 		{
-			if (Time.unscaledTime > nextScroll && GameController.Instance.isPaused)
+			if (Time.unscaledTime > nextScroll)
 			{
-				// Move up
-				if (Nav.y > navMin)
+				if (GameController.Instance != null)
 				{
-					OnScrollUp.Invoke();
-					nextScroll = Time.unscaledTime + ScrollRate;
-					Nav = Vector2.zero;
-					return;
+					if (GameController.Instance.isPaused)
+					{
+						return;
+					}
 				}
 
-				// Move down
-				if (Nav.y < -navMin)
-				{
-					OnScrollDown.Invoke();
-					nextScroll = Time.unscaledTime + ScrollRate;
-					Nav = Vector2.zero;
-					return;
-				}
+				else
 
-				// Move left
-				if (Nav.x < -navMin)
 				{
-					OnScrollLeft.Invoke();
-					nextScroll = Time.unscaledTime + ScrollRate;
-					Nav = Vector2.zero;
-					return;
-				}
 
-				// Move right
-				if (Nav.x > navMin)
-				{
-					OnScrollRight.Invoke();
-					nextScroll = Time.unscaledTime + ScrollRate;
-					Nav = Vector2.zero;
-					return;
+					// Move up
+					if (Nav.y > navMin)
+					{
+						OnScrollUp.Invoke();
+						nextScroll = Time.unscaledTime + ScrollRate;
+						Nav = Vector2.zero;
+						return;
+					}
+
+					// Move down
+					if (Nav.y < -navMin)
+					{
+						OnScrollDown.Invoke();
+						nextScroll = Time.unscaledTime + ScrollRate;
+						Nav = Vector2.zero;
+						return;
+					}
+
+					// Move left
+					if (Nav.x < -navMin)
+					{
+						OnScrollLeft.Invoke();
+						nextScroll = Time.unscaledTime + ScrollRate;
+						Nav = Vector2.zero;
+						return;
+					}
+
+					// Move right
+					if (Nav.x > navMin)
+					{
+						OnScrollRight.Invoke();
+						nextScroll = Time.unscaledTime + ScrollRate;
+						Nav = Vector2.zero;
+						return;
+					}
 				}
 			}
 		}

@@ -547,11 +547,22 @@ namespace CityBashers
 			}
 		}
 
+		/*
 		private void OnCollisionStay(Collision col)
 		{
 			if (col.collider.gameObject.layer == 9)
 			{
 				isGrounded = true;
+				playerAnim.SetBool("OnGround", isGrounded);
+			}
+		}
+		*/
+
+		private void OnCollisionExit(Collision col)
+		{
+			if (col.collider.gameObject.layer == 9)
+			{
+				isGrounded = false;
 				playerAnim.SetBool("OnGround", isGrounded);
 			}
 		}
