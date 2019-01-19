@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
 	[AddComponentMenu("Camera-Control/Mouse Look")]
 	public class MouseLook : MonoBehaviour 
 	{
-		public static MouseLook instance { get; private set; }
+		public static MouseLook Instance { get; private set; }
+		public PlayerControls playerControls;
+		[ReadOnly] public Vector2 LookAxis;
 
 		public Vector2 sensitivity = new Vector2 (15, 15);
 
@@ -21,17 +24,29 @@ namespace CityBashers
 
 		public Slider MouseSensitivitySlider;
 
-		private PlayerActions playerActions;
-
 		void Awake ()
 		{
-			instance = this;
+			Instance = this;
 			this.enabled = false;
 		}
 
-		void Start ()
+		private void OnEnable()
 		{
-			playerActions = InControlActions.instance.playerActions;
+			playerControls.Player.Look.performed += HandleLook;
+			playerControls.Player.Look.Enable();
+		}
+
+		private void OnDisable()
+		{
+			playerControls.Player.Look.performed -= HandleLook;
+			playerControls.Player.Look.Disable();
+		}
+
+		void HandleLook(InputAction.CallbackContext context)
+		{
+			LookAxis = context.ReadValue<Vector2>();
+			UpdateLook();
+			//Debug.Log("Mouse Delta: " + LookAxis);
 		}
 
 		/// <summary>
@@ -59,31 +74,31 @@ namespace CityBashers
 			MouseSensitivitySlider.value = SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 		}
 
-		void Update ()
+		void UpdateLook ()
 		{
 			rotationX = 
 				transform.localEulerAngles.y + 
-				playerActions.CamRot.Value.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+				LookAxis.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 
 			// While aiming.
-			if (playerActions.Aim.Value > 0.5f)
+			if (PlayerController.Instance.aimInput == true)
 			{
 				// Don't use deadzone.
 				rotationY += 
-					playerActions.CamRot.Value.y * 
+					LookAxis.y * 
 					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y) 
 					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 			}
 
 			// Not aiming.
-			if (playerActions.Aim.Value <= 0.5f)
+			else
 			{
 				// Use deadzone.
-				if (playerActions.CamRot.Value.y > rotYDeadZone ||
-				    playerActions.CamRot.Value.y < -rotYDeadZone)
+				if (LookAxis.y > rotYDeadZone ||
+				    LookAxis.y < -rotYDeadZone)
 				{
 					rotationY += 
-						playerActions.CamRot.Value.y * 
+						LookAxis.y * 
 						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.x : sensitivity.y);
 				}
 			}

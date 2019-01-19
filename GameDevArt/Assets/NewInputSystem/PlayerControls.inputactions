@@ -1,0 +1,344 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "a865c2ab-e9b6-47de-941a-eff68a78c9d3",
+            "actions": [
+                {
+                    "name": "Move",
+                    "id": "85bc7fd3-240d-45ca-8986-ab403dc16594",
+                    "expectedControlLayout": "Vector2",
+                    "bindings": []
+                },
+                {
+                    "name": "Look",
+                    "id": "220e3516-f2a3-4e88-9427-3a3cc478b90f",
+                    "expectedControlLayout": "Vector2",
+                    "bindings": []
+                },
+                {
+                    "name": "Jump",
+                    "id": "5c166a13-1aa4-472d-ad4a-4b3d7d8bd5c7",
+                    "expectedControlLayout": "Axis",
+                    "bindings": []
+                },
+                {
+                    "name": "Aim",
+                    "id": "86aa61ff-880f-48b9-b366-3463ab1c63a4",
+                    "expectedControlLayout": "Axis",
+                    "bindings": []
+                },
+                {
+                    "name": "Dodge",
+                    "id": "c94b2137-b27d-40b3-837f-cde93f64f64c",
+                    "expectedControlLayout": "Axis",
+                    "bindings": []
+                },
+                {
+                    "name": "Attack",
+                    "id": "df555def-a042-46a7-b726-3e25bdbc7c36",
+                    "expectedControlLayout": "Axis",
+                    "bindings": []
+                },
+                {
+                    "name": "Shoot",
+                    "id": "1b574067-05f3-4453-9e7a-077cf5ad04bf",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "Use",
+                    "id": "f1967237-aa38-4c1c-90e2-2c72e34f0fab",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "CameraChange",
+                    "id": "2aa4bbd6-ae6f-45d9-826a-f3f7a16e308e",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "Ability",
+                    "id": "bfdbfe64-bd0d-49ce-a6f5-41862d837c59",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "Pause",
+                    "id": "c4b9c9ca-2358-4f0a-9448-2a52f33ebe66",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "LockOnLeft",
+                    "id": "8234b9ac-da9f-4164-9fb1-5e3783c80dee",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "LockOnRight",
+                    "id": "164b87da-6ec9-4acf-9489-700bdd9f9517",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                },
+                {
+                    "name": "HeavyAttack",
+                    "id": "a7b36601-357c-4734-a007-c5a757323ea8",
+                    "expectedControlLayout": "",
+                    "bindings": []
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "positive",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Look",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "positive",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Jump",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "positive",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Aim",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "positive",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Dodge",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "positive",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Dodge",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "Dpad",
+                    "path": "Dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "chainWithPrevious": false,
+                    "isComposite": true,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "up",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": true,
+                    "modifiers": ""
+                },
+                {
+                    "name": "down",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": true,
+                    "modifiers": ""
+                },
+                {
+                    "name": "left",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": true,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": true,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Attack",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Shoot",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/f",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Use",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "CameraChange",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "Ability",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/v",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";MouseAndKeyboard",
+                    "action": "LockOnLeft",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/b",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";MouseAndKeyboard",
+                    "action": "LockOnRight",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "MouseAndKeyboard",
+            "basedOn": "",
+            "bindingGroup": "MouseAndKeyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

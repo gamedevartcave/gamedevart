@@ -51,7 +51,7 @@ namespace CityBashers
 
 		void OnTriggerEnter (Collider other)
 		{
-			if (other.gameObject == PlayerController.instance.gameObject)
+			if (other.gameObject == PlayerController.Instance.gameObject)
 			{
 				if (timesUsed < maxTimesUsed)
 				{

@@ -12,7 +12,7 @@ namespace CityBashers
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
             base.OnStateMachineEnter(animator, stateMachinePathHash);
-            pc = PlayerController.instance;
+            pc = PlayerController.Instance;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,16 +21,16 @@ namespace CityBashers
             // TODO fix hack
             if (pc == null)
             {
-                pc = PlayerController.instance;
+                pc = PlayerController.Instance;
             }
 
-            DodgeAction(animator);
+            //DodgeAction(animator);
         }
 
         void DodgeAction(Animator playerAnim)
         {
-            if (pc.magic > pc.dodgeMagicCost &&
-               (pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
+            if ((pc.magic > pc.dodgeMagicCost || pc.unlimitedMagic))// &&
+               //(pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
             {
                 // Get dodge angle.
                 // Assign to player animation.
@@ -74,7 +74,7 @@ namespace CityBashers
                 if (pc.isDodging == true)
                 {
                     // Game is not paused.
-                    if (GameController.instance.isPaused == false)
+                    if (GameController.Instance.isPaused == false)
                     {
                         TimescaleController.instance.targetTimeScale = 1; // Reset time scale.
 
@@ -102,14 +102,14 @@ namespace CityBashers
 
 				Debug.Log ("isDodge time");
                 // Game is not paused.
-                if (GameController.instance.isPaused == false)
+                if (GameController.Instance.isPaused == false)
                 {
                     // Decrease time left of dodging.
                     dodgeTimeRemain -= Time.unscaledDeltaTime;
 
                     Vector3 relativeDodgeDir = pc.transform.InverseTransformDirection(
                         pc.transform.forward *
-                        (pc.playerActions.Move.Value.sqrMagnitude > 0 ? 1 : -1) *
+                        (pc.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
                         pc.dodgeSpeed * Time.unscaledDeltaTime);
 
                     pc.transform.Translate(relativeDodgeDir, Space.Self);

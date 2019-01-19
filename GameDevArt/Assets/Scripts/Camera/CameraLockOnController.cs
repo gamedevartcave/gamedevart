@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
 	public class CameraLockOnController : MonoBehaviour 
 	{
 		public static CameraLockOnController instance { get; private set; }
+		public PlayerControls playerControls;
+
 		[ReadOnlyAttribute] public bool lockedOn;
 		public float lockOnRate = 0.3f;
 
@@ -29,114 +32,136 @@ namespace CityBashers
 		public UnityEvent OnLockOnBegan;
 		public UnityEvent OnLockOnRelease;
 
-		public PlayerActions playerActions;
-
-		void Awake ()
+		void Awake()
 		{
 			instance = this;
 			this.enabled = false;
 		}
 
-		void Start ()
+		private void OnEnable()
 		{
-			playerActions = InControlActions.instance.playerActions;
+			playerControls.Player.LockOnLeft.performed += HandleLockOnLeft;
+			playerControls.Player.LockOnLeft.Enable();
+
+			playerControls.Player.LockOnRight.performed += HandleLockOnRight;
+			playerControls.Player.LockOnRight.Enable();
 		}
 
-		void Update ()
+		private void OnDisable()
 		{
-			// While aiming.
-			if (playerActions.Aim.Value > 0.5f)
+			playerControls.Player.LockOnLeft.performed -= HandleLockOnLeft;
+			playerControls.Player.LockOnLeft.Disable();
+
+			playerControls.Player.LockOnRight.performed -= HandleLockOnRight;
+			playerControls.Player.LockOnRight.Disable();
+		}
+
+		private void Start()
+		{
+			PlayerController.Instance.OnAimRelease.AddListener(OnAimRelease);
+		}
+
+		void HandleLockOnLeft(InputAction.CallbackContext context)
+		{
+			if (PlayerController.Instance.aimInput)
 			{
-				// Pressed lock on button (left).
-				if (playerActions.LockOnLeft.WasPressed)
-				{	
-					// Already locked on to something.
-					if (lockedOn == true)
-					{
-						// There are lock on points.
-						if (lockOnPoints.Count > 0)
-						{
-							// Move down a lock on index.
-							if (activeLockOnIndex > 0)
-							{
-								activeLockOnIndex--;
-							} 
-
-							else // Go to last lock on index.
-
-							{
-								activeLockOnIndex = lockOnPoints.Count - 1;
-							}
-						}
-					}
-
-					else
-					
-					{
-						// Uses last index.
-					}
-
-					SetLockOnPoint (); // Lock on to something.
-				}
-
-				// Pressed lock on button (right).
-				if (playerActions.LockOnRight.WasPressed)
-				{
-					// Already locked on to something.
-					if (lockedOn == true)
-					{
-						// There are lock on points.
-						if (lockOnPoints.Count > 0)
-						{
-							// Move up a lock on index.
-							if (activeLockOnIndex < lockOnPoints.Count - 1)
-							{
-								activeLockOnIndex++;
-							} 
-
-							else // Go to first lock on index.
-
-							{
-								activeLockOnIndex = 0;
-							}
-						}
-					} 
-
-					else
-					
-					{
-						// Uses last index.
-					}
-
-					SetLockOnPoint (); // Lock on to something.
-				}
-			}
-
-			else // Stopped aiming, stop lock on.
-			
-			{
-				// On lock on release.
+				// Already locked on to something.
 				if (lockedOn == true)
 				{
-					lockedOn = false;
-					OnLockOnRelease.Invoke ();
+					// There are lock on points.
+					if (lockOnPoints.Count > 0)
+					{
+						// Move down a lock on index.
+						if (activeLockOnIndex > 0)
+						{
+							activeLockOnIndex--;
+						}
+
+						else // Go to last lock on index.
+
+						{
+							activeLockOnIndex = lockOnPoints.Count - 1;
+						}
+					}
 				}
 
-				if (camLookAt.enabled == true)
+				else
+
 				{
-					camLookAt.enabled = false;
-					cameraRig.rotation = Quaternion.LookRotation (cam.transform.forward, Vector3.up);
+					// Uses last index.
 				}
 
-				// While not locked on.
-				cam.localRotation = Quaternion.Slerp (
-					cam.localRotation, 
-					Quaternion.identity, 
-					resetRotationSmoothing * Time.deltaTime
-				);
-			}	
+				SetLockOnPoint(); // Lock on to something.
+			}
 		}
 
+		void HandleLockOnRight(InputAction.CallbackContext context)
+		{
+			if (PlayerController.Instance.aimInput)
+			{
+				// Already locked on to something.
+				if (lockedOn == true)
+				{
+					// There are lock on points.
+					if (lockOnPoints.Count > 0)
+					{
+						// Move up a lock on index.
+						if (activeLockOnIndex < lockOnPoints.Count - 1)
+						{
+							activeLockOnIndex++;
+						}
+
+						else // Go to first lock on index.
+
+						{
+							activeLockOnIndex = 0;
+						}
+					}
+				}
+
+				else
+
+				{
+					// Uses last index.
+				}
+
+				SetLockOnPoint(); // Lock on to something.
+			}
+		}
+
+		/// <summary>
+		/// Called when aim is released.
+		/// </summary>
+		void OnAimRelease()
+		{
+			lockedOn = false;
+			OnLockOnRelease.Invoke();
+
+			if (camLookAt.enabled == true)
+			{
+				camLookAt.enabled = false;
+				//cameraRig.rotation = Quaternion.LookRotation(cam.transform.forward, Vector3.up);
+			}
+
+			//Debug.Log("Called on aim release");
+		}
+
+		private void Update()
+		{
+			if (lockedOn == false)
+			{
+				// While not locked on.
+				cam.localRotation = Quaternion.Slerp(
+					cam.localRotation,
+					Quaternion.identity,
+					resetRotationSmoothing * Time.deltaTime
+				);
+			}
+		}
+
+		/// <summary>
+		/// Sets lock on point.
+		/// </summary>
 		void SetLockOnPoint ()
 		{
 			OnLockOnBegan.Invoke ();

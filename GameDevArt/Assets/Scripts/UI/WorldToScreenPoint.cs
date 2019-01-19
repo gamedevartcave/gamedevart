@@ -68,7 +68,7 @@ namespace CityBashers
 		{
 			// Note: Checks any camera (including Editor camera).
 			if ((worldMeshRend.isVisible || updateWhenOffScreen) && 
-				GameController.instance.isPaused == false &&
+				GameController.Instance.isPaused == false &&
 				Camera.main != null)
 			{
 				// Calculate the position of the UI element

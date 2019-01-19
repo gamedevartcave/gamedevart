@@ -30,12 +30,12 @@ namespace CityBashers
 
 		void Start ()
 		{
-			PlayerController.instance.OnUse.AddListener (Use);
+			PlayerController.Instance.OnUse.AddListener (Use);
 		}
 
 		void OnTriggerEnter (Collider other)
 		{
-			if (other == PlayerController.instance.playerCol)
+			if (other == PlayerController.Instance.playerCol)
 			{
 				canUse = true;
 
@@ -53,7 +53,7 @@ namespace CityBashers
 
 		void OnTriggerExit (Collider other)
 		{
-			if (other == PlayerController.instance.playerCol)
+			if (other == PlayerController.Instance.playerCol)
 			{
 				canUse = false;
 			}

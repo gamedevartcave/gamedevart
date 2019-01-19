@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using InControl;
 
 namespace CityBashers
 {
-	[RequireComponent (typeof (Slider))]
-	public class SliderInput : MonoBehaviour 
+	[RequireComponent(typeof(Slider))]
+	public class SliderInput : MonoBehaviour
 	{
 		/// <summary>
 		/// Checks if selectable is currently selected.
@@ -30,30 +29,49 @@ namespace CityBashers
 		/// </summary>
 		private Selectable selectable;
 
-		public PlayerActions playerActions;
-
-		void Awake ()
+		void Awake()
 		{
-			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener (OnInitialize);
+			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener(OnInitialize);
 		}
 
-		void Start ()
+		void Start()
 		{
-			slider = GetComponent<Slider> ();
-			selectable = GetComponent<Selectable> ();
+			slider = GetComponent<Slider>();
+			selectable = GetComponent<Selectable>();
 		}
 
-		void OnInitialize ()
+		void OnInitialize()
 		{
-			FetchComponents ();
+			AddListeners();
 		}
 
-		void FetchComponents ()
+		void AddListeners()
 		{
-			if (playerActions == null) playerActions = InControlActions.instance.playerActions;
+			MenuInput.instance.OnScrollLeft.AddListener(OnScrollLeft);
+			MenuInput.instance.OnScrollRight.AddListener(OnScrollRight);
 		}
 
-		void Update ()
+		void OnScrollLeft()
+		{
+			CheckActiveMenu();
+
+			if (active == true)
+			{
+				slider.value -= moveAmount;
+			}
+		}
+
+		void OnScrollRight()
+		{
+			CheckActiveMenu();
+
+			if (active == true)
+			{
+				slider.value += moveAmount;
+			}
+		}
+
+		void CheckActiveMenu()
 		{
 			if (menuNav.isActiveMenu == true)
 			{
@@ -63,15 +81,10 @@ namespace CityBashers
 					{
 						active = true;
 					}
-				
-					if (playerActions.Move.Value.x != 0)
-					{
-						slider.value += moveAmount * playerActions.Move.Value.x * Time.unscaledDeltaTime;
-					}
-				} 
+				}
 
 				else
-				
+
 				{
 					if (active == true)
 					{

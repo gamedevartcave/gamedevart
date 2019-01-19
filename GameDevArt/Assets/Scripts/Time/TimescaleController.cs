@@ -41,9 +41,9 @@ namespace CityBashers
 
 		void SetTargetTimeScale ()
 		{
-			if (GameController.instance != null)
+			if (GameController.Instance != null)
 			{
-				if (GameController.instance.isPaused == false)
+				if (GameController.Instance.isPaused == false)
 				{
 					currentTimeScale = Mathf.Lerp (
 						currentTimeScale, 
