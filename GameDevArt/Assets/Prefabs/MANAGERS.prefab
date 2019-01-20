@@ -6788,7 +6788,7 @@ GameObject:
   - component: {fileID: 5796832624831438246}
   - component: {fileID: 9188035135539658685}
   m_Layer: 0
-  m_Name: MenuManager
+  m_Name: MenuInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

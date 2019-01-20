@@ -29,6 +29,16 @@ namespace CityBashers
 
 		private void OnEnable()
 		{
+			RegisterControls();
+		}
+
+		private void OnDestroy()
+		{
+			DeregisterControls();
+		}
+
+		void RegisterControls()
+		{
 			menuControls.Menu.Nav.performed += HandleNav;
 			menuControls.Menu.Nav.Enable();
 
@@ -37,9 +47,11 @@ namespace CityBashers
 
 			menuControls.Menu.Back.performed += HandleBack;
 			menuControls.Menu.Back.Enable();
+
+			//Debug.Log("Menu controls registered.");
 		}
 
-		private void OnDestroy()
+		void DeregisterControls()
 		{
 			menuControls.Menu.Nav.performed -= HandleNav;
 			menuControls.Menu.Nav.Disable();
@@ -71,57 +83,69 @@ namespace CityBashers
 			CheckNav();
 		}
 
+		void DoNav()
+		{
+			// Move up
+			if (Nav.y > navMin)
+			{
+				OnScrollUp.Invoke();
+				nextScroll = Time.unscaledTime + ScrollRate;
+				Nav = Vector2.zero;
+				return;
+			}
+
+			// Move down
+			if (Nav.y < -navMin)
+			{
+				OnScrollDown.Invoke();
+				nextScroll = Time.unscaledTime + ScrollRate;
+				Nav = Vector2.zero;
+				return;
+			}
+
+			// Move left
+			if (Nav.x < -navMin)
+			{
+				OnScrollLeft.Invoke();
+				nextScroll = Time.unscaledTime + ScrollRate;
+				Nav = Vector2.zero;
+				return;
+			}
+
+			// Move right
+			if (Nav.x > navMin)
+			{
+				OnScrollRight.Invoke();
+				nextScroll = Time.unscaledTime + ScrollRate;
+				Nav = Vector2.zero;
+				return;
+			}
+		}
+
 		void CheckNav()
 		{
 			if (Time.unscaledTime > nextScroll)
 			{
+				// Check if there is a GameController Instance.
 				if (GameController.Instance != null)
 				{
-					if (GameController.Instance.isPaused)
+					// Game is not paused.
+					if (!GameController.Instance.isPaused)
 					{
 						return;
+					}
+
+					else // Game is paused, allow menu input.
+
+					{
+						DoNav();
 					}
 				}
 
-				else
+				else // No GameController, allow menu input anyway.
 
 				{
-
-					// Move up
-					if (Nav.y > navMin)
-					{
-						OnScrollUp.Invoke();
-						nextScroll = Time.unscaledTime + ScrollRate;
-						Nav = Vector2.zero;
-						return;
-					}
-
-					// Move down
-					if (Nav.y < -navMin)
-					{
-						OnScrollDown.Invoke();
-						nextScroll = Time.unscaledTime + ScrollRate;
-						Nav = Vector2.zero;
-						return;
-					}
-
-					// Move left
-					if (Nav.x < -navMin)
-					{
-						OnScrollLeft.Invoke();
-						nextScroll = Time.unscaledTime + ScrollRate;
-						Nav = Vector2.zero;
-						return;
-					}
-
-					// Move right
-					if (Nav.x > navMin)
-					{
-						OnScrollRight.Invoke();
-						nextScroll = Time.unscaledTime + ScrollRate;
-						Nav = Vector2.zero;
-						return;
-					}
+					DoNav();
 				}
 			}
 		}

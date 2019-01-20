@@ -327,7 +327,7 @@ namespace CityBashers
 			var value = context.ReadValue<float>();
 
 			// Button held down.
-			if (value == 1)
+			if (value > 0.9f)
 			{
 				if (lastJumpValue != 1)
 				{
@@ -341,7 +341,7 @@ namespace CityBashers
 		void HandleAim(InputAction.CallbackContext context)
 		{
 			var value = context.ReadValue<float>();
-			aimInput = value == 1 ? true : false;
+			aimInput = value > 0.9f ? true : false;
 
 			if (aimInput == false)
 			{
@@ -479,7 +479,7 @@ namespace CityBashers
 
 		void HandleShoot(InputAction.CallbackContext context)
 		{
-			shootInput = context.ReadValue<float>() == 1 ? true : false;
+			shootInput = context.ReadValue<float>() > 0.9f ? true : false;
 		}
 
 		void HandleUse(InputAction.CallbackContext context)
@@ -508,11 +508,6 @@ namespace CityBashers
 
 		void Update ()
 		{
-			// Movement calculations.
-			CalculateRelativeMoveDirection();
-			ApplyMoveAndTurn();
-		    ApplyExtraTurnRotation();
-
 			// Actions.
 			AimAction();
 			ShootAction();
@@ -547,7 +542,6 @@ namespace CityBashers
 			}
 		}
 
-		/*
 		private void OnCollisionStay(Collision col)
 		{
 			if (col.collider.gameObject.layer == 9)
@@ -556,7 +550,6 @@ namespace CityBashers
 				playerAnim.SetBool("OnGround", isGrounded);
 			}
 		}
-		*/
 
 		private void OnCollisionExit(Collision col)
 		{
@@ -700,14 +693,28 @@ namespace CityBashers
 			{
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
+				playerRb.velocity = Vector3.zero;
+				move = Vector3.zero;
+				forwardAmount = 0;
+
+
+				if (isGrounded == true)
+				{
+					playerAnim.SetFloat("Forward", 0);
+				}
 			}
 
 			else    // Not aiming.
 
 			{
+				CalculateRelativeMoveDirection();
+				ApplyMoveAndTurn();
+				ApplyExtraTurnRotation();
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, normalFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
 			}
+
+			playerAnim.SetBool("Aim", aimInput);
 		}
 
 		/// <summary>
@@ -794,22 +801,36 @@ namespace CityBashers
 		/// </summary>
 		void ShootAction()
 		{
-			if (shootInput)
+			if (aimInput)
 			{
-				if (Time.time > nextFire && GameController.Instance.isPaused == false)
+				playerAnim.SetBool("Shooting", shootInput);
+
+				if (shootInput)
 				{
-					transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
+					if (Time.time > nextFire && GameController.Instance.isPaused == false)
+					{
+						transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
 
-					Shoot();
-					nextFire = Time.time + currentFireRate;
+						Shoot();
+						nextFire = Time.time + currentFireRate;
 
-					GameController.Instance.camShakeScript.shakeDuration = 1;
-					GameController.Instance.camShakeScript.shakeAmount = 0.1f;
-					GameController.Instance.camShakeScript.Shake();
+						GameController.Instance.camShakeScript.shakeDuration = 0.5f;
+						GameController.Instance.camShakeScript.shakeAmount = 0.05f;
+						GameController.Instance.camShakeScript.Shake();
 
-					VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.25f, 1);
+						VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.25f, 1);
 
-					//Debug.Log ("Shooting from weapon " + currentWeaponIndex);
+						//Debug.Log ("Shooting from weapon " + currentWeaponIndex);
+					}
+				}
+			}
+
+			else // Not aiming, therefore make sure we arent shooting.
+
+			{
+				if (playerAnim.GetBool("Shooting") == true)
+				{
+					playerAnim.SetBool("Shooting", false);
 				}
 			}
 		}
@@ -942,16 +963,17 @@ namespace CityBashers
 		/// </summary>
 		public void Shoot ()
 		{
-			RaycastHit hit;
-			Ray ray = cam.ScreenPointToRay (Input.mousePosition);
+			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 			AimDir = ray.direction;
 			AimNoPitchDir = new Vector3 (ray.direction.x, 0, ray.direction.z);
 
-			if (Physics.Raycast (AimingOrigin.position, ray.direction, out hit, Mathf.Infinity))
+			if (Physics.Raycast (AimingOrigin.position, ray.direction, out RaycastHit hit, Mathf.Infinity))
 			{
 				Debug.DrawRay (AimingOrigin.position, ray.direction * 10, Color.cyan, 0.2f);
 				Debug.DrawRay (AimingOrigin.position, AimNoPitchDir * 10, Color.green, 0.2f);
 			}
+
+			//playerAnim.SetTrigger("Shoot");
 
 			OnShoot.Invoke ();
 		}

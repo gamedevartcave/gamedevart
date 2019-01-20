@@ -223,7 +223,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 60183
+    m_Bits: 125719
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -310,20 +310,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013544662402786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60e318a6043c1cb4a8ce1c8805bab930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution: 1
+  resolution: 2
   screenBlendMode: 1
   sunTransform: {fileID: 0}
   radialBlurIterations: 2
-  sunColor: {r: 1, g: 0.7531447, b: 0.25943398, a: 1}
+  sunColor: {r: 0.7913849, g: 0.8918176, b: 0.9811321, a: 1}
   sunThreshold: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
-  sunShaftBlurRadius: 3.13
-  sunShaftIntensity: 1.1
-  maxRadius: 0.45
+  sunShaftBlurRadius: 3.09
+  sunShaftIntensity: 0.5
+  maxRadius: 0.75
   useDepthTexture: 1
   sunShaftsShader: {fileID: 4800000, guid: d3b1c8c1036784176946f5cfbfb7fe4c, type: 3}
   simpleClearShader: {fileID: 4800000, guid: f688f89ed5eb847c5b19c934a0f1e772, type: 3}
@@ -445,7 +445,7 @@ MonoBehaviour:
   LookMethod: 0
   useUpDirection: 0
   useSmoothing: 1
-  SmoothingAmount: 10
+  SmoothingAmount: 5
 --- !u!54 &54412824476952680
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -532,8 +532,8 @@ MonoBehaviour:
   FollowPosZ:
   - {fileID: 0}
   FollowPosMethod: 1
-  FollowPosOffset: {x: 0, y: -1.7, z: 0}
-  FollowPosSmoothTime: {x: 5, y: 3, z: 5}
+  FollowPosOffset: {x: 0, y: -1.6, z: 0}
+  FollowPosSmoothTime: {x: 5, y: 5, z: 5}
   XPosTimeUnscaled: 0
   YPosTimeUnscaled: 0
   ZPosTimeUnscaled: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   LookForRotName: 
   FollowRotX: {fileID: 0}
   FollowRotY: {fileID: 0}
-  FollowRotZ: {fileID: 4074300922465350}
+  FollowRotZ: {fileID: 0}
   FollowRotOffset: {x: 0, y: 0, z: 0}
   FollowRotSmoothTime: {x: 25, y: 25, z: 0}
   XRotTimeUnscaled: 0
