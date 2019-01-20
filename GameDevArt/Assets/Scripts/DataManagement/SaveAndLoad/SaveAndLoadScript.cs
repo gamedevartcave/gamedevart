@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -62,13 +61,15 @@ namespace CityBashers
 		/// </summary>
 		public void InitializeLoad ()
 		{
-			SaveAndLoadScript.Instance.LoadPlayerData ();
+			Instance.LoadPlayerData ();
 
 			cam = Camera.main;
 			sunShafts = cam.GetComponent<SunShafts> ();
 			edgeDetection = cam.GetComponent<EdgeDetection> ();
 
-			SaveAndLoadScript.Instance.LoadSettingsData ();
+			Instance.LoadSettingsData ();
+
+			//LocalSceneLoader.Instance.FadeOutLoaderUI ();
 		}
 
 		/// <summary>
@@ -197,6 +198,18 @@ namespace CityBashers
 			}
 		}
 
+		public static void DeletePlayerDataEditorFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_PlayerConfig_Editor.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_PlayerConfig_Editor.dat");
+
+				Debug.Log("<color=red>Deleted player data</color>\n" +
+					Application.persistentDataPath + "/default_PlayerConfig_Editor.dat"
+				);
+			}
+		}
+
 		/// <summary>
 		/// Deletes the main player data.
 		/// </summary>
@@ -208,6 +221,18 @@ namespace CityBashers
 
 				Debug.Log ("<color=red>Deleted player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
+				);
+			}
+		}
+
+		public static void DeletePlayerDataMainFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_PlayerConfig.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_PlayerConfig.dat");
+
+				Debug.Log("<color=red>Deleted player data</color>\n" +
+					Application.persistentDataPath + "/default_PlayerConfig.dat"
 				);
 			}
 		}
@@ -227,6 +252,18 @@ namespace CityBashers
 			}
 		}
 
+		public static void DeleteSettingsDataEditorFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_SettingsConfig_Editor.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_SettingsConfig_Editor.dat");
+
+				Debug.Log("<color=red>Deleted settings data</color>\n" +
+					Application.persistentDataPath + "/default_SettingsConfig_Editor.dat"
+				);
+			}
+		}
+
 		/// <summary>
 		/// Deletes the main settings data.
 		/// </summary>
@@ -237,6 +274,17 @@ namespace CityBashers
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 				Debug.Log ("<color=red>Deleted settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"
+				);
+			}
+		}
+
+		public static void DeleteSettingsDataMainFile()
+		{
+			if (File.Exists(Application.persistentDataPath + "/default_SettingsConfig.dat") == true)
+			{
+				File.Delete(Application.persistentDataPath + "/default_SettingsConfig.dat");
+				Debug.Log("<color=red>Deleted settings data</color>\n" +
+					Application.persistentDataPath + "/default_SettingsConfig.dat"
 				);
 			}
 		}
@@ -344,6 +392,8 @@ namespace CityBashers
 				targetResolutionHeight = Screen.currentResolution.height;
 
 				// Audio settings.
+
+				// Gameplay settings.
 				targetFrameRate = Application.targetFrameRate;
 			}
 		}
@@ -417,7 +467,7 @@ namespace CityBashers
 		{
 			if (AllowLoading == true)
 			{
-				#if !UNITY_EDITOR
+#if !UNITY_EDITOR
 				if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true) 
 				{
 					// Opens the save data.
@@ -440,12 +490,14 @@ namespace CityBashers
 				else
 
 				{
+					Application.targetFrameRate = 60;
+					limitFramerate = true;
 					SaveSettingsData ();
 					LoadSettingsData ();
 				}
-				#endif
+#endif
 
-				#if UNITY_EDITOR
+#if UNITY_EDITOR
 				if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 				{
 					// Opens the save data.
@@ -468,6 +520,8 @@ namespace CityBashers
 				else
 				
 				{
+					Application.targetFrameRate = 60;
+					limitFramerate = true;
 					SaveSettingsData ();
 					LoadSettingsData ();
 				}
@@ -565,13 +619,13 @@ namespace CityBashers
 			{
 				if (targetFrameRate < 30 && targetFrameRate >= 0)
 				{
-					targetFrameRate = Screen.currentResolution.refreshRate;
+					//targetFrameRate = Screen.currentResolution.refreshRate;
+					targetFrameRate = 60;
 				} 
 
-				else
+				else // Target framerate unlimited.
 
 				{
-					TargetFPS.Instance.SetTargetFramerate (targetFrameRate);
 				}
 			} 
 
@@ -582,6 +636,7 @@ namespace CityBashers
 			}
 
 			//Debug.Log ("Application.targetFrameRate = " + Application.targetFrameRate);
+			TargetFPS.Instance.SetTargetFramerate(targetFrameRate);
 		}
 
 		// Variables stored in data files.

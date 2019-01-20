@@ -19,7 +19,7 @@ namespace CityBashers
 					CancelInvoke ("ReleaseOverride");
 				}
 
-				PlayerController.instance.cam = overrideCam;
+				PlayerController.Instance.cam = overrideCam;
 				playerCam.enabled = false;
 				overrideCam.enabled = true;
 			}
@@ -35,7 +35,7 @@ namespace CityBashers
 
 		void ReleaseOverride ()
 		{
-			PlayerController.instance.cam = playerCam;
+			PlayerController.Instance.cam = playerCam;
 			playerCam.enabled = true;
 			overrideCam.enabled = false;
 		}

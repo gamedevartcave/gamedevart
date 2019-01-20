@@ -8,13 +8,13 @@ namespace UnityEngine.UI.Extensions
     public class FancyScrollView<TData, TContext> : MonoBehaviour where TContext : class
     {
         [SerializeField, Range(float.Epsilon, 1f)]
-        float cellInterval;
+        public float cellInterval;
         [SerializeField, Range(0f, 1f)]
-        float cellOffset;
+        public float cellOffset;
         [SerializeField]
-        bool loop;
+        public bool loop;
         [SerializeField]
-        GameObject cellBase;
+        public GameObject cellBase;
 
         float currentPosition;
         readonly List<FancyScrollViewCell<TData, TContext>> cells =

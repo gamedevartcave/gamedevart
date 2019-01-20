@@ -9,12 +9,11 @@ namespace CityBashers
 	public class DontDestroyOnLoadInit : MonoBehaviour 
 	{
 		public static DontDestroyOnLoadInit Instance { get; private set; }
-		[ReadOnlyAttribute] public bool initialized;
+		[ReadOnly] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
 		public float Delay;
 		public float initializeWaitTime = 0.5f;
-		private GameObject managers;
 		public UnityEvent OnInitialize;
 
 		private WaitForSeconds initializeWait;
@@ -26,9 +25,10 @@ namespace CityBashers
 			Instance = this;
 			Time.timeScale = 1;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
-			Invoke ("DetectManagers", Delay);
-
+			//Invoke ("DetectManagers", Delay);
+			DetectManagers();
 			Destroy (EventSystemGameObject);
+			EventSystemGameObject = null;
 		}
 
 		public void DetectManagers ()
@@ -50,6 +50,7 @@ namespace CityBashers
 			OnInitialize.Invoke ();
 			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+			Time.timeScale = 1;
 			this.gameObject.SetActive (false);
 		}
 

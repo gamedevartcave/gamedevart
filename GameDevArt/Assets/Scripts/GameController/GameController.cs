@@ -2,21 +2,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.UI;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace CityBashers
 {
 	public class GameController : MonoBehaviour 
 	{
-		public static GameController instance { get; private set; }
+		public static GameController Instance { get; private set; }
 
 		public CameraShake camShakeScript;
 
 		[Header ("Scoring")]
-		[ReadOnlyAttribute] public float displayScore;
+		[ReadOnly] public float displayScore;
 		[SerializeField] private float targetScore;
-		public float score 
+		public float Score 
 		{
 			get 
 			{ 
@@ -30,16 +28,16 @@ namespace CityBashers
 			}
 		}
 
-		//[ReadOnlyAttribute] private bool isCountingScore;
+		//[ReadOnly] private bool isCountingScore;
 		public TextMeshProUGUI scoreText;
 		public float scoreSmoothing;
 		public UnityEvent OnScoreCountStarted;
 		public UnityEvent OnScoreCountComplete;
 		[Space (10)]
 
-		[ReadOnlyAttribute] public float displayComboScore;
+		[ReadOnly] public float displayComboScore;
 		[SerializeField] private float targetComboScore;
-		public float comboScore 
+		public float ComboScore 
 		{
 			get 
 			{ 
@@ -53,7 +51,7 @@ namespace CityBashers
 			}
 		}
 
-		[ReadOnlyAttribute] private bool isCountingCombo;
+		[ReadOnly] private bool isCountingCombo;
 		public TextMeshProUGUI comboScoreText;
 		public float comboScoreSmoothing;
 
@@ -68,30 +66,28 @@ namespace CityBashers
 		private float startTime;
 
 		[Header ("Pausing")]
-		[ReadOnlyAttribute] public bool isPaused;
+		[ReadOnly] public bool isPaused;
+		public float unpauseCooldown = 0.25f;
+		private float nextUnpause;
 		public MenuNavigation activeMenu;
 		public MenuNavigation firstActiveMenu;
 		public UnityEvent OnPause;
 		public UnityEvent OnUnpause;
-
+		
 		[Header ("Post processing")]
 		public float targetDofDistance;
 		public float dofSmoothingIn = 5.0f;
 		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;
 
-		private PlayerActions playerActions;
-
 		void Awake ()
 		{
-			instance = this;
-			this.enabled = false;
+			Instance = this;
+			enabled = false;
 		}
 
 		void Start ()
 		{
-			playerActions = InControlActions.instance.playerActions;
-			//PlayerController.instance.OnWeaponChange.AddListener (OnWeaponChange);
 			displayScore = 0;
 			targetScore = 0;
 			scoreText.text = 0.ToString ();
@@ -104,14 +100,7 @@ namespace CityBashers
 
 		void Update ()
 		{
-			if (playerActions.Pause.WasPressed)
-			{
-				if (PlayerController.instance.lostAllHealth == false)
-				{
-					CheckPause ();
-				}
-			}
-
+			// Do this while not paused.
 			if (isPaused == false)
 			{
 				GetDepthOfField ();
@@ -120,6 +109,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Gets score value.
+		/// </summary>
 		void GetScore ()
 		{
 			if (targetScore - displayScore >= 0.5f)
@@ -141,6 +133,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Gets combo value.
+		/// </summary>
 		void GetCombo ()
 		{
 			if (targetComboScore - displayComboScore >= 0.5f)
@@ -162,35 +157,37 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Gets depth of field value to be used on post processing using raycasts.
+		/// </summary>
 		void GetDepthOfField ()
 		{
-			RaycastHit hit;
-
-			if (Physics.Raycast (Camera.main.transform.position, Camera.main.transform.forward, out hit, maxDofDistance))
+			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance))
 			{
 				// While moving.
-				if (playerActions.CamRot.Value.magnitude > 0.05f || playerActions.Move.Value.magnitude > 0.25f)
+				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.05f ||
+					MouseLook.Instance.LookAxis.normalized.sqrMagnitude > 0.25f)
 				{
-					targetDofDistance = Vector3.Distance (
-						Camera.main.transform.position, 
+					targetDofDistance = Vector3.Distance(
+						Camera.main.transform.position,
 						hit.point);
-				} 
+				}
 
 				else // Idling.
-				
+
 				{
-					targetDofDistance = Vector3.Distance (
-						Camera.main.transform.position, 
-						PlayerController.instance.transform.position);
+					targetDofDistance = Vector3.Distance(
+						Camera.main.transform.position,
+						PlayerController.Instance.transform.position);
 				}
 			}
 
 			else // Idling.
 
 			{
-				targetDofDistance = Vector3.Distance (
-					Camera.main.transform.position, 
-					PlayerController.instance.transform.position);
+				targetDofDistance = Vector3.Distance(
+					Camera.main.transform.position,
+					PlayerController.Instance.transform.position);
 			}
 
 			if (SaveAndLoadScript.Instance.postProcessVolume.profile != null)
@@ -227,6 +224,9 @@ namespace CityBashers
 			#endif
 		}
 
+		/// <summary>
+		/// Starts tracking time.
+		/// </summary>
 		public void StartTrackingTime ()
 		{
 			if (trackTime == false)
@@ -238,6 +238,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Stops tracking time.
+		/// </summary>
 		public void StopTrackingTime ()
 		{
 			if (trackTime == true)
@@ -262,29 +265,42 @@ namespace CityBashers
 			}
 		}
 
-		void CheckPause ()
+		/// <summary>
+		/// Toggle pause and unpause state.
+		/// </summary>
+		public void CheckPause ()
 		{
-			if (activeMenu == firstActiveMenu)
+			if (Time.unscaledTime > nextUnpause)
 			{
-				isPaused = !isPaused;
-			}
+				if (activeMenu == firstActiveMenu)
+				{
+					isPaused = !isPaused;
+				}
 
-			if (isPaused && activeMenu == firstActiveMenu)
-			{
-				DoPause ();
-			}
+				if (isPaused && activeMenu == firstActiveMenu)
+				{
+					DoPause();
+				}
 
-			if (!isPaused && activeMenu == firstActiveMenu)
-			{
-				DoUnpause ();
+				if (!isPaused && activeMenu == firstActiveMenu)
+				{
+					DoUnpause();
+				}
 			}
 		}
 
+		/// <summary>
+		/// Sets chosen active menu.
+		/// </summary>
+		/// <param name="newActiveMenu"></param>
 		public void SetActiveMenu (MenuNavigation newActiveMenu)
 		{
 			activeMenu = newActiveMenu;
 		}
 
+		/// <summary>
+		/// Pauses the game.
+		/// </summary>
 		public void DoPause ()
 		{
 			isPaused = true;
@@ -294,18 +310,17 @@ namespace CityBashers
 			OnPause.Invoke ();
 		}
 
+		/// <summary>
+		/// Unpauses the game.
+		/// </summary>
 		public void DoUnpause ()
 		{
-			Time.timeScale = TimescaleController.instance.targetTimeScale;
+			Time.timeScale = TimescaleController.Instance.targetTimeScale;
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 			isPaused = false;
+			nextUnpause = Time.unscaledTime + unpauseCooldown;
 			OnUnpause.Invoke ();
-		}
-
-		public void OnWeaponChange ()
-		{
-			
 		}
 	}
 }

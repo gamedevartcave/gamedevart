@@ -18,15 +18,15 @@ namespace UnityEngine.UI.Extensions
         //*** ATTRIBUTES ***//
         [Header("[ Settings ]")]
         [SerializeField]
-        private ScrollType scrollDirection;
+        public ScrollType scrollDirection;
         [SerializeField]
-        private float scrollSpeed = 10f;
+        public float scrollSpeed = 10f;
 
         [Header("[ Input ]")]
         [SerializeField]
-        private bool cancelScrollOnInput = false;
+        public bool cancelScrollOnInput = false;
         [SerializeField]
-        private List<KeyCode> cancelScrollKeycodes = new List<KeyCode>();
+        public List<KeyCode> cancelScrollKeycodes = new List<KeyCode>();
 
         //*** PROPERTIES ***//
         // REFERENCES

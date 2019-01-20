@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using Unity.Collections;
 
 namespace CityBashers
 {
 	public class AudioSourcePitchByTimescale : MonoBehaviour 
 	{
-		[ReadOnlyAttribute] public float currentPitchView; // The current pitch of the audio source. (Read only.)
+		[ReadOnly] public float currentPitchView; // The current pitch of the audio source. (Read only.)
 		public bool dontUseStartPitch; // Don't use the starting pitch.
 		public float startingPitch = 1.0f; // The pitch to start off.
 		public float multiplierPitch = 1.0f; // Multiply by this amount to get amplitude of change in pitch.

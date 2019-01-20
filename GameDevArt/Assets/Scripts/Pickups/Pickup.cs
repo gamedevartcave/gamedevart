@@ -36,15 +36,15 @@ namespace CityBashers
 		/// <param name="other">Other.</param>
 		void OnTriggerEnter (Collider other)
 		{
-			if (other == PlayerController.instance.playerCol)
+			if (other == PlayerController.Instance.playerCol)
 			{
 				switch (pickupType)
 				{
 					case PickupType.Health:
 						
-						if (PlayerController.instance.health < PlayerController.instance.MaximumHealth)
+						if (PlayerController.Instance.health < PlayerController.Instance.MaximumHealth)
 						{
-							PlayerController.instance.health += Amount;
+							PlayerController.Instance.health += Amount;
 							OnPickup.Invoke ();
 							Destroy (objectToDestroy);
 						}
@@ -53,9 +53,9 @@ namespace CityBashers
 
 					case PickupType.Magic:
 					
-						if (PlayerController.instance.magic < PlayerController.instance.MaximumMagic)
+						if (PlayerController.Instance.magic < PlayerController.Instance.MaximumMagic)
 						{
-							PlayerController.instance.magic += Amount;
+							PlayerController.Instance.magic += Amount;
 							OnPickup.Invoke ();
 							Destroy (objectToDestroy);
 						}

@@ -5,7 +5,7 @@ namespace CityBashers
 {
 	public class HiResScreenShots : MonoBehaviour 
 	{
-		public static HiResScreenShots instance { get ; private set; }
+		public static HiResScreenShots Instance { get ; private set; }
 
 		public Vector2 baseResolution = new Vector2 (Screen.width, Screen.height); // Base resolution dimensions.
 		private Vector2 ResolutionMultiplier = new Vector2 (1, 1);
@@ -15,7 +15,7 @@ namespace CityBashers
 
 		void Awake ()
 		{
-			instance = this;
+			Instance = this;
 		}
 
 		public void AddCamera (Camera _cam)

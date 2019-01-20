@@ -40,23 +40,23 @@ namespace UnityEngine.UI.Extensions
 		}
 
 		[SerializeField]
-		RectTransform viewport;
+		public RectTransform viewport;
 		[SerializeField]
 		ScrollDirection directionOfRecognize = ScrollDirection.Vertical;
 		[SerializeField]
 		MovementType movementType = MovementType.Elastic;
 		[SerializeField]
-		float elasticity = 0.1f;
+		public float elasticity = 0.1f;
 		[SerializeField]
-		float scrollSensitivity = 1f;
+		public float scrollSensitivity = 1f;
 		[SerializeField]
-		bool inertia = true;
+		public bool inertia = true;
 		[SerializeField, Tooltip("Only used when inertia is enabled")]
-		float decelerationRate = 0.03f;
+		public float decelerationRate = 0.03f;
 		[SerializeField, Tooltip("Only used when inertia is enabled")]
 		Snap snap = new Snap { Enable = true, VelocityThreshold = 0.5f, Duration = 0.3f };
 		[SerializeField]
-		int dataCount;
+		public int dataCount;
 
 		#region Events
 		[Tooltip("Event that fires when the position of an item changes")]

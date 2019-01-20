@@ -6,9 +6,9 @@ namespace CityBashers
 {
 	public class UseZone : MonoBehaviour 
 	{
-		[ReadOnlyAttribute] public bool canUse;
+		[ReadOnly] public bool canUse;
 		public bool denyUse;
-		[ReadOnlyAttribute] public bool used;
+		[ReadOnly] public bool used;
 		public bool oneOffUse;
 		public bool autoUse;
 		public bool toggleUse;
@@ -30,12 +30,12 @@ namespace CityBashers
 
 		void Start ()
 		{
-			PlayerController.instance.OnUse.AddListener (Use);
+			PlayerController.Instance.OnUse.AddListener (Use);
 		}
 
 		void OnTriggerEnter (Collider other)
 		{
-			if (other == PlayerController.instance.playerCol)
+			if (other == PlayerController.Instance.playerCol)
 			{
 				canUse = true;
 
@@ -53,7 +53,7 @@ namespace CityBashers
 
 		void OnTriggerExit (Collider other)
 		{
-			if (other == PlayerController.instance.playerCol)
+			if (other == PlayerController.Instance.playerCol)
 			{
 				canUse = false;
 			}

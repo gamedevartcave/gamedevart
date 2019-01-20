@@ -26,10 +26,10 @@ namespace CityBashers
 		{
 			if (UpdateOnStart == true) 
 			{
-				bitdepth = 				BitcrusherGroup.Instance.bitdepth;
-				sampleRateReduction = 	BitcrusherGroup.Instance.sampleRateReduction;
-				volume = 				BitcrusherGroup.Instance.volume;
-				dryWet = 				BitcrusherGroup.Instance.dryWet;
+				//bitdepth = 				BitcrusherGroup.Instance.bitdepth;
+				//sampleRateReduction = 	BitcrusherGroup.Instance.sampleRateReduction;
+				//volume = 				BitcrusherGroup.Instance.volume;
+				//dryWet = 				BitcrusherGroup.Instance.dryWet;
 			}
 		}
 

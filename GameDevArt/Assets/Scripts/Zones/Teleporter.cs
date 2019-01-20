@@ -7,7 +7,7 @@ namespace CityBashers
 	public class Teleporter : MonoBehaviour
 	{
 		public bool locked;
-		[ReadOnlyAttribute] public int timesUsed;
+		[ReadOnly] public int timesUsed;
 		public int maxTimesUsed = 1;
 		public ParticleSystem teleportParticles;
 		public GameObject teleportLockParticles;
@@ -51,7 +51,7 @@ namespace CityBashers
 
 		void OnTriggerEnter (Collider other)
 		{
-			if (other.gameObject == PlayerController.instance.gameObject)
+			if (other.gameObject == PlayerController.Instance.gameObject)
 			{
 				if (timesUsed < maxTimesUsed)
 				{

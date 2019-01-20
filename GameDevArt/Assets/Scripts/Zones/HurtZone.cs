@@ -6,7 +6,7 @@ namespace CityBashers
 {
 	public class HurtZone : MonoBehaviour 
 	{
-		[ReadOnlyAttribute] public bool isInsideHurtZone;
+		[ReadOnly] public bool isInsideHurtZone;
 		public Collider playerCol;
 		public Animator PlayerUI;
 		public bool damageOnEnter;
@@ -106,17 +106,17 @@ namespace CityBashers
 			} 
 
 			// Inflict inside hurt zone periodically.
-			while (isInsideHurtZone == true && PlayerController.instance.health > 0)
+			while (isInsideHurtZone == true && PlayerController.Instance.health > 0)
 			{
-				PlayerController.instance.health -= damageAmount;
+				PlayerController.Instance.health -= damageAmount;
 				PlayerUI.SetTrigger ("Show");
 				yield return damageWait;
 			}
 
-			if (PlayerController.instance.health <= 0)
+			if (PlayerController.Instance.health <= 0)
 			{
-				PlayerController.instance.health = 0;
-				this.enabled = false;
+				PlayerController.Instance.health = 0;
+				enabled = false;
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace CityBashers
 		{
 			if (isHitStunZone == true)
 			{
-				PlayerController.instance.DoHitStun ();
+				PlayerController.Instance.DoHitStun ();
 			}
 		}
 	}

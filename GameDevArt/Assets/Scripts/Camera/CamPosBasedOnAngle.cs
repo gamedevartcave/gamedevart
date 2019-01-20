@@ -5,24 +5,22 @@ namespace CityBashers
 	//[ExecuteInEditMode]
 	public class CamPosBasedOnAngle : MonoBehaviour
 	{
-		public static CamPosBasedOnAngle instance { get; private set; }
+		public static CamPosBasedOnAngle Instance { get; private set; }
 
 		public Vector2 offset;
 		public float offsetMult = 0.1f;
 		public AnimationCurve yPos;
 		public AnimationCurve zPos;
-		private Transform Cam;
 		private Transform Checker;
 		private Vector2 Eval;
 			
 		void Awake ()
 		{
-			instance = this;
+			Instance = this;
 		}
 
 		void Start ()
 		{
-			Cam = transform;
 			Checker = transform.parent;
 		}
 
@@ -40,8 +38,8 @@ namespace CityBashers
 			);
 
 			// Set new pos.
-			Cam.transform.localPosition = new Vector3 (
-				Cam.transform.localPosition.x,
+			transform.localPosition = new Vector3 (
+				transform.localPosition.x,
 				Eval.x + offset.x,
 				-Eval.y + offset.y
 			);

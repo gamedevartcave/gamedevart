@@ -1,39 +1,42 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Input;
 
 namespace CityBashers
 {
 	public class VibrateController : MonoBehaviour 
 	{
-		public static VibrateController instance { get; private set; }
-		[ReadOnlyAttribute] int priority;
-		private PlayerActions playerActions;
-		private WaitForSeconds vibrateTime;
+		public static VibrateController Instance { get; private set; }
+		[ReadOnly] int priority;
+		private readonly WaitForSeconds vibrateTime;
 
 		void Awake ()
 		{
-			instance = this;
-			this.enabled = false;
-		}
-
-		void Start ()
-		{
-			playerActions = InControlActions.instance.playerActions;
+			Instance = this;
+			enabled = false;
 		}
 		
 		public void Vibrate (float _leftMotor, float _rightMotor, float _vibrationTime, int _priority)
 		{
 			if (_priority >= priority)
 			{
-				playerActions.ActiveDevice.Vibrate (_leftMotor, _rightMotor);
-				StartCoroutine (VibrateTime (_vibrationTime));
+				if (Gamepad.current != null)
+				{
+					Gamepad.current.SetMotorSpeeds(_leftMotor, _rightMotor);
+					StartCoroutine(VibrateTime(_vibrationTime));
+				}
 			}
 		}
 
 		IEnumerator VibrateTime (float _time)
 		{
 			yield return new WaitForSeconds (_time);
-			playerActions.ActiveDevice.StopVibration ();
+
+			if (Gamepad.current != null)
+			{
+				Gamepad.current.SetMotorSpeeds(0, 0);
+			}
+
 			priority = 0;
 		}
 	}
