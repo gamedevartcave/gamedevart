@@ -12,7 +12,7 @@ namespace CityBashers
 		public AnimationCurve yPos;
 		public AnimationCurve zPos;
 		private Transform Checker;
-		private Vector2 Eval;
+		[ReadOnly] public Vector2 Eval;
 			
 		void Awake ()
 		{

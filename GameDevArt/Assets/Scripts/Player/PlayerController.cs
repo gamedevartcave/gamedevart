@@ -41,6 +41,7 @@ namespace CityBashers
 		public float turnAmount;
 		public float forwardAmount;
 		public Vector3 groundNormal;
+		public Animator CamContainer;
 
 		[Header("Health")]
 		[HideInInspector] public bool lostAllHealth;
@@ -191,6 +192,8 @@ namespace CityBashers
 			playerAnim = GetComponent<Animator>();
 			playerRb = GetComponent<Rigidbody>();
 			playerCol = GetComponent<CapsuleCollider>();
+
+			CamContainer.speed = 0;
 
 			enabled = false;
 		}
@@ -519,7 +522,18 @@ namespace CityBashers
 			CheckHealthSliders ();
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
-        }
+
+
+			if (isGrounded == true && aimInput == false)
+			{
+				CamContainer.speed = Mathf.Abs(playerAnim.GetFloat("Forward"));
+			}
+
+			else
+			{
+				CamContainer.speed = 0;
+			}
+		}
 
 		void FixedUpdate ()
 		{
@@ -622,46 +636,48 @@ namespace CityBashers
 		/// </summary>
 		void JumpAction ()
 		{
-			isGrounded = false;
-			playerAnim.SetBool("OnGround", isGrounded);
-
-			// 0: none, 1: jump, 2: double jump
-			if (jumpState < 2)
+			if (!aimInput)
 			{
-				jumpState++;
+				isGrounded = false;
+				playerAnim.SetBool("OnGround", isGrounded);
 
-				switch (jumpState)
+				// 0: none, 1: jump, 2: double jump
+				if (jumpState < 2)
 				{
-				case 0:
-					isGrounded = false;
-					break;
+					jumpState++;
 
-				case 1: // Jump.
-						
-					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-					isGrounded = false;
-					playerAnim.applyRootMotion = false;
-					OnJump.Invoke ();
+					switch (jumpState)
+					{
+						case 0:
+							isGrounded = false;
+							break;
 
-					break;
+						case 1: // Jump.
 
-				case 2: // Double jump.
+							playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+							isGrounded = false;
+							playerAnim.applyRootMotion = false;
+							OnJump.Invoke();
 
-					// Override vertical velocity.
-					playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+							break;
 
-					// Add forward force.
-					playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
+						case 2: // Double jump.
 
-					playerAnim.applyRootMotion = false;
-					playerAnim.SetTrigger ("DoubleJump");
+							// Override vertical velocity.
+							playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-					OnDoubleJump.Invoke ();
+							// Add forward force.
+							playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-					break;
+							playerAnim.applyRootMotion = false;
+							playerAnim.SetTrigger("DoubleJump");
+
+							OnDoubleJump.Invoke();
+
+							break;
+					}
 				}
 			}
-			
 		}
 
 		/// <summary>
@@ -693,10 +709,8 @@ namespace CityBashers
 			{
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
-				playerRb.velocity = Vector3.zero;
 				move = Vector3.zero;
 				forwardAmount = 0;
-
 
 				if (isGrounded == true)
 				{
