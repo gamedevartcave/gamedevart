@@ -12,7 +12,7 @@ namespace UnityEngine.UI.Extensions
         private List<Toggle> m_PaginationChildren;
 
         [SerializeField]
-        private ScrollSnapBase scrollSnap;
+        public ScrollSnapBase scrollSnap;
 
         private bool isAClick;
 

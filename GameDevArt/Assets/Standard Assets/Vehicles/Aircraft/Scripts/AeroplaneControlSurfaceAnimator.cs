@@ -6,7 +6,7 @@ namespace UnityStandardAssets.Vehicles.Aeroplane
     public class AeroplaneControlSurfaceAnimator : MonoBehaviour
     {
         [SerializeField] private float m_Smoothing = 5f; // The smoothing applied to the movement of control surfaces.
-        [SerializeField] private ControlSurface[] m_ControlSurfaces; // Collection of control surfaces.
+        [SerializeField] public ControlSurface[] m_ControlSurfaces; // Collection of control surfaces.
 
         private AeroplaneController m_Plane; // Reference to the aeroplane controller.
 

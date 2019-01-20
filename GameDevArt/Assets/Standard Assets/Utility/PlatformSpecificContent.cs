@@ -15,20 +15,20 @@ namespace UnityStandardAssets.Utility
         , UnityEditor.Build.IActiveBuildTargetChanged
 #endif
     {
-        private enum BuildTargetGroup
+		public enum BuildTargetGroup
         {
             Standalone,
             Mobile
         }
 
+		[SerializeField]
+		public BuildTargetGroup m_BuildTargetGroup;
         [SerializeField]
-        private BuildTargetGroup m_BuildTargetGroup;
+		public GameObject[] m_Content = new GameObject[0];
         [SerializeField]
-        private GameObject[] m_Content = new GameObject[0];
+		public MonoBehaviour[] m_MonoBehaviours = new MonoBehaviour[0];
         [SerializeField]
-        private MonoBehaviour[] m_MonoBehaviours = new MonoBehaviour[0];
-        [SerializeField]
-        private bool m_ChildrenOfThisObject;
+		public bool m_ChildrenOfThisObject;
 
 #if !UNITY_EDITOR
 	void OnEnable()

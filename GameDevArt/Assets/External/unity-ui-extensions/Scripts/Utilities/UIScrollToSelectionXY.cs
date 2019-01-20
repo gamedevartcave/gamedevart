@@ -22,7 +22,7 @@ namespace UnityEngine.UI.Extensions
         public float scrollSpeed = 10f;
 
         [SerializeField]
-        private RectTransform layoutListGroup;
+		public RectTransform layoutListGroup;
 
         // temporary variables
         private RectTransform targetScrollObject;
