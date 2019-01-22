@@ -13,6 +13,19 @@ namespace CityBashers
 		public Renderer worldMeshRend;
 		public Vector3 worldOffset;
 		public bool updateWhenOffScreen;
+		public float coneAngle = 60;
+		[ReadOnly] public bool IsInView;
+		public float viewWaitTime = 0.5f;
+		private WaitForSeconds viewWait;
+		/*
+		public bool IsInView
+		{
+			get
+			{
+				return ViewTester.Instance.TestCone(WorldObject.position, coneAngle);
+			}
+		}
+		*/
 
 		private Vector2 ViewportPosition;
 		private Vector2 WorldObject_ScreenPosition;
@@ -47,11 +60,23 @@ namespace CityBashers
 			{
 				currentDistance = Vector3.Distance (distanceReferencePos.position, WorldObject.position);
 			}
+
+			viewWait = new WaitForSeconds(viewWaitTime);
+			StartCoroutine(EvaluateView ());
 		}
 
 		void OnEnable ()
 		{
 			StartCoroutine (UpdateDistance ());
+		}
+
+		IEnumerator EvaluateView()
+		{
+			while (true)
+			{
+				IsInView = ViewTester.Instance.TestCone(WorldObject.position, coneAngle);
+				yield return viewWait;
+			}
 		}
 			
 		IEnumerator UpdateDistance ()
@@ -67,7 +92,7 @@ namespace CityBashers
 		void Update ()
 		{
 			// Note: Checks any camera (including Editor camera).
-			if ((worldMeshRend.isVisible || updateWhenOffScreen) && 
+			if ((IsInView || updateWhenOffScreen) && 
 				GameController.Instance.isPaused == false &&
 				Camera.main != null)
 			{
@@ -76,7 +101,7 @@ namespace CityBashers
 				// whereas WorldToViewPortPoint treats the lower left corner as 0,0. 
 				// Because of this, you need to subtract the height / width of the canvas * 0.5f to get the correct position.
 
-				//Debug.Log(worldMeshRend.isVisible);
+				Debug.Log(IsInView);
 				ViewportPosition = Camera.main.WorldToViewportPoint (WorldObject.position + worldOffset);
 
 				WorldObject_ScreenPosition = new Vector2 (

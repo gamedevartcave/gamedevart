@@ -8016,6 +8016,9 @@ MonoBehaviour:
   worldMeshRend: {fileID: 420390109}
   worldOffset: {x: 0, y: 0.5, z: 0}
   updateWhenOffScreen: 0
+  coneAngle: 60
+  IsInView: 0
+  viewWaitTime: 0.2
   showDistance: 0
   distanceRange: {x: 1, y: 200}
   distanceReferencePos: {fileID: 1400011144}
@@ -19854,6 +19857,9 @@ MonoBehaviour:
   worldMeshRend: {fileID: 1403349160}
   worldOffset: {x: 0, y: 0, z: 0}
   updateWhenOffScreen: 1
+  coneAngle: 60
+  IsInView: 0
+  viewWaitTime: 0.5
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 1400010780}
@@ -30630,6 +30636,9 @@ MonoBehaviour:
   worldMeshRend: {fileID: 148990264}
   worldOffset: {x: 0, y: 0.5, z: 0}
   updateWhenOffScreen: 0
+  coneAngle: 60
+  IsInView: 0
+  viewWaitTime: 0.2
   showDistance: 1
   distanceRange: {x: 1, y: 200}
   distanceReferencePos: {fileID: 1400011144}
@@ -36135,6 +36144,9 @@ MonoBehaviour:
   worldMeshRend: {fileID: 0}
   worldOffset: {x: 0, y: 0, z: 0}
   updateWhenOffScreen: 0
+  coneAngle: 60
+  IsInView: 0
+  viewWaitTime: 0.5
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 0}
@@ -43520,6 +43532,9 @@ MonoBehaviour:
   worldMeshRend: {fileID: 1146120089}
   worldOffset: {x: 0, y: 0.5, z: 0}
   updateWhenOffScreen: 0
+  coneAngle: 60
+  IsInView: 0
+  viewWaitTime: 0.2
   showDistance: 1
   distanceRange: {x: 1, y: 50}
   distanceReferencePos: {fileID: 1400011144}
@@ -68695,6 +68710,9 @@ MonoBehaviour:
   worldMeshRend: {fileID: 1403349160}
   worldOffset: {x: 0, y: 0, z: 0}
   updateWhenOffScreen: 1
+  coneAngle: 60
+  IsInView: 0
+  viewWaitTime: 0.5
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 1400010780}
