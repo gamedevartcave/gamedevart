@@ -20,9 +20,9 @@ RenderSettings:
   m_FogDensity: 0.0005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.02950339, g: 0.05970507, b: 0.16037738, a: 1}
-  m_AmbientEquatorColor: {r: 0.09540761, g: 0.25423777, b: 0.3018868, a: 1}
-  m_AmbientGroundColor: {r: 0.02963689, g: 0.040109627, b: 0.05660379, a: 1}
+  m_AmbientSkyColor: {r: 0.24046275, g: 0.29727554, b: 0.3372549, a: 1}
+  m_AmbientEquatorColor: {r: 0.08420392, g: 0.11723293, b: 0.1254902, a: 1}
+  m_AmbientGroundColor: {r: 0.49202403, g: 0.61528164, b: 0.66400003, a: 1}
   m_AmbientIntensity: 0.75
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
@@ -1488,7 +1488,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -11.5, y: 0}
-  m_SizeDelta: {x: 8, y: 25}
+  m_SizeDelta: {x: 10, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &77567880
 MonoBehaviour:
@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: a3a7fcd3e7acd2944903c8dad0096d7a, type: 2}
-  m_Color: {r: 0.25943398, g: 0.76185733, b: 1, a: 1}
+  m_Color: {r: 0.7122642, g: 0.90713286, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -8018,7 +8018,7 @@ MonoBehaviour:
   updateWhenOffScreen: 0
   coneAngle: 60
   IsInView: 0
-  viewWaitTime: 0.2
+  viewWaitTime: 0.1
   showDistance: 0
   distanceRange: {x: 1, y: 200}
   distanceReferencePos: {fileID: 1400011144}
@@ -8034,6 +8034,16 @@ MonoBehaviour:
   screenOffset: {x: 0, y: 0}
   xBounds: {x: -1000, y: 1000}
   yBounds: {x: -1000, y: 1000}
+  OnBecameVisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecameInvisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!222 &209473528
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9054,7 +9064,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 60.3, y: 0}
-  m_SizeDelta: {x: 150, y: 9}
+  m_SizeDelta: {x: 303.95, y: 4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &286021816
 MonoBehaviour:
@@ -10337,7 +10347,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -11.4999695, y: 0.000015258789}
-  m_SizeDelta: {x: 8, y: 25}
+  m_SizeDelta: {x: 10, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &376055419
 MonoBehaviour:
@@ -10352,7 +10362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: a3a7fcd3e7acd2944903c8dad0096d7a, type: 2}
-  m_Color: {r: 0.25943398, g: 0.76185733, b: 1, a: 1}
+  m_Color: {r: 0.7122642, g: 0.90713286, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -15269,7 +15279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 37344112048ea1c4784d655b6aceed01, type: 2}
-  m_Color: {r: 0.3726415, g: 1, b: 0.6207758, a: 1}
+  m_Color: {r: 0.7877358, g: 0.9240873, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -15277,7 +15287,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -16428,7 +16438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: a3a7fcd3e7acd2944903c8dad0096d7a, type: 2}
-  m_Color: {r: 0.25943398, g: 0.76185733, b: 1, a: 1}
+  m_Color: {r: 0.6745283, g: 0.8949536, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -17743,7 +17753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -19859,7 +19869,7 @@ MonoBehaviour:
   updateWhenOffScreen: 1
   coneAngle: 60
   IsInView: 0
-  viewWaitTime: 0.5
+  viewWaitTime: 0.1
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 1400010780}
@@ -19875,6 +19885,16 @@ MonoBehaviour:
   screenOffset: {x: 130, y: -35}
   xBounds: {x: -900, y: 900}
   yBounds: {x: -480, y: 480}
+  OnBecameVisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecameInvisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &771003534
 GameObject:
   m_ObjectHideFlags: 0
@@ -30638,7 +30658,7 @@ MonoBehaviour:
   updateWhenOffScreen: 0
   coneAngle: 60
   IsInView: 0
-  viewWaitTime: 0.2
+  viewWaitTime: 0.1
   showDistance: 1
   distanceRange: {x: 1, y: 200}
   distanceReferencePos: {fileID: 1400011144}
@@ -30654,6 +30674,16 @@ MonoBehaviour:
   screenOffset: {x: 0, y: 0}
   xBounds: {x: -1000, y: 1000}
   yBounds: {x: -1000, y: 1000}
+  OnBecameVisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecameInvisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!222 &827961304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36162,6 +36192,16 @@ MonoBehaviour:
   screenOffset: {x: 0, y: 0}
   xBounds: {x: -960, y: 960}
   yBounds: {x: -540, y: 540}
+  OnBecameVisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecameInvisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &881487816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43534,7 +43574,7 @@ MonoBehaviour:
   updateWhenOffScreen: 0
   coneAngle: 60
   IsInView: 0
-  viewWaitTime: 0.2
+  viewWaitTime: 0.1
   showDistance: 1
   distanceRange: {x: 1, y: 50}
   distanceReferencePos: {fileID: 1400011144}
@@ -43550,6 +43590,16 @@ MonoBehaviour:
   screenOffset: {x: 0, y: 0}
   xBounds: {x: -1000, y: 1000}
   yBounds: {x: -1000, y: 1000}
+  OnBecameVisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecameInvisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!222 &1001681962
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -57039,7 +57089,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 60.29998, y: 0}
-  m_SizeDelta: {x: 150, y: 9}
+  m_SizeDelta: {x: 303.95, y: 4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1581778248
 MonoBehaviour:
@@ -57300,14 +57350,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 37344112048ea1c4784d655b6aceed01, type: 2}
-  m_Color: {r: 0.4198113, g: 1, b: 0.6450611, a: 1}
+  m_Color: {r: 0.8160377, g: 0.9299912, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 394e93ce356b57344903a08ff72fcab2, type: 3}
+  m_Texture: {fileID: 2800000, guid: ad716093ca8bdf84189f6a67bfb8e30e, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -65670,7 +65720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -68712,7 +68762,7 @@ MonoBehaviour:
   updateWhenOffScreen: 1
   coneAngle: 60
   IsInView: 0
-  viewWaitTime: 0.5
+  viewWaitTime: 0.1
   showDistance: 0
   distanceRange: {x: 1, y: 10000}
   distanceReferencePos: {fileID: 1400010780}
@@ -68728,6 +68778,16 @@ MonoBehaviour:
   screenOffset: {x: 130, y: 0}
   xBounds: {x: -900, y: 900}
   yBounds: {x: -480, y: 480}
+  OnBecameVisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecameInvisible:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1899210372
 GameObject:
   m_ObjectHideFlags: 0
@@ -69489,7 +69549,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 60.29998, y: 0}
-  m_SizeDelta: {x: 150, y: 9}
+  m_SizeDelta: {x: 303.95, y: 4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1925840717
 MonoBehaviour:
@@ -70167,7 +70227,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 60.29998, y: 0}
-  m_SizeDelta: {x: 150, y: 9}
+  m_SizeDelta: {x: 303.95, y: 4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1955476464
 MonoBehaviour:
@@ -78902,6 +78962,21 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   ComboQueueSize: 3
   TimeBetweenDeQueue: 0.2
+  comboDuration: 0.5
+  comboTimeRemaining: 0
+  comboLimit: 16
+  resultCombo: 
+  comboSet: {fileID: 11400000, guid: 164c29743b81d7f408d1f2b22a8be2a3, type: 2}
+  OnComboComplete:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnComboCancelled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentWeaponIndex: 0
   DisplayedWeaponImage: {fileID: 1103667893}
   Weapons:

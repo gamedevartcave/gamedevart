@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace CityBashers
 {
@@ -17,15 +18,6 @@ namespace CityBashers
 		[ReadOnly] public bool IsInView;
 		public float viewWaitTime = 0.5f;
 		private WaitForSeconds viewWait;
-		/*
-		public bool IsInView
-		{
-			get
-			{
-				return ViewTester.Instance.TestCone(WorldObject.position, coneAngle);
-			}
-		}
-		*/
 
 		private Vector2 ViewportPosition;
 		private Vector2 WorldObject_ScreenPosition;
@@ -52,6 +44,9 @@ namespace CityBashers
 		public Vector2 xBounds = new Vector2 (-960, 960);
 		public Vector2 yBounds = new Vector2 (-540, 540);
 
+		public UnityEvent OnBecameVisible;
+		public UnityEvent OnBecameInvisible;
+
 		void Start ()
 		{
 			DistanceUpdate = new WaitForSeconds (distanceUpdateTime);
@@ -74,7 +69,27 @@ namespace CityBashers
 		{
 			while (true)
 			{
+				bool lastViewState = IsInView; // Get last visible state.
 				IsInView = ViewTester.Instance.TestCone(WorldObject.position, coneAngle);
+
+				// A change in Visible state.
+				if (lastViewState != IsInView)
+				{
+					// Became visible.
+					if (IsInView == true)
+					{
+						OnBecameVisible.Invoke();
+						//Debug.Log("Became visible");
+					}
+
+					else // Became invisible.
+
+					{
+						OnBecameInvisible.Invoke();
+						//Debug.Log("Became invisible");
+					}
+				}
+
 				yield return viewWait;
 			}
 		}
@@ -101,7 +116,7 @@ namespace CityBashers
 				// whereas WorldToViewPortPoint treats the lower left corner as 0,0. 
 				// Because of this, you need to subtract the height / width of the canvas * 0.5f to get the correct position.
 
-				Debug.Log(IsInView);
+				//Debug.Log(IsInView);
 				ViewportPosition = Camera.main.WorldToViewportPoint (WorldObject.position + worldOffset);
 
 				WorldObject_ScreenPosition = new Vector2 (

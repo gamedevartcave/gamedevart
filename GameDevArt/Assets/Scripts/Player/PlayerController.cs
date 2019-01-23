@@ -105,6 +105,15 @@ namespace CityBashers
 		private Queue<int> _comboQueue;
 		private float _timePassed = 0;
 
+		[Header("Combo system")]
+		public float comboDuration;
+		[ReadOnly] [SerializeField] private float comboTimeRemaining;
+		public int comboLimit = 16;
+		public string resultCombo;
+		public ComboSet comboSet;
+		public UnityEvent OnComboComplete;
+		public UnityEvent OnComboCancelled;
+
 		[Header("Weapons")]
 		public int currentWeaponIndex;
 		public RawImage DisplayedWeaponImage;
@@ -229,6 +238,9 @@ namespace CityBashers
 
 			// Add yield times here.
 			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
+
+			OnComboComplete.AddListener(ComboComplete);
+			OnComboCancelled.AddListener(ComboCancelled);
 		}
 
 		void OnEnable()
@@ -517,6 +529,7 @@ namespace CityBashers
 			MeleeActionUpdate();
 			GetCameraChangeSmoothing();
 			DodgeUpdate();
+			ComboTimer();
 
 			// UI updates.
 			CheckHealthSliders ();
@@ -747,6 +760,7 @@ namespace CityBashers
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(1);
+					AddToCombo("X");
 				}
 			}			
 		}
@@ -1148,6 +1162,92 @@ namespace CityBashers
 				
 			OnHitStunEnded.Invoke ();
 			isInHitStun = false;
+		}
+		#endregion
+
+		#region Combo system
+		public void CheckCombo()
+		{
+			for (int i = 0; i < comboSet.combos.Length; i++)
+			{
+				if (resultCombo == comboSet.combos[i])
+				{
+					Debug.Log("Combo performed: " + resultCombo);
+					OnComboComplete.Invoke ();
+				}
+			}
+		}
+
+		public void AddToCombo(string addChar)
+		{
+			resultCombo += addChar;
+
+			// Cull first character.
+			if (resultCombo.Length > comboLimit)
+			{
+				resultCombo = resultCombo.Remove(0, 1);
+			}
+
+			CheckCombo();
+			ResetComboTime();
+		}
+
+		public void ComboComplete()
+		{
+			ClearCombo();
+		}
+
+		public void ComboCancelled()
+		{
+			ClearCombo();
+		}
+
+		public void ClearCombo()
+		{
+			resultCombo = string.Empty;
+		}
+
+		void ComboTimer()
+		{
+			if (comboTimeRemaining > 0)
+			{
+				comboTimeRemaining -= Time.deltaTime;
+			}
+
+			else // Combo time ran out.
+
+			{
+				//CheckCombo();
+
+				// Check if result combo last character is not a space.
+				if (!resultCombo.EndsWith("_"))
+				{
+					// Must have at least one combo character.
+					if (resultCombo.Length > 0)
+					{
+						// Add one space.
+						resultCombo += "_";
+						ResetComboTime(); // One more chance.
+					}
+
+					else
+
+					{
+						OnComboCancelled.Invoke();
+					}
+				}
+
+				else // If gap already existed, reset.
+
+				{	
+					OnComboCancelled.Invoke();
+				}
+			}
+		}
+
+		public void ResetComboTime()
+		{
+			comboTimeRemaining = comboDuration;
 		}
 		#endregion
 

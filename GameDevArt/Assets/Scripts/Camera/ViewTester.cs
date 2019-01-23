@@ -18,7 +18,7 @@ public class ViewTester : MonoBehaviour
 			(inputPoint - transform.position).normalized,
 			transform.forward);
 		float angle = Mathf.Acos(cosAngle) * Mathf.Rad2Deg;
-		Debug.Log(angle);
+		//Debug.Log(angle);
 		return angle < cutoffAngle;
 	}
 }

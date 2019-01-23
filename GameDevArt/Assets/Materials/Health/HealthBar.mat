@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: HealthBar
   m_Shader: {fileID: 4800000, guid: 84273470abd10cc4d849f68d11b1c613, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
@@ -62,7 +63,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.552
     - _GlossyReflections: 0
-    - _Glow: 4
+    - _Glow: 3
     - _Metallic: 0
     - _Mode: 3
     - _OcclusionStrength: 1
