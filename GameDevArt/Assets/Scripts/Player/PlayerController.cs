@@ -266,6 +266,9 @@ namespace CityBashers
 			playerControls.Player.Attack.performed += HandleAttack;
 			playerControls.Player.Attack.Enable();
 
+			playerControls.Player.MediumAttack.performed += HandleMediumAttack;
+			playerControls.Player.MediumAttack.Enable();
+
 			playerControls.Player.HeavyAttack.performed += HandleHeavyAttack;
 			playerControls.Player.HeavyAttack.Enable();
 
@@ -307,6 +310,9 @@ namespace CityBashers
 
 			playerControls.Player.Attack.performed -= HandleAttack;
 			playerControls.Player.Attack.Disable();
+
+			playerControls.Player.MediumAttack.performed -= HandleMediumAttack;
+			playerControls.Player.MediumAttack.Disable();
 
 			playerControls.Player.HeavyAttack.performed -= HandleHeavyAttack;
 			playerControls.Player.HeavyAttack.Disable();
@@ -485,6 +491,11 @@ namespace CityBashers
 		void HandleAttack(InputAction.CallbackContext context)
 		{
 			AttackAction();
+		}
+
+		void HandleMediumAttack(InputAction.CallbackContext context)
+		{
+			MediumAttackAction();
 		}
 
 		void HandleHeavyAttack(InputAction.CallbackContext context)
@@ -749,8 +760,9 @@ namespace CityBashers
 		/// </summary>
 		void AttackAction()
 		{
-			if (aimInput)
+			if (aimInput || isGrounded == false)
 			{
+				ClearCombo();
 				return;
 			}
 
@@ -760,9 +772,24 @@ namespace CityBashers
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(1);
-					AddToCombo("X");
+					AddToCombo("Y");
 				}
 			}			
+		}
+
+		void MediumAttackAction()
+		{
+			if (aimInput || isGrounded == false)
+			{
+				ClearCombo();
+				return;
+			}
+
+			else
+
+			{
+				AddToCombo("X");
+			}
 		}
 
 		/// <summary>
@@ -770,8 +797,9 @@ namespace CityBashers
 		/// </summary>
 		void HeavyAttackAction()
 		{
-			if (aimInput)
+			if (aimInput || isGrounded == false)
 			{
+				ClearCombo();
 				return;
 			}
 
@@ -781,6 +809,7 @@ namespace CityBashers
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(2);
+					AddToCombo("B");
 				}	
 			}
 		}
@@ -1173,9 +1202,27 @@ namespace CityBashers
 				if (resultCombo == comboSet.combos[i])
 				{
 					Debug.Log("Combo performed: " + resultCombo);
+
+					// Check if there is an animation for the state.
+					if (StateExists(playerAnim, comboSet.animationName[i], 0))
+					{
+						playerAnim.Play(comboSet.animationName[i]);
+					}
+
+					else // State was not found.
+
+					{
+						Debug.LogWarning("Could not find animator with state " + comboSet.animationName[i]);
+					}
+
 					OnComboComplete.Invoke ();
 				}
 			}
+		}
+
+		public static bool StateExists(Animator animator, string stateName, int layerId = 0)
+		{
+			return animator.HasState(layerId, Animator.StringToHash(stateName));
 		}
 
 		public void AddToCombo(string addChar)

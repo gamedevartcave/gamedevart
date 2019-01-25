@@ -6,5 +6,6 @@ namespace CityBashers
 	public class ComboSet : ScriptableObject
 	{
 		public string[] combos;
+		public string[] animationName;
 	}
 }
