@@ -12,7 +12,6 @@ namespace CityBashers
 		[ReadOnly] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
-		public float Delay;
 		public float initializeWaitTime = 0.5f;
 		public UnityEvent OnInitialize;
 
@@ -23,47 +22,67 @@ namespace CityBashers
 		void Awake ()
 		{
 			Instance = this;
+
 			Time.timeScale = 1;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
-			//Invoke ("DetectManagers", Delay);
+
 			DetectManagers();
+
 			Destroy (EventSystemGameObject);
 			EventSystemGameObject = null;
+			OnInitialized(); // Essential for scenes to initialize correctly.
 		}
 
+		/// <summary>
+		/// Detects InitManager Instance, loads init scene if not found.
+		/// </summary>
 		public void DetectManagers ()
 		{
 			// If there is no MANAGERS GameObject present,
-			// Create one and make it not destory on load.
+			// Load init scene.
 			if (InitManager.Instance == null)
 			{
-				//managers = Instantiate (ManagersPrefab); // Includes the InitManager.
-				//managers.name = "MANAGERS";
-				//DontDestroyOnLoad (managers.gameObject); 
 				SceneManager.LoadSceneAsync (0, LoadSceneMode.Additive);
 			}
 		}
 
+		/// <summary>
+		/// Main initialization sequence.
+		/// </summary>
+		/// <returns></returns>
 		IEnumerator Initialize ()
 		{
 			yield return initializeWait;
+
 			OnInitialize.Invoke ();
 			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
-			this.gameObject.SetActive (false);
+			SceneLoader.Instance.backgroundFader.fader.SetBool("Active", false);
+
+			gameObject.SetActive (false);
 		}
 
+		/// <summary>
+		/// Loads data from save files.
+		/// </summary>
 		public void LoadData ()
 		{
 			SaveAndLoadScript.Instance.InitializeLoad ();
 		}
 
+		/// <summary>
+		/// Event to initialize the scene.
+		/// </summary>
 		public void OnInitialized ()
 		{
 			StartCoroutine (Initialize ());
 		}
 
+		/// <summary>
+		/// Assigns post process volume to manipulate at runtime.
+		/// </summary>
+		/// <param name="newPostProcessVolume"></param>
 		public void AssignPostProcessVolume (PostProcessVolume newPostProcessVolume)
 		{
 			SaveAndLoadScript.Instance.postProcessVolume = newPostProcessVolume;

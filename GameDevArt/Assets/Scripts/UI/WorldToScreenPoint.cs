@@ -53,11 +53,16 @@ namespace CityBashers
 
 			if (distanceReferencePos != null)
 			{
-				currentDistance = Vector3.Distance (distanceReferencePos.position, WorldObject.position);
+				//currentDistance = Vector3.Distance (distanceReferencePos.position, WorldObject.position);
+				currentDistance = GetDistanceOptimized.GetDistance(distanceReferencePos.position, WorldObject.position);
 			}
 
 			viewWait = new WaitForSeconds(viewWaitTime);
 			StartCoroutine(EvaluateView ());
+		}
+
+		void GetDistance()
+		{
 		}
 
 		void OnEnable ()
