@@ -8,7 +8,7 @@ namespace CityBashers
 		{
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
-			SceneLoader.Instance.backgroundFader.fader.SetTrigger("FadeOut");
+			//SceneLoader.Instance.backgroundFader.fader.SetBool("Active", false);
 		}
 	}
 }

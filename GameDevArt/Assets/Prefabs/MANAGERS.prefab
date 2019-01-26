@@ -1566,7 +1566,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Appear
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 114507946513632190}
         m_MethodName: ClearMissionText
         m_Mode: 1
@@ -1588,7 +1588,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Disappear
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1867518166027914

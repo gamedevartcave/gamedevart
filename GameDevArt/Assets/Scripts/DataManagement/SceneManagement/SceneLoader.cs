@@ -133,9 +133,10 @@ namespace CityBashers
 				// Checks if the scene has been completely loaded into memory. 
 				if (LoadProgressText.text == "100%")
 				{
-					OnLoadThisScene ();
-					SceneLoadUIDisappear();
-					//BackgroundFader.Instance.fader.SetTrigger("FadeIn");
+					//OnLoadThisScene ();
+					//SceneLoadUIDisappear();
+					backgroundFader.fader.SetBool("Active", true);
+					yield break;
 				}
 				
 				yield return null;
@@ -144,10 +145,11 @@ namespace CityBashers
 			// Checks if the scene has been completely loaded into memory. 
 			if (LoadProgressText.text == "100%")
 			{
-				OnLoadThisScene ();
+				//OnLoadThisScene ();
 				//OnSceneLoadComplete.Invoke();
-				SceneLoadUIDisappear();
-				backgroundFader.fader.SetTrigger("FadeIn");
+				//SceneLoadUIDisappear();
+				backgroundFader.fader.SetBool("Active", true);
+				yield break;
 			}
 		}
 
@@ -183,6 +185,7 @@ namespace CityBashers
 			if (asyncOp != null)
 			{
 				asyncOp.allowSceneActivation = true;
+				//Debug.Log("Scene activated");
 			}
 
 			GC.Collect ();
@@ -196,7 +199,7 @@ namespace CityBashers
 			}
 			*/
 
-			SceneLoadUIDisappear ();
+			//SceneLoadUIDisappear ();
 
 			if (DontDestroyOnLoadInit.Instance != null)
 			{

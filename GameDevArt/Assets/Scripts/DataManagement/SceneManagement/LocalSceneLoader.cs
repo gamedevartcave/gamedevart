@@ -112,7 +112,7 @@ namespace CityBashers
 
 		public void FadeOutLoaderUI ()
 		{
-			SceneLoader.Instance.SceneLoadUIDisappear ();
+			//SceneLoader.Instance.SceneLoadUIDisappear ();
 		}
 	}
 }

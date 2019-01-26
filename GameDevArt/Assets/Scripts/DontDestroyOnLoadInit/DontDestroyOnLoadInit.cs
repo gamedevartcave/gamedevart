@@ -22,11 +22,15 @@ namespace CityBashers
 		void Awake ()
 		{
 			Instance = this;
+
 			Time.timeScale = 1;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
+
 			DetectManagers();
+
 			Destroy (EventSystemGameObject);
 			EventSystemGameObject = null;
+			OnInitialized();
 		}
 
 		public void DetectManagers ()
@@ -44,9 +48,9 @@ namespace CityBashers
 			yield return initializeWait;
 			OnInitialize.Invoke ();
 			initialized = true;
-			//SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
-			SceneLoader.Instance.backgroundFader.fader.SetTrigger("FadeOut");
+			SceneLoader.Instance.backgroundFader.fader.SetBool("Active", false);
 			gameObject.SetActive (false);
 		}
 
