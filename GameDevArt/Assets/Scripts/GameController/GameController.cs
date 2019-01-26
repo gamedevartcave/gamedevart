@@ -296,6 +296,7 @@ namespace CityBashers
 		public void SetActiveMenu (MenuNavigation newActiveMenu)
 		{
 			activeMenu = newActiveMenu;
+			MenuNavigation.ActiveMenu = activeMenu;
 		}
 
 		/// <summary>

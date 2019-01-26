@@ -17,6 +17,7 @@ ScriptedImporter:
     11400024: Player/LockOnLeft
     11400026: Player/LockOnRight
     11400028: Player/HeavyAttack
+    11400030: Player/MediumAttack
   externalObjects: {}
   userData: 
   assetBundleName: 

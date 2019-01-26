@@ -34,6 +34,7 @@ public class PlayerControls : InputActionAssetReference
         m_Player_LockOnLeft = m_Player.GetAction("LockOnLeft");
         m_Player_LockOnRight = m_Player.GetAction("LockOnRight");
         m_Player_HeavyAttack = m_Player.GetAction("HeavyAttack");
+        m_Player_MediumAttack = m_Player.GetAction("MediumAttack");
         m_Initialized = true;
     }
     private void Uninitialize()
@@ -53,6 +54,7 @@ public class PlayerControls : InputActionAssetReference
         m_Player_LockOnLeft = null;
         m_Player_LockOnRight = null;
         m_Player_HeavyAttack = null;
+        m_Player_MediumAttack = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
@@ -81,6 +83,7 @@ public class PlayerControls : InputActionAssetReference
     private InputAction m_Player_LockOnLeft;
     private InputAction m_Player_LockOnRight;
     private InputAction m_Player_HeavyAttack;
+    private InputAction m_Player_MediumAttack;
     public struct PlayerActions
     {
         private PlayerControls m_Wrapper;
@@ -99,6 +102,7 @@ public class PlayerControls : InputActionAssetReference
         public InputAction @LockOnLeft { get { return m_Wrapper.m_Player_LockOnLeft; } }
         public InputAction @LockOnRight { get { return m_Wrapper.m_Player_LockOnRight; } }
         public InputAction @HeavyAttack { get { return m_Wrapper.m_Player_HeavyAttack; } }
+        public InputAction @MediumAttack { get { return m_Wrapper.m_Player_MediumAttack; } }
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }

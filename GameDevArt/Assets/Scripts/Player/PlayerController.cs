@@ -41,6 +41,7 @@ namespace CityBashers
 		public float turnAmount;
 		public float forwardAmount;
 		public Vector3 groundNormal;
+		public Animator CamContainer;
 
 		[Header("Health")]
 		[HideInInspector] public bool lostAllHealth;
@@ -103,6 +104,15 @@ namespace CityBashers
 		public float TimeBetweenDeQueue = 0.2f;
 		private Queue<int> _comboQueue;
 		private float _timePassed = 0;
+
+		[Header("Combo system")]
+		public float comboDuration;
+		[ReadOnly] [SerializeField] private float comboTimeRemaining;
+		public int comboLimit = 16;
+		public string resultCombo;
+		public ComboSet comboSet;
+		public UnityEvent OnComboComplete;
+		public UnityEvent OnComboCancelled;
 
 		[Header("Weapons")]
 		public int currentWeaponIndex;
@@ -192,6 +202,8 @@ namespace CityBashers
 			playerRb = GetComponent<Rigidbody>();
 			playerCol = GetComponent<CapsuleCollider>();
 
+			CamContainer.speed = 0;
+
 			enabled = false;
 		}
 
@@ -226,6 +238,9 @@ namespace CityBashers
 
 			// Add yield times here.
 			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
+
+			OnComboComplete.AddListener(ComboComplete);
+			OnComboCancelled.AddListener(ComboCancelled);
 		}
 
 		void OnEnable()
@@ -250,6 +265,9 @@ namespace CityBashers
 
 			playerControls.Player.Attack.performed += HandleAttack;
 			playerControls.Player.Attack.Enable();
+
+			playerControls.Player.MediumAttack.performed += HandleMediumAttack;
+			playerControls.Player.MediumAttack.Enable();
 
 			playerControls.Player.HeavyAttack.performed += HandleHeavyAttack;
 			playerControls.Player.HeavyAttack.Enable();
@@ -292,6 +310,9 @@ namespace CityBashers
 
 			playerControls.Player.Attack.performed -= HandleAttack;
 			playerControls.Player.Attack.Disable();
+
+			playerControls.Player.MediumAttack.performed -= HandleMediumAttack;
+			playerControls.Player.MediumAttack.Disable();
 
 			playerControls.Player.HeavyAttack.performed -= HandleHeavyAttack;
 			playerControls.Player.HeavyAttack.Disable();
@@ -472,6 +493,11 @@ namespace CityBashers
 			AttackAction();
 		}
 
+		void HandleMediumAttack(InputAction.CallbackContext context)
+		{
+			MediumAttackAction();
+		}
+
 		void HandleHeavyAttack(InputAction.CallbackContext context)
 		{
 			HeavyAttackAction();
@@ -514,12 +540,24 @@ namespace CityBashers
 			MeleeActionUpdate();
 			GetCameraChangeSmoothing();
 			DodgeUpdate();
+			ComboTimer();
 
 			// UI updates.
 			CheckHealthSliders ();
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
-        }
+
+
+			if (isGrounded == true && aimInput == false)
+			{
+				CamContainer.speed = Mathf.Abs(playerAnim.GetFloat("Forward"));
+			}
+
+			else
+			{
+				CamContainer.speed = 0;
+			}
+		}
 
 		void FixedUpdate ()
 		{
@@ -622,46 +660,48 @@ namespace CityBashers
 		/// </summary>
 		void JumpAction ()
 		{
-			isGrounded = false;
-			playerAnim.SetBool("OnGround", isGrounded);
-
-			// 0: none, 1: jump, 2: double jump
-			if (jumpState < 2)
+			if (!aimInput)
 			{
-				jumpState++;
+				isGrounded = false;
+				playerAnim.SetBool("OnGround", isGrounded);
 
-				switch (jumpState)
+				// 0: none, 1: jump, 2: double jump
+				if (jumpState < 2)
 				{
-				case 0:
-					isGrounded = false;
-					break;
+					jumpState++;
 
-				case 1: // Jump.
-						
-					playerRb.velocity = new Vector3 (playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-					isGrounded = false;
-					playerAnim.applyRootMotion = false;
-					OnJump.Invoke ();
+					switch (jumpState)
+					{
+						case 0:
+							isGrounded = false;
+							break;
 
-					break;
+						case 1: // Jump.
 
-				case 2: // Double jump.
+							playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+							isGrounded = false;
+							playerAnim.applyRootMotion = false;
+							OnJump.Invoke();
 
-					// Override vertical velocity.
-					playerRb.velocity = new Vector3 (playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+							break;
 
-					// Add forward force.
-					playerRb.AddRelativeForce (0, 0, jumpPower_Forward, ForceMode.Acceleration);
+						case 2: // Double jump.
 
-					playerAnim.applyRootMotion = false;
-					playerAnim.SetTrigger ("DoubleJump");
+							// Override vertical velocity.
+							playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-					OnDoubleJump.Invoke ();
+							// Add forward force.
+							playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-					break;
+							playerAnim.applyRootMotion = false;
+							playerAnim.SetTrigger("DoubleJump");
+
+							OnDoubleJump.Invoke();
+
+							break;
+					}
 				}
 			}
-			
 		}
 
 		/// <summary>
@@ -693,10 +733,8 @@ namespace CityBashers
 			{
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
-				playerRb.velocity = Vector3.zero;
 				move = Vector3.zero;
 				forwardAmount = 0;
-
 
 				if (isGrounded == true)
 				{
@@ -722,8 +760,9 @@ namespace CityBashers
 		/// </summary>
 		void AttackAction()
 		{
-			if (aimInput)
+			if (aimInput || isGrounded == false)
 			{
+				ClearCombo();
 				return;
 			}
 
@@ -733,8 +772,24 @@ namespace CityBashers
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(1);
+					AddToCombo("Y");
 				}
 			}			
+		}
+
+		void MediumAttackAction()
+		{
+			if (aimInput || isGrounded == false)
+			{
+				ClearCombo();
+				return;
+			}
+
+			else
+
+			{
+				AddToCombo("X");
+			}
 		}
 
 		/// <summary>
@@ -742,8 +797,9 @@ namespace CityBashers
 		/// </summary>
 		void HeavyAttackAction()
 		{
-			if (aimInput)
+			if (aimInput || isGrounded == false)
 			{
+				ClearCombo();
 				return;
 			}
 
@@ -753,6 +809,7 @@ namespace CityBashers
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(2);
+					AddToCombo("B");
 				}	
 			}
 		}
@@ -1134,6 +1191,110 @@ namespace CityBashers
 				
 			OnHitStunEnded.Invoke ();
 			isInHitStun = false;
+		}
+		#endregion
+
+		#region Combo system
+		public void CheckCombo()
+		{
+			for (int i = 0; i < comboSet.combos.Length; i++)
+			{
+				if (resultCombo == comboSet.combos[i])
+				{
+					Debug.Log("Combo performed: " + resultCombo);
+
+					// Check if there is an animation for the state.
+					if (StateExists(playerAnim, comboSet.animationName[i], 0))
+					{
+						playerAnim.Play(comboSet.animationName[i]);
+					}
+
+					else // State was not found.
+
+					{
+						Debug.LogWarning("Could not find animator with state " + comboSet.animationName[i]);
+					}
+
+					OnComboComplete.Invoke ();
+				}
+			}
+		}
+
+		public static bool StateExists(Animator animator, string stateName, int layerId = 0)
+		{
+			return animator.HasState(layerId, Animator.StringToHash(stateName));
+		}
+
+		public void AddToCombo(string addChar)
+		{
+			resultCombo += addChar;
+
+			// Cull first character.
+			if (resultCombo.Length > comboLimit)
+			{
+				resultCombo = resultCombo.Remove(0, 1);
+			}
+
+			CheckCombo();
+			ResetComboTime();
+		}
+
+		public void ComboComplete()
+		{
+			ClearCombo();
+		}
+
+		public void ComboCancelled()
+		{
+			ClearCombo();
+		}
+
+		public void ClearCombo()
+		{
+			resultCombo = string.Empty;
+		}
+
+		void ComboTimer()
+		{
+			if (comboTimeRemaining > 0)
+			{
+				comboTimeRemaining -= Time.deltaTime;
+			}
+
+			else // Combo time ran out.
+
+			{
+				//CheckCombo();
+
+				// Check if result combo last character is not a space.
+				if (!resultCombo.EndsWith("_"))
+				{
+					// Must have at least one combo character.
+					if (resultCombo.Length > 0)
+					{
+						// Add one space.
+						resultCombo += "_";
+						ResetComboTime(); // One more chance.
+					}
+
+					else
+
+					{
+						OnComboCancelled.Invoke();
+					}
+				}
+
+				else // If gap already existed, reset.
+
+				{	
+					OnComboCancelled.Invoke();
+				}
+			}
+		}
+
+		public void ResetComboTime()
+		{
+			comboTimeRemaining = comboDuration;
 		}
 		#endregion
 

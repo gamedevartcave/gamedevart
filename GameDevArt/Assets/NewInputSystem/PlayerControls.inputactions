@@ -88,6 +88,12 @@
                     "id": "a7b36601-357c-4734-a007-c5a757323ea8",
                     "expectedControlLayout": "",
                     "bindings": []
+                },
+                {
+                    "name": "MediumAttack",
+                    "id": "ff9b02fb-113b-458d-96b6-09c0023e3a52",
+                    "expectedControlLayout": "",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -382,7 +388,7 @@
                 {
                     "name": "right",
                     "path": "<Mouse>/middleButton",
-                    "interactions": "Press",
+                    "interactions": "Hold(duration=0.5)",
                     "processors": "",
                     "groups": "MouseAndKeyboard",
                     "action": "Ability",
@@ -394,7 +400,7 @@
                 {
                     "name": "right",
                     "path": "<Gamepad>/rightStickPress",
-                    "interactions": "Press",
+                    "interactions": "Hold(duration=0.5)",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Ability",
@@ -494,6 +500,30 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "HeavyAttack",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";MouseAndKeyboard",
+                    "action": "MediumAttack",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "MediumAttack",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
