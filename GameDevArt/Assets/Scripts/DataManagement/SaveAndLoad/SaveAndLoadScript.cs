@@ -38,16 +38,19 @@ namespace CityBashers
 		public float averageFpsTimer;
 
 		[Header ("Audio settings")]
+		[Range (0, 1)]
 		public float MasterVolume = 1; // Using volume multiplier applied to AudioListener.
+		[Range (-80, 0)]
 		public float SoundtrackVolume = 0; // Using dB scale (-80, 0)
+		[Range(-80, 0)]
 		public float EffectsVolume = 0;  // Using dB scale (-80, 0)
 
 		[Header ("Gameplay settings")]
 		public bool invertYAxis;
 		public float MouseSensitivityMultplier = 1;
 
-		[HideInInspector] public playerData PlayerData;
-		[HideInInspector] public settingsData SettingsData;
+		[HideInInspector] public PlayerData playerData;
+		[HideInInspector] public SettingsData settingsData;
 
 		#region Singleton
 		void Awake ()
@@ -68,8 +71,6 @@ namespace CityBashers
 			edgeDetection = cam.GetComponent<EdgeDetection> ();
 
 			Instance.LoadSettingsData ();
-
-			//LocalSceneLoader.Instance.FadeOutLoaderUI ();
 		}
 
 		/// <summary>
@@ -95,14 +96,12 @@ namespace CityBashers
 			// When username is default username.
 			if (Username == defaultUsername) 
 			{
-				/*
-				Debug.Log (
+				/*Debug.Log (
 					"Username is " 
 					+ Username + 
 					". Consider changing your username in the menu. " +
 					"You may not have created a local profile yet."
-				);
-				*/
+				);*/
 			}
 		}
 			
@@ -114,24 +113,20 @@ namespace CityBashers
 			#if !UNITY_EDITOR
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat") == true) 
 			{
-
 			}
 
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat") == false) 
 			{
-
 			}
 			#endif
 
 			#if UNITY_EDITOR
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat") == true) 
-			{
-				
+			{	
 			}
 				
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat") == false) 
 			{
-				
 			}
 			#endif
 		}
@@ -151,20 +146,18 @@ namespace CityBashers
 
 				#if !UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
-
 				Debug.Log ("<color=cyan>Saved player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"); 
 				#endif
 
 				#if UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
-
 				Debug.Log ("<color=cyan>Saved player data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"); 
 				#endif
 
 				// Does the saving.
-				playerData data = new playerData ();
+				PlayerData data = new PlayerData ();
 
 				SetPlayerData (data);
 
@@ -178,7 +171,7 @@ namespace CityBashers
 		/// Sets data.[variable] = [variable] from this script.
 		/// </summary>
 		/// <param name="data">Data.</param>
-		void SetPlayerData (playerData data)
+		void SetPlayerData (PlayerData data)
 		{
 			data.Username = Username;
 		}
@@ -191,10 +184,8 @@ namespace CityBashers
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat") == true)
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
-
 				Debug.Log ("<color=red>Deleted player data</color>\n" +
-					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat"
-				);
+					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
 			}
 		}
 
@@ -203,10 +194,8 @@ namespace CityBashers
 			if (File.Exists(Application.persistentDataPath + "/default_PlayerConfig_Editor.dat") == true)
 			{
 				File.Delete(Application.persistentDataPath + "/default_PlayerConfig_Editor.dat");
-
 				Debug.Log("<color=red>Deleted player data</color>\n" +
-					Application.persistentDataPath + "/default_PlayerConfig_Editor.dat"
-				);
+					Application.persistentDataPath + "/default_PlayerConfig_Editor.dat");
 			}
 		}
 
@@ -218,10 +207,8 @@ namespace CityBashers
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat") == true) 
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
-
 				Debug.Log ("<color=red>Deleted player data</color>\n" +
-					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat"
-				);
+					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
 			}
 		}
 
@@ -230,10 +217,8 @@ namespace CityBashers
 			if (File.Exists(Application.persistentDataPath + "/default_PlayerConfig.dat") == true)
 			{
 				File.Delete(Application.persistentDataPath + "/default_PlayerConfig.dat");
-
 				Debug.Log("<color=red>Deleted player data</color>\n" +
-					Application.persistentDataPath + "/default_PlayerConfig.dat"
-				);
+					Application.persistentDataPath + "/default_PlayerConfig.dat");
 			}
 		}
 
@@ -245,10 +230,8 @@ namespace CityBashers
 			if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
-
 				Debug.Log ("<color=red>Deleted settings data</color>\n" +
-					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"
-				);
+					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
 			}
 		}
 
@@ -257,10 +240,8 @@ namespace CityBashers
 			if (File.Exists(Application.persistentDataPath + "/default_SettingsConfig_Editor.dat") == true)
 			{
 				File.Delete(Application.persistentDataPath + "/default_SettingsConfig_Editor.dat");
-
 				Debug.Log("<color=red>Deleted settings data</color>\n" +
-					Application.persistentDataPath + "/default_SettingsConfig_Editor.dat"
-				);
+					Application.persistentDataPath + "/default_SettingsConfig_Editor.dat");
 			}
 		}
 
@@ -273,8 +254,7 @@ namespace CityBashers
 			{
 				File.Delete (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 				Debug.Log ("<color=red>Deleted settings data</color>\n" +
-					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"
-				);
+					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
 			}
 		}
 
@@ -284,8 +264,7 @@ namespace CityBashers
 			{
 				File.Delete(Application.persistentDataPath + "/default_SettingsConfig.dat");
 				Debug.Log("<color=red>Deleted settings data</color>\n" +
-					Application.persistentDataPath + "/default_SettingsConfig.dat"
-				);
+					Application.persistentDataPath + "/default_SettingsConfig.dat");
 			}
 		}
 			
@@ -294,75 +273,47 @@ namespace CityBashers
 		/// </summary>
 		public void LoadPlayerData ()
 		{
-			#if !UNITY_EDITOR
 			if (AllowLoading == true)
 			{
-				if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat") == true) 
+				string playerDataFile =
+#if !UNITY_EDITOR
+					Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat";
+#else
+					Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat";
+#endif
+
+				bool playerDataFileExists = File.Exists(playerDataFile);
+
+				if (playerDataFileExists)
 				{
 					// Opens the save data.
-					BinaryFormatter bf = new BinaryFormatter ();
-					FileStream file = File.Open (
-						Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat", 
-						FileMode.Open);
+					BinaryFormatter bf = new BinaryFormatter();
+					FileStream file = File.Open(playerDataFile,	FileMode.Open);
 
 					// Processes the save data into memory.
-					playerData data = (playerData)bf.Deserialize (file);
-					file.Close ();
+					PlayerData data = (PlayerData)bf.Deserialize(file);
+					file.Close();
 
-					LoadPlayerDataContents (data);
-					StorePlayerDataInGame ();
+					LoadPlayerDataContents(data);
+					StorePlayerDataInGame();
 
-					Debug.Log ("<color=cyan>Loaded player data</color>\n" +
-						Application.persistentDataPath + "/" + Username + "_PlayerConfig.dat");
+					Debug.Log("<color=cyan>Loaded player data</color>\n" + playerDataFile);
 				}
 
 				else
-				
+
 				{
-					SavePlayerData ();
-					LoadPlayerData ();
+					SavePlayerData();
+					LoadPlayerData();
 				}
 			}
-			#endif
-
-			#if UNITY_EDITOR
-			if (AllowLoading == true)
-			{
-				if (File.Exists (Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat") == true) 
-				{
-					// Opens the save data.
-					BinaryFormatter bf = new BinaryFormatter ();
-
-					FileStream file = File.Open (
-						Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat", 
-						FileMode.Open);
-
-					// Processes the save data into memory.
-					playerData data = (playerData)bf.Deserialize (file);
-					file.Close ();
-
-					LoadPlayerDataContents (data);
-					StorePlayerDataInGame ();
-
-					Debug.Log ("<color=#00FF00>Loaded player data</color>\n" +
-						Application.persistentDataPath + "/" + Username + "_PlayerConfig_Editor.dat");
-				}
-
-				else
-				
-				{
-					SavePlayerData ();
-					LoadPlayerData ();
-				}
-			}
-			#endif
 		}
 
 		/// <summary>
 		/// Sets variables in this script by getting data from save file.
 		/// </summary>
 		/// <param name="data">Data.</param>
-		void LoadPlayerDataContents (playerData data)
+		void LoadPlayerDataContents (PlayerData data)
 		{
 			Username = data.Username;
 		}
@@ -374,7 +325,6 @@ namespace CityBashers
 		{
 			if (SceneManager.GetActiveScene ().name != "menu")
 			{
-
 			}
 		}
 			
@@ -383,8 +333,16 @@ namespace CityBashers
 		/// </summary>
 		void GetSettingsData ()
 		{
-			if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true
-			 || File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
+			string settingsFile =
+#if !UNITY_EDITOR
+				Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat";
+#else
+				Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat";
+#endif
+
+			bool settingsFileExists = File.Exists(settingsFile);
+
+			if (settingsFileExists == true) 
 			{
 				// Visual settings.
 				QualitySettings.SetQualityLevel (QualitySettingsIndex);
@@ -411,23 +369,19 @@ namespace CityBashers
 				// Creates new save file.
 				BinaryFormatter bf = new BinaryFormatter ();
 
-				#if !UNITY_EDITOR
+#if !UNITY_EDITOR
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
-				
 				Debug.Log ("<color=cyan>Saved settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat"); 
-				#endif
-
-				#if UNITY_EDITOR
+#else
 				FileStream file = File.Create (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
-
 				Debug.Log ("<color=cyan>Saved settings data</color>\n" +
 					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat"); 
-				#endif
+#endif
 
-				// Does the saving
-				settingsData data = new settingsData ();
-
+				// Creates new save data.
+				SettingsData data = new SettingsData ();
+		
 				SetSettingsData (data);
 
 				// Serializes and closes the file.
@@ -440,7 +394,7 @@ namespace CityBashers
 		/// Sets data.[variable] = [variable] from this script.
 		/// </summary>
 		/// <param name="data">Data.</param>
-		void SetSettingsData (settingsData data)
+		void SetSettingsData (SettingsData data)
 		{
 			// Visual settings.
 			data.QualitySettingsIndex 	= QualitySettingsIndex;
@@ -467,65 +421,39 @@ namespace CityBashers
 		{
 			if (AllowLoading == true)
 			{
+				string settingsFile =
 #if !UNITY_EDITOR
-				if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat") == true) 
-				{
-					// Opens the save data.
-					BinaryFormatter bf = new BinaryFormatter ();
-
-					FileStream file = File.Open (Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat", FileMode.Open);
-
-					Debug.Log ("<color=#00FF00>Saved settings data</color>\n" +
-						Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat");
-
-					// Processes the save data into memory.
-					settingsData data = (settingsData)bf.Deserialize (file);
-					
-					file.Close ();
-
-					LoadSettingsDataContents (data);
-					StoreSettingsDataInGame ();
-				}
-
-				else
-
-				{
-					Application.targetFrameRate = 60;
-					limitFramerate = true;
-					SaveSettingsData ();
-					LoadSettingsData ();
-				}
+					Application.persistentDataPath + "/" + Username + "_SettingsConfig.dat";
+#else
+					Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat";
 #endif
 
-#if UNITY_EDITOR
-				if (File.Exists (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat") == true) 
+				bool settingsFileExists = File.Exists(settingsFile);				
+
+				if (settingsFileExists)
 				{
 					// Opens the save data.
-					BinaryFormatter bf = new BinaryFormatter ();
-
-					FileStream file = File.Open (Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat", FileMode.Open);
-
-					Debug.Log ("<color=#00FF00>Loaded settings data</color>\n" +
-						Application.persistentDataPath + "/" + Username + "_SettingsConfig_Editor.dat");
+					BinaryFormatter bf = new BinaryFormatter();
+					FileStream file = File.Open(settingsFile, FileMode.Open);
+					Debug.Log("<color=#00FF00>Loaded settings data</color>\n" + settingsFile);
 
 					// Processes the save data into memory.
-					settingsData data = (settingsData)bf.Deserialize (file);
+					SettingsData data = (SettingsData)bf.Deserialize(file);
 
-					file.Close ();
+					file.Close();
 
-					LoadSettingsDataContents (data);
-					StoreSettingsDataInGame ();
+					LoadSettingsDataContents(data);
+					StoreSettingsDataInGame();
 				}
 
-				else
-				
+				else // File does not exist, create a new one.
+
 				{
 					Application.targetFrameRate = 60;
 					limitFramerate = true;
-					SaveSettingsData ();
-					LoadSettingsData ();
+					SaveSettingsData();
+					LoadSettingsData();
 				}
-				#endif
 			}
 		}
 			
@@ -533,7 +461,7 @@ namespace CityBashers
 		/// Sets variables in this script by getting data from save file. 
 		/// </summary>
 		/// <param name="data">Data.</param>
-		void LoadSettingsDataContents (settingsData data)
+		void LoadSettingsDataContents (SettingsData data)
 		{
 			// Visual settings.
 			QualitySettingsIndex 	= data.QualitySettingsIndex;
@@ -641,13 +569,13 @@ namespace CityBashers
 
 		// Variables stored in data files.
 		[Serializable]
-		public class playerData
+		public class PlayerData
 		{
 			public string Username;
 		}
 
 		[Serializable]
-		public class settingsData
+		public class SettingsData
 		{
 			// VISUAL SETTINGS
 			public int QualitySettingsIndex;

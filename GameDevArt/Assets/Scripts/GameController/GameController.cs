@@ -165,8 +165,8 @@ namespace CityBashers
 			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance))
 			{
 				// While moving.
-				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.05f ||
-					MouseLook.Instance.LookAxis.normalized.sqrMagnitude > 0.25f)
+				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.1f ||
+					MouseLook.Instance.LookAxis.normalized.sqrMagnitude > 0.1f)
 				{
 					targetDofDistance = Vector3.Distance(
 						Camera.main.transform.position,
@@ -182,7 +182,7 @@ namespace CityBashers
 				}
 			}
 
-			else // Idling.
+			else // raycast too far.
 
 			{
 				targetDofDistance = Vector3.Distance(

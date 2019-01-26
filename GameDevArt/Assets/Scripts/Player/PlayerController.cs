@@ -24,14 +24,14 @@ namespace CityBashers
 
 		[Header("Input")]
 		public PlayerControls playerControls;
-		public Vector2 MoveAxis;
-		public bool aimInput;
-		public bool shootInput;
+		[ReadOnly] public Vector2 MoveAxis;
+		[ReadOnly] public bool aimInput;
+		[ReadOnly] public bool shootInput;
 		private float lastJumpValue;
 
 		[Header("Movement")]
 		[Tooltip("The world-relative desired move direction, calculated from camForward and user input.")]
-		public Vector3 move;
+		[ReadOnly] public Vector3 move;
 
 		public float moveSpeedMultiplier = 1f;
 		public float movingTurnSpeed = 360;
@@ -78,8 +78,6 @@ namespace CityBashers
 		public SimpleFollow camRigSimpleFollow;
 		public Vector3 camRigSimpleFollowRotNormal = new Vector3(25, 25, 0);
 		public Vector3 camRigSimpleFollowRotAiming = new Vector3(60, 60, 0);
-		[Space(10)]
-		public MouseLook mouseLook;
 		[HideInInspector] public Camera cam; // A reference to the main camera in the scenes transform
 		private Vector3 camForwardDirection; // The current forward direction of the camera
 		public Animator CrosshairAnim;
@@ -149,7 +147,7 @@ namespace CityBashers
 
 		[Header("Landing")]
 		public float terminalVelocity = 10;
-		public float fallMult = 2.5f;
+		//public float fallMult = 2.5f;
 		[ReadOnly] public bool isGrounded;
 		public AudioSource landingAudioSource;
 		public AudioClip[] landingClips;
@@ -564,10 +562,9 @@ namespace CityBashers
 			playerRb.velocity = new Vector3 (
 				transform.forward.x * forwardAmount * moveSpeedMultiplier * Time.deltaTime,
 				playerRb.velocity.y,
-				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.deltaTime
-			);
+				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.deltaTime);
 
-			GetBetterJumpVelocity();
+			//GetBetterJumpVelocity();
 			ClampVelocity (playerRb, terminalVelocity);
 		}
 
@@ -672,38 +669,33 @@ namespace CityBashers
 
 					switch (jumpState)
 					{
-						case 0:
-							isGrounded = false;
-							break;
+					case 0:
+						isGrounded = false;
+						break;
+					case 1: // Jump.
+						playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+						isGrounded = false;
+						playerAnim.applyRootMotion = false;
+						OnJump.Invoke();
+						break;
+					case 2: // Double jump.
+						// Override vertical velocity.
+						playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-						case 1: // Jump.
+						// Add forward force.
+						playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-							playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-							isGrounded = false;
-							playerAnim.applyRootMotion = false;
-							OnJump.Invoke();
+						playerAnim.applyRootMotion = false;
+						playerAnim.SetTrigger("DoubleJump");
 
-							break;
-
-						case 2: // Double jump.
-
-							// Override vertical velocity.
-							playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
-
-							// Add forward force.
-							playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
-
-							playerAnim.applyRootMotion = false;
-							playerAnim.SetTrigger("DoubleJump");
-
-							OnDoubleJump.Invoke();
-
-							break;
+						OnDoubleJump.Invoke();
+						break;
 					}
 				}
 			}
 		}
 
+		/*
 		/// <summary>
 		/// Gets the better jump velocity.
 		/// </summary>
@@ -722,6 +714,7 @@ namespace CityBashers
 				playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
 			}
 		}
+		*/
 		
 		/// <summary>
 		/// Aim action.
@@ -733,11 +726,11 @@ namespace CityBashers
 			{
 				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
 				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
-				move = Vector3.zero;
-				forwardAmount = 0;
 
 				if (isGrounded == true)
 				{
+					move = Vector3.zero;
+					forwardAmount = 0;
 					playerAnim.SetFloat("Forward", 0);
 				}
 			}
@@ -760,35 +753,35 @@ namespace CityBashers
 		/// </summary>
 		void AttackAction()
 		{
-			if (aimInput || isGrounded == false)
-			{
-				ClearCombo();
-				return;
-			}
-
-			else // Not aiming.
-
+			if (!aimInput && isGrounded)
 			{
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(1);
 					AddToCombo("Y");
 				}
-			}			
-		}
-
-		void MediumAttackAction()
-		{
-			if (aimInput || isGrounded == false)
-			{
-				ClearCombo();
-				return;
 			}
 
 			else
 
 			{
+				ClearCombo();
+				return;
+			}
+		}
+
+		void MediumAttackAction()
+		{
+			if (!aimInput && isGrounded)
+			{
 				AddToCombo("X");
+			}
+
+			else
+
+			{
+				ClearCombo();
+				return;
 			}
 		}
 
@@ -797,20 +790,20 @@ namespace CityBashers
 		/// </summary>
 		void HeavyAttackAction()
 		{
-			if (aimInput || isGrounded == false)
-			{
-				ClearCombo();
-				return;
-			}
-
-			else // Not aiming.
-
+			if (!aimInput && isGrounded)
 			{
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(2);
 					AddToCombo("B");
-				}	
+				}
+			}
+
+			else
+
+			{
+				ClearCombo();
+				return;
 			}
 		}
 
@@ -825,18 +818,17 @@ namespace CityBashers
 				{
 					switch (_comboQueue.Dequeue())
 					{
-						case 1:
-							// Light attack 
-							playerAnim.SetTrigger("LiteAttack");
-							break;
-						case 2:
-							// heavy attack 
-							playerAnim.SetTrigger("HeavyAttack");
-							break;
-						default:
-							Debug.Log("Combo Queue Error");
-							break;
-
+					case 1:
+						// Light attack 
+						playerAnim.SetTrigger("LiteAttack");
+						break;
+					case 2:
+						// heavy attack 
+						playerAnim.SetTrigger("HeavyAttack");
+						break;
+					default:
+						Debug.Log("Combo Queue Error");
+						break;
 					}
 
 					_timePassed = 0f;
@@ -858,25 +850,27 @@ namespace CityBashers
 		/// </summary>
 		void ShootAction()
 		{
-			if (aimInput)
+			if (aimInput == true)
 			{
-				playerAnim.SetBool("Shooting", shootInput);
+				playerAnim.SetBool("Shooting", shootInput); // Update shooting animator parameter while aiming.
 
-				if (shootInput)
+				if (shootInput == true)
 				{
 					if (Time.time > nextFire && GameController.Instance.isPaused == false)
 					{
+						// Look at forward camera direction without pitch.
 						transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
+						Shoot(); // Instantiate a shot.
+						nextFire = Time.time + currentFireRate; // Shoot rate update.
 
-						Shoot();
-						nextFire = Time.time + currentFireRate;
-
-						GameController.Instance.camShakeScript.shakeDuration = 0.5f;
-						GameController.Instance.camShakeScript.shakeAmount = 0.05f;
+						// Set up camera shake.
+						// TODO: Have this modifiable from weapon.
+						GameController.Instance.camShakeScript.shakeDuration = 0.1f;
+						GameController.Instance.camShakeScript.shakeAmount = 0.08f;
 						GameController.Instance.camShakeScript.Shake();
 
-						VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.25f, 1);
-
+						// Set up vibration.
+						VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);
 						//Debug.Log ("Shooting from weapon " + currentWeaponIndex);
 					}
 				}
@@ -916,7 +910,8 @@ namespace CityBashers
 			// Is left.
 			if (isRight == false)
 			{
-				CamFollow.localPosition = Vector3.Lerp (CamFollow.localPosition, 
+				CamFollow.localPosition = Vector3.Lerp (
+					CamFollow.localPosition, 
 					new Vector3 (cameraOffset.x, CamFollow.localPosition.y, CamFollow.localPosition.z), 
 					cameraOffsetSmoothing * Time.deltaTime);
 
@@ -926,7 +921,8 @@ namespace CityBashers
 			else // Is right.
 
 			{
-				CamFollow.localPosition = Vector3.Lerp (CamFollow.localPosition,
+				CamFollow.localPosition = Vector3.Lerp (
+					CamFollow.localPosition,
 					new Vector3 (cameraOffset.y, CamFollow.localPosition.y, CamFollow.localPosition.z),
 					cameraOffsetSmoothing * Time.deltaTime);
 
@@ -986,8 +982,11 @@ namespace CityBashers
 		void CheckMagicSliders ()
 		{
 			MagicSlider.value = Mathf.Clamp (magic, 0, MaximumMagic);
-			MagicSlider_Smoothed.value = Mathf.Lerp (MagicSlider_Smoothed.value, magic, 
-				magicSliderSmoothing * Time.deltaTime);
+			MagicSlider_Smoothed.value = Mathf.Lerp (
+				MagicSlider_Smoothed.value, 
+				magic, 
+				magicSliderSmoothing * Time.deltaTime
+			);
 		}
 
 		/// <summary>
@@ -1029,8 +1028,6 @@ namespace CityBashers
 				Debug.DrawRay (AimingOrigin.position, ray.direction * 10, Color.cyan, 0.2f);
 				Debug.DrawRay (AimingOrigin.position, AimNoPitchDir * 10, Color.green, 0.2f);
 			}
-
-			//playerAnim.SetTrigger("Shoot");
 
 			OnShoot.Invoke ();
 		}
@@ -1213,7 +1210,7 @@ namespace CityBashers
 					else // State was not found.
 
 					{
-						Debug.LogWarning("Could not find animator with state " + comboSet.AdditiveAnimationName[i]);
+						Debug.LogWarning("Could not find animator with state name: " + comboSet.AdditiveAnimationName[i]);
 					}
 				}
 			}
@@ -1234,7 +1231,7 @@ namespace CityBashers
 					else // State was not found.
 
 					{
-						Debug.LogWarning("Could not find animator with state " + comboSet.ClearableAnimationName[i]);
+						Debug.LogWarning("Could not find animator with state name " + comboSet.ClearableAnimationName[i]);
 					}
 
 					OnComboComplete.Invoke ();
