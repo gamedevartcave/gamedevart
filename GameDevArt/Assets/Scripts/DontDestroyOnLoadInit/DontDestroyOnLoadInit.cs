@@ -30,9 +30,12 @@ namespace CityBashers
 
 			Destroy (EventSystemGameObject);
 			EventSystemGameObject = null;
-			OnInitialized();
+			OnInitialized(); // Essential for scenes to initialize correctly.
 		}
 
+		/// <summary>
+		/// Detects InitManager Instance, loads init scene if not found.
+		/// </summary>
 		public void DetectManagers ()
 		{
 			// If there is no MANAGERS GameObject present,
@@ -43,27 +46,43 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Main initialization sequence.
+		/// </summary>
+		/// <returns></returns>
 		IEnumerator Initialize ()
 		{
 			yield return initializeWait;
+
 			OnInitialize.Invoke ();
 			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
 			SceneLoader.Instance.backgroundFader.fader.SetBool("Active", false);
+
 			gameObject.SetActive (false);
 		}
 
+		/// <summary>
+		/// Loads data from save files.
+		/// </summary>
 		public void LoadData ()
 		{
 			SaveAndLoadScript.Instance.InitializeLoad ();
 		}
 
+		/// <summary>
+		/// Event to initialize the scene.
+		/// </summary>
 		public void OnInitialized ()
 		{
 			StartCoroutine (Initialize ());
 		}
 
+		/// <summary>
+		/// Assigns post process volume to manipulate at runtime.
+		/// </summary>
+		/// <param name="newPostProcessVolume"></param>
 		public void AssignPostProcessVolume (PostProcessVolume newPostProcessVolume)
 		{
 			SaveAndLoadScript.Instance.postProcessVolume = newPostProcessVolume;
