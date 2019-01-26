@@ -6,7 +6,9 @@ namespace CityBashers
 {
 	public class MenuNavigation : MonoBehaviour 
 	{
-		public static MenuNavigation activeMenu { get; protected set; }
+		// The current active menu reference.
+		public static MenuNavigation ActiveMenu { get; set; }
+		// Show we are the active menu.
 		[ReadOnly] public bool isActiveMenu;
 
 		// Button assets
@@ -21,12 +23,14 @@ namespace CityBashers
 
 		void Awake ()
 		{
+			// Set up delayed initialization.
 			DontDestroyOnLoadInit.Instance.OnInitialize.AddListener (OnInitialize);
 		}
 
 		void OnEnable ()
 		{
-			if (activeMenu == this)
+			// Automatically highlight the current selectable when the menu appears.
+			if (ActiveMenu == this)
 			{
 				ButtonEnter (currentSelectable);
 			}
@@ -38,6 +42,9 @@ namespace CityBashers
 			AddListeners();
 		}
 
+		/// <summary>
+		/// Help with initializing.
+		/// </summary>
 		void FetchComponents ()
 		{
 			if (eventData == null) eventData = new PointerEventData (EventSystem.current);
@@ -45,17 +52,26 @@ namespace CityBashers
 			if (currentSelectable == null) currentSelectable = firstSelectable;
 		}
 
+		/// <summary>
+		/// Add listeners to menu input events rather than checking for them here.
+		/// </summary>
 		void AddListeners()
 		{
+			// Scroll events.
 			MenuInput.Instance.OnScrollUp.AddListener(OnScrollUp);
 			MenuInput.Instance.OnScrollDown.AddListener(OnScrollDown);
 			MenuInput.Instance.OnScrollLeft.AddListener(OnScrollLeft);
 			MenuInput.Instance.OnScrollRight.AddListener(OnScrollRight);
 
+			// Button events.
 			MenuInput.Instance.OnConfirm.AddListener(OnConfirm);
 			MenuInput.Instance.OnBack.AddListener(OnBack);
 		}
-			
+		
+		/// <summary>
+		/// Set custom button index, when the menu is active, it will select that button index.
+		/// </summary>
+		/// <param name="index"></param>
 		public void SetButtonIndex (int index)
 		{
 			for (int i = 0; i < buttons.Length; i++)
@@ -69,6 +85,9 @@ namespace CityBashers
 			ButtonEnter (buttons [index]);
 		}
 
+		/// <summary>
+		/// Scroll up event.
+		/// </summary>
 		void OnScrollUp()
 		{
 			CheckActiveMenu();
@@ -84,6 +103,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Scroll down event.
+		/// </summary>
 		void OnScrollDown()
 		{
 			CheckActiveMenu();
@@ -99,6 +121,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Scroll left event.
+		/// </summary>
 		void OnScrollLeft()
 		{
 			CheckActiveMenu();
@@ -114,6 +139,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Scroll right event.
+		/// </summary>
 		void OnScrollRight()
 		{
 			CheckActiveMenu();
@@ -129,6 +157,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Confirm/Accept event.
+		/// </summary>
 		void OnConfirm()
 		{
 			CheckActiveMenu();
@@ -139,6 +170,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Back event.
+		/// </summary>
 		void OnBack()
 		{
 			CheckActiveMenu();
@@ -149,6 +183,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Checks if we are the active menu.
+		/// </summary>
 		void CheckActiveMenu ()
 		{
 			// Bail out if not fully visible.

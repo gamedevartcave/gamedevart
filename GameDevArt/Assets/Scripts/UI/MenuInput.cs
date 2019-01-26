@@ -7,14 +7,18 @@ namespace CityBashers
 	public class MenuInput : MonoBehaviour
 	{
 		public static MenuInput Instance { get; private set; }
+		[Tooltip ("Inout controls asset to use to measure nav.")]
 		public MenuControls menuControls;
 
 		private Vector2 Nav;
+		[Tooltip ("Threshold input until nav is registered.")]
 		public float navMin = 0.75f;
 
+		[Tooltip ("Real time in seconds between one scroll to the next.")]
 		public float ScrollRate = 0.25f;
 		private float nextScroll;
 
+		// Unity events on input performed.
 		public UnityEvent OnScrollUp;
 		public UnityEvent OnScrollDown;
 		public UnityEvent OnScrollLeft;
@@ -37,6 +41,7 @@ namespace CityBashers
 			DeregisterControls();
 		}
 
+		#region Control event registration
 		void RegisterControls()
 		{
 			menuControls.Menu.Nav.performed += HandleNav;
@@ -47,8 +52,6 @@ namespace CityBashers
 
 			menuControls.Menu.Back.performed += HandleBack;
 			menuControls.Menu.Back.Enable();
-
-			//Debug.Log("Menu controls registered.");
 		}
 
 		void DeregisterControls()
@@ -62,10 +65,13 @@ namespace CityBashers
 			menuControls.Menu.Back.performed -= HandleBack;
 			menuControls.Menu.Back.Disable();
 		}
+		#endregion
 
+		#region Input handles
 		void HandleNav(InputAction.CallbackContext context)
 		{
 			Nav = context.ReadValue<Vector2>();
+			CheckNav();
 		}
 
 		void HandleConfirm(InputAction.CallbackContext context)
@@ -77,53 +83,12 @@ namespace CityBashers
 		{
 			OnBack.Invoke();
 		}
+		#endregion
 
-		private void Update()
-		{
-			CheckNav();
-		}
-
-		void DoNav()
-		{
-			// Move up
-			if (Nav.y > navMin)
-			{
-				OnScrollUp.Invoke();
-				nextScroll = Time.unscaledTime + ScrollRate;
-				Nav = Vector2.zero;
-				return;
-			}
-
-			// Move down
-			if (Nav.y < -navMin)
-			{
-				OnScrollDown.Invoke();
-				nextScroll = Time.unscaledTime + ScrollRate;
-				Nav = Vector2.zero;
-				return;
-			}
-
-			// Move left
-			if (Nav.x < -navMin)
-			{
-				OnScrollLeft.Invoke();
-				nextScroll = Time.unscaledTime + ScrollRate;
-				Nav = Vector2.zero;
-				return;
-			}
-
-			// Move right
-			if (Nav.x > navMin)
-			{
-				OnScrollRight.Invoke();
-				nextScroll = Time.unscaledTime + ScrollRate;
-				Nav = Vector2.zero;
-				return;
-			}
-		}
-
+		#region Navigation
 		void CheckNav()
 		{
+			// Can register input.
 			if (Time.unscaledTime > nextScroll)
 			{
 				// Check if there is a GameController Instance.
@@ -132,22 +97,55 @@ namespace CityBashers
 					// Game is not paused.
 					if (!GameController.Instance.isPaused)
 					{
-						return;
-					}
-
-					else // Game is paused, allow menu input.
-
-					{
-						DoNav();
+						return; // Bail out, there is no GameController Instance.
 					}
 				}
 
-				else // No GameController, allow menu input anyway.
-
-				{
-					DoNav();
-				}
+				DoNav(); // Got to this point, GameController Instance was not found, allow menu input.
 			}
 		}
+
+		// Invokes correct nav direction.
+		void DoNav()
+		{
+			// Move up
+			if (Nav.y > navMin)
+			{
+				OnScrollUp.Invoke();
+				ResetNav();
+				return;
+			}
+
+			// Move down
+			if (Nav.y < -navMin)
+			{
+				OnScrollDown.Invoke();
+				ResetNav();
+				return;
+			}
+
+			// Move left
+			if (Nav.x < -navMin)
+			{
+				OnScrollLeft.Invoke();
+				ResetNav();
+				return;
+			}
+
+			// Move right
+			if (Nav.x > navMin)
+			{
+				OnScrollRight.Invoke();
+				ResetNav();
+				return;
+			}
+		}
+
+		void ResetNav()
+		{
+			nextScroll = Time.unscaledTime + ScrollRate;
+			Nav = Vector2.zero;
+		}
+		#endregion
 	}
 }
