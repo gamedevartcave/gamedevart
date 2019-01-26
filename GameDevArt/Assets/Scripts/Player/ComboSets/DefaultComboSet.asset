@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c854ca0949ac824286c2b360eb529e3, type: 3}
   m_Name: DefaultComboSet
   m_EditorClassIdentifier: 
-  combos:
-  - XYBXYB
-  - XX_BB_YY
-  animationName:
-  - HeavyAttack
-  - HeavyAttack
+  AdditiveCombos:
+  - XXB
+  - XXBY
+  AdditiveAnimationName:
+  - 
+  - 
+  ClearableCombos:
+  - XBYX_BXY_YBX
+  - XXBBY_BBXB
+  ClearableAnimationName:
+  - 
+  - 

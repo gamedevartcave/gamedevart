@@ -30,6 +30,8 @@ namespace CityBashers
 		public TextMeshProUGUI LoadingMissionText;
 		public string missionText;
 
+		public BackgroundFader backgroundFader;
+
 		//private WaitForSecondsRealtime WaitDelay;
 		public UnityEvent OnInitialize;
 		public UnityEvent OnSceneLoadBegin;
@@ -94,20 +96,6 @@ namespace CityBashers
 			LoadProgressText.text = "0%";
 			LoadSlider.value = 0;
 
-			/*
-			if (LoadParticlesAnim.gameObject.activeInHierarchy == true)
-			{
-				//LoadParticlesAnim.Play ("LoadingParticlesLoop");
-			}
-			*/
-
-			/*
-			foreach (ParticleSystem loadParticle in LoadingParticles) 
-			{
-				loadParticle.Play (true);
-			}
-			*/
-
 			if (LocalSceneLoader.Instance != null)
 			{
 				AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync (LocalSceneLoader.Instance.gameObject.scene);
@@ -130,14 +118,6 @@ namespace CityBashers
 
 				// UI checks load progress and displays for the player.
 				SmoothProgress = Mathf.Lerp (SmoothProgress, asyncOp.progress, ProgressBarSmoothTime * Time.unscaledDeltaTime);
-
-				/*
-				foreach (ParticleSystem loadParticle in LoadingParticles) 
-				{
-					var ParticleStartLifetimeMain = loadParticle.main;
-					ParticleStartLifetimeMain.startLifetime = asyncOp.progress + 0.5f;
-				}
-				*/
 					
 				if (asyncprogress < 100) 
 				{
@@ -149,12 +129,15 @@ namespace CityBashers
 				LoadProgressText.text = Mathf.Round (1.1111f * (SmoothProgress * 100)) + "%";
 				LoadSlider.value = 1.1111f * (SmoothProgress * 100);
 
+				
 				// Checks if the scene has been completely loaded into memory. 
 				if (LoadProgressText.text == "100%")
 				{
 					OnLoadThisScene ();
+					SceneLoadUIDisappear();
+					//BackgroundFader.Instance.fader.SetTrigger("FadeIn");
 				}
-
+				
 				yield return null;
 			}
 
@@ -162,6 +145,9 @@ namespace CityBashers
 			if (LoadProgressText.text == "100%")
 			{
 				OnLoadThisScene ();
+				//OnSceneLoadComplete.Invoke();
+				SceneLoadUIDisappear();
+				backgroundFader.fader.SetTrigger("FadeIn");
 			}
 		}
 
@@ -172,13 +158,6 @@ namespace CityBashers
 
 		IEnumerator LoadThisScene ()
 		{
-			/*
-			foreach (ParticleSystem loadParticle in LoadingParticles) 
-			{
-				loadParticle.Stop (true, ParticleSystemStopBehavior.StopEmitting);
-			}
-			*/
-				
 			yield return new WaitForEndOfFrame ();
 
 			isLoading = false;
@@ -238,8 +217,8 @@ namespace CityBashers
 		public void SceneLoadUIDisappear ()
 		{
 			SceneLoaderUI.ResetTrigger ("Appear");
-			//SceneLoaderUI.SetTrigger ("Disappear");
-			SceneLoaderUI.ResetTrigger ("Disappear");
+			SceneLoaderUI.SetTrigger ("Disappear");
+			//SceneLoaderUI.ResetTrigger ("Disappear");
 		}
 
 		public void SetLoadedSceneActive ()

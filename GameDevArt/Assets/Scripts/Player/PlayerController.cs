@@ -1197,22 +1197,44 @@ namespace CityBashers
 		#region Combo system
 		public void CheckCombo()
 		{
-			for (int i = 0; i < comboSet.combos.Length; i++)
+			// Go through all additive combos for a match.
+			for (int i = 0; i < comboSet.AdditiveCombos.Length; i++)
 			{
-				if (resultCombo == comboSet.combos[i])
+				if (resultCombo == comboSet.AdditiveCombos[i])
 				{
-					Debug.Log("Combo performed: " + resultCombo);
+					Debug.Log("Additive combo performed: " + resultCombo);
 
 					// Check if there is an animation for the state.
-					if (StateExists(playerAnim, comboSet.animationName[i], 0))
+					if (StateExists(playerAnim, comboSet.AdditiveAnimationName[i], 0))
 					{
-						playerAnim.Play(comboSet.animationName[i]);
+						playerAnim.Play(comboSet.AdditiveAnimationName[i]);
 					}
 
 					else // State was not found.
 
 					{
-						Debug.LogWarning("Could not find animator with state " + comboSet.animationName[i]);
+						Debug.LogWarning("Could not find animator with state " + comboSet.AdditiveAnimationName[i]);
+					}
+				}
+			}
+
+			// Go through all clearable combos for a match.
+			for (int i = 0; i < comboSet.ClearableCombos.Length; i++)
+			{
+				if (resultCombo == comboSet.ClearableCombos[i])
+				{
+					Debug.Log("Clearable combo performed: " + resultCombo);
+
+					// Check if there is an animation for the state.
+					if (StateExists(playerAnim, comboSet.ClearableAnimationName[i], 0))
+					{
+						playerAnim.Play(comboSet.ClearableAnimationName[i]);
+					}
+
+					else // State was not found.
+
+					{
+						Debug.LogWarning("Could not find animator with state " + comboSet.ClearableAnimationName[i]);
 					}
 
 					OnComboComplete.Invoke ();

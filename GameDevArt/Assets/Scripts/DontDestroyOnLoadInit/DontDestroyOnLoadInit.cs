@@ -12,7 +12,6 @@ namespace CityBashers
 		[ReadOnly] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
-		public float Delay;
 		public float initializeWaitTime = 0.5f;
 		public UnityEvent OnInitialize;
 
@@ -25,7 +24,6 @@ namespace CityBashers
 			Instance = this;
 			Time.timeScale = 1;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
-			//Invoke ("DetectManagers", Delay);
 			DetectManagers();
 			Destroy (EventSystemGameObject);
 			EventSystemGameObject = null;
@@ -34,12 +32,9 @@ namespace CityBashers
 		public void DetectManagers ()
 		{
 			// If there is no MANAGERS GameObject present,
-			// Create one and make it not destory on load.
+			// Load init scene.
 			if (InitManager.Instance == null)
 			{
-				//managers = Instantiate (ManagersPrefab); // Includes the InitManager.
-				//managers.name = "MANAGERS";
-				//DontDestroyOnLoad (managers.gameObject); 
 				SceneManager.LoadSceneAsync (0, LoadSceneMode.Additive);
 			}
 		}
@@ -49,9 +44,10 @@ namespace CityBashers
 			yield return initializeWait;
 			OnInitialize.Invoke ();
 			initialized = true;
-			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
+			//SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
-			this.gameObject.SetActive (false);
+			SceneLoader.Instance.backgroundFader.fader.SetTrigger("FadeOut");
+			gameObject.SetActive (false);
 		}
 
 		public void LoadData ()
