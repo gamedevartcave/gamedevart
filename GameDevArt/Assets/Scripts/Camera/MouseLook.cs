@@ -72,10 +72,6 @@ namespace CityBashers
 		void HandleLook(InputAction.CallbackContext context)
 		{
 			LookAxis = context.ReadValue<Vector2>();
-
-			// Could be used to optimize look code but as value will not change if no input changes, 
-			// the camera rig will stop moving.
-			//UpdateLook(); 
 		}
 
 		/// <summary>

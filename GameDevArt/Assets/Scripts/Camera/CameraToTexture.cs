@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.UI;
 
 namespace CityBashers
 {
 	public class CameraToTexture : MonoBehaviour 
 	{
+		public static CameraToTexture Instance { get; private set; }
+
 		public RawImage OutputGraphic;
 		private Texture2D renderedTexture;
-
 		public Camera[] cameras;
 
 		public UnityEvent OnCameraRenderedToTexture;
+
+		private void Awake()
+		{
+			Instance = this;
+		}
 
 		/// <summary>
 		/// Starts render camera to texture process.
@@ -45,20 +50,17 @@ namespace CityBashers
 			OutputGraphic.texture = null;
 			Destroy (renderedTexture);
 
-			for (int i = 0; i < cameras.Length; i++)
-			{
-				cameras [i].enabled = true;
-			}
+			SetCamerasState(true);
 		}
 
 		/// <summary>
-		/// Disables the cameras in cameras array.
+		/// Enables the cameras in cameras array.
 		/// </summary>
-		public void DisableCameras ()
+		public void SetCamerasState(bool active)
 		{
 			for (int i = 0; i < cameras.Length; i++)
 			{
-				cameras [i].enabled = false;
+				cameras[i].enabled = active;
 			}
 		}
 	}

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
@@ -9,21 +9,20 @@ namespace CityBashers
 	public class DontDestroyOnLoadInit : MonoBehaviour 
 	{
 		public static DontDestroyOnLoadInit Instance { get; private set; }
+
 		[ReadOnly] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
+		public GameObject EventSystemGameObject;
 		public float initializeWaitTime = 0.5f;
 		public UnityEvent OnInitialize;
-
 		private WaitForSeconds initializeWait;
-
-		public GameObject EventSystemGameObject;
 
 		void Awake ()
 		{
 			Instance = this;
-
-			Time.timeScale = 1;
+			Physics.autoSimulation = false;
+			Time.timeScale = 0;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
 
 			DetectManagers();
@@ -59,7 +58,7 @@ namespace CityBashers
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
 			SceneLoader.Instance.backgroundFader.fader.SetBool("Active", false);
-
+			Physics.autoSimulation = true;
 			gameObject.SetActive (false);
 		}
 

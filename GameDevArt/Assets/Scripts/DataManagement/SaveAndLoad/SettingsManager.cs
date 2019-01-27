@@ -295,7 +295,7 @@ namespace CityBashers
 		#endregion
 
 		#region Gameplay
-		void UpdateGameplayValues ()
+		public void UpdateGameplayValues ()
 		{
 			invertToggle.isOn = SaveAndLoadScript.Instance.invertYAxis;
 		}

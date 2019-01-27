@@ -4,6 +4,7 @@ namespace CityBashers
 {
 	public class CursorManager : MonoBehaviour 
 	{
+		/*
 		public void ShowCursor ()
 		{
 			Cursor.visible = true;
@@ -15,5 +16,6 @@ namespace CityBashers
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
+		*/
 	}
 }

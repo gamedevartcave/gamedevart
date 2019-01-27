@@ -27,7 +27,6 @@ namespace CityBashers
 		[ReadOnly] public Vector2 MoveAxis;
 		[ReadOnly] public bool aimInput;
 		[ReadOnly] public bool shootInput;
-		private float lastJumpValue;
 
 		[Header("Movement")]
 		[Tooltip("The world-relative desired move direction, calculated from camForward and user input.")]
@@ -128,6 +127,7 @@ namespace CityBashers
 
 		[Header("Jumping")]
 		public int jumpState;
+		private float lastJumpValue;
 		public float jumpPower = 12f;
 		public float jumpPower_Forward = 2f;
 		[Space(10)]
@@ -146,8 +146,8 @@ namespace CityBashers
 		public UnityEvent OnDoubleJump;
 
 		[Header("Landing")]
+		public float fallMult = 0.2f;
 		public float terminalVelocity = 10;
-		//public float fallMult = 2.5f;
 		[ReadOnly] public bool isGrounded;
 		public AudioSource landingAudioSource;
 		public AudioClip[] landingClips;
@@ -158,13 +158,9 @@ namespace CityBashers
 		[ReadOnly] public bool isDodging;
 		[Tooltip("Time between each dodge event.")]
 		public float dodgeRate = 0.5f;
-		private float nextDodge;
+		[HideInInspector] public float nextDodge;
 		[Tooltip("Speed at which player moves while dodging.")]
 		public float dodgeSpeed = 15;
-
-		private float dodgeTimeRemain;
-		[Tooltip("How long in unscaled time the dodge time lasts.")]
-		public float DodgeTimeDuration;
 		[Tooltip("The time scale during dodge time.")]
 		public float dodgeTimeScale = 0.25f;
 		[Tooltip("Animator speed factor while in dodge mode.")]
@@ -338,7 +334,6 @@ namespace CityBashers
 		void HandleMove(InputAction.CallbackContext context)
 		{
 			MoveAxis = context.ReadValue<Vector2>();
-			//Debug.Log(context.ReadValue<Vector2> ());
 		}
 
 		void HandleJump(InputAction.CallbackContext context)
@@ -407,83 +402,8 @@ namespace CityBashers
 					isDodging = true;
 					playerAnim.SetBool("Dodging", true);
 					playerAnim.SetTrigger("Dodge");
-
-					// Update UI elements.
-					magic -= dodgeMagicCost;
-					PlayerUI.SetTrigger("Show");
-
-					// Tweak movement amounts.
-					moveMultiplier *= dodgeSpeedupFactor;
-					animSpeedMultiplier *= dodgeSpeedupFactor;
-					movingTurnSpeed *= dodgeSpeedupFactor;
-					stationaryTurnSpeed *= dodgeSpeedupFactor;
-
-					playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
-
-					// Set dodge time.
-					dodgeTimeRemain = DodgeTimeDuration;
-					TimescaleController.Instance.targetTimeScale = dodgeTimeScale;
-
-					// Call events.
-					OnDodgeBegan.Invoke();
-					nextDodge = Time.time + dodgeRate;
 				}
 			}			
-		}
-
-		/// <summary>
-		/// Updates dodge timing.
-		/// </summary>
-		void DodgeUpdate()
-		{
-			// Dodge time ran out.
-			if (dodgeTimeRemain <= 0)
-			{
-				// If is dodging.
-				if (isDodging == true)
-				{
-					// Game is not paused.
-					if (GameController.Instance.isPaused == false)
-					{
-						TimescaleController.Instance.targetTimeScale = 1; // Reset time scale.
-
-						// Reset dodging animation parameters.
-						playerAnim.ResetTrigger("Dodge");
-						playerAnim.SetBool("Dodging", false);
-						playerAnim.updateMode = AnimatorUpdateMode.Normal;
-
-						// Reset movement amounts.
-						moveMultiplier /= dodgeSpeedupFactor;
-						animSpeedMultiplier /= dodgeSpeedupFactor;
-						movingTurnSpeed /= dodgeSpeedupFactor;
-						stationaryTurnSpeed /= dodgeSpeedupFactor;
-
-						// Call end dodge event.
-						OnDodgeEnded.Invoke();
-						isDodging = false;
-					}
-				}
-			}
-
-			else // There is dodge time.
-
-			{
-				// Game is not paused.
-				if (GameController.Instance.isPaused == false)
-				{
-					// Decrease time left of dodging.
-					dodgeTimeRemain -= Time.unscaledDeltaTime;
-
-					Vector3 relativeDodgeDir = transform.InverseTransformDirection(
-						transform.forward *
-						(MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
-						dodgeSpeed * Time.unscaledDeltaTime);
-
-					transform.Translate(relativeDodgeDir, Space.Self);
-
-					playerAnim.SetBool("Dodging", true);
-				}
-			}
 		}
 
 		void HandleAttack(InputAction.CallbackContext context)
@@ -537,7 +457,6 @@ namespace CityBashers
 			ShootAction();
 			MeleeActionUpdate();
 			GetCameraChangeSmoothing();
-			DodgeUpdate();
 			ComboTimer();
 
 			// UI updates.
@@ -545,13 +464,13 @@ namespace CityBashers
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
 
-
 			if (isGrounded == true && aimInput == false)
 			{
 				CamContainer.speed = Mathf.Abs(playerAnim.GetFloat("Forward"));
 			}
 
-			else
+			else // Player is not moving or is grounded, dont play handheld movement.
+
 			{
 				CamContainer.speed = 0;
 			}
@@ -564,7 +483,7 @@ namespace CityBashers
 				playerRb.velocity.y,
 				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.deltaTime);
 
-			//GetBetterJumpVelocity();
+			GetBetterJumpVelocity();
 			ClampVelocity (playerRb, terminalVelocity);
 		}
 
@@ -694,8 +613,7 @@ namespace CityBashers
 				}
 			}
 		}
-
-		/*
+		
 		/// <summary>
 		/// Gets the better jump velocity.
 		/// </summary>
@@ -714,7 +632,6 @@ namespace CityBashers
 				playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
 			}
 		}
-		*/
 		
 		/// <summary>
 		/// Aim action.
@@ -732,10 +649,11 @@ namespace CityBashers
 					move = Vector3.zero;
 					forwardAmount = 0;
 					playerAnim.SetFloat("Forward", 0);
+					playerRb.velocity = Vector3.zero;
 				}
 			}
 
-			else    // Not aiming.
+			else // Not aiming.
 
 			{
 				CalculateRelativeMoveDirection();
@@ -770,6 +688,9 @@ namespace CityBashers
 			}
 		}
 
+		/// <summary>
+		/// Medium attack melee action.
+		/// </summary>
 		void MediumAttackAction()
 		{
 			if (!aimInput && isGrounded)
@@ -871,7 +792,6 @@ namespace CityBashers
 
 						// Set up vibration.
 						VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);
-						//Debug.Log ("Shooting from weapon " + currentWeaponIndex);
 					}
 				}
 			}
