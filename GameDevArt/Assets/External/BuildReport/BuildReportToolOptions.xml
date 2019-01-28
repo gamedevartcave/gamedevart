@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<BuildReportToolOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IncludeSvnInUnused>true</IncludeSvnInUnused>
-  <IncludeGitInUnused>true</IncludeGitInUnused>
+<BuildReportToolOptions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IncludeSvnInUnused>false</IncludeSvnInUnused>
+  <IncludeGitInUnused>false</IncludeGitInUnused>
   <AllowDeletingOfUsedAssets>false</AllowDeletingOfUsedAssets>
-  <CollectBuildInfo>true</CollectBuildInfo>
+  <CollectBuildInfo>false</CollectBuildInfo>
   <BuildReportFolderName>UnityBuildReports</BuildReportFolderName>
   <SaveType>0</SaveType>
   <FilterToUseInt>0</FilterToUseInt>
   <AssetListPaginationLength>300</AssetListPaginationLength>
   <UnusedAssetsEntriesPerBatch>1000</UnusedAssetsEntriesPerBatch>
-  <NumberOfTopLargestUsedAssetsToShow>10</NumberOfTopLargestUsedAssetsToShow>
-  <NumberOfTopLargestUnusedAssetsToShow>10</NumberOfTopLargestUnusedAssetsToShow>
-  <IncludeUsedAssetsInReportCreation>true</IncludeUsedAssetsInReportCreation>
-  <IncludeUnusedAssetsInReportCreation>true</IncludeUnusedAssetsInReportCreation>
-  <IncludeUnusedPrefabsInReportCreation>true</IncludeUnusedPrefabsInReportCreation>
+  <NumberOfTopLargestUsedAssetsToShow>50</NumberOfTopLargestUsedAssetsToShow>
+  <NumberOfTopLargestUnusedAssetsToShow>50</NumberOfTopLargestUnusedAssetsToShow>
+  <IncludeUsedAssetsInReportCreation>false</IncludeUsedAssetsInReportCreation>
+  <IncludeUnusedAssetsInReportCreation>false</IncludeUnusedAssetsInReportCreation>
+  <IncludeUnusedPrefabsInReportCreation>false</IncludeUnusedPrefabsInReportCreation>
   <IncludeBuildSizeInReportCreation>true</IncludeBuildSizeInReportCreation>
-  <GetImportedSizesForUsedAssets>false</GetImportedSizesForUsedAssets>
-  <ShowImportedSizeForUsedAssets>true</ShowImportedSizeForUsedAssets>
+  <GetImportedSizesForUsedAssets>true</GetImportedSizesForUsedAssets>
+  <ShowImportedSizeForUsedAssets>false</ShowImportedSizeForUsedAssets>
   <GetImportedSizesForUnusedAssets>true</GetImportedSizesForUnusedAssets>
   <GetProjectSettings>true</GetProjectSettings>
   <AutoShowWindowAfterNormalBuild>true</AutoShowWindowAfterNormalBuild>

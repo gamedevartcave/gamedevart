@@ -379,6 +379,7 @@ MonoBehaviour:
   OutputGraphic: {fileID: 0}
   cameras:
   - {fileID: 20953436440265894}
+  - {fileID: 20105250787580356}
   - {fileID: 20320850137394824}
   OnCameraRenderedToTexture:
     m_PersistentCalls:
@@ -417,8 +418,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114281603516434890}
-        m_MethodName: DisableCameras
-        m_Mode: 1
+        m_MethodName: SetCamerasState
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -426,7 +427,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114224790211075386
@@ -532,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843463fa16eccc74a8bec53d8a9d04e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posUpdateMethod: 2
+  posUpdateMethod: 1
   rotUpdateMethod: 2
   FollowPosition: 1
   AutomaticallyFindPlayerPosObject: 0
@@ -766,8 +767,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 324.75372
-      value: 1.4031982
+      time: 322.4599
+      value: 1.6867676
       inSlope: 0.0064607677
       outSlope: 0.0064607677
       tangentMode: 0
