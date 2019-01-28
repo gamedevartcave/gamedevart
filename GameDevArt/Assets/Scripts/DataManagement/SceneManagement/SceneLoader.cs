@@ -182,8 +182,7 @@ namespace CityBashers
 			// Finally, we can activate the newly loaded scene.
 			if (asyncOp != null)
 			{
-				asyncOp.allowSceneActivation = true;
-
+				
 			}
 
 			GC.Collect ();
@@ -200,6 +199,7 @@ namespace CityBashers
 
 			if (asyncOp != null)
 			{
+				asyncOp.allowSceneActivation = true;
 			}
 
 			yield return null;

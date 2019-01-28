@@ -16,6 +16,7 @@ namespace CityBashers
 		public GameObject EventSystemGameObject;
 		public float initializeWaitTime = 0.5f;
 		public UnityEvent OnInitialize;
+		public UnityEvent OnInitializedComplete;
 		private WaitForSeconds initializeWait;
 
 		void Awake ()
@@ -54,6 +55,7 @@ namespace CityBashers
 			yield return initializeWait;
 
 			OnInitialize.Invoke ();
+			OnInitializedComplete.Invoke();
 			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
@@ -85,6 +87,15 @@ namespace CityBashers
 		public void AssignPostProcessVolume (PostProcessVolume newPostProcessVolume)
 		{
 			SaveAndLoadScript.Instance.postProcessVolume = newPostProcessVolume;
+		}
+
+		/// <summary>
+		/// Assigns post process volume to manipulate at runtime.
+		/// </summary>
+		/// <param name="newPostProcessVolume"></param>
+		public void AssignUIPostProcessVolume(PostProcessVolume newPostProcessVolume)
+		{
+			SaveAndLoadScript.Instance.postProcessVolumeUI = newPostProcessVolume;
 		}
 	}
 }

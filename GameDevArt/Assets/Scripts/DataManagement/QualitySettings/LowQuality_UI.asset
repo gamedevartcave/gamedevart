@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 451fedb5c9f9a724b83a219c0c9f8e81, type: 3}
-  m_Name: MediumQuality
+  m_Name: LowQuality_UI
   m_EditorClassIdentifier: 
-  sunShafts: 1
-  edgeDetection: 1
-  AntiAliasingMode: 1
-  fog: 1
+  sunShafts: 0
+  edgeDetection: 0
+  AntiAliasingMode: 0
+  fog: 0
   lensDistortion: 0
-  motionBlur: 1
+  motionBlur: 0
   autoExposure: 0
   vignette: 0
   screenSpaceReflections: 0
-  ambientOcclusion: 1
+  ambientOcclusion: 0
   chromaticAbberation: 0
-  depthOfField: 1
-  grain: 1
-  bloom: 1
+  depthOfField: 0
+  grain: 0
+  bloom: 0
   colorGrading: 0

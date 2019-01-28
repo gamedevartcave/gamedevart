@@ -158,7 +158,7 @@ namespace CityBashers
 		}
 
 		/// <summary>
-		/// Gets combo value.
+		/// Gets combo score value.
 		/// </summary>
 		void GetCombo ()
 		{
@@ -188,9 +188,10 @@ namespace CityBashers
 		{
 			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance))
 			{
-				// While moving.
+				// While moving or aiming.
 				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.1f ||
-					MouseLook.Instance.LookAxis.normalized.sqrMagnitude > 0.1f)
+					MouseLook.Instance.LookAxis.sqrMagnitude > 0.01f ||
+					(PlayerController.Instance.aimInput == true))
 				{
 					targetDofDistance = Vector3.Distance(
 						Camera.main.transform.position,

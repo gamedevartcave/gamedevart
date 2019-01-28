@@ -1425,6 +1425,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 35266ee186286b84f95242275c0834a6, type: 2}
   - {fileID: 11400000, guid: c96de988cc9281c4ca08be49f10eafd3, type: 2}
   - {fileID: 11400000, guid: d89c0e7a3419fbb46a7bb3990fb6e988, type: 2}
+  postProcessProfileUI: {fileID: 11400000, guid: e5b1025503f95c24c80080733880bf15,
+    type: 2}
+  postProcessLayerUI: {fileID: 0}
+  postProcessVolumeUI: {fileID: 0}
+  qualitySettingsUI:
+  - {fileID: 11400000, guid: 7c8ec95da3fc6ec4ba43b3f055ce032c, type: 2}
+  - {fileID: 11400000, guid: 2802a52583e413b4eab46402a49d2235, type: 2}
+  - {fileID: 11400000, guid: ec7b9e857c57f84459591957b118e5ca, type: 2}
   QualitySettingsIndex: 2
   targetResolutionWidth: 1920
   targetResolutionHeight: 1080
@@ -1437,16 +1445,16 @@ MonoBehaviour:
   EffectsVolume: 0
   invertYAxis: 0
   MouseSensitivityMultplier: 1
-  PlayerData:
+  playerData:
     Username: 
-  SettingsData:
+  settingsData:
     QualitySettingsIndex: 0
     targetResolutionWidth: 1920
     targetResolutionHeight: 1080
     isFullscreen: 0
     limitFramerate: 0
-    targetFrameRate: 0
-    MasterVolume: 0
+    targetFrameRate: 60
+    MasterVolume: 1
     SoundtrackVolume: 0
     EffectsVolume: 0
     invertYAxis: 0

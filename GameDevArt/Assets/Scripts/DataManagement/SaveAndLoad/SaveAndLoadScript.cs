@@ -21,12 +21,20 @@ namespace CityBashers
 
 		[Header ("Effects components")]
 		public Camera cam; // Camera to use to change settings.
+
 		public SunShafts sunShafts;
 		public EdgeDetection edgeDetection;
+
 		public PostProcessProfile postProcessProfile;
 		public PostProcessLayer postProcessLayer;
 		public PostProcessVolume postProcessVolume;
 		public QualitySetting[] qualitySettings;
+		[Space(10)]
+		public Camera UICam;
+		public PostProcessProfile postProcessProfileUI;
+		public PostProcessLayer postProcessLayerUI;
+		public PostProcessVolume postProcessVolumeUI;
+		public QualitySetting[] qualitySettingsUI;
 
 		[Header ("Visual settings")]
 		public int QualitySettingsIndex;
@@ -67,6 +75,7 @@ namespace CityBashers
 			Instance.LoadPlayerData ();
 
 			cam = Camera.main;
+			UICam = Camera.main.GetComponent<HiResScreenShots>().cameras[1];
 			sunShafts = cam.GetComponent<SunShafts> ();
 			edgeDetection = cam.GetComponent<EdgeDetection> ();
 
@@ -491,51 +500,105 @@ namespace CityBashers
 				postProcessLayer = cam.GetComponent<PostProcessLayer> ();
 			}
 
+			if (postProcessLayerUI == null)
+			{
+				postProcessLayerUI = cam.GetComponent<HiResScreenShots>().cameras[1].GetComponent<PostProcessLayer>();
+			}
+
 			QualitySettings.SetQualityLevel (QualitySettingsIndex);
 
 			sunShafts.enabled = qualitySettings [QualitySettingsIndex].sunShafts;
 			//edgeDetection.enabled = qualitySettings [QualitySettingsIndex].edgeDetection;
 
-			postProcessLayer.antialiasingMode = qualitySettings [QualitySettingsIndex].AntiAliasingMode;
-			postProcessLayer.fog.enabled = qualitySettings [QualitySettingsIndex].fog;
+			SetQualitySettingsMain();
 
-			postProcessVolume.profile.GetSetting <LensDistortion> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].lensDistortion;
-			
-			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.MotionBlur> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].motionBlur;
-			
-			postProcessVolume.profile.GetSetting <AutoExposure> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].autoExposure;
-			
-			postProcessVolume.profile.GetSetting <Vignette> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].vignette;
-			
-			postProcessVolume.profile.GetSetting <ScreenSpaceReflections> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].screenSpaceReflections;
-			
-			postProcessVolume.profile.GetSetting <AmbientOcclusion> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].ambientOcclusion;
-			
-			postProcessVolume.profile.GetSetting <ChromaticAberration> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].chromaticAbberation;
-			
-			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.DepthOfField> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].depthOfField;
-			
-			postProcessVolume.profile.GetSetting <Grain> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].grain;
-			
-			postProcessVolume.profile.GetSetting <UnityEngine.Rendering.PostProcessing.Bloom> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].bloom;
-			
-			postProcessVolume.profile.GetSetting <ColorGrading> ().enabled.value = 
-				qualitySettings [QualitySettingsIndex].colorGrading;
+			if (postProcessVolumeUI != null)
+			{
+				SetQualitySettingsUI();
+			}
 
 			AudioListener.volume = Mathf.Clamp (MasterVolume, 0, 1);
 			SettingsManager.Instance.LoadAudioVolumes ();
 
 			SetTargetFramerate ();
+		}
+
+		void SetQualitySettingsMain()
+		{
+			postProcessLayer.antialiasingMode = qualitySettings[QualitySettingsIndex].AntiAliasingMode;
+			postProcessLayer.fog.enabled = qualitySettings[QualitySettingsIndex].fog;
+
+			postProcessVolume.profile.GetSetting<LensDistortion>().enabled.value =
+				qualitySettings[QualitySettingsIndex].lensDistortion;
+
+			postProcessVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.MotionBlur>().enabled.value =
+				qualitySettings[QualitySettingsIndex].motionBlur;
+
+			postProcessVolume.profile.GetSetting<AutoExposure>().enabled.value =
+				qualitySettings[QualitySettingsIndex].autoExposure;
+
+			postProcessVolume.profile.GetSetting<Vignette>().enabled.value =
+				qualitySettings[QualitySettingsIndex].vignette;
+
+			postProcessVolume.profile.GetSetting<ScreenSpaceReflections>().enabled.value =
+				qualitySettings[QualitySettingsIndex].screenSpaceReflections;
+
+			postProcessVolume.profile.GetSetting<AmbientOcclusion>().enabled.value =
+				qualitySettings[QualitySettingsIndex].ambientOcclusion;
+
+			postProcessVolume.profile.GetSetting<ChromaticAberration>().enabled.value =
+				qualitySettings[QualitySettingsIndex].chromaticAbberation;
+
+			postProcessVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.DepthOfField>().enabled.value =
+				qualitySettings[QualitySettingsIndex].depthOfField;
+
+			postProcessVolume.profile.GetSetting<Grain>().enabled.value =
+				qualitySettings[QualitySettingsIndex].grain;
+
+			postProcessVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.Bloom>().enabled.value =
+				qualitySettings[QualitySettingsIndex].bloom;
+
+			postProcessVolume.profile.GetSetting<ColorGrading>().enabled.value =
+				qualitySettings[QualitySettingsIndex].colorGrading;
+		}
+
+		void SetQualitySettingsUI()
+		{
+			postProcessLayerUI.antialiasingMode = qualitySettingsUI[QualitySettingsIndex].AntiAliasingMode;
+			postProcessLayerUI.fog.enabled = qualitySettingsUI[QualitySettingsIndex].fog;
+
+			postProcessVolumeUI.profile.GetSetting<LensDistortion>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].lensDistortion;
+
+			postProcessVolumeUI.profile.GetSetting<UnityEngine.Rendering.PostProcessing.MotionBlur>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].motionBlur;
+
+			postProcessVolumeUI.profile.GetSetting<AutoExposure>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].autoExposure;
+
+			postProcessVolumeUI.profile.GetSetting<Vignette>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].vignette;
+
+			postProcessVolumeUI.profile.GetSetting<ScreenSpaceReflections>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].screenSpaceReflections;
+
+			postProcessVolumeUI.profile.GetSetting<AmbientOcclusion>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].ambientOcclusion;
+
+			postProcessVolumeUI.profile.GetSetting<ChromaticAberration>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].chromaticAbberation;
+
+			postProcessVolumeUI.profile.GetSetting<UnityEngine.Rendering.PostProcessing.DepthOfField>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].depthOfField;
+
+			postProcessVolumeUI.profile.GetSetting<Grain>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].grain;
+
+			postProcessVolumeUI.profile.GetSetting<UnityEngine.Rendering.PostProcessing.Bloom>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].bloom;
+
+			postProcessVolumeUI.profile.GetSetting<ColorGrading>().enabled.value =
+				qualitySettingsUI[QualitySettingsIndex].colorGrading;
 		}
 
 		/// <summary>
@@ -547,8 +610,8 @@ namespace CityBashers
 			{
 				if (targetFrameRate < 30 && targetFrameRate >= 0)
 				{
-					//targetFrameRate = Screen.currentResolution.refreshRate;
-					targetFrameRate = 60;
+					targetFrameRate = Screen.currentResolution.refreshRate;
+					//targetFrameRate = 60;
 				} 
 
 				else // Target framerate unlimited.

@@ -24,14 +24,13 @@ namespace CityBashers
 
 		[Header("Input")]
 		public PlayerControls playerControls;
-		[ReadOnly] public Vector2 MoveAxis;
-		[ReadOnly] public bool aimInput;
-		[ReadOnly] public bool shootInput;
+		[HideInInspector] public Vector2 MoveAxis;
+		[HideInInspector] public bool aimInput;
+		[HideInInspector] public bool shootInput;
 
 		[Header("Movement")]
-		[Tooltip("The world-relative desired move direction, calculated from camForward and user input.")]
-		[ReadOnly] public Vector3 move;
-
+		//[Tooltip("The world-relative desired move direction, calculated from camForward and user input.")]
+		[HideInInspector] public Vector3 move;
 		public float moveSpeedMultiplier = 1f;
 		public float movingTurnSpeed = 360;
 		public float stationaryTurnSpeed = 180;
@@ -40,10 +39,10 @@ namespace CityBashers
 		public float turnAmount;
 		public float forwardAmount;
 		public Vector3 groundNormal;
-		public Animator CamContainer;
 
 		[Header("Health")]
-		[HideInInspector] public bool lostAllHealth;
+
+		[Range(0, 100)]
 		public int health;
 		public int StartHealth = 100;
 		public int MaximumHealth = 100;
@@ -51,17 +50,19 @@ namespace CityBashers
 		public Slider HealthSlider;
 		public Slider HealthSlider_Smoothed;
 		public float healthSliderSmoothing;
+		[HideInInspector] public bool lostAllHealth;
 		public UnityEvent OnLostAllHealth;
 
 		[Header("Magic")]
+		[Range (0, 100)]
 		public int magic;
 		public int StartingMagic = 100;
 		public int MaximumMagic = 100;
+		public bool unlimitedMagic;
 		public float magicUIVisibilityThreshold = 50;
 		public Slider MagicSlider;
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
-		public bool unlimitedMagic;
 
 		[Header("Aiming")]
 		public float normalFov = 65;
@@ -69,6 +70,7 @@ namespace CityBashers
 		public float aimSmoothing = 10;
 		public GameObject CrosshairObject;
 		public Transform AimingOrigin;
+		public Animator CrosshairAnim;
 		[HideInInspector] public Vector3 AimDir;
 		[HideInInspector] public Vector3 AimNoPitchDir;
 		public UnityEvent OnAimRelease;
@@ -79,7 +81,7 @@ namespace CityBashers
 		public Vector3 camRigSimpleFollowRotAiming = new Vector3(60, 60, 0);
 		[HideInInspector] public Camera cam; // A reference to the main camera in the scenes transform
 		private Vector3 camForwardDirection; // The current forward direction of the camera
-		public Animator CrosshairAnim;
+		public Animator CamContainer;
 
 		[Header("Camera offset")]
 		public Transform CamFollow; // Camera offset follow point.
@@ -363,6 +365,14 @@ namespace CityBashers
 				{
 					OnAimRelease.Invoke();
 				}
+
+				CrosshairAnim.SetTrigger("Out");
+			}
+
+			else
+
+			{
+				CrosshairAnim.SetTrigger("In");
 			}
 		}
 
@@ -890,6 +900,8 @@ namespace CityBashers
 				if (lostAllHealth == false)
 				{
 					lostAllHealth = true;
+					move = Vector3.zero;
+					CamContainer.speed = 0;
 					OnLostAllHealth.Invoke ();
 					Debug.Log ("Player died.");
 				}
