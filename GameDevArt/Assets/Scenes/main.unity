@@ -79155,7 +79155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2100289657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -80945,7 +80945,6 @@ MonoBehaviour:
   playerControls:
     m_Asset: {fileID: 11400000, guid: 15eaf76e0ccb2374f9ade9b1ac9faacf, type: 3}
   MoveAxis: {x: 0, y: 0}
-  aimInput: 0
   shootInput: 0
   move: {x: 0, y: 0, z: 0}
   moveSpeedMultiplier: 500
@@ -81065,22 +81064,12 @@ MonoBehaviour:
   MagicSlider: {fileID: 1581778248}
   MagicSlider_Smoothed: {fileID: 1925840717}
   magicSliderSmoothing: 1
-  normalFov: 65
-  aimFov: 45
-  aimSmoothing: 10
-  CrosshairObject: {fileID: 2100289656}
   AimingOrigin: {fileID: 794116995}
   CrosshairAnim: {fileID: 2100289658}
   AimDir: {x: 0, y: 0, z: 0}
   AimNoPitchDir: {x: 0, y: 0, z: 0}
-  OnAimRelease:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   camRigSimpleFollow: {fileID: 70154510}
   camRigSimpleFollowRotNormal: {x: 25, y: 25, z: 1}
-  camRigSimpleFollowRotAiming: {x: 60, y: 60, z: 1}
   cam: {fileID: 794116991}
   CamContainer: {fileID: 707541865}
   CamFollow: {fileID: 1704875984}

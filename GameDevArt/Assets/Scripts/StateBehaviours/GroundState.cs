@@ -44,9 +44,9 @@ namespace CityBashers
 
             // Update the animator parameters.
 			playerAnim.SetFloat("Forward", PlayerController.Instance.forwardAmount, 0.1f, Time.deltaTime);
-            //playerAnim.SetFloat("Turn", pc.turnAmount, 0.1f, Time.deltaTime);
+			//playerAnim.SetFloat("Turn", PlayerController.Instance.turnAmount, 0.1f, Time.deltaTime);
 
-            // Update grounded state.
+			// Update grounded state.
 			playerAnim.SetBool("OnGround", PlayerController.Instance.isGrounded);
 
 			if (PlayerController.Instance.isGrounded == true)
@@ -56,8 +56,7 @@ namespace CityBashers
 
                 CamPosBasedOnAngle.Instance.offset = new Vector2(
                     CamPosBasedOnAngle.Instance.offset.x,
-                    Mathf.Lerp(CamPosBasedOnAngle.Instance.offset.y, 0, 2 * Time.deltaTime)
-                );
+                    Mathf.Lerp(CamPosBasedOnAngle.Instance.offset.y, 0, 2 * Time.deltaTime));
             }
 
             // The anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,

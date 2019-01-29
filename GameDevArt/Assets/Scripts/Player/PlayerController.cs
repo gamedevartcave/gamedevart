@@ -25,7 +25,6 @@ namespace CityBashers
 		[Header("Input")]
 		public PlayerControls playerControls;
 		[HideInInspector] public Vector2 MoveAxis;
-		[HideInInspector] public bool aimInput;
 		[HideInInspector] public bool shootInput;
 
 		[Header("Movement")]
@@ -64,21 +63,14 @@ namespace CityBashers
 		public Slider MagicSlider_Smoothed;
 		public float magicSliderSmoothing;
 
-		[Header("Aiming")]
-		public float normalFov = 65;
-		public float aimFov = 35;
-		public float aimSmoothing = 10;
-		public GameObject CrosshairObject;
 		public Transform AimingOrigin;
 		public Animator CrosshairAnim;
 		[HideInInspector] public Vector3 AimDir;
 		[HideInInspector] public Vector3 AimNoPitchDir;
-		public UnityEvent OnAimRelease;
 
 		[Header("Camera rig")]
 		public SimpleFollow camRigSimpleFollow;
 		public Vector3 camRigSimpleFollowRotNormal = new Vector3(25, 25, 0);
-		public Vector3 camRigSimpleFollowRotAiming = new Vector3(60, 60, 0);
 		[HideInInspector] public Camera cam; // A reference to the main camera in the scenes transform
 		private Vector3 camForwardDirection; // The current forward direction of the camera
 		public Animator CamContainer;
@@ -253,17 +245,11 @@ namespace CityBashers
 			playerControls.Player.Jump.performed += HandleJump;
 			playerControls.Player.Jump.Enable();
 
-			playerControls.Player.Aim.performed += HandleAim;
-			playerControls.Player.Aim.Enable();
-
 			playerControls.Player.Dodge.performed += HandleDodge;
 			playerControls.Player.Dodge.Enable();
 
 			playerControls.Player.Attack.performed += HandleAttack;
 			playerControls.Player.Attack.Enable();
-
-			playerControls.Player.MediumAttack.performed += HandleMediumAttack;
-			playerControls.Player.MediumAttack.Enable();
 
 			playerControls.Player.HeavyAttack.performed += HandleHeavyAttack;
 			playerControls.Player.HeavyAttack.Enable();
@@ -298,17 +284,11 @@ namespace CityBashers
 			playerControls.Player.Jump.performed -= HandleJump;
 			playerControls.Player.Jump.Disable();
 
-			playerControls.Player.Aim.performed -= HandleAim;
-			playerControls.Player.Aim.Disable();
-
 			playerControls.Player.Dodge.performed -= HandleDodge;
 			playerControls.Player.Dodge.Disable();
 
 			playerControls.Player.Attack.performed -= HandleAttack;
 			playerControls.Player.Attack.Disable();
-
-			playerControls.Player.MediumAttack.performed -= HandleMediumAttack;
-			playerControls.Player.MediumAttack.Disable();
 
 			playerControls.Player.HeavyAttack.performed -= HandleHeavyAttack;
 			playerControls.Player.HeavyAttack.Disable();
@@ -354,76 +334,51 @@ namespace CityBashers
 			lastJumpValue = value;
 		}
 
-		void HandleAim(InputAction.CallbackContext context)
-		{
-			var value = context.ReadValue<float>();
-			aimInput = value > 0.9f ? true : false;
-
-			if (aimInput == false)
-			{
-				if (CameraLockOnController.Instance.lockedOn == true)
-				{
-					OnAimRelease.Invoke();
-				}
-
-				CrosshairAnim.SetTrigger("Out");
-			}
-
-			else
-
-			{
-				CrosshairAnim.SetTrigger("In");
-			}
-		}
-
 		void HandleDodge(InputAction.CallbackContext context)
 		{
-			if (magic > dodgeMagicCost || unlimitedMagic)
+			if (context.ReadValue<float>() < 0.9f)
 			{
-				// Bypass dodging if near scenery collider. That way we cannot pass through it.
-				if (MoveAxis.sqrMagnitude > 0)
-				{
-					// Cannot dodge, show line of sight.
-					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
-						dodgeLayerMask))
-					{
-						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
-						return;
-					}
-				}
+				return;
+			}
 
-				else // No movement
-
+			// Bypass dodging if near scenery collider. That way we cannot pass through it.
+			if (MoveAxis.sqrMagnitude > 0)
+			{
+				// Cannot dodge, show line of sight.
+				if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+					dodgeLayerMask))
 				{
-					// Cannot dodge, show line of sight.
-					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
-						dodgeLayerMask))
-					{
-						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
-						return;
-					}
+					Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+					return;
 				}
+			}
 
-				// Get dodge angle.
-				// Assign to player animation.
-				if (Time.time > nextDodge)
+			else // No movement
+
+			{
+				// Cannot dodge, show line of sight.
+				if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
+					dodgeLayerMask))
 				{
-					// Set dodge state.
-					isDodging = true;
-					playerAnim.SetBool("Dodging", true);
-					playerAnim.SetTrigger("Dodge");
+					Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
+					return;
 				}
-			}			
+			}
+
+			// Get dodge angle.
+			// Assign to player animation.
+			if (Time.time > nextDodge)
+			{
+				// Set dodge state.
+				isDodging = true;
+				playerAnim.SetBool("Dodging", true);
+				playerAnim.SetTrigger("Dodge");
+			}		
 		}
 
 		void HandleAttack(InputAction.CallbackContext context)
 		{
 			AttackAction();
-		}
-
-		void HandleMediumAttack(InputAction.CallbackContext context)
-		{
-			MediumAttackAction();
 		}
 
 		void HandleHeavyAttack(InputAction.CallbackContext context)
@@ -462,8 +417,11 @@ namespace CityBashers
 
 		void Update ()
 		{
+			CalculateRelativeMoveDirection();
+			ApplyMoveAndTurn();
+			ApplyExtraTurnRotation();
+
 			// Actions.
-			AimAction();
 			ShootAction();
 			MeleeActionUpdate();
 			GetCameraChangeSmoothing();
@@ -474,7 +432,7 @@ namespace CityBashers
 			CheckMagicSliders ();
 			CheckHealthMagicIsLow ();
 
-			if (isGrounded == true && aimInput == false)
+			if (isGrounded == true)
 			{
 				CamContainer.speed = Mathf.Abs(playerAnim.GetFloat("Forward"));
 			}
@@ -493,8 +451,8 @@ namespace CityBashers
 				playerRb.velocity.y,
 				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.deltaTime);
 
-			GetBetterJumpVelocity();
-			ClampVelocity (playerRb, terminalVelocity);
+			//GetBetterJumpVelocity();
+			//ClampVelocity (playerRb, terminalVelocity);
 		}
 
 		void OnCollisionEnter(Collision col)
@@ -586,40 +544,37 @@ namespace CityBashers
 		/// </summary>
 		void JumpAction ()
 		{
-			if (!aimInput)
+			isGrounded = false;
+			playerAnim.SetBool("OnGround", isGrounded);
+
+			// 0: none, 1: jump, 2: double jump
+			if (jumpState < 2)
 			{
-				isGrounded = false;
-				playerAnim.SetBool("OnGround", isGrounded);
+				jumpState++;
 
-				// 0: none, 1: jump, 2: double jump
-				if (jumpState < 2)
+				switch (jumpState)
 				{
-					jumpState++;
+				case 0:
+					isGrounded = false;
+					break;
+				case 1: // Jump.
+					playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+					isGrounded = false;
+					playerAnim.applyRootMotion = false;
+					OnJump.Invoke();
+					break;
+				case 2: // Double jump.
+					// Override vertical velocity.
+					playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-					switch (jumpState)
-					{
-					case 0:
-						isGrounded = false;
-						break;
-					case 1: // Jump.
-						playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-						isGrounded = false;
-						playerAnim.applyRootMotion = false;
-						OnJump.Invoke();
-						break;
-					case 2: // Double jump.
-						// Override vertical velocity.
-						playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+					// Add forward force.
+					playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-						// Add forward force.
-						playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
+					playerAnim.applyRootMotion = false;
+					playerAnim.SetTrigger("DoubleJump");
 
-						playerAnim.applyRootMotion = false;
-						playerAnim.SetTrigger("DoubleJump");
-
-						OnDoubleJump.Invoke();
-						break;
-					}
+					OnDoubleJump.Invoke();
+					break;
 				}
 			}
 		}
@@ -642,46 +597,13 @@ namespace CityBashers
 				playerRb.velocity += Vector3.up * Physics.gravity.y * (jumpPower - 1) * Time.deltaTime;
 			}
 		}
-		
-		/// <summary>
-		/// Aim action.
-		/// </summary>
-		void AimAction ()
-		{
-			// Aiming.
-			if (aimInput)
-			{
-				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, aimFov, aimSmoothing * Time.deltaTime);
-				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotAiming;
-
-				if (isGrounded == true)
-				{
-					move = Vector3.zero;
-					forwardAmount = 0;
-					playerAnim.SetFloat("Forward", 0);
-					playerRb.velocity = Vector3.zero;
-				}
-			}
-
-			else // Not aiming.
-
-			{
-				CalculateRelativeMoveDirection();
-				ApplyMoveAndTurn();
-				ApplyExtraTurnRotation();
-				cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, normalFov, aimSmoothing * Time.deltaTime);
-				camRigSimpleFollow.FollowRotSmoothTime = camRigSimpleFollowRotNormal;
-			}
-
-			playerAnim.SetBool("Aim", aimInput);
-		}
 
 		/// <summary>
 		/// Light attack melee action.
 		/// </summary>
 		void AttackAction()
 		{
-			if (!aimInput && isGrounded)
+			if (isGrounded)
 			{
 				if (_comboQueue.Count < ComboQueueSize)
 				{
@@ -703,7 +625,7 @@ namespace CityBashers
 		/// </summary>
 		void MediumAttackAction()
 		{
-			if (!aimInput && isGrounded)
+			if (isGrounded)
 			{
 				AddToCombo("X");
 			}
@@ -721,7 +643,7 @@ namespace CityBashers
 		/// </summary>
 		void HeavyAttackAction()
 		{
-			if (!aimInput && isGrounded)
+			if (isGrounded)
 			{
 				if (_comboQueue.Count < ComboQueueSize)
 				{
@@ -781,37 +703,27 @@ namespace CityBashers
 		/// </summary>
 		void ShootAction()
 		{
-			if (aimInput == true)
+			playerAnim.SetBool("Shooting", shootInput); // Update shooting animator parameter while aiming.
+
+			if (shootInput == true)
 			{
-				playerAnim.SetBool("Shooting", shootInput); // Update shooting animator parameter while aiming.
-
-				if (shootInput == true)
+				if (Time.time > nextFire && GameController.Instance.isPaused == false)
 				{
-					if (Time.time > nextFire && GameController.Instance.isPaused == false)
-					{
-						// Look at forward camera direction without pitch.
-						transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
-						Shoot(); // Instantiate a shot.
-						nextFire = Time.time + currentFireRate; // Shoot rate update.
+					// Look at forward camera direction without pitch.
+					// TODO: Face closest target.
 
-						// Set up camera shake.
-						// TODO: Have this modifiable from weapon.
-						GameController.Instance.camShakeScript.shakeDuration = 0.1f;
-						GameController.Instance.camShakeScript.shakeAmount = 0.08f;
-						GameController.Instance.camShakeScript.Shake();
+					//transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
+					Shoot(); // Instantiate a shot.
+					nextFire = Time.time + currentFireRate; // Shoot rate update.
 
-						// Set up vibration.
-						VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);
-					}
-				}
-			}
+					// Set up camera shake.
+					// TODO: Have this modifiable from weapon.
+					GameController.Instance.camShakeScript.shakeDuration = 0.1f;
+					GameController.Instance.camShakeScript.shakeAmount = 0.08f;
+					GameController.Instance.camShakeScript.Shake();
 
-			else // Not aiming, therefore make sure we arent shooting.
-
-			{
-				if (playerAnim.GetBool("Shooting") == true)
-				{
-					playerAnim.SetBool("Shooting", false);
+					// Set up vibration.
+					VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);
 				}
 			}
 		}

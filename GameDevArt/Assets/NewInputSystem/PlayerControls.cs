@@ -23,7 +23,6 @@ public class PlayerControls : InputActionAssetReference
         m_Player_Move = m_Player.GetAction("Move");
         m_Player_Look = m_Player.GetAction("Look");
         m_Player_Jump = m_Player.GetAction("Jump");
-        m_Player_Aim = m_Player.GetAction("Aim");
         m_Player_Dodge = m_Player.GetAction("Dodge");
         m_Player_Attack = m_Player.GetAction("Attack");
         m_Player_Shoot = m_Player.GetAction("Shoot");
@@ -31,10 +30,8 @@ public class PlayerControls : InputActionAssetReference
         m_Player_CameraChange = m_Player.GetAction("CameraChange");
         m_Player_Ability = m_Player.GetAction("Ability");
         m_Player_Pause = m_Player.GetAction("Pause");
-        m_Player_LockOnLeft = m_Player.GetAction("LockOnLeft");
-        m_Player_LockOnRight = m_Player.GetAction("LockOnRight");
+        m_Player_LockOn = m_Player.GetAction("LockOn");
         m_Player_HeavyAttack = m_Player.GetAction("HeavyAttack");
-        m_Player_MediumAttack = m_Player.GetAction("MediumAttack");
         m_Initialized = true;
     }
     private void Uninitialize()
@@ -43,7 +40,6 @@ public class PlayerControls : InputActionAssetReference
         m_Player_Move = null;
         m_Player_Look = null;
         m_Player_Jump = null;
-        m_Player_Aim = null;
         m_Player_Dodge = null;
         m_Player_Attack = null;
         m_Player_Shoot = null;
@@ -51,10 +47,8 @@ public class PlayerControls : InputActionAssetReference
         m_Player_CameraChange = null;
         m_Player_Ability = null;
         m_Player_Pause = null;
-        m_Player_LockOnLeft = null;
-        m_Player_LockOnRight = null;
+        m_Player_LockOn = null;
         m_Player_HeavyAttack = null;
-        m_Player_MediumAttack = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
@@ -72,7 +66,6 @@ public class PlayerControls : InputActionAssetReference
     private InputAction m_Player_Move;
     private InputAction m_Player_Look;
     private InputAction m_Player_Jump;
-    private InputAction m_Player_Aim;
     private InputAction m_Player_Dodge;
     private InputAction m_Player_Attack;
     private InputAction m_Player_Shoot;
@@ -80,10 +73,8 @@ public class PlayerControls : InputActionAssetReference
     private InputAction m_Player_CameraChange;
     private InputAction m_Player_Ability;
     private InputAction m_Player_Pause;
-    private InputAction m_Player_LockOnLeft;
-    private InputAction m_Player_LockOnRight;
+    private InputAction m_Player_LockOn;
     private InputAction m_Player_HeavyAttack;
-    private InputAction m_Player_MediumAttack;
     public struct PlayerActions
     {
         private PlayerControls m_Wrapper;
@@ -91,7 +82,6 @@ public class PlayerControls : InputActionAssetReference
         public InputAction @Move { get { return m_Wrapper.m_Player_Move; } }
         public InputAction @Look { get { return m_Wrapper.m_Player_Look; } }
         public InputAction @Jump { get { return m_Wrapper.m_Player_Jump; } }
-        public InputAction @Aim { get { return m_Wrapper.m_Player_Aim; } }
         public InputAction @Dodge { get { return m_Wrapper.m_Player_Dodge; } }
         public InputAction @Attack { get { return m_Wrapper.m_Player_Attack; } }
         public InputAction @Shoot { get { return m_Wrapper.m_Player_Shoot; } }
@@ -99,10 +89,8 @@ public class PlayerControls : InputActionAssetReference
         public InputAction @CameraChange { get { return m_Wrapper.m_Player_CameraChange; } }
         public InputAction @Ability { get { return m_Wrapper.m_Player_Ability; } }
         public InputAction @Pause { get { return m_Wrapper.m_Player_Pause; } }
-        public InputAction @LockOnLeft { get { return m_Wrapper.m_Player_LockOnLeft; } }
-        public InputAction @LockOnRight { get { return m_Wrapper.m_Player_LockOnRight; } }
+        public InputAction @LockOn { get { return m_Wrapper.m_Player_LockOn; } }
         public InputAction @HeavyAttack { get { return m_Wrapper.m_Player_HeavyAttack; } }
-        public InputAction @MediumAttack { get { return m_Wrapper.m_Player_MediumAttack; } }
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }

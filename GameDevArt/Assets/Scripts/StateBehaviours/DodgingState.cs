@@ -17,11 +17,7 @@ namespace CityBashers
 			relativeDodgeDir = PlayerController.Instance.transform.InverseTransformDirection(
 				PlayerController.Instance.transform.forward *
 				(PlayerController.Instance.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
-				PlayerController.Instance.dodgeSpeed * Time.unscaledDeltaTime);
-
-			// Update UI elements.
-			PlayerController.Instance.magic -= PlayerController.Instance.dodgeMagicCost;
-			PlayerController.Instance.PlayerUI.SetTrigger("Show");
+				PlayerController.Instance.dodgeSpeed * Time.unscaledDeltaTime);	
 
 			// Tweak movement amounts.
 			PlayerController.Instance.moveMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;

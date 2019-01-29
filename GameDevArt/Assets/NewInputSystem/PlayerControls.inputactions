@@ -24,12 +24,6 @@
                     "bindings": []
                 },
                 {
-                    "name": "Aim",
-                    "id": "86aa61ff-880f-48b9-b366-3463ab1c63a4",
-                    "expectedControlLayout": "Axis",
-                    "bindings": []
-                },
-                {
                     "name": "Dodge",
                     "id": "c94b2137-b27d-40b3-837f-cde93f64f64c",
                     "expectedControlLayout": "Axis",
@@ -72,26 +66,14 @@
                     "bindings": []
                 },
                 {
-                    "name": "LockOnLeft",
+                    "name": "LockOn",
                     "id": "8234b9ac-da9f-4164-9fb1-5e3783c80dee",
-                    "expectedControlLayout": "",
-                    "bindings": []
-                },
-                {
-                    "name": "LockOnRight",
-                    "id": "164b87da-6ec9-4acf-9489-700bdd9f9517",
                     "expectedControlLayout": "",
                     "bindings": []
                 },
                 {
                     "name": "HeavyAttack",
                     "id": "a7b36601-357c-4734-a007-c5a757323ea8",
-                    "expectedControlLayout": "",
-                    "bindings": []
-                },
-                {
-                    "name": "MediumAttack",
-                    "id": "ff9b02fb-113b-458d-96b6-09c0023e3a52",
                     "expectedControlLayout": "",
                     "bindings": []
                 }
@@ -147,55 +129,19 @@
                 },
                 {
                     "name": "positive",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "MouseAndKeyboard",
-                    "action": "Aim",
+                    "action": "Dodge",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
                     "modifiers": ""
                 },
                 {
-                    "name": "positive",
+                    "name": "Dpad",
                     "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Aim",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "positive",
-                    "path": "<Keyboard>/q",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "MouseAndKeyboard",
-                    "action": "Dodge",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "positive",
-                    "path": "<Keyboard>/e",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "MouseAndKeyboard",
-                    "action": "Dodge",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "Dpad",
-                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
@@ -207,7 +153,7 @@
                 },
                 {
                     "name": "Dpad",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
@@ -315,7 +261,7 @@
                 },
                 {
                     "name": "right",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "MouseAndKeyboard",
@@ -327,7 +273,7 @@
                 },
                 {
                     "name": "right",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -363,7 +309,7 @@
                 },
                 {
                     "name": "right",
-                    "path": "<Keyboard>/tab",
+                    "path": "<Keyboard>/l",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "MouseAndKeyboard",
@@ -387,7 +333,7 @@
                 },
                 {
                     "name": "right",
-                    "path": "<Mouse>/middleButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "Hold(duration=0.5)",
                     "processors": "",
                     "groups": "MouseAndKeyboard",
@@ -399,10 +345,22 @@
                 },
                 {
                     "name": "right",
-                    "path": "<Gamepad>/rightStickPress",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "Hold(duration=0.5)",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Ability",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "right",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "Hold(duration=0.5)",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Ability",
                     "chainWithPrevious": false,
                     "isComposite": false,
@@ -435,55 +393,55 @@
                 },
                 {
                     "name": "right",
-                    "path": "<Keyboard>/v",
+                    "path": "<Keyboard>/tab",
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";MouseAndKeyboard",
-                    "action": "LockOnLeft",
+                    "action": "LockOn",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
                     "modifiers": ""
                 },
                 {
-                    "name": "right",
+                    "name": "Axis",
+                    "path": "Axis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOn",
+                    "chainWithPrevious": false,
+                    "isComposite": true,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "negative",
                     "path": "<Gamepad>/dpad/left",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "LockOnLeft",
+                    "groups": ";Gamepad",
+                    "action": "LockOn",
                     "chainWithPrevious": false,
                     "isComposite": false,
-                    "isPartOfComposite": false,
+                    "isPartOfComposite": true,
                     "modifiers": ""
                 },
                 {
-                    "name": "right",
-                    "path": "<Keyboard>/b",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": ";MouseAndKeyboard",
-                    "action": "LockOnRight",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "right",
+                    "name": "positive",
                     "path": "<Gamepad>/dpad/right",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "LockOnRight",
+                    "groups": ";Gamepad",
+                    "action": "LockOn",
                     "chainWithPrevious": false,
                     "isComposite": false,
-                    "isPartOfComposite": false,
+                    "isPartOfComposite": true,
                     "modifiers": ""
                 },
                 {
                     "name": "right",
-                    "path": "<Keyboard>/leftAlt",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";MouseAndKeyboard",
@@ -500,30 +458,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "HeavyAttack",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "right",
-                    "path": "<Keyboard>/leftCtrl",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": ";MouseAndKeyboard",
-                    "action": "MediumAttack",
-                    "chainWithPrevious": false,
-                    "isComposite": false,
-                    "isPartOfComposite": false,
-                    "modifiers": ""
-                },
-                {
-                    "name": "right",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "MediumAttack",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

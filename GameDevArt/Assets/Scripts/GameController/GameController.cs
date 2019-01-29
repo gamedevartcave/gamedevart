@@ -188,10 +188,9 @@ namespace CityBashers
 		{
 			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance))
 			{
-				// While moving or aiming.
+				// While moving.
 				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.1f ||
-					MouseLook.Instance.LookAxis.sqrMagnitude > 0.01f ||
-					(PlayerController.Instance.aimInput == true))
+					MouseLook.Instance.LookAxis.sqrMagnitude > 0.01f)
 				{
 					targetDofDistance = Vector3.Distance(
 						Camera.main.transform.position,
