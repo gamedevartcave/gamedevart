@@ -7,17 +7,14 @@ ScriptedImporter:
     11400004: Player/Look
     11400006: Player/Shoot
     11400008: Player/Attack
-    11400010: Player/Aim
     11400012: Player/Dodge
     11400014: Player/Move
     11400016: Player/Use
     11400018: Player/CameraChange
     11400020: Player/Ability
     11400022: Player/Pause
-    11400024: Player/LockOnLeft
-    11400026: Player/LockOnRight
     11400028: Player/HeavyAttack
-    11400030: Player/MediumAttack
+    11400030: Player/LockOn
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -36,6 +36,13 @@ namespace CityBashers
 			}
 		}
 
+		// Only happens if there is a GameController present.
+		void OnUnpause()
+		{
+			currentSelectable = firstSelectable;
+			SetButtonIndex(0);
+		}
+
 		void OnInitialize ()
 		{
 			FetchComponents ();
@@ -66,6 +73,11 @@ namespace CityBashers
 			// Button events.
 			MenuInput.Instance.OnConfirm.AddListener(OnConfirm);
 			MenuInput.Instance.OnBack.AddListener(OnBack);
+
+			if (GameController.Instance != null)
+			{
+				GameController.Instance.OnUnpause.AddListener(OnUnpause);
+			}
 		}
 		
 		/// <summary>

@@ -32,6 +32,8 @@ namespace CityBashers
 		public UnityEvent OnLockOnBegan;
 		public UnityEvent OnLockOnRelease;
 
+		private float lockOnVal;
+
 		void Awake()
 		{
 			Instance = this;
@@ -40,30 +42,26 @@ namespace CityBashers
 
 		private void OnEnable()
 		{
-			playerControls.Player.LockOnLeft.performed += HandleLockOnLeft;
-			playerControls.Player.LockOnLeft.Enable();
-
-			playerControls.Player.LockOnRight.performed += HandleLockOnRight;
-			playerControls.Player.LockOnRight.Enable();
+			playerControls.Player.LockOn.performed += HandleLockOn;
+			playerControls.Player.LockOn.Enable();
 		}
 
 		private void OnDisable()
 		{
-			playerControls.Player.LockOnLeft.performed -= HandleLockOnLeft;
-			playerControls.Player.LockOnLeft.Disable();
-
-			playerControls.Player.LockOnRight.performed -= HandleLockOnRight;
-			playerControls.Player.LockOnRight.Disable();
+			playerControls.Player.LockOn.performed -= HandleLockOn;
+			playerControls.Player.LockOn.Disable();
 		}
 
 		private void Start()
 		{
-			PlayerController.Instance.OnAimRelease.AddListener(OnAimRelease);
 		}
 
-		void HandleLockOnLeft(InputAction.CallbackContext context)
+		void HandleLockOn(InputAction.CallbackContext context)
 		{
-			if (PlayerController.Instance.aimInput)
+			lockOnVal = context.ReadValue<float>();
+			Debug.Log(lockOnVal);
+
+			if (lockOnVal > 0)
 			{
 				// Already locked on to something.
 				if (lockedOn == true)
@@ -93,11 +91,8 @@ namespace CityBashers
 
 				SetLockOnPoint(); // Lock on to something.
 			}
-		}
 
-		void HandleLockOnRight(InputAction.CallbackContext context)
-		{
-			if (PlayerController.Instance.aimInput)
+			if (lockOnVal < 0)
 			{
 				// Already locked on to something.
 				if (lockedOn == true)

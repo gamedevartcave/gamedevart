@@ -72,10 +72,6 @@ namespace CityBashers
 		void HandleLook(InputAction.CallbackContext context)
 		{
 			LookAxis = context.ReadValue<Vector2>();
-
-			// Could be used to optimize look code but as value will not change if no input changes, 
-			// the camera rig will stop moving.
-			//UpdateLook(); 
 		}
 
 		/// <summary>
@@ -108,43 +104,25 @@ namespace CityBashers
 		/// </summary>
 		void Update ()
 		{
-			// Horizontal rotation.
-			rotationX = 
-				transform.localEulerAngles.y + 
-				LookAxis.x * sensitivity.x * SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+			// Yaw rotation.
+			rotationX = transform.localEulerAngles.y + LookAxis.x * sensitivity.x * 
+				SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 
-			// While aiming.
-			if (PlayerController.Instance.aimInput == true)
+			// Use deadzone.
+			if (LookAxis.y > rotYDeadZone ||
+				LookAxis.y < -rotYDeadZone)
 			{
-				// Don't use deadzone.
-				// Vertical rotation.
-				rotationY += 
-					LookAxis.y * 
+				// Pitch rotation.
+				rotationY += LookAxis.y * 
 					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
 					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
 			}
-
-			// Not aiming.
-			else
-			{
-				// Use deadzone.
-				if (LookAxis.y > rotYDeadZone ||
-				    LookAxis.y < -rotYDeadZone)
-				{
-					// Vertical rotation.
-					rotationY += 
-						LookAxis.y * 
-						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
-						* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
-				}
-			}
-
-			// Vertical rotation.
+			
+			// pitch rotation.
 			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
 
 			// Roll rotation.
-			float rotationZ = PlayerController.Instance.aimInput ? 0 : 
-				Mathf.Clamp (-LookAxis.x * rotationZSensitivity, rotationZBounds.x, rotationZBounds.y);
+			float rotationZ = Mathf.Clamp (-LookAxis.x * rotationZSensitivity, rotationZBounds.x, rotationZBounds.y);
 			
 			// Assign rotation amounts to object.
 			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, rotationZ);

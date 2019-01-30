@@ -1,11 +1,12 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering.PostProcessing;
 
 namespace CityBashers
 {
-	public class GameController : MonoBehaviour 
+	public class GameController : MonoBehaviour
 	{
 		public static GameController Instance { get; private set; }
 
@@ -75,10 +76,13 @@ namespace CityBashers
 		public UnityEvent OnUnpause;
 		
 		[Header ("Post processing")]
-		public float targetDofDistance;
+		[ReadOnly] public float targetDofDistance;
 		public float dofSmoothingIn = 5.0f;
 		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;
+
+		Vector3 delta;
+		Vector3 lastPos;
 
 		void Awake ()
 		{
@@ -94,6 +98,7 @@ namespace CityBashers
 			displayComboScore = 0;
 			targetComboScore = 0;
 			comboScoreText.text = string.Empty;
+
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
@@ -103,9 +108,28 @@ namespace CityBashers
 			// Do this while not paused.
 			if (isPaused == false)
 			{
-				GetDepthOfField ();
-				GetScore ();
-				GetCombo ();
+				GetDepthOfField();
+				GetScore();
+				GetCombo();
+				Cursor.visible = false;
+				Cursor.lockState = CursorLockMode.Locked;
+			}
+
+			else
+
+			{
+				delta = Input.mousePosition - lastPos;
+
+				if (delta.sqrMagnitude > 1)
+				{
+					Cursor.visible = true;
+					Cursor.lockState = CursorLockMode.None;
+					//Debug.Log("Unlocked");
+				}
+
+				//Debug.Log("delta X : " + delta.x);
+				//Debug.Log("delta Y : " + delta.y);
+				lastPos = Input.mousePosition;
 			}
 		}
 
@@ -134,7 +158,7 @@ namespace CityBashers
 		}
 
 		/// <summary>
-		/// Gets combo value.
+		/// Gets combo score value.
 		/// </summary>
 		void GetCombo ()
 		{
@@ -166,7 +190,7 @@ namespace CityBashers
 			{
 				// While moving.
 				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.1f ||
-					MouseLook.Instance.LookAxis.normalized.sqrMagnitude > 0.1f)
+					MouseLook.Instance.LookAxis.sqrMagnitude > 0.01f)
 				{
 					targetDofDistance = Vector3.Distance(
 						Camera.main.transform.position,
@@ -305,10 +329,18 @@ namespace CityBashers
 		public void DoPause ()
 		{
 			isPaused = true;
+
 			Time.timeScale = 0;
-			Cursor.visible = true;
-			Cursor.lockState = CursorLockMode.None;
+
 			OnPause.Invoke ();
+
+			Physics.autoSimulation = false;
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+			lastPos = Input.mousePosition;
+			SettingsManager.Instance.UpdateGameplayValues();
+			SettingsManager.Instance.RefreshFullscreenToggle();
+			SettingsManager.Instance.RefreshLimitFramerateToggle();
 		}
 
 		/// <summary>
@@ -316,12 +348,16 @@ namespace CityBashers
 		/// </summary>
 		public void DoUnpause ()
 		{
+			isPaused = false;
+
 			Time.timeScale = TimescaleController.Instance.targetTimeScale;
+			nextUnpause = Time.unscaledTime + unpauseCooldown;
+
+			OnUnpause.Invoke ();
+
+			Physics.autoSimulation = true;
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
-			isPaused = false;
-			nextUnpause = Time.unscaledTime + unpauseCooldown;
-			OnUnpause.Invoke ();
 		}
 	}
 }

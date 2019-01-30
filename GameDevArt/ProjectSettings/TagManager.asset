@@ -11,6 +11,7 @@ TagManager:
   - DontDestroyOnLoadInit
   - PostProcessVolume
   - Weapon
+  - Scenery
   layers:
   - Default
   - TransparentFX

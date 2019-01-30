@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
@@ -9,21 +9,21 @@ namespace CityBashers
 	public class DontDestroyOnLoadInit : MonoBehaviour 
 	{
 		public static DontDestroyOnLoadInit Instance { get; private set; }
+
 		[ReadOnly] public bool initialized;
 		[Tooltip ("Managers Prefab.")]
 		public GameObject ManagersPrefab;
+		public GameObject EventSystemGameObject;
 		public float initializeWaitTime = 0.5f;
 		public UnityEvent OnInitialize;
-
+		public UnityEvent OnInitializedComplete;
 		private WaitForSeconds initializeWait;
-
-		public GameObject EventSystemGameObject;
 
 		void Awake ()
 		{
 			Instance = this;
-
-			Time.timeScale = 1;
+			Physics.autoSimulation = false;
+			Time.timeScale = 0;
 			initializeWait = new WaitForSeconds (initializeWaitTime);
 
 			DetectManagers();
@@ -55,11 +55,12 @@ namespace CityBashers
 			yield return initializeWait;
 
 			OnInitialize.Invoke ();
+			OnInitializedComplete.Invoke();
 			initialized = true;
 			SceneLoader.Instance.OnSceneLoadComplete.Invoke ();
 			Time.timeScale = 1;
 			SceneLoader.Instance.backgroundFader.fader.SetBool("Active", false);
-
+			Physics.autoSimulation = true;
 			gameObject.SetActive (false);
 		}
 
@@ -86,6 +87,15 @@ namespace CityBashers
 		public void AssignPostProcessVolume (PostProcessVolume newPostProcessVolume)
 		{
 			SaveAndLoadScript.Instance.postProcessVolume = newPostProcessVolume;
+		}
+
+		/// <summary>
+		/// Assigns post process volume to manipulate at runtime.
+		/// </summary>
+		/// <param name="newPostProcessVolume"></param>
+		public void AssignUIPostProcessVolume(PostProcessVolume newPostProcessVolume)
+		{
+			SaveAndLoadScript.Instance.postProcessVolumeUI = newPostProcessVolume;
 		}
 	}
 }

@@ -77,7 +77,7 @@ namespace CityBashers
 		{
 			SaveAndLoadScript.Instance.isFullscreen = FullscreenToggle.isOn;
 			Screen.fullScreen = SaveAndLoadScript.Instance.isFullscreen;
-			Debug.Log ("Fullscreen " + Screen.fullScreen);
+			//Debug.Log ("Fullscreen " + Screen.fullScreen);
 		}
 
 		public void RefreshFullscreenToggle ()
@@ -295,7 +295,7 @@ namespace CityBashers
 		#endregion
 
 		#region Gameplay
-		void UpdateGameplayValues ()
+		public void UpdateGameplayValues ()
 		{
 			invertToggle.isOn = SaveAndLoadScript.Instance.invertYAxis;
 		}

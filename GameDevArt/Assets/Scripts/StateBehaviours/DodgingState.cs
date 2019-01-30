@@ -1,141 +1,93 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CityBashers
 {
     public class DodgingState : StateMachineBehaviour
     {
-        private PlayerController pc;
-        private float dodgeTimeRemain;
-        private float nextDodge;
+		private Vector3 relativeDodgeDir;
+
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
             base.OnStateMachineEnter(animator, stateMachinePathHash);
-            pc = PlayerController.Instance;
         }
 
-        // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        {            
-            // TODO fix hack
-            if (pc == null)
-            {
-                pc = PlayerController.Instance;
-            }
+		// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		{
+			relativeDodgeDir = PlayerController.Instance.transform.InverseTransformDirection(
+				PlayerController.Instance.transform.forward *
+				(PlayerController.Instance.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
+				PlayerController.Instance.dodgeSpeed * Time.unscaledDeltaTime);	
 
-            //DodgeAction(animator);
+			// Tweak movement amounts.
+			PlayerController.Instance.moveMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;
+			PlayerController.Instance.animSpeedMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;
+			PlayerController.Instance.movingTurnSpeed *= PlayerController.Instance.dodgeSpeedupFactor;
+			PlayerController.Instance.stationaryTurnSpeed *= PlayerController.Instance.dodgeSpeedupFactor;
+
+			animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+			// Set dodge time.
+			TimescaleController.Instance.targetTimeScale = PlayerController.Instance.dodgeTimeScale;
+
+			// Call events.
+			PlayerController.Instance.OnDodgeBegan.Invoke();
+			PlayerController.Instance.nextDodge = Time.time + PlayerController.Instance.dodgeRate;
+		}
+
+		// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+		override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {            
+            DodgeAction(animator);
         }
 
         void DodgeAction(Animator playerAnim)
         {
-            if ((pc.magic > pc.dodgeMagicCost || pc.unlimitedMagic))// &&
-               //(pc.playerActions.DodgeLeft.WasPressed || pc.playerActions.DodgeRight.WasPressed))
+            // Game is not paused.
+            if (GameController.Instance.isPaused == false)
             {
-                // Get dodge angle.
-                // Assign to player animation.
-                if (Time.time > nextDodge)
-                {
-                    pc.isDodging = true;
+				// Decrease time left of dodging.
+				PlayerController.Instance.transform.Translate(relativeDodgeDir, Space.Self);
+				PlayerController.Instance.move = Vector3.zero;
 
-                    //playerAnim.SetFloat("DodgeDir", pc.playerActions.Dodge.Value);
-                    playerAnim.SetBool("Dodging", true);
-
-                    playerAnim.SetTrigger("Dodge");
-                    pc.magic -= pc.dodgeMagicCost;
-                    pc.PlayerUI.SetTrigger("Show");
-
-                    pc.moveMultiplier *= pc.dodgeSpeedupFactor;
-                    pc.animSpeedMultiplier *= pc.dodgeSpeedupFactor;
-                    pc.movingTurnSpeed *= pc.dodgeSpeedupFactor;
-                    pc.stationaryTurnSpeed *= pc.dodgeSpeedupFactor;
-
-                    playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
-
-                    dodgeTimeRemain = pc.DodgeTimeDuration;
-                    TimescaleController.Instance.targetTimeScale = pc.dodgeTimeScale;
-
-                    pc.OnDodgeBegan.Invoke();
-                    nextDodge = Time.time + pc.dodgeRate;
-
-                    //Debug.Log ("Dodged " + playerActions.Dodge.Value);
-                }
-
-                else // Not able to dodge yet.
-
-                {
-                }
-            }
-
-            // Dodge time ran out.
-            if (dodgeTimeRemain <= 0)
-            {
-                // If is dodging.
-                if (pc.isDodging == true)
-                {
-                    // Game is not paused.
-                    if (GameController.Instance.isPaused == false)
-                    {
-                        TimescaleController.Instance.targetTimeScale = 1; // Reset time scale.
-
-                        // Reset dodging animation parameters.
-                        //playerAnim.SetFloat("DodgeDir", 0);
-                        playerAnim.ResetTrigger("Dodge");
-                        playerAnim.SetBool("Dodging", false);
-
-                        pc.moveMultiplier /= pc.dodgeSpeedupFactor;
-                        pc.animSpeedMultiplier /= pc.dodgeSpeedupFactor;
-                        pc.movingTurnSpeed /= pc.dodgeSpeedupFactor;
-                        pc.stationaryTurnSpeed /= pc.dodgeSpeedupFactor;
-                        
-                        playerAnim.updateMode = AnimatorUpdateMode.Normal;
-                        
-                        pc.OnDodgeEnded.Invoke();
-                        pc.isDodging = false;
-                    }
-                }
-            }
-
-            else // There is dodge time.
-
-            {
-
-				Debug.Log ("isDodge time");
-                // Game is not paused.
-                if (GameController.Instance.isPaused == false)
-                {
-                    // Decrease time left of dodging.
-                    dodgeTimeRemain -= Time.unscaledDeltaTime;
-
-                    Vector3 relativeDodgeDir = pc.transform.InverseTransformDirection(
-                        pc.transform.forward *
-                        (pc.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
-                        pc.dodgeSpeed * Time.unscaledDeltaTime);
-
-                    pc.transform.Translate(relativeDodgeDir, Space.Self);
-
-					playerAnim.SetBool("Dodging", true);
-					Debug.Log ("Dodging");
-                }
+				playerAnim.SetBool("Dodging", true);
             }
         }
 
-
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-        //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //}
+        override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+			// Game is not paused.
+			if (GameController.Instance.isPaused == false)
+			{
+				TimescaleController.Instance.targetTimeScale = 1; // Reset time scale.
+
+				// Reset dodging animation parameters.
+				animator.ResetTrigger("Dodge");
+				animator.SetBool("Dodging", false);
+
+				PlayerController.Instance.moveMultiplier /= PlayerController.Instance.dodgeSpeedupFactor;
+				PlayerController.Instance.animSpeedMultiplier /= PlayerController.Instance.dodgeSpeedupFactor;
+				PlayerController.Instance.movingTurnSpeed /= PlayerController.Instance.dodgeSpeedupFactor;
+				PlayerController.Instance.stationaryTurnSpeed /= PlayerController.Instance.dodgeSpeedupFactor;
+
+				animator.updateMode = AnimatorUpdateMode.Normal;
+
+				PlayerController.Instance.OnDodgeEnded.Invoke();
+				PlayerController.Instance.isDodging = false;
+			}
+		}
 
         // OnStateMove is called right after Animator.OnAnimatorMove()
-        //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that processes and affects root motion
-        //}
+        override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            // Implement code that processes and affects root motion
+        }
 
         // OnStateIK is called right after Animator.OnAnimatorIK()
-        //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-        //{
-        //    // Implement code that sets up animation IK (inverse kinematics)
-        //}
+        override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            // Implement code that sets up animation IK (inverse kinematics)
+        }
     }
 }
