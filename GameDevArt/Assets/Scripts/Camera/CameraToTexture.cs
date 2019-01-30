@@ -10,7 +10,7 @@ namespace CityBashers
 		public static CameraToTexture Instance { get; private set; }
 
 		public RawImage OutputGraphic;
-		private Texture2D renderedTexture;
+		[SerializeField] [ReadOnly] private Texture2D renderedTexture;
 		public Camera[] cameras;
 
 		public UnityEvent OnCameraRenderedToTexture;

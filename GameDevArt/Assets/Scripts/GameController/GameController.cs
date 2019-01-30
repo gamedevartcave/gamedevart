@@ -76,7 +76,7 @@ namespace CityBashers
 		public UnityEvent OnUnpause;
 		
 		[Header ("Post processing")]
-		public float targetDofDistance;
+		[ReadOnly] public float targetDofDistance;
 		public float dofSmoothingIn = 5.0f;
 		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;

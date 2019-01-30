@@ -25,7 +25,6 @@ namespace CityBashers
 		[Header("Input")]
 		public PlayerControls playerControls;
 		[HideInInspector] public Vector2 MoveAxis;
-		[HideInInspector] public bool shootInput;
 
 		[Header("Movement")]
 		//[Tooltip("The world-relative desired move direction, calculated from camForward and user input.")]
@@ -388,7 +387,7 @@ namespace CityBashers
 
 		void HandleShoot(InputAction.CallbackContext context)
 		{
-			shootInput = context.ReadValue<float>() > 0.9f ? true : false;
+			ShootAction();
 		}
 
 		void HandleUse(InputAction.CallbackContext context)
@@ -422,7 +421,6 @@ namespace CityBashers
 			ApplyExtraTurnRotation();
 
 			// Actions.
-			ShootAction();
 			MeleeActionUpdate();
 			GetCameraChangeSmoothing();
 			ComboTimer();
@@ -605,29 +603,12 @@ namespace CityBashers
 		{
 			if (isGrounded)
 			{
+				AddToCombo("Y");
+
 				if (_comboQueue.Count < ComboQueueSize)
 				{
-					_comboQueue.Enqueue(1);
-					AddToCombo("Y");
+					_comboQueue.Enqueue(1);	
 				}
-			}
-
-			else
-
-			{
-				ClearCombo();
-				return;
-			}
-		}
-
-		/// <summary>
-		/// Medium attack melee action.
-		/// </summary>
-		void MediumAttackAction()
-		{
-			if (isGrounded)
-			{
-				AddToCombo("X");
 			}
 
 			else
@@ -645,10 +626,11 @@ namespace CityBashers
 		{
 			if (isGrounded)
 			{
+				AddToCombo("B");
+
 				if (_comboQueue.Count < ComboQueueSize)
 				{
 					_comboQueue.Enqueue(2);
-					AddToCombo("B");
 				}
 			}
 
@@ -703,28 +685,26 @@ namespace CityBashers
 		/// </summary>
 		void ShootAction()
 		{
-			playerAnim.SetBool("Shooting", shootInput); // Update shooting animator parameter while aiming.
+			playerAnim.SetTrigger("Shoot"); // Update shooting animator parameter while aiming.
+			AddToCombo("X");
 
-			if (shootInput == true)
+			if (Time.time > nextFire && GameController.Instance.isPaused == false)
 			{
-				if (Time.time > nextFire && GameController.Instance.isPaused == false)
-				{
-					// Look at forward camera direction without pitch.
-					// TODO: Face closest target.
+				// Look at forward camera direction without pitch.
+				// TODO: Face closest target.
 
-					//transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
-					Shoot(); // Instantiate a shot.
-					nextFire = Time.time + currentFireRate; // Shoot rate update.
+				//transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
+				Shoot(); // Instantiate a shot.
+				nextFire = Time.time + currentFireRate; // Shoot rate update.
 
-					// Set up camera shake.
-					// TODO: Have this modifiable from weapon.
-					GameController.Instance.camShakeScript.shakeDuration = 0.1f;
-					GameController.Instance.camShakeScript.shakeAmount = 0.08f;
-					GameController.Instance.camShakeScript.Shake();
+				// Set up camera shake.
+				// TODO: Have this modifiable from weapon.
+				GameController.Instance.camShakeScript.shakeDuration = 0.1f;
+				GameController.Instance.camShakeScript.shakeAmount = 0.08f;
+				GameController.Instance.camShakeScript.Shake();
 
-					// Set up vibration.
-					VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);
-				}
+				// Set up vibration.
+				VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);
 			}
 		}
 
@@ -1119,38 +1099,41 @@ namespace CityBashers
 
 		void ComboTimer()
 		{
-			if (comboTimeRemaining > 0)
+			if (GameController.Instance.isPaused == false)
 			{
-				comboTimeRemaining -= Time.deltaTime;
-			}
-
-			else // Combo time ran out.
-
-			{
-				//CheckCombo();
-
-				// Check if result combo last character is not a space.
-				if (!resultCombo.EndsWith("_"))
+				if (comboTimeRemaining > 0)
 				{
-					// Must have at least one combo character.
-					if (resultCombo.Length > 0)
+					comboTimeRemaining -= Time.deltaTime;
+				}
+
+				else // Combo time ran out.
+
+				{
+					//CheckCombo();
+
+					// Check if result combo last character is not a space.
+					if (!resultCombo.EndsWith("_"))
 					{
-						// Add one space.
-						resultCombo += "_";
-						ResetComboTime(); // One more chance.
+						// Must have at least one combo character.
+						if (resultCombo.Length > 0)
+						{
+							// Add one space.
+							resultCombo += "_";
+							ResetComboTime(); // One more chance.
+						}
+
+						else
+
+						{
+							OnComboCancelled.Invoke();
+						}
 					}
 
-					else
+					else // If gap already existed, reset.
 
 					{
 						OnComboCancelled.Invoke();
 					}
-				}
-
-				else // If gap already existed, reset.
-
-				{	
-					OnComboCancelled.Invoke();
 				}
 			}
 		}

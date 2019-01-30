@@ -262,7 +262,7 @@
                 {
                     "name": "right",
                     "path": "<Mouse>/middleButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "MouseAndKeyboard",
                     "action": "Shoot",
@@ -274,7 +274,7 @@
                 {
                     "name": "right",
                     "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Shoot",

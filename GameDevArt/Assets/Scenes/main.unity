@@ -12176,6 +12176,11 @@ PrefabInstance:
       objectReference: {fileID: 626687714}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
       propertyPath: OutputGraphic
       value: 
       objectReference: {fileID: 1271815352}
@@ -12188,7 +12193,47 @@ PrefabInstance:
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
+      objectReference: {fileID: 1743460260}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
       objectReference: {fileID: 693883176}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: ResetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
+      value: SetInvisible
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 114875647330816120, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: antialiasingMode
@@ -67995,6 +68040,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1743460260 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114137300304252464, guid: a5f33cbd171cc37449a573793c7c3f6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 455110628}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1745236578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013285487154, guid: 3123da49cb81147489b444f2749aba47,
@@ -68694,73 +68751,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnTimerTrackingStopped:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: Sleep
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: set_useGravity
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: OverridePlayerPosition
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1244233478}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isPaused: 0
@@ -68836,12 +68827,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 862737736}
-        m_MethodName: 
+      - m_Target: {fileID: 7633497528776520503}
+        m_MethodName: ClearCombo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -68916,6 +68907,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1743460260}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SetVisible
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 693883176}
@@ -80945,7 +80947,6 @@ MonoBehaviour:
   playerControls:
     m_Asset: {fileID: 11400000, guid: 15eaf76e0ccb2374f9ade9b1ac9faacf, type: 3}
   MoveAxis: {x: 0, y: 0}
-  shootInput: 0
   move: {x: 0, y: 0, z: 0}
   moveSpeedMultiplier: 500
   movingTurnSpeed: 720
