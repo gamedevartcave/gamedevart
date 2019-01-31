@@ -21,6 +21,7 @@ namespace CityBashers
 		public Rigidbody playerRb;
 		private Animator playerAnim;
 		public Transform startingPoint;
+		[ReadOnly] public bool collidingWithScenery;
 
 		[Header("Input")]
 		public PlayerControls playerControls;
@@ -335,44 +336,35 @@ namespace CityBashers
 
 		void HandleDodge(InputAction.CallbackContext context)
 		{
-			if (context.ReadValue<float>() < 0.9f)
+			if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
 			{
-				return;
-			}
-
-			// Bypass dodging if near scenery collider. That way we cannot pass through it.
-			if (MoveAxis.sqrMagnitude > 0)
-			{
-				// Cannot dodge, show line of sight.
-				if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
-					dodgeLayerMask))
+				// Bypass dodging if near scenery collider. That way we cannot pass through it.
+				if (MoveAxis.sqrMagnitude > 0)
 				{
-					Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
-					return;
+					// Cannot dodge, show line of sight.
+					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+						dodgeLayerMask))
+					{
+						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+						return;
+					}
 				}
-			}
 
-			else // No movement
+				else // No movement
 
-			{
-				// Cannot dodge, show line of sight.
-				if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
-					dodgeLayerMask))
 				{
-					Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
-					return;
+					// Cannot dodge, show line of sight.
+					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
+						dodgeLayerMask))
+					{
+						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
+						return;
+					}
 				}
-			}
 
-			// Get dodge angle.
-			// Assign to player animation.
-			if (Time.time > nextDodge)
-			{
-				// Set dodge state.
 				isDodging = true;
-				playerAnim.SetBool("Dodging", true);
 				playerAnim.SetTrigger("Dodge");
-			}		
+			}
 		}
 
 		void HandleAttack(InputAction.CallbackContext context)
@@ -460,6 +452,11 @@ namespace CityBashers
 			{
 				OnLand.Invoke();
 			}
+
+			if (col.collider.tag == "Scenery")
+			{
+				collidingWithScenery = true;
+			}
 		}
 
 		private void OnCollisionStay(Collision col)
@@ -477,6 +474,11 @@ namespace CityBashers
 			{
 				isGrounded = false;
 				playerAnim.SetBool("OnGround", isGrounded);
+			}
+
+			if (col.collider.tag == "Scenery")
+			{
+				collidingWithScenery = false;
 			}
 		}
 

@@ -4,7 +4,7 @@ namespace CityBashers
 {
     public class DodgingState : StateMachineBehaviour
     {
-		private Vector3 relativeDodgeDir;
+		[SerializeField] [ReadOnly] private Vector3 relativeDodgeDir;
 
         public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
@@ -17,7 +17,7 @@ namespace CityBashers
 			relativeDodgeDir = PlayerController.Instance.transform.InverseTransformDirection(
 				PlayerController.Instance.transform.forward *
 				(PlayerController.Instance.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
-				PlayerController.Instance.dodgeSpeed * Time.unscaledDeltaTime);	
+				PlayerController.Instance.dodgeSpeed * Time.unscaledDeltaTime);
 
 			// Tweak movement amounts.
 			PlayerController.Instance.moveMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;
@@ -25,6 +25,7 @@ namespace CityBashers
 			PlayerController.Instance.movingTurnSpeed *= PlayerController.Instance.dodgeSpeedupFactor;
 			PlayerController.Instance.stationaryTurnSpeed *= PlayerController.Instance.dodgeSpeedupFactor;
 
+			// Set update mode to unscaled.
 			animator.updateMode = AnimatorUpdateMode.UnscaledTime;
 
 			// Set dodge time.
@@ -43,15 +44,19 @@ namespace CityBashers
 
         void DodgeAction(Animator playerAnim)
         {
-            // Game is not paused.
-            if (GameController.Instance.isPaused == false)
-            {
+			// Game is not paused.
+			if (GameController.Instance.isPaused == false && PlayerController.Instance.collidingWithScenery == false)
+			{
 				// Decrease time left of dodging.
 				PlayerController.Instance.transform.Translate(relativeDodgeDir, Space.Self);
-				PlayerController.Instance.move = Vector3.zero;
+			}
 
-				playerAnim.SetBool("Dodging", true);
-            }
+			else
+
+			{
+				playerAnim.ResetTrigger("Dodge");
+				playerAnim.SetBool("Dodging", false);
+			}
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -66,11 +71,13 @@ namespace CityBashers
 				animator.ResetTrigger("Dodge");
 				animator.SetBool("Dodging", false);
 
+				// Reset speed factors.
 				PlayerController.Instance.moveMultiplier /= PlayerController.Instance.dodgeSpeedupFactor;
 				PlayerController.Instance.animSpeedMultiplier /= PlayerController.Instance.dodgeSpeedupFactor;
 				PlayerController.Instance.movingTurnSpeed /= PlayerController.Instance.dodgeSpeedupFactor;
 				PlayerController.Instance.stationaryTurnSpeed /= PlayerController.Instance.dodgeSpeedupFactor;
 
+				// Reset update mode to normal.
 				animator.updateMode = AnimatorUpdateMode.Normal;
 
 				PlayerController.Instance.OnDodgeEnded.Invoke();
