@@ -22,6 +22,7 @@ namespace CityBashers
 		private Animator playerAnim;
 		public Transform startingPoint;
 		[ReadOnly] public bool collidingWithScenery;
+		[ReadOnly] public bool dodgedInMidAir;
 
 		[Header("Input")]
 		public PlayerControls playerControls;
@@ -197,6 +198,18 @@ namespace CityBashers
 
 		void Start()
 		{
+			GetCamera();
+			GetPlayerStats();
+			AddListeners();
+			isGrounded = true;
+			_comboQueue = new Queue<int>(ComboQueueSize);
+		}
+
+		/// <summary>
+		/// Gets main camera.
+		/// </summary>
+		void GetCamera()
+		{
 			// Get the transform of the main camera
 			if (Camera.main != null) cam = Camera.main;
 			else // Camera was not found.
@@ -205,7 +218,36 @@ namespace CityBashers
 					"Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.",
 					gameObject);
 			}
+		}
 
+		/// <summary>
+		/// Adds listeners.
+		/// </summary>
+		void AddListeners ()
+		{
+			// Add listeners for events.
+			OnFootstep.AddListener(OnFootStep);
+			OnJump.AddListener(OnJumpBegan);
+			OnDoubleJump.AddListener(OnDoubleJumpBegan);
+			OnLand.AddListener(OnLanded);
+			OnComboComplete.AddListener(ComboComplete);
+			OnComboCancelled.AddListener(ComboCancelled);
+		}
+
+		/// <summary>
+		/// Sets yield times for Coroutines.
+		/// </summary>
+		void SetYieldTimes()
+		{
+			// Add yield times here.
+			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
+		}
+
+		/// <summary>
+		/// Gets start player stats.
+		/// </summary>
+		void GetPlayerStats()
+		{
 			// Set start health attributes.
 			health = StartHealth;
 			HealthSlider.value = health;
@@ -215,20 +257,6 @@ namespace CityBashers
 			magic = StartingMagic;
 			MagicSlider.value = magic;
 			MagicSlider_Smoothed.value = magic;
-
-			// Add listeners for events.
-			OnFootstep.AddListener(OnFootStep);
-			OnJump.AddListener(OnJumpBegan);
-			OnDoubleJump.AddListener(OnDoubleJumpBegan);
-			OnLand.AddListener(OnLanded);
-			isGrounded = true;
-			_comboQueue = new Queue<int>(ComboQueueSize);
-
-			// Add yield times here.
-			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
-
-			OnComboComplete.AddListener(ComboComplete);
-			OnComboCancelled.AddListener(ComboCancelled);
 		}
 
 		void OnEnable()
@@ -336,34 +364,42 @@ namespace CityBashers
 
 		void HandleDodge(InputAction.CallbackContext context)
 		{
-			if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
+			if (dodgedInMidAir == false)
 			{
-				// Bypass dodging if near scenery collider. That way we cannot pass through it.
-				if (MoveAxis.sqrMagnitude > 0)
+				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
 				{
-					// Cannot dodge, show line of sight.
-					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
-						dodgeLayerMask))
+					// Bypass dodging if near scenery collider. That way we cannot pass through it.
+					if (MoveAxis.sqrMagnitude > 0)
 					{
-						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
-						return;
+						// Cannot dodge, show line of sight.
+						if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+							dodgeLayerMask))
+						{
+							Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+							return;
+						}
+					}
+
+					else // No movement
+
+					{
+						// Cannot dodge, show line of sight.
+						if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
+							dodgeLayerMask))
+						{
+							Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
+							return;
+						}
+					}
+
+					isDodging = true;
+					playerAnim.SetTrigger("Dodge");
+
+					if (isGrounded == false)
+					{
+						dodgedInMidAir = true;
 					}
 				}
-
-				else // No movement
-
-				{
-					// Cannot dodge, show line of sight.
-					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
-						dodgeLayerMask))
-					{
-						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
-						return;
-					}
-				}
-
-				isDodging = true;
-				playerAnim.SetTrigger("Dodge");
 			}
 		}
 
@@ -451,6 +487,7 @@ namespace CityBashers
 			if (col.collider.gameObject.layer == 9)
 			{
 				OnLand.Invoke();
+				dodgedInMidAir = false;
 			}
 
 			if (col.collider.tag == "Scenery")

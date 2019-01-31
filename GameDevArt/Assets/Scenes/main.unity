@@ -12174,6 +12174,36 @@ PrefabInstance:
       propertyPath: FollowRotZ
       value: 
       objectReference: {fileID: 626687714}
+    - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: YPosTimeUnscaled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: ZPosTimeUnscaled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: XPosTimeUnscaled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: FollowPosSmoothTime.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: FollowPosSmoothTime.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114506690854639742, guid: a5f33cbd171cc37449a573793c7c3f6a,
+        type: 3}
+      propertyPath: FollowPosSmoothTime.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 114281603516434890, guid: a5f33cbd171cc37449a573793c7c3f6a,
         type: 3}
       propertyPath: OnCameraRenderedToTexture.m_PersistentCalls.m_Calls.Array.size

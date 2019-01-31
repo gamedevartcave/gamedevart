@@ -17,7 +17,7 @@ namespace CityBashers
 			relativeDodgeDir = PlayerController.Instance.transform.InverseTransformDirection(
 				PlayerController.Instance.transform.forward *
 				(PlayerController.Instance.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
-				PlayerController.Instance.dodgeSpeed * Time.unscaledDeltaTime);
+				PlayerController.Instance.dodgeSpeed);
 
 			// Tweak movement amounts.
 			PlayerController.Instance.moveMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;
@@ -48,7 +48,7 @@ namespace CityBashers
 			if (GameController.Instance.isPaused == false && PlayerController.Instance.collidingWithScenery == false)
 			{
 				// Decrease time left of dodging.
-				PlayerController.Instance.transform.Translate(relativeDodgeDir, Space.Self);
+				PlayerController.Instance.transform.Translate(relativeDodgeDir * Time.unscaledDeltaTime, Space.Self);
 			}
 
 			else
