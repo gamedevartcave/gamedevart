@@ -591,27 +591,27 @@ namespace CityBashers
 
 				switch (jumpState)
 				{
-				case 0:
-					isGrounded = false;
-					break;
-				case 1: // Jump.
-					playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-					isGrounded = false;
-					playerAnim.applyRootMotion = false;
-					OnJump.Invoke();
-					break;
-				case 2: // Double jump.
-					// Override vertical velocity.
-					playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+					case 0:
+						isGrounded = false;
+						break;
+					case 1: // Jump.
+						playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+						isGrounded = false;
+						playerAnim.applyRootMotion = false;
+						OnJump.Invoke();
+						break;
+					case 2: // Double jump.
+						// Override vertical velocity.
+						playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-					// Add forward force.
-					playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
+						// Add forward force.
+						playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-					playerAnim.applyRootMotion = false;
-					playerAnim.SetTrigger("DoubleJump");
+						playerAnim.applyRootMotion = false;
+						playerAnim.SetTrigger("DoubleJump");
 
-					OnDoubleJump.Invoke();
-					break;
+						OnDoubleJump.Invoke();
+						break;
 				}
 			}
 		}
