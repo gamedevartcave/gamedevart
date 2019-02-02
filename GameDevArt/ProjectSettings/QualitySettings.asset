@@ -121,3 +121,4 @@ QualitySettings:
     Android: 0
     Standalone: 2
     Windows Store Apps: 0
+    iPhone: 0

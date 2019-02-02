@@ -21,6 +21,8 @@ namespace CityBashers
 		public Rigidbody playerRb;
 		private Animator playerAnim;
 		public Transform startingPoint;
+		[ReadOnly] public bool collidingWithScenery;
+		[ReadOnly] public bool dodgedInMidAir;
 
 		[Header("Input")]
 		public PlayerControls playerControls;
@@ -196,6 +198,18 @@ namespace CityBashers
 
 		void Start()
 		{
+			GetCamera();
+			GetPlayerStats();
+			AddListeners();
+			isGrounded = true;
+			_comboQueue = new Queue<int>(ComboQueueSize);
+		}
+
+		/// <summary>
+		/// Gets main camera.
+		/// </summary>
+		void GetCamera()
+		{
 			// Get the transform of the main camera
 			if (Camera.main != null) cam = Camera.main;
 			else // Camera was not found.
@@ -204,7 +218,36 @@ namespace CityBashers
 					"Third person character needs a Camera tagged \"MainCamera\", for camera-relative controls.",
 					gameObject);
 			}
+		}
 
+		/// <summary>
+		/// Adds listeners.
+		/// </summary>
+		void AddListeners ()
+		{
+			// Add listeners for events.
+			OnFootstep.AddListener(OnFootStep);
+			OnJump.AddListener(OnJumpBegan);
+			OnDoubleJump.AddListener(OnDoubleJumpBegan);
+			OnLand.AddListener(OnLanded);
+			OnComboComplete.AddListener(ComboComplete);
+			OnComboCancelled.AddListener(ComboCancelled);
+		}
+
+		/// <summary>
+		/// Sets yield times for Coroutines.
+		/// </summary>
+		void SetYieldTimes()
+		{
+			// Add yield times here.
+			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
+		}
+
+		/// <summary>
+		/// Gets start player stats.
+		/// </summary>
+		void GetPlayerStats()
+		{
 			// Set start health attributes.
 			health = StartHealth;
 			HealthSlider.value = health;
@@ -214,20 +257,6 @@ namespace CityBashers
 			magic = StartingMagic;
 			MagicSlider.value = magic;
 			MagicSlider_Smoothed.value = magic;
-
-			// Add listeners for events.
-			OnFootstep.AddListener(OnFootStep);
-			OnJump.AddListener(OnJumpBegan);
-			OnDoubleJump.AddListener(OnDoubleJumpBegan);
-			OnLand.AddListener(OnLanded);
-			isGrounded = true;
-			_comboQueue = new Queue<int>(ComboQueueSize);
-
-			// Add yield times here.
-			hitStunYield = new WaitForSeconds(HitStunRenderToggleWait);
-
-			OnComboComplete.AddListener(ComboComplete);
-			OnComboCancelled.AddListener(ComboCancelled);
 		}
 
 		void OnEnable()
@@ -335,44 +364,43 @@ namespace CityBashers
 
 		void HandleDodge(InputAction.CallbackContext context)
 		{
-			if (context.ReadValue<float>() < 0.9f)
+			if (dodgedInMidAir == false)
 			{
-				return;
-			}
-
-			// Bypass dodging if near scenery collider. That way we cannot pass through it.
-			if (MoveAxis.sqrMagnitude > 0)
-			{
-				// Cannot dodge, show line of sight.
-				if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
-					dodgeLayerMask))
+				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
 				{
-					Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
-					return;
+					// Bypass dodging if near scenery collider. That way we cannot pass through it.
+					if (MoveAxis.sqrMagnitude > 0)
+					{
+						// Cannot dodge, show line of sight.
+						if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
+							dodgeLayerMask))
+						{
+							Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+							return;
+						}
+					}
+
+					else // No movement
+
+					{
+						// Cannot dodge, show line of sight.
+						if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
+							dodgeLayerMask))
+						{
+							Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
+							return;
+						}
+					}
+
+					isDodging = true;
+					playerAnim.SetTrigger("Dodge");
+
+					if (isGrounded == false)
+					{
+						dodgedInMidAir = true;
+					}
 				}
 			}
-
-			else // No movement
-
-			{
-				// Cannot dodge, show line of sight.
-				if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
-					dodgeLayerMask))
-				{
-					Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
-					return;
-				}
-			}
-
-			// Get dodge angle.
-			// Assign to player animation.
-			if (Time.time > nextDodge)
-			{
-				// Set dodge state.
-				isDodging = true;
-				playerAnim.SetBool("Dodging", true);
-				playerAnim.SetTrigger("Dodge");
-			}		
 		}
 
 		void HandleAttack(InputAction.CallbackContext context)
@@ -459,6 +487,12 @@ namespace CityBashers
 			if (col.collider.gameObject.layer == 9)
 			{
 				OnLand.Invoke();
+				dodgedInMidAir = false;
+			}
+
+			if (col.collider.tag == "Scenery")
+			{
+				collidingWithScenery = true;
 			}
 		}
 
@@ -477,6 +511,11 @@ namespace CityBashers
 			{
 				isGrounded = false;
 				playerAnim.SetBool("OnGround", isGrounded);
+			}
+
+			if (col.collider.tag == "Scenery")
+			{
+				collidingWithScenery = false;
 			}
 		}
 
@@ -552,27 +591,27 @@ namespace CityBashers
 
 				switch (jumpState)
 				{
-				case 0:
-					isGrounded = false;
-					break;
-				case 1: // Jump.
-					playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
-					isGrounded = false;
-					playerAnim.applyRootMotion = false;
-					OnJump.Invoke();
-					break;
-				case 2: // Double jump.
-					// Override vertical velocity.
-					playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
+					case 0:
+						isGrounded = false;
+						break;
+					case 1: // Jump.
+						playerRb.velocity = new Vector3(playerRb.velocity.x, jumpPower, playerRb.velocity.z);
+						isGrounded = false;
+						playerAnim.applyRootMotion = false;
+						OnJump.Invoke();
+						break;
+					case 2: // Double jump.
+						// Override vertical velocity.
+						playerRb.velocity = new Vector3(playerRb.velocity.x, doubleJumpPower, playerRb.velocity.z);
 
-					// Add forward force.
-					playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
+						// Add forward force.
+						playerRb.AddRelativeForce(0, 0, jumpPower_Forward, ForceMode.Acceleration);
 
-					playerAnim.applyRootMotion = false;
-					playerAnim.SetTrigger("DoubleJump");
+						playerAnim.applyRootMotion = false;
+						playerAnim.SetTrigger("DoubleJump");
 
-					OnDoubleJump.Invoke();
-					break;
+						OnDoubleJump.Invoke();
+						break;
 				}
 			}
 		}

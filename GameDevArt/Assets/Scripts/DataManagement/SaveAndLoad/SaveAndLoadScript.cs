@@ -87,7 +87,7 @@ namespace CityBashers
 		/// </summary>
 		void OnApplicationQuit ()
 		{
-			SaveSettingsData ();
+			//SaveSettingsData ();
 		}
 
 		/// <summary>
