@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9363650}
   - component: {fileID: 9363649}
   - component: {fileID: 9363651}
+  - component: {fileID: 31925654}
   m_Layer: 9
   m_Name: tree_top5
   m_TagString: Untagged
@@ -87,11 +88,24 @@ MeshCollider:
   m_GameObject: {fileID: 9363647}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300166, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &31925654
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9363647}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.40837634, y: 0.07527992, z: -2.2927222}
 --- !u!1 &22961177
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +118,7 @@ GameObject:
   - component: {fileID: 22961180}
   - component: {fileID: 22961179}
   - component: {fileID: 22961181}
+  - component: {fileID: 431382431}
   m_Layer: 9
   m_Name: tree_bot16
   m_TagString: Untagged
@@ -179,11 +194,24 @@ MeshCollider:
   m_GameObject: {fileID: 22961177}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300210, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &431382431
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22961177}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -1.2068461, y: 0.012239732, z: -3.3648963}
 --- !u!1 &23080641
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +224,7 @@ GameObject:
   - component: {fileID: 23080644}
   - component: {fileID: 23080643}
   - component: {fileID: 23080645}
+  - component: {fileID: 993904124}
   m_Layer: 9
   m_Name: tree_top4
   m_TagString: Untagged
@@ -271,11 +300,24 @@ MeshCollider:
   m_GameObject: {fileID: 23080641}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300162, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &993904124
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23080641}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.31312808, y: 0.07527992, z: -1.946365}
 --- !u!1 &23267528
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +332,7 @@ GameObject:
   - component: {fileID: 23267532}
   m_Layer: 9
   m_Name: building38
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -325,7 +367,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23267528}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -334,7 +376,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,7 +407,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300076, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &23637659
@@ -380,6 +422,7 @@ GameObject:
   - component: {fileID: 23637662}
   - component: {fileID: 23637661}
   - component: {fileID: 23637663}
+  - component: {fileID: 734356380}
   m_Layer: 9
   m_Name: tree_bot5
   m_TagString: Untagged
@@ -455,11 +498,24 @@ MeshCollider:
   m_GameObject: {fileID: 23637659}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300164, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &734356380
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23637659}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.31312808, y: 0.012239732, z: -1.946365}
 --- !u!1 &32412782
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +530,7 @@ GameObject:
   - component: {fileID: 32412786}
   m_Layer: 9
   m_Name: building60
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -509,7 +565,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32412782}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -518,7 +574,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -549,7 +605,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300120, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &35501648
@@ -566,7 +622,7 @@ GameObject:
   - component: {fileID: 35501652}
   m_Layer: 9
   m_Name: building27
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,7 +657,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35501648}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -610,7 +666,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -641,7 +697,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300054, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &71574679
@@ -733,6 +789,7 @@ GameObject:
   - component: {fileID: 134280224}
   - component: {fileID: 134280223}
   - component: {fileID: 134280225}
+  - component: {fileID: 1660593812}
   m_Layer: 9
   m_Name: tree_top12
   m_TagString: Untagged
@@ -808,11 +865,24 @@ MeshCollider:
   m_GameObject: {fileID: 134280221}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300194, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1660593812
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134280221}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.7635946, y: 0.07527992, z: -1.8006258}
 --- !u!1 &156210393
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +897,7 @@ GameObject:
   - component: {fileID: 156210397}
   m_Layer: 9
   m_Name: building41
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -862,7 +932,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156210393}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -871,7 +941,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -902,7 +972,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300082, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &164711217
@@ -919,7 +989,7 @@ GameObject:
   - component: {fileID: 164711221}
   m_Layer: 9
   m_Name: building24
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -954,7 +1024,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164711217}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -963,7 +1033,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -994,7 +1064,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300048, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &165749135
@@ -1009,6 +1079,7 @@ GameObject:
   - component: {fileID: 165749138}
   - component: {fileID: 165749137}
   - component: {fileID: 165749139}
+  - component: {fileID: 171985004}
   m_Layer: 9
   m_Name: tree_top6
   m_TagString: Untagged
@@ -1084,11 +1155,24 @@ MeshCollider:
   m_GameObject: {fileID: 165749135}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300170, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &171985004
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165749135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.51805615, y: 0.07527992, z: -2.670829}
 --- !u!1 &176906110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1187,7 @@ GameObject:
   - component: {fileID: 176906114}
   m_Layer: 9
   m_Name: building19
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1138,7 +1222,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176906110}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -1147,7 +1231,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1178,7 +1262,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300038, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &180522650
@@ -1193,6 +1277,7 @@ GameObject:
   - component: {fileID: 180522653}
   - component: {fileID: 180522652}
   - component: {fileID: 180522654}
+  - component: {fileID: 1162281655}
   m_Layer: 9
   m_Name: tree_bot22
   m_TagString: Untagged
@@ -1268,11 +1353,24 @@ MeshCollider:
   m_GameObject: {fileID: 180522650}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300234, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1162281655
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180522650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.038958468
+  m_Center: {x: -0.38465914, y: 0.04640168, z: 1.1788183}
 --- !u!1 &185867294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,7 +1385,7 @@ GameObject:
   - component: {fileID: 185867298}
   m_Layer: 9
   m_Name: building70
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1322,7 +1420,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185867294}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -1331,7 +1429,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1362,7 +1460,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300138, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &196375260
@@ -1379,7 +1477,7 @@ GameObject:
   - component: {fileID: 196375264}
   m_Layer: 9
   m_Name: building71
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1414,7 +1512,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196375260}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -1423,7 +1521,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1454,7 +1552,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300140, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &207215889
@@ -1469,6 +1567,7 @@ GameObject:
   - component: {fileID: 207215892}
   - component: {fileID: 207215891}
   - component: {fileID: 207215893}
+  - component: {fileID: 1385657863}
   m_Layer: 9
   m_Name: tree_top15
   m_TagString: Untagged
@@ -1544,11 +1643,24 @@ MeshCollider:
   m_GameObject: {fileID: 207215889}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300204, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1385657863
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207215889}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -1.0933588, y: 0.07527992, z: -2.937427}
 --- !u!1 &232847467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,7 +1675,7 @@ GameObject:
   - component: {fileID: 232847471}
   m_Layer: 9
   m_Name: building30
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1598,7 +1710,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232847467}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -1607,7 +1719,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1638,7 +1750,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300060, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &262397837
@@ -1753,6 +1865,7 @@ GameObject:
   - component: {fileID: 266083602}
   - component: {fileID: 266083601}
   - component: {fileID: 266083603}
+  - component: {fileID: 140454727}
   m_Layer: 9
   m_Name: tree_bot20
   m_TagString: Untagged
@@ -1828,11 +1941,24 @@ MeshCollider:
   m_GameObject: {fileID: 266083599}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300226, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &140454727
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266083599}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.99549603, y: 0.012239732, z: 0.5647044}
 --- !u!1 &279983476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +1971,7 @@ GameObject:
   - component: {fileID: 279983479}
   - component: {fileID: 279983478}
   - component: {fileID: 279983480}
+  - component: {fileID: 255442816}
   m_Layer: 9
   m_Name: tree_top13
   m_TagString: Untagged
@@ -1920,11 +2047,24 @@ MeshCollider:
   m_GameObject: {fileID: 279983476}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300198, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &255442816
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279983476}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.8588429, y: 0.07527992, z: -2.1469831}
 --- !u!1 &286389018
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,7 +2079,7 @@ GameObject:
   - component: {fileID: 286389022}
   m_Layer: 9
   m_Name: building46
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1974,7 +2114,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286389018}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -1983,7 +2123,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2012,9 +2152,9 @@ MeshCollider:
   m_GameObject: {fileID: 286389018}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300092, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &289619813
@@ -2031,7 +2171,7 @@ GameObject:
   - component: {fileID: 289619817}
   m_Layer: 9
   m_Name: building40
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2066,7 +2206,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289619813}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2075,7 +2215,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2106,7 +2246,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300080, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &296650075
@@ -2123,7 +2263,7 @@ GameObject:
   - component: {fileID: 296650079}
   m_Layer: 9
   m_Name: building50
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2158,7 +2298,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296650075}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2167,7 +2307,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2196,9 +2336,9 @@ MeshCollider:
   m_GameObject: {fileID: 296650075}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300100, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &301389625
@@ -2215,7 +2355,7 @@ GameObject:
   - component: {fileID: 301389629}
   m_Layer: 9
   m_Name: building37
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2250,7 +2390,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301389625}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2259,7 +2399,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2290,7 +2430,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300074, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &311509615
@@ -2305,6 +2445,7 @@ GameObject:
   - component: {fileID: 311509618}
   - component: {fileID: 311509617}
   - component: {fileID: 311509619}
+  - component: {fileID: 77450701}
   m_Layer: 9
   m_Name: tree_bot9
   m_TagString: Untagged
@@ -2380,11 +2521,24 @@ MeshCollider:
   m_GameObject: {fileID: 311509615}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300180, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &77450701
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311509615}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.75637954, y: 0.012239732, z: -3.5106354}
 --- !u!1 &332089198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2553,7 @@ GameObject:
   - component: {fileID: 332089202}
   m_Layer: 9
   m_Name: building56
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2434,7 +2588,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332089198}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2443,7 +2597,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2474,7 +2628,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300112, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &351344274
@@ -2491,7 +2645,7 @@ GameObject:
   - component: {fileID: 351344278}
   m_Layer: 9
   m_Name: building34
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2526,7 +2680,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351344274}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2535,7 +2689,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2566,7 +2720,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300068, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &359808135
@@ -2583,7 +2737,7 @@ GameObject:
   - component: {fileID: 359808139}
   m_Layer: 9
   m_Name: building68
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2618,7 +2772,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 359808135}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2627,7 +2781,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2658,7 +2812,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300134, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &362478138
@@ -2673,6 +2827,7 @@ GameObject:
   - component: {fileID: 362478141}
   - component: {fileID: 362478140}
   - component: {fileID: 362478142}
+  - component: {fileID: 1548666916}
   m_Layer: 9
   m_Name: tree_top9
   m_TagString: Untagged
@@ -2748,11 +2903,24 @@ MeshCollider:
   m_GameObject: {fileID: 362478138}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300182, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1548666916
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362478138}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.45187306, y: 0.07527992, z: -0.7326908}
 --- !u!1 &370533673
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,7 +2935,7 @@ GameObject:
   - component: {fileID: 370533677}
   m_Layer: 9
   m_Name: building32
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2802,7 +2970,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370533673}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2811,7 +2979,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2842,7 +3010,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300064, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &403210055
@@ -2906,7 +3074,7 @@ GameObject:
   - component: {fileID: 407722600}
   m_Layer: 9
   m_Name: building25
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2941,7 +3109,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407722596}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2950,7 +3118,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2981,7 +3149,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300050, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &426273192
@@ -2996,6 +3164,7 @@ GameObject:
   - component: {fileID: 426273195}
   - component: {fileID: 426273194}
   - component: {fileID: 426273196}
+  - component: {fileID: 607097851}
   m_Layer: 9
   m_Name: tree_bot8
   m_TagString: Untagged
@@ -3071,11 +3240,24 @@ MeshCollider:
   m_GameObject: {fileID: 426273192}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300176, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &607097851
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426273192}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.64289224, y: 0.012239732, z: -3.0831666}
 --- !u!1 &434627088
 GameObject:
   m_ObjectHideFlags: 0
@@ -3090,7 +3272,7 @@ GameObject:
   - component: {fileID: 434627092}
   m_Layer: 9
   m_Name: building59
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3125,7 +3307,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434627088}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3134,7 +3316,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3165,7 +3347,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300118, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &437209800
@@ -3180,6 +3362,7 @@ GameObject:
   - component: {fileID: 437209803}
   - component: {fileID: 437209802}
   - component: {fileID: 437209804}
+  - component: {fileID: 409421571}
   m_Layer: 9
   m_Name: tree_top19
   m_TagString: Untagged
@@ -3255,11 +3438,24 @@ MeshCollider:
   m_GameObject: {fileID: 437209800}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300220, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &409421571
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437209800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08303394
+  m_Center: {x: 0.36354688, y: 0.12588799, z: 0.4992711}
 --- !u!1 &449315206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3274,7 +3470,7 @@ GameObject:
   - component: {fileID: 449315210}
   m_Layer: 9
   m_Name: building51
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3309,7 +3505,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449315206}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3318,7 +3514,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3347,9 +3543,9 @@ MeshCollider:
   m_GameObject: {fileID: 449315206}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300102, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &467024860
@@ -3366,7 +3562,7 @@ GameObject:
   - component: {fileID: 467024864}
   m_Layer: 9
   m_Name: building52
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3401,7 +3597,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467024860}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3410,7 +3606,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3439,9 +3635,9 @@ MeshCollider:
   m_GameObject: {fileID: 467024860}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300104, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &480514726
@@ -3458,7 +3654,7 @@ GameObject:
   - component: {fileID: 480514730}
   m_Layer: 9
   m_Name: building14
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3493,7 +3689,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480514726}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3502,7 +3698,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3533,7 +3729,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300028, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &481946001
@@ -3550,7 +3746,7 @@ GameObject:
   - component: {fileID: 481946005}
   m_Layer: 9
   m_Name: building36
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3585,7 +3781,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481946001}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3594,7 +3790,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3625,7 +3821,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300072, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &483265548
@@ -3642,7 +3838,7 @@ GameObject:
   - component: {fileID: 483265552}
   m_Layer: 9
   m_Name: building53
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3677,7 +3873,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483265548}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3686,7 +3882,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3715,9 +3911,9 @@ MeshCollider:
   m_GameObject: {fileID: 483265548}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300106, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &501937500
@@ -3734,7 +3930,7 @@ GameObject:
   - component: {fileID: 501937504}
   m_Layer: 9
   m_Name: building44
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3769,7 +3965,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501937500}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3778,7 +3974,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3809,7 +4005,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300088, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &527684124
@@ -3826,7 +4022,7 @@ GameObject:
   - component: {fileID: 527684128}
   m_Layer: 9
   m_Name: building69
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3861,7 +4057,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527684124}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -3870,7 +4066,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3901,7 +4097,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300136, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &537455387
@@ -3916,6 +4112,7 @@ GameObject:
   - component: {fileID: 537455390}
   - component: {fileID: 537455389}
   - component: {fileID: 537455391}
+  - component: {fileID: 2052487160}
   m_Layer: 9
   m_Name: tree_bot13
   m_TagString: Untagged
@@ -3991,11 +4188,24 @@ MeshCollider:
   m_GameObject: {fileID: 537455387}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300196, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &2052487160
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537455387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.7635946, y: 0.012239732, z: -1.8006258}
 --- !u!1 &591905080
 GameObject:
   m_ObjectHideFlags: 0
@@ -4008,6 +4218,7 @@ GameObject:
   - component: {fileID: 591905083}
   - component: {fileID: 591905082}
   - component: {fileID: 591905084}
+  - component: {fileID: 930979690}
   m_Layer: 9
   m_Name: tree_bot4
   m_TagString: Untagged
@@ -4083,11 +4294,24 @@ MeshCollider:
   m_GameObject: {fileID: 591905080}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300160, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &930979690
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591905080}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.20344827, y: 0.012239732, z: -1.5682583}
 --- !u!1 &597029416
 GameObject:
   m_ObjectHideFlags: 0
@@ -4102,7 +4326,7 @@ GameObject:
   - component: {fileID: 597029420}
   m_Layer: 9
   m_Name: building57
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4137,7 +4361,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597029416}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -4146,7 +4370,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4177,7 +4401,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300114, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &618546573
@@ -4194,7 +4418,7 @@ GameObject:
   - component: {fileID: 618546577}
   m_Layer: 9
   m_Name: building1
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4229,7 +4453,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618546573}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -4238,7 +4462,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4269,7 +4493,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300002, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &625470151
@@ -4284,6 +4508,7 @@ GameObject:
   - component: {fileID: 625470154}
   - component: {fileID: 625470153}
   - component: {fileID: 625470155}
+  - component: {fileID: 1404807448}
   m_Layer: 9
   m_Name: tree_top7
   m_TagString: Untagged
@@ -4359,11 +4584,24 @@ MeshCollider:
   m_GameObject: {fileID: 625470151}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300174, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1404807448
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625470151}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.64289224, y: 0.07527992, z: -3.0831666}
 --- !u!1 &652845447
 GameObject:
   m_ObjectHideFlags: 0
@@ -4376,6 +4614,7 @@ GameObject:
   - component: {fileID: 652845450}
   - component: {fileID: 652845449}
   - component: {fileID: 652845451}
+  - component: {fileID: 1739957632}
   m_Layer: 9
   m_Name: tree_top16
   m_TagString: Untagged
@@ -4451,11 +4690,24 @@ MeshCollider:
   m_GameObject: {fileID: 652845447}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300208, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1739957632
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652845447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -1.2068461, y: 0.07527992, z: -3.3648963}
 --- !u!1 &653720875
 GameObject:
   m_ObjectHideFlags: 0
@@ -4470,7 +4722,7 @@ GameObject:
   - component: {fileID: 653720879}
   m_Layer: 9
   m_Name: building13
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4505,7 +4757,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653720875}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -4514,7 +4766,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4545,7 +4797,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300026, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &661661979
@@ -4562,7 +4814,7 @@ GameObject:
   - component: {fileID: 661661983}
   m_Layer: 9
   m_Name: building2
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4597,7 +4849,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661661979}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -4606,7 +4858,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4637,7 +4889,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300004, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &671744727
@@ -4652,6 +4904,7 @@ GameObject:
   - component: {fileID: 671744730}
   - component: {fileID: 671744729}
   - component: {fileID: 671744731}
+  - component: {fileID: 139279294}
   m_Layer: 9
   m_Name: tree_top2
   m_TagString: Untagged
@@ -4727,11 +4980,24 @@ MeshCollider:
   m_GameObject: {fileID: 671744727}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300154, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &139279294
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671744727}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.105313696, y: 0.07527992, z: -1.2305598}
 --- !u!1 &690855753
 GameObject:
   m_ObjectHideFlags: 0
@@ -4746,7 +5012,7 @@ GameObject:
   - component: {fileID: 690855757}
   m_Layer: 9
   m_Name: building15
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4781,7 +5047,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690855753}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -4790,7 +5056,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4821,7 +5087,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300030, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &724942262
@@ -4836,6 +5102,7 @@ GameObject:
   - component: {fileID: 724942265}
   - component: {fileID: 724942264}
   - component: {fileID: 724942266}
+  - component: {fileID: 431450374}
   m_Layer: 9
   m_Name: tree_bot2
   m_TagString: Untagged
@@ -4911,11 +5178,24 @@ MeshCollider:
   m_GameObject: {fileID: 724942262}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300152, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &431450374
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724942262}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.0014065071, y: 0.012239732, z: -0.87843}
 --- !u!1 &733223363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,7 +5284,7 @@ GameObject:
   - component: {fileID: 743458887}
   m_Layer: 9
   m_Name: building64
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5039,7 +5319,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743458883}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -5048,7 +5328,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5077,9 +5357,9 @@ MeshCollider:
   m_GameObject: {fileID: 743458883}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300128, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &749692031
@@ -5094,6 +5374,7 @@ GameObject:
   - component: {fileID: 749692034}
   - component: {fileID: 749692033}
   - component: {fileID: 749692035}
+  - component: {fileID: 1368614375}
   m_Layer: 9
   m_Name: tree_bot1
   m_TagString: Untagged
@@ -5169,11 +5450,24 @@ MeshCollider:
   m_GameObject: {fileID: 749692031}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300148, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1368614375
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749692031}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.96852267, y: 0.012239732, z: -2.5250897}
 --- !u!1 &762542709
 GameObject:
   m_ObjectHideFlags: 0
@@ -5186,6 +5480,7 @@ GameObject:
   - component: {fileID: 762542712}
   - component: {fileID: 762542711}
   - component: {fileID: 762542713}
+  - component: {fileID: 674806425}
   m_Layer: 9
   m_Name: tree_top14
   m_TagString: Untagged
@@ -5261,11 +5556,24 @@ MeshCollider:
   m_GameObject: {fileID: 762542709}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300202, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &674806425
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762542709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.96852267, y: 0.07527992, z: -2.5250897}
 --- !u!1 &781603427
 GameObject:
   m_ObjectHideFlags: 0
@@ -5293,7 +5601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781603427}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0.001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 403210056}
@@ -5315,7 +5623,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781603427}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -5370,6 +5678,7 @@ GameObject:
   - component: {fileID: 884510166}
   - component: {fileID: 884510165}
   - component: {fileID: 884510167}
+  - component: {fileID: 1229588099}
   m_Layer: 9
   m_Name: tree_bot17
   m_TagString: Untagged
@@ -5445,11 +5754,24 @@ MeshCollider:
   m_GameObject: {fileID: 884510163}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300214, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1229588099
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884510163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.038958468
+  m_Center: {x: 2.25387, y: 0.020339236, z: -0.1642411}
 --- !u!1 &897495083
 GameObject:
   m_ObjectHideFlags: 0
@@ -5462,6 +5784,7 @@ GameObject:
   - component: {fileID: 897495086}
   - component: {fileID: 897495085}
   - component: {fileID: 897495087}
+  - component: {fileID: 1504688337}
   m_Layer: 9
   m_Name: tree_bot19
   m_TagString: Untagged
@@ -5537,11 +5860,24 @@ MeshCollider:
   m_GameObject: {fileID: 897495083}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300222, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1504688337
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897495083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.038958468
+  m_Center: {x: 0.36354685, y: 0.020339236, z: 0.49927106}
 --- !u!1 &904074747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5556,7 +5892,7 @@ GameObject:
   - component: {fileID: 904074751}
   m_Layer: 9
   m_Name: building20
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5591,7 +5927,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904074747}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -5600,7 +5936,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5631,7 +5967,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300040, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &958298554
@@ -5648,7 +5984,7 @@ GameObject:
   - component: {fileID: 958298558}
   m_Layer: 9
   m_Name: building55
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5683,7 +6019,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958298554}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -5692,7 +6028,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5723,7 +6059,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300110, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &965943750
@@ -5738,6 +6074,7 @@ GameObject:
   - component: {fileID: 965943753}
   - component: {fileID: 965943752}
   - component: {fileID: 965943754}
+  - component: {fileID: 1356292407}
   m_Layer: 9
   m_Name: tree_bot15
   m_TagString: Untagged
@@ -5813,11 +6150,24 @@ MeshCollider:
   m_GameObject: {fileID: 965943750}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300206, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1356292407
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965943750}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -1.0933588, y: 0.012239732, z: -2.937427}
 --- !u!1 &980264571
 GameObject:
   m_ObjectHideFlags: 0
@@ -5867,7 +6217,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980264571}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -5924,7 +6274,7 @@ GameObject:
   - component: {fileID: 983113395}
   m_Layer: 9
   m_Name: building12
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5959,7 +6309,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983113391}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -5968,7 +6318,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5999,7 +6349,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300024, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &983484242
@@ -6014,6 +6364,7 @@ GameObject:
   - component: {fileID: 983484245}
   - component: {fileID: 983484244}
   - component: {fileID: 983484246}
+  - component: {fileID: 1601599599}
   m_Layer: 9
   m_Name: tree_bot12
   m_TagString: Untagged
@@ -6089,11 +6440,24 @@ MeshCollider:
   m_GameObject: {fileID: 983484242}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300192, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1601599599
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983484242}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.65391487, y: 0.012239732, z: -1.422519}
 --- !u!1 &987870682
 GameObject:
   m_ObjectHideFlags: 0
@@ -6108,7 +6472,7 @@ GameObject:
   - component: {fileID: 987870686}
   m_Layer: 9
   m_Name: building62
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6143,7 +6507,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987870682}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6152,7 +6516,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6183,7 +6547,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300124, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &994388336
@@ -6200,7 +6564,7 @@ GameObject:
   - component: {fileID: 994388340}
   m_Layer: 9
   m_Name: building65
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6235,7 +6599,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994388336}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6244,7 +6608,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6273,9 +6637,9 @@ MeshCollider:
   m_GameObject: {fileID: 994388336}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300130, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1003109190
@@ -6290,6 +6654,7 @@ GameObject:
   - component: {fileID: 1003109193}
   - component: {fileID: 1003109192}
   - component: {fileID: 1003109194}
+  - component: {fileID: 726620639}
   m_Layer: 9
   m_Name: tree_top1
   m_TagString: Untagged
@@ -6365,11 +6730,24 @@ MeshCollider:
   m_GameObject: {fileID: 1003109190}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300150, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &726620639
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003109190}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.0014065057, y: 0.07527992, z: -0.87843}
 --- !u!1 &1006296954
 GameObject:
   m_ObjectHideFlags: 0
@@ -6384,7 +6762,7 @@ GameObject:
   - component: {fileID: 1006296958}
   m_Layer: 9
   m_Name: building10
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6419,7 +6797,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006296954}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6428,7 +6806,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6459,7 +6837,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300020, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1014611105
@@ -6476,7 +6854,7 @@ GameObject:
   - component: {fileID: 1014611109}
   m_Layer: 9
   m_Name: building63
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6511,7 +6889,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014611105}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6520,7 +6898,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6551,7 +6929,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300126, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1035457267
@@ -6618,7 +6996,7 @@ GameObject:
   - component: {fileID: 1087085907}
   m_Layer: 9
   m_Name: building39
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6653,7 +7031,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087085903}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6662,7 +7040,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6693,7 +7071,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300078, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1142615314
@@ -6710,7 +7088,7 @@ GameObject:
   - component: {fileID: 1142615318}
   m_Layer: 9
   m_Name: building26
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6745,7 +7123,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142615314}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6754,7 +7132,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6785,7 +7163,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300052, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1160628506
@@ -6800,6 +7178,7 @@ GameObject:
   - component: {fileID: 1160628509}
   - component: {fileID: 1160628508}
   - component: {fileID: 1160628510}
+  - component: {fileID: 1539208952}
   m_Layer: 9
   m_Name: tree_top3
   m_TagString: Untagged
@@ -6875,11 +7254,24 @@ MeshCollider:
   m_GameObject: {fileID: 1160628506}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300158, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1539208952
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160628506}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.20344827, y: 0.07527992, z: -1.5682583}
 --- !u!1 &1171900543
 GameObject:
   m_ObjectHideFlags: 0
@@ -6894,7 +7286,7 @@ GameObject:
   - component: {fileID: 1171900547}
   m_Layer: 9
   m_Name: building7
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6929,7 +7321,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171900543}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -6938,7 +7330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6969,7 +7361,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300014, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1216054336
@@ -6986,7 +7378,7 @@ GameObject:
   - component: {fileID: 1216054340}
   m_Layer: 9
   m_Name: building6
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7021,7 +7413,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216054336}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -7030,7 +7422,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7061,7 +7453,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300012, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1283579529
@@ -7076,6 +7468,7 @@ GameObject:
   - component: {fileID: 1283579532}
   - component: {fileID: 1283579531}
   - component: {fileID: 1283579533}
+  - component: {fileID: 176387834}
   m_Layer: 9
   m_Name: tree_bot6
   m_TagString: Untagged
@@ -7151,11 +7544,24 @@ MeshCollider:
   m_GameObject: {fileID: 1283579529}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300168, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &176387834
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283579529}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.40837634, y: 0.012239732, z: -2.2927222}
 --- !u!1 &1293595415
 GameObject:
   m_ObjectHideFlags: 0
@@ -7170,7 +7576,7 @@ GameObject:
   - component: {fileID: 1293595419}
   m_Layer: 9
   m_Name: building61
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7205,7 +7611,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1293595415}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -7214,7 +7620,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7245,7 +7651,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300122, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1324513342
@@ -7260,6 +7666,7 @@ GameObject:
   - component: {fileID: 1324513345}
   - component: {fileID: 1324513344}
   - component: {fileID: 1324513346}
+  - component: {fileID: 1292937619}
   m_Layer: 9
   m_Name: tree_bot10
   m_TagString: Untagged
@@ -7335,11 +7742,24 @@ MeshCollider:
   m_GameObject: {fileID: 1324513342}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300184, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1292937619
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324513342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.45187306, y: 0.012239732, z: -0.7326908}
 --- !u!1 &1326099871
 GameObject:
   m_ObjectHideFlags: 0
@@ -7352,6 +7772,7 @@ GameObject:
   - component: {fileID: 1326099874}
   - component: {fileID: 1326099873}
   - component: {fileID: 1326099875}
+  - component: {fileID: 1553939865}
   m_Layer: 9
   m_Name: tree_top20
   m_TagString: Untagged
@@ -7427,11 +7848,24 @@ MeshCollider:
   m_GameObject: {fileID: 1326099871}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300224, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1553939865
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326099871}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.99549603, y: 0.07527992, z: 0.5647044}
 --- !u!1 &1357251055
 GameObject:
   m_ObjectHideFlags: 0
@@ -7444,6 +7878,7 @@ GameObject:
   - component: {fileID: 1357251058}
   - component: {fileID: 1357251057}
   - component: {fileID: 1357251059}
+  - component: {fileID: 463100970}
   m_Layer: 9
   m_Name: tree_top10
   m_TagString: Untagged
@@ -7519,11 +7954,24 @@ MeshCollider:
   m_GameObject: {fileID: 1357251055}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300186, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &463100970
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357251055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.5557803, y: 0.07527992, z: -1.0848207}
 --- !u!1 &1386500140
 GameObject:
   m_ObjectHideFlags: 0
@@ -7536,6 +7984,7 @@ GameObject:
   - component: {fileID: 1386500143}
   - component: {fileID: 1386500142}
   - component: {fileID: 1386500144}
+  - component: {fileID: 1660612973}
   m_Layer: 9
   m_Name: tree_bot21
   m_TagString: Untagged
@@ -7611,11 +8060,24 @@ MeshCollider:
   m_GameObject: {fileID: 1386500140}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300230, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1660612973
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386500140}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.038958468
+  m_Center: {x: -0.87008333, y: 0.020339236, z: 0.5529872}
 --- !u!1 &1427039551
 GameObject:
   m_ObjectHideFlags: 0
@@ -7628,9 +8090,11 @@ GameObject:
   - component: {fileID: 1427039554}
   - component: {fileID: 1427039553}
   - component: {fileID: 1427039555}
+  - component: {fileID: 5860389658778610134}
+  - component: {fileID: 2911004926572347935}
   m_Layer: 9
   m_Name: building54
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7665,7 +8129,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427039551}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -7674,7 +8138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7703,11 +8167,37 @@ MeshCollider:
   m_GameObject: {fileID: 1427039551}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300108, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!65 &5860389658778610134
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427039551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.215633, y: 0.69002545, z: 2.7082117}
+  m_Center: {x: -1.2860595, y: 0.3400128, z: 3.1462529}
+--- !u!65 &2911004926572347935
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427039551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0943395, y: 0.69002545, z: 1.117526}
+  m_Center: {x: -1.8467054, y: 0.3400128, z: 1.3147248}
 --- !u!1 &1432285189
 GameObject:
   m_ObjectHideFlags: 0
@@ -7720,6 +8210,7 @@ GameObject:
   - component: {fileID: 1432285192}
   - component: {fileID: 1432285191}
   - component: {fileID: 1432285193}
+  - component: {fileID: 2042790820}
   m_Layer: 9
   m_Name: tree_top11
   m_TagString: Untagged
@@ -7795,11 +8286,24 @@ MeshCollider:
   m_GameObject: {fileID: 1432285189}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300190, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &2042790820
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432285189}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.6539148, y: 0.07527992, z: -1.422519}
 --- !u!1 &1451657340
 GameObject:
   m_ObjectHideFlags: 0
@@ -7812,6 +8316,7 @@ GameObject:
   - component: {fileID: 1451657343}
   - component: {fileID: 1451657342}
   - component: {fileID: 1451657344}
+  - component: {fileID: 660294078}
   m_Layer: 9
   m_Name: tree_bot3
   m_TagString: Untagged
@@ -7887,11 +8392,24 @@ MeshCollider:
   m_GameObject: {fileID: 1451657340}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300156, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &660294078
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451657340}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.1053137, y: 0.012239732, z: -1.23056}
 --- !u!1 &1473121295
 GameObject:
   m_ObjectHideFlags: 0
@@ -7906,7 +8424,7 @@ GameObject:
   - component: {fileID: 1473121299}
   m_Layer: 9
   m_Name: building48
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7941,7 +8459,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473121295}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -7950,7 +8468,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7979,9 +8497,9 @@ MeshCollider:
   m_GameObject: {fileID: 1473121295}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300096, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1540872545
@@ -7998,7 +8516,7 @@ GameObject:
   - component: {fileID: 1540872549}
   m_Layer: 9
   m_Name: building4
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8033,7 +8551,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540872545}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8042,7 +8560,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8073,7 +8591,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300008, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1560573525
@@ -8088,6 +8606,7 @@ GameObject:
   - component: {fileID: 1560573528}
   - component: {fileID: 1560573527}
   - component: {fileID: 1560573529}
+  - component: {fileID: 1971849718}
   m_Layer: 9
   m_Name: tree_top17
   m_TagString: Untagged
@@ -8163,11 +8682,24 @@ MeshCollider:
   m_GameObject: {fileID: 1560573525}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300212, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1971849718
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560573525}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08303394
+  m_Center: {x: 2.25387, y: 0.12588799, z: -0.16424112}
 --- !u!1 &1564029296
 GameObject:
   m_ObjectHideFlags: 0
@@ -8182,7 +8714,7 @@ GameObject:
   - component: {fileID: 1564029300}
   m_Layer: 9
   m_Name: building8
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8217,7 +8749,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564029296}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8226,7 +8758,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8257,7 +8789,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300016, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1565936593
@@ -8274,7 +8806,7 @@ GameObject:
   - component: {fileID: 1565936597}
   m_Layer: 9
   m_Name: building43
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8309,7 +8841,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565936593}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8318,7 +8850,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8349,7 +8881,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300086, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1575402029
@@ -8366,7 +8898,7 @@ GameObject:
   - component: {fileID: 1575402033}
   m_Layer: 9
   m_Name: building3
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8401,7 +8933,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575402029}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8410,7 +8942,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8441,7 +8973,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300006, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1588851638
@@ -8458,7 +8990,7 @@ GameObject:
   - component: {fileID: 1588851642}
   m_Layer: 9
   m_Name: building17
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8493,7 +9025,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588851638}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8502,7 +9034,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8533,7 +9065,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300034, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1606063811
@@ -8550,7 +9082,7 @@ GameObject:
   - component: {fileID: 1606063815}
   m_Layer: 9
   m_Name: building9
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8585,7 +9117,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606063811}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8594,7 +9126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8625,7 +9157,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300018, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1610159215
@@ -8642,7 +9174,7 @@ GameObject:
   - component: {fileID: 1610159219}
   m_Layer: 9
   m_Name: building31
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8677,7 +9209,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610159215}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8686,7 +9218,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8717,7 +9249,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300062, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1657150262
@@ -8734,7 +9266,7 @@ GameObject:
   - component: {fileID: 1657150266}
   m_Layer: 9
   m_Name: building23
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8769,7 +9301,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657150262}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -8778,7 +9310,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8809,7 +9341,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300046, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1692312696
@@ -8824,6 +9356,7 @@ GameObject:
   - component: {fileID: 1692312699}
   - component: {fileID: 1692312698}
   - component: {fileID: 1692312700}
+  - component: {fileID: 1715288620}
   m_Layer: 9
   m_Name: tree_bot7
   m_TagString: Untagged
@@ -8899,11 +9432,24 @@ MeshCollider:
   m_GameObject: {fileID: 1692312696}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300172, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1715288620
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692312696}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.51805615, y: 0.012239732, z: -2.670829}
 --- !u!1 &1715424496
 GameObject:
   m_ObjectHideFlags: 0
@@ -8916,6 +9462,7 @@ GameObject:
   - component: {fileID: 1715424499}
   - component: {fileID: 1715424498}
   - component: {fileID: 1715424500}
+  - component: {fileID: 1730038393}
   m_Layer: 9
   m_Name: tree_bot14
   m_TagString: Untagged
@@ -8991,11 +9538,24 @@ MeshCollider:
   m_GameObject: {fileID: 1715424496}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300200, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1730038393
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715424496}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.8588429, y: 0.012239732, z: -2.1469831}
 --- !u!1 &1744314232
 GameObject:
   m_ObjectHideFlags: 0
@@ -9008,6 +9568,7 @@ GameObject:
   - component: {fileID: 1744314235}
   - component: {fileID: 1744314234}
   - component: {fileID: 1744314236}
+  - component: {fileID: 593945841}
   m_Layer: 9
   m_Name: tree_top8
   m_TagString: Untagged
@@ -9083,11 +9644,24 @@ MeshCollider:
   m_GameObject: {fileID: 1744314232}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300178, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &593945841
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744314232}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03910954
+  m_Center: {x: -0.7563795, y: 0.07527992, z: -3.5106354}
 --- !u!1 &1748017692
 GameObject:
   m_ObjectHideFlags: 0
@@ -9102,7 +9676,7 @@ GameObject:
   - component: {fileID: 1748017696}
   m_Layer: 9
   m_Name: building67
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9137,7 +9711,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748017692}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9146,7 +9720,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9177,7 +9751,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300132, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1774778137
@@ -9194,7 +9768,7 @@ GameObject:
   - component: {fileID: 1774778141}
   m_Layer: 9
   m_Name: building29
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9229,7 +9803,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774778137}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9238,7 +9812,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9269,7 +9843,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300058, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1811112486
@@ -9286,7 +9860,7 @@ GameObject:
   - component: {fileID: 1811112490}
   m_Layer: 9
   m_Name: building49
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9321,7 +9895,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811112486}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9330,7 +9904,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9359,9 +9933,9 @@ MeshCollider:
   m_GameObject: {fileID: 1811112486}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300098, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1813259932
@@ -9378,7 +9952,7 @@ GameObject:
   - component: {fileID: 1813259936}
   m_Layer: 9
   m_Name: building21
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9413,7 +9987,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813259932}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9422,7 +9996,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9453,7 +10027,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300042, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1826153396
@@ -9468,6 +10042,7 @@ GameObject:
   - component: {fileID: 1826153399}
   - component: {fileID: 1826153398}
   - component: {fileID: 1826153400}
+  - component: {fileID: 1526154158}
   m_Layer: 9
   m_Name: tree_bot18
   m_TagString: Untagged
@@ -9543,11 +10118,24 @@ MeshCollider:
   m_GameObject: {fileID: 1826153396}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300218, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &1526154158
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826153396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.038958468
+  m_Center: {x: 0.92453766, y: 0.020339236, z: 0.38734668}
 --- !u!1 &1851265711
 GameObject:
   m_ObjectHideFlags: 0
@@ -9560,6 +10148,7 @@ GameObject:
   - component: {fileID: 1851265714}
   - component: {fileID: 1851265713}
   - component: {fileID: 1851265715}
+  - component: {fileID: 2044583019}
   m_Layer: 9
   m_Name: tree_top21
   m_TagString: Untagged
@@ -9635,11 +10224,24 @@ MeshCollider:
   m_GameObject: {fileID: 1851265711}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300228, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &2044583019
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851265711}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08303394
+  m_Center: {x: -0.87008333, y: 0.12588799, z: 0.5529872}
 --- !u!1 &1851698174
 GameObject:
   m_ObjectHideFlags: 0
@@ -9654,7 +10256,7 @@ GameObject:
   - component: {fileID: 1851698178}
   m_Layer: 9
   m_Name: building35
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9689,7 +10291,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851698174}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9698,7 +10300,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9729,7 +10331,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300070, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1860105232
@@ -9744,6 +10346,7 @@ GameObject:
   - component: {fileID: 1860105235}
   - component: {fileID: 1860105234}
   - component: {fileID: 1860105236}
+  - component: {fileID: 753139519}
   m_Layer: 9
   m_Name: tree_top18
   m_TagString: Untagged
@@ -9819,11 +10422,24 @@ MeshCollider:
   m_GameObject: {fileID: 1860105232}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300216, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &753139519
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860105232}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08303394
+  m_Center: {x: 0.92453766, y: 0.12588799, z: 0.38734668}
 --- !u!1 &1871326675
 GameObject:
   m_ObjectHideFlags: 0
@@ -9838,7 +10454,7 @@ GameObject:
   - component: {fileID: 1871326679}
   m_Layer: 9
   m_Name: building58
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9873,7 +10489,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871326675}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9882,7 +10498,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9913,7 +10529,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300116, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1874427732
@@ -9930,7 +10546,7 @@ GameObject:
   - component: {fileID: 1874427736}
   m_Layer: 9
   m_Name: building11
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9965,7 +10581,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1874427732}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -9974,7 +10590,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10005,7 +10621,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300022, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1907650576
@@ -10022,7 +10638,7 @@ GameObject:
   - component: {fileID: 1907650580}
   m_Layer: 9
   m_Name: building33
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10057,7 +10673,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907650576}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10066,7 +10682,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10097,7 +10713,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300066, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1911647043
@@ -10112,6 +10728,7 @@ GameObject:
   - component: {fileID: 1911647046}
   - component: {fileID: 1911647045}
   - component: {fileID: 1911647047}
+  - component: {fileID: 327112617}
   m_Layer: 9
   m_Name: tree_top22
   m_TagString: Untagged
@@ -10187,11 +10804,24 @@ MeshCollider:
   m_GameObject: {fileID: 1911647043}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300232, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &327112617
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911647043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16651586
+  m_Center: {x: -0.38465914, y: 0.15195043, z: 1.1788183}
 --- !u!1 &1953471258
 GameObject:
   m_ObjectHideFlags: 0
@@ -10206,7 +10836,7 @@ GameObject:
   - component: {fileID: 1953471262}
   m_Layer: 9
   m_Name: building45
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10241,7 +10871,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953471258}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10250,7 +10880,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10279,9 +10909,9 @@ MeshCollider:
   m_GameObject: {fileID: 1953471258}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300090, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &1961497866
@@ -10333,7 +10963,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961497866}
   m_Enabled: 1
-  m_CastShadows: 2
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10387,6 +11017,7 @@ GameObject:
   - component: {fileID: 1988726134}
   - component: {fileID: 1988726133}
   - component: {fileID: 1988726135}
+  - component: {fileID: 502199868}
   m_Layer: 9
   m_Name: tree_bot11
   m_TagString: Untagged
@@ -10462,11 +11093,24 @@ MeshCollider:
   m_GameObject: {fileID: 1988726131}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300188, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
+--- !u!135 &502199868
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988726131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030858964
+  m_Center: {x: -0.5557803, y: 0.012239732, z: -1.0848207}
 --- !u!1 &2044579017
 GameObject:
   m_ObjectHideFlags: 0
@@ -10481,7 +11125,7 @@ GameObject:
   - component: {fileID: 2044579021}
   m_Layer: 9
   m_Name: building22
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10516,7 +11160,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044579017}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10525,7 +11169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10556,7 +11200,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300044, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &2053187201
@@ -10573,7 +11217,7 @@ GameObject:
   - component: {fileID: 2053187205}
   m_Layer: 9
   m_Name: building47
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10608,7 +11252,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053187201}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10617,7 +11261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10646,9 +11290,9 @@ MeshCollider:
   m_GameObject: {fileID: 2053187201}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300094, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &2081012509
@@ -10665,7 +11309,7 @@ GameObject:
   - component: {fileID: 2081012513}
   m_Layer: 9
   m_Name: building18
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10700,7 +11344,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081012509}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10709,7 +11353,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10740,7 +11384,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300036, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &2095095478
@@ -10757,7 +11401,7 @@ GameObject:
   - component: {fileID: 2095095482}
   m_Layer: 9
   m_Name: building28
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10792,7 +11436,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095095478}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10801,7 +11445,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10832,7 +11476,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300056, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &2125465888
@@ -10849,7 +11493,7 @@ GameObject:
   - component: {fileID: 2125465892}
   m_Layer: 9
   m_Name: building42
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10884,7 +11528,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125465888}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10893,7 +11537,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10924,7 +11568,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300084, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &2133531505
@@ -10941,7 +11585,7 @@ GameObject:
   - component: {fileID: 2133531509}
   m_Layer: 9
   m_Name: building16
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10976,7 +11620,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133531505}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -10985,7 +11629,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11016,7 +11660,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300032, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}
 --- !u!1 &2140631922
@@ -11033,7 +11677,7 @@ GameObject:
   - component: {fileID: 2140631926}
   m_Layer: 9
   m_Name: building5
-  m_TagString: Untagged
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11068,7 +11712,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140631922}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -11077,7 +11721,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09551ddcf6b00b4bbb7d9cd487c60ec, type: 2}
+  - {fileID: 2100000, guid: 296d2a9555c1ffe499c73fc520e9c3cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11108,6 +11752,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300010, guid: ddde86cca0d98254b9b79cc28c552531, type: 3}

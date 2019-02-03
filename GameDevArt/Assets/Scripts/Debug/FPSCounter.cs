@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 namespace CityBashers
@@ -46,6 +45,12 @@ namespace CityBashers
 			qty++;
 			averageFps += (newFPS - averageFps) / qty;
 			return averageFps;
+		}
+
+		public void ResetAverageFps()
+		{
+			qty = 0;
+			averageFps = 0;
 		}
 
 		private IEnumerator FPS () 
