@@ -163,6 +163,8 @@ namespace CityBashers
 		[Tooltip("How much magic it costs per dodge.")]
 		public int dodgeMagicCost = 10;
 		[Tooltip("Layers to look out for when checking colliders for a potential dodge.")]
+		[ReadOnly] public int dodgeTimes = 0;
+		public float dodgePlayerSpeedMult = 2;
 		public LayerMask dodgeLayerMask;
 		public UnityEvent OnDodgeBegan;
 		public UnityEvent OnDodgeEnded;
@@ -344,6 +346,14 @@ namespace CityBashers
 		void HandleMove(InputAction.CallbackContext context)
 		{
 			MoveAxis = context.ReadValue<Vector2>();
+
+			if (MoveAxis.sqrMagnitude == 0)
+			{
+				moveSpeedMultiplier /= dodgePlayerSpeedMult;
+				animSpeedMultiplier /= dodgePlayerSpeedMult;
+				dodgeTimes = 0;
+				Debug.Log("Reset dodged times.");
+			}
 		}
 
 		void HandleJump(InputAction.CallbackContext context)
@@ -394,6 +404,14 @@ namespace CityBashers
 
 					isDodging = true;
 					playerAnim.SetTrigger("Dodge");
+					dodgeTimes++;
+
+					if (dodgeTimes > 3)
+					{
+						moveSpeedMultiplier *= dodgePlayerSpeedMult;
+						animSpeedMultiplier *= dodgePlayerSpeedMult;
+						Debug.Log("Dodge made player go fast.");
+					}
 
 					if (isGrounded == false)
 					{
