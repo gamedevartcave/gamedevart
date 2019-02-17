@@ -76137,6 +76137,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4109410463687644747, guid: f92e40ca5311c1b489b787b90a3e8afd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2859661217808195937, guid: f92e40ca5311c1b489b787b90a3e8afd,
         type: 3}
       propertyPath: startingPoint
@@ -76242,5 +76247,15 @@ PrefabInstance:
       propertyPath: DisplayedWeaponImage
       value: 
       objectReference: {fileID: 1103667893}
+    - target: {fileID: 3827086896130730490, guid: f92e40ca5311c1b489b787b90a3e8afd,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9c3d0521eda0f124692c5da0186d90e0, type: 2}
+    - target: {fileID: 3827086896130730490, guid: f92e40ca5311c1b489b787b90a3e8afd,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92e40ca5311c1b489b787b90a3e8afd, type: 3}
