@@ -20,12 +20,15 @@ namespace CityBashers
         {
             playerAnim.SetFloat("Jump", PlayerController.Instance.playerRb.velocity.y);
 
+			/*
             CamPosBasedOnAngle.Instance.offset = new Vector2(
                 CamPosBasedOnAngle.Instance.offset.x,
                 Mathf.Lerp(CamPosBasedOnAngle.Instance.offset.y,
-                    Mathf.Min(PlayerController.Instance.playerRb.velocity.y * CamPosBasedOnAngle.Instance.offsetMult, 0),
-                    2 * Time.deltaTime)
+                   // Mathf.Min(PlayerController.Instance.playerRb.velocity.y * CamPosBasedOnAngle.Instance.offsetMult, 0),
+					 PlayerController.Instance.playerRb.velocity.y,
+					2 * Time.deltaTime)
             );
+			*/
         }
        
 		// OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -29,11 +29,10 @@ namespace CityBashers
 			animator.updateMode = AnimatorUpdateMode.UnscaledTime;
 
 			// Set dodge time.
-			TimescaleController.Instance.targetTimeScale = PlayerController.Instance.dodgeTimeScale;
+			//TimescaleController.Instance.targetTimeScale = PlayerController.Instance.dodgeTimeScale;
 
 			// Call events.
 			PlayerController.Instance.OnDodgeBegan.Invoke();
-			PlayerController.Instance.nextDodge = Time.time + PlayerController.Instance.dodgeRate;
 		}
 
 		// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

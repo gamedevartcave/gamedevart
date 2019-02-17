@@ -165,6 +165,7 @@ namespace CityBashers
 		[Tooltip("Layers to look out for when checking colliders for a potential dodge.")]
 		[ReadOnly] public int dodgeTimes = 0;
 		public float dodgePlayerSpeedMult = 2;
+		public ParticleSystem dodgeParticles;
 		public LayerMask dodgeLayerMask;
 		public UnityEvent OnDodgeBegan;
 		public UnityEvent OnDodgeEnded;
@@ -349,10 +350,10 @@ namespace CityBashers
 
 			if (MoveAxis.sqrMagnitude == 0)
 			{
-				moveSpeedMultiplier /= dodgePlayerSpeedMult;
-				animSpeedMultiplier /= dodgePlayerSpeedMult;
+				moveSpeedMultiplier = 500;
+				animSpeedMultiplier = 1;
 				dodgeTimes = 0;
-				Debug.Log("Reset dodged times.");
+				//Debug.Log("Reset dodged times.");
 			}
 		}
 
@@ -374,6 +375,12 @@ namespace CityBashers
 
 		void HandleDodge(InputAction.CallbackContext context)
 		{
+			if (DashZone.Instance.enemyNearby == true)
+			{
+				TimescaleController.Instance.targetTimeScale = dodgeTimeScale;
+				Debug.Log("HitEnemy");
+			}
+
 			if (dodgedInMidAir == false)
 			{
 				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
@@ -402,20 +409,26 @@ namespace CityBashers
 						}
 					}
 
-					isDodging = true;
-					playerAnim.SetTrigger("Dodge");
-					dodgeTimes++;
-
-					if (dodgeTimes > 3)
+					if (Time.unscaledTime > nextDodge)
 					{
-						moveSpeedMultiplier *= dodgePlayerSpeedMult;
-						animSpeedMultiplier *= dodgePlayerSpeedMult;
-						Debug.Log("Dodge made player go fast.");
-					}
+						isDodging = true;
+						playerAnim.SetTrigger("Dodge");
+						nextDodge = Time.unscaledTime + dodgeRate;
 
-					if (isGrounded == false)
-					{
-						dodgedInMidAir = true;
+						dodgeTimes++;
+						dodgeParticles.Play();
+
+						if (dodgeTimes == 3)
+						{
+							moveSpeedMultiplier *= dodgePlayerSpeedMult;
+							animSpeedMultiplier *= dodgePlayerSpeedMult;
+							Debug.Log("Dodge made player go fast.");
+						}
+
+						if (isGrounded == false)
+						{
+							dodgedInMidAir = true;
+						}
 					}
 				}
 			}

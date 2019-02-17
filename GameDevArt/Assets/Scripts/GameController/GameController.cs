@@ -80,6 +80,7 @@ namespace CityBashers
 		public float dofSmoothingIn = 5.0f;
 		public float dofSmoothingOut = 5.0f;
 		public float maxDofDistance = 1000;
+		public LayerMask doflayermask;
 
 		Vector3 delta;
 		Vector3 lastPos;
@@ -186,8 +187,8 @@ namespace CityBashers
 		/// </summary>
 		void GetDepthOfField ()
 		{
-			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance))
-			{
+			if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDofDistance, doflayermask))
+			{	
 				// While moving.
 				if (PlayerController.Instance.MoveAxis.sqrMagnitude > 0.1f ||
 					MouseLook.Instance.LookAxis.sqrMagnitude > 0.01f)
@@ -309,6 +310,9 @@ namespace CityBashers
 				if (!isPaused && activeMenu == firstActiveMenu)
 				{
 					DoUnpause();
+					Time.timeScale = 1;
+					PlayerController.Instance.moveSpeedMultiplier = 500; // Hard resets player move speed mult.
+					PlayerController.Instance.animSpeedMultiplier = 1;
 				}
 			}
 		}

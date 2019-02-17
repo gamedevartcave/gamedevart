@@ -45,11 +45,8 @@ namespace CityBashers
 			{
 				if (GameController.Instance.isPaused == false)
 				{
-					currentTimeScale = Mathf.Lerp (
-						currentTimeScale, 
-						targetTimeScale, 
-						timeScaleSmoothing * Time.unscaledDeltaTime
-					);
+					currentTimeScale = Mathf.Lerp (currentTimeScale, targetTimeScale, 
+						timeScaleSmoothing * Time.unscaledDeltaTime);
 
 					Time.timeScale = currentTimeScale;
 				}

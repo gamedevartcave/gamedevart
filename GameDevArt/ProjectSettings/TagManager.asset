@@ -12,6 +12,8 @@ TagManager:
   - PostProcessVolume
   - Weapon
   - Scenery
+  - Enemy
+  - IgnoreRaycasts
   layers:
   - Default
   - TransparentFX
@@ -48,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Upper
+    uniqueID: 3165803901
     locked: 0
