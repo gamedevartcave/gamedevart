@@ -125,6 +125,197 @@ ModelImporter:
     100238: trees
     100240: building
     100242: road
+    100244: entrance_pole
+    100246: entrance_pole1
+    100248: entrance_pole2
+    100250: entrance_pole3
+    100252: entrance_poles
+    100254: entrances
+    100256: polySurface1
+    100258: polySurface1 1
+    100260: polySurface10
+    100262: polySurface10 1
+    100264: polySurface11
+    100266: polySurface11 1
+    100268: polySurface12
+    100270: polySurface12 1
+    100272: polySurface13
+    100274: polySurface13 1
+    100276: polySurface14
+    100278: polySurface14 1
+    100280: polySurface15
+    100282: polySurface15 1
+    100284: polySurface16
+    100286: polySurface16 1
+    100288: polySurface17
+    100290: polySurface17 1
+    100292: polySurface17 2
+    100294: polySurface17 3
+    100296: polySurface18
+    100298: polySurface18 1
+    100300: polySurface19
+    100302: polySurface19 1
+    100304: polySurface2
+    100306: polySurface2 1
+    100308: polySurface21
+    100310: polySurface21 1
+    100312: polySurface22
+    100314: polySurface22 1
+    100316: polySurface23
+    100318: polySurface23 1
+    100320: polySurface24
+    100322: polySurface24 1
+    100324: polySurface25
+    100326: polySurface25 1
+    100328: polySurface26
+    100330: polySurface26 1
+    100332: polySurface27
+    100334: polySurface27 1
+    100336: polySurface28
+    100338: polySurface29
+    100340: polySurface29 1
+    100342: polySurface3
+    100344: polySurface3 1
+    100346: polySurface30
+    100348: polySurface30 1
+    100350: polySurface31
+    100352: polySurface31 1
+    100354: polySurface32
+    100356: polySurface33
+    100358: polySurface34
+    100360: polySurface35
+    100362: polySurface36
+    100364: polySurface37
+    100366: polySurface38
+    100368: polySurface39
+    100370: polySurface4
+    100372: polySurface4 1
+    100374: polySurface40
+    100376: polySurface41
+    100378: polySurface42
+    100380: polySurface43
+    100382: polySurface44
+    100384: polySurface45
+    100386: polySurface46
+    100388: polySurface47
+    100390: polySurface48
+    100392: polySurface49
+    100394: polySurface5
+    100396: polySurface5 1
+    100398: polySurface50
+    100400: polySurface51
+    100402: polySurface52
+    100404: polySurface53
+    100406: polySurface54
+    100408: polySurface55
+    100410: polySurface56
+    100412: polySurface57
+    100414: polySurface58
+    100416: polySurface59
+    100418: polySurface6
+    100420: polySurface6 1
+    100422: polySurface60
+    100424: polySurface61
+    100426: polySurface62
+    100428: polySurface63
+    100430: polySurface64
+    100432: polySurface7
+    100434: polySurface7 1
+    100436: polySurface8
+    100438: polySurface8 1
+    100440: polySurface9
+    100442: sign01
+    100444: sign02
+    100446: sign03
+    100448: sign04
+    100450: sign05
+    100452: signs
+    100454: small_lights1
+    100456: small_lights2
+    100458: street_lights
+    100460: street_lights1
+    100462: street_lights2
+    100464: street_lights3
+    100466: street_lights4
+    100468: street_lights5
+    100470: street_lights6
+    100472: street_lights7
+    100474: street_lights8
+    100476: stump
+    100478: stump1
+    100480: stump10
+    100482: stump11
+    100484: stump12
+    100486: stump13
+    100488: stump14
+    100490: stump15
+    100492: stump16
+    100494: stump17
+    100496: stump18
+    100498: stump19
+    100500: stump2
+    100502: stump20
+    100504: stump21
+    100506: stump22
+    100508: stump23
+    100510: stump24
+    100512: stump25
+    100514: stump26
+    100516: stump3
+    100518: stump4
+    100520: stump5
+    100522: stump6
+    100524: stump7
+    100526: stump8
+    100528: stump9
+    100530: stumps
+    100532: subway_entrance
+    100534: subway_entrance1
+    100536: subway_entrance2
+    100538: subway_entrance3
+    100540: traffic_light01
+    100542: traffic_light010
+    100544: traffic_light011
+    100546: traffic_light012
+    100548: traffic_light013
+    100550: traffic_light014
+    100552: traffic_light015
+    100554: traffic_light016
+    100556: traffic_light02
+    100558: traffic_light03
+    100560: traffic_light04
+    100562: traffic_light05
+    100564: traffic_light06
+    100566: traffic_light07
+    100568: traffic_light08
+    100570: traffic_light09
+    100572: traffic_lights
+    100574: tree01
+    100576: tree01 1
+    100578: tree010
+    100580: tree011
+    100582: tree012
+    100584: tree013
+    100586: tree014
+    100588: tree02
+    100590: tree02 1
+    100592: tree02 2
+    100594: tree03
+    100596: tree03 1
+    100598: tree03 2
+    100600: tree04
+    100602: tree04 1
+    100604: tree05
+    100606: tree05 1
+    100608: tree06
+    100610: tree06 1
+    100612: tree07
+    100614: tree07 1
+    100616: tree08
+    100618: tree08 1
+    100620: tree09
+    100622: tree_row01
+    100624: tree_row02
     400000: //RootNode
     400002: base
     400004: building1
@@ -247,6 +438,197 @@ ModelImporter:
     400238: trees
     400240: building
     400242: road
+    400244: entrance_pole
+    400246: entrance_pole1
+    400248: entrance_pole2
+    400250: entrance_pole3
+    400252: entrance_poles
+    400254: entrances
+    400256: polySurface1
+    400258: polySurface1 1
+    400260: polySurface10
+    400262: polySurface10 1
+    400264: polySurface11
+    400266: polySurface11 1
+    400268: polySurface12
+    400270: polySurface12 1
+    400272: polySurface13
+    400274: polySurface13 1
+    400276: polySurface14
+    400278: polySurface14 1
+    400280: polySurface15
+    400282: polySurface15 1
+    400284: polySurface16
+    400286: polySurface16 1
+    400288: polySurface17
+    400290: polySurface17 1
+    400292: polySurface17 2
+    400294: polySurface17 3
+    400296: polySurface18
+    400298: polySurface18 1
+    400300: polySurface19
+    400302: polySurface19 1
+    400304: polySurface2
+    400306: polySurface2 1
+    400308: polySurface21
+    400310: polySurface21 1
+    400312: polySurface22
+    400314: polySurface22 1
+    400316: polySurface23
+    400318: polySurface23 1
+    400320: polySurface24
+    400322: polySurface24 1
+    400324: polySurface25
+    400326: polySurface25 1
+    400328: polySurface26
+    400330: polySurface26 1
+    400332: polySurface27
+    400334: polySurface27 1
+    400336: polySurface28
+    400338: polySurface29
+    400340: polySurface29 1
+    400342: polySurface3
+    400344: polySurface3 1
+    400346: polySurface30
+    400348: polySurface30 1
+    400350: polySurface31
+    400352: polySurface31 1
+    400354: polySurface32
+    400356: polySurface33
+    400358: polySurface34
+    400360: polySurface35
+    400362: polySurface36
+    400364: polySurface37
+    400366: polySurface38
+    400368: polySurface39
+    400370: polySurface4
+    400372: polySurface4 1
+    400374: polySurface40
+    400376: polySurface41
+    400378: polySurface42
+    400380: polySurface43
+    400382: polySurface44
+    400384: polySurface45
+    400386: polySurface46
+    400388: polySurface47
+    400390: polySurface48
+    400392: polySurface49
+    400394: polySurface5
+    400396: polySurface5 1
+    400398: polySurface50
+    400400: polySurface51
+    400402: polySurface52
+    400404: polySurface53
+    400406: polySurface54
+    400408: polySurface55
+    400410: polySurface56
+    400412: polySurface57
+    400414: polySurface58
+    400416: polySurface59
+    400418: polySurface6
+    400420: polySurface6 1
+    400422: polySurface60
+    400424: polySurface61
+    400426: polySurface62
+    400428: polySurface63
+    400430: polySurface64
+    400432: polySurface7
+    400434: polySurface7 1
+    400436: polySurface8
+    400438: polySurface8 1
+    400440: polySurface9
+    400442: sign01
+    400444: sign02
+    400446: sign03
+    400448: sign04
+    400450: sign05
+    400452: signs
+    400454: small_lights1
+    400456: small_lights2
+    400458: street_lights
+    400460: street_lights1
+    400462: street_lights2
+    400464: street_lights3
+    400466: street_lights4
+    400468: street_lights5
+    400470: street_lights6
+    400472: street_lights7
+    400474: street_lights8
+    400476: stump
+    400478: stump1
+    400480: stump10
+    400482: stump11
+    400484: stump12
+    400486: stump13
+    400488: stump14
+    400490: stump15
+    400492: stump16
+    400494: stump17
+    400496: stump18
+    400498: stump19
+    400500: stump2
+    400502: stump20
+    400504: stump21
+    400506: stump22
+    400508: stump23
+    400510: stump24
+    400512: stump25
+    400514: stump26
+    400516: stump3
+    400518: stump4
+    400520: stump5
+    400522: stump6
+    400524: stump7
+    400526: stump8
+    400528: stump9
+    400530: stumps
+    400532: subway_entrance
+    400534: subway_entrance1
+    400536: subway_entrance2
+    400538: subway_entrance3
+    400540: traffic_light01
+    400542: traffic_light010
+    400544: traffic_light011
+    400546: traffic_light012
+    400548: traffic_light013
+    400550: traffic_light014
+    400552: traffic_light015
+    400554: traffic_light016
+    400556: traffic_light02
+    400558: traffic_light03
+    400560: traffic_light04
+    400562: traffic_light05
+    400564: traffic_light06
+    400566: traffic_light07
+    400568: traffic_light08
+    400570: traffic_light09
+    400572: traffic_lights
+    400574: tree01
+    400576: tree01 1
+    400578: tree010
+    400580: tree011
+    400582: tree012
+    400584: tree013
+    400586: tree014
+    400588: tree02
+    400590: tree02 1
+    400592: tree02 2
+    400594: tree03
+    400596: tree03 1
+    400598: tree03 2
+    400600: tree04
+    400602: tree04 1
+    400604: tree05
+    400606: tree05 1
+    400608: tree06
+    400610: tree06 1
+    400612: tree07
+    400614: tree07 1
+    400616: tree08
+    400618: tree08 1
+    400620: tree09
+    400622: tree_row01
+    400624: tree_row02
     2100000: white
     2300000: //RootNode
     2300002: base
@@ -368,6 +750,179 @@ ModelImporter:
     2300234: tree_top9
     2300236: building
     2300238: road
+    2300240: entrance_pole
+    2300242: entrance_pole1
+    2300244: entrance_pole2
+    2300246: entrance_pole3
+    2300248: polySurface1
+    2300250: polySurface1 1
+    2300252: polySurface10
+    2300254: polySurface10 1
+    2300256: polySurface11
+    2300258: polySurface11 1
+    2300260: polySurface12
+    2300262: polySurface12 1
+    2300264: polySurface13
+    2300266: polySurface13 1
+    2300268: polySurface14
+    2300270: polySurface14 1
+    2300272: polySurface15
+    2300274: polySurface15 1
+    2300276: polySurface16
+    2300278: polySurface16 1
+    2300280: polySurface17
+    2300282: polySurface17 1
+    2300284: polySurface17 2
+    2300286: polySurface17 3
+    2300288: polySurface18
+    2300290: polySurface18 1
+    2300292: polySurface19
+    2300294: polySurface19 1
+    2300296: polySurface2
+    2300298: polySurface2 1
+    2300300: polySurface21
+    2300302: polySurface21 1
+    2300304: polySurface22
+    2300306: polySurface22 1
+    2300308: polySurface23
+    2300310: polySurface23 1
+    2300312: polySurface24
+    2300314: polySurface24 1
+    2300316: polySurface25
+    2300318: polySurface25 1
+    2300320: polySurface26
+    2300322: polySurface26 1
+    2300324: polySurface27
+    2300326: polySurface27 1
+    2300328: polySurface28
+    2300330: polySurface29
+    2300332: polySurface29 1
+    2300334: polySurface3
+    2300336: polySurface3 1
+    2300338: polySurface30
+    2300340: polySurface30 1
+    2300342: polySurface31
+    2300344: polySurface31 1
+    2300346: polySurface32
+    2300348: polySurface33
+    2300350: polySurface34
+    2300352: polySurface35
+    2300354: polySurface36
+    2300356: polySurface37
+    2300358: polySurface38
+    2300360: polySurface39
+    2300362: polySurface4
+    2300364: polySurface4 1
+    2300366: polySurface40
+    2300368: polySurface41
+    2300370: polySurface42
+    2300372: polySurface43
+    2300374: polySurface44
+    2300376: polySurface45
+    2300378: polySurface46
+    2300380: polySurface47
+    2300382: polySurface48
+    2300384: polySurface49
+    2300386: polySurface5
+    2300388: polySurface5 1
+    2300390: polySurface50
+    2300392: polySurface51
+    2300394: polySurface52
+    2300396: polySurface53
+    2300398: polySurface54
+    2300400: polySurface55
+    2300402: polySurface56
+    2300404: polySurface57
+    2300406: polySurface58
+    2300408: polySurface59
+    2300410: polySurface6
+    2300412: polySurface6 1
+    2300414: polySurface60
+    2300416: polySurface61
+    2300418: polySurface62
+    2300420: polySurface63
+    2300422: polySurface64
+    2300424: polySurface7
+    2300426: polySurface7 1
+    2300428: polySurface8
+    2300430: polySurface8 1
+    2300432: polySurface9
+    2300434: sign01
+    2300436: sign02
+    2300438: sign03
+    2300440: sign04
+    2300442: sign05
+    2300444: stump
+    2300446: stump1
+    2300448: stump10
+    2300450: stump11
+    2300452: stump12
+    2300454: stump13
+    2300456: stump14
+    2300458: stump15
+    2300460: stump16
+    2300462: stump17
+    2300464: stump18
+    2300466: stump19
+    2300468: stump2
+    2300470: stump20
+    2300472: stump21
+    2300474: stump22
+    2300476: stump23
+    2300478: stump24
+    2300480: stump25
+    2300482: stump26
+    2300484: stump3
+    2300486: stump4
+    2300488: stump5
+    2300490: stump6
+    2300492: stump7
+    2300494: stump8
+    2300496: stump9
+    2300498: subway_entrance
+    2300500: subway_entrance1
+    2300502: subway_entrance2
+    2300504: subway_entrance3
+    2300506: traffic_light01
+    2300508: traffic_light010
+    2300510: traffic_light011
+    2300512: traffic_light012
+    2300514: traffic_light013
+    2300516: traffic_light014
+    2300518: traffic_light015
+    2300520: traffic_light016
+    2300522: traffic_light02
+    2300524: traffic_light03
+    2300526: traffic_light04
+    2300528: traffic_light05
+    2300530: traffic_light06
+    2300532: traffic_light07
+    2300534: traffic_light08
+    2300536: traffic_light09
+    2300538: tree01
+    2300540: tree01 1
+    2300542: tree010
+    2300544: tree011
+    2300546: tree012
+    2300548: tree013
+    2300550: tree014
+    2300552: tree02
+    2300554: tree02 1
+    2300556: tree02 2
+    2300558: tree03
+    2300560: tree03 1
+    2300562: tree03 2
+    2300564: tree04
+    2300566: tree04 1
+    2300568: tree05
+    2300570: tree05 1
+    2300572: tree06
+    2300574: tree06 1
+    2300576: tree07
+    2300578: tree07 1
+    2300580: tree08
+    2300582: tree08 1
+    2300584: tree09
     3300000: //RootNode
     3300002: base
     3300004: building1
@@ -488,6 +1043,179 @@ ModelImporter:
     3300234: tree_top9
     3300236: building
     3300238: road
+    3300240: entrance_pole
+    3300242: entrance_pole1
+    3300244: entrance_pole2
+    3300246: entrance_pole3
+    3300248: polySurface1
+    3300250: polySurface1 1
+    3300252: polySurface10
+    3300254: polySurface10 1
+    3300256: polySurface11
+    3300258: polySurface11 1
+    3300260: polySurface12
+    3300262: polySurface12 1
+    3300264: polySurface13
+    3300266: polySurface13 1
+    3300268: polySurface14
+    3300270: polySurface14 1
+    3300272: polySurface15
+    3300274: polySurface15 1
+    3300276: polySurface16
+    3300278: polySurface16 1
+    3300280: polySurface17
+    3300282: polySurface17 1
+    3300284: polySurface17 2
+    3300286: polySurface17 3
+    3300288: polySurface18
+    3300290: polySurface18 1
+    3300292: polySurface19
+    3300294: polySurface19 1
+    3300296: polySurface2
+    3300298: polySurface2 1
+    3300300: polySurface21
+    3300302: polySurface21 1
+    3300304: polySurface22
+    3300306: polySurface22 1
+    3300308: polySurface23
+    3300310: polySurface23 1
+    3300312: polySurface24
+    3300314: polySurface24 1
+    3300316: polySurface25
+    3300318: polySurface25 1
+    3300320: polySurface26
+    3300322: polySurface26 1
+    3300324: polySurface27
+    3300326: polySurface27 1
+    3300328: polySurface28
+    3300330: polySurface29
+    3300332: polySurface29 1
+    3300334: polySurface3
+    3300336: polySurface3 1
+    3300338: polySurface30
+    3300340: polySurface30 1
+    3300342: polySurface31
+    3300344: polySurface31 1
+    3300346: polySurface32
+    3300348: polySurface33
+    3300350: polySurface34
+    3300352: polySurface35
+    3300354: polySurface36
+    3300356: polySurface37
+    3300358: polySurface38
+    3300360: polySurface39
+    3300362: polySurface4
+    3300364: polySurface4 1
+    3300366: polySurface40
+    3300368: polySurface41
+    3300370: polySurface42
+    3300372: polySurface43
+    3300374: polySurface44
+    3300376: polySurface45
+    3300378: polySurface46
+    3300380: polySurface47
+    3300382: polySurface48
+    3300384: polySurface49
+    3300386: polySurface5
+    3300388: polySurface5 1
+    3300390: polySurface50
+    3300392: polySurface51
+    3300394: polySurface52
+    3300396: polySurface53
+    3300398: polySurface54
+    3300400: polySurface55
+    3300402: polySurface56
+    3300404: polySurface57
+    3300406: polySurface58
+    3300408: polySurface59
+    3300410: polySurface6
+    3300412: polySurface6 1
+    3300414: polySurface60
+    3300416: polySurface61
+    3300418: polySurface62
+    3300420: polySurface63
+    3300422: polySurface64
+    3300424: polySurface7
+    3300426: polySurface7 1
+    3300428: polySurface8
+    3300430: polySurface8 1
+    3300432: polySurface9
+    3300434: sign01
+    3300436: sign02
+    3300438: sign03
+    3300440: sign04
+    3300442: sign05
+    3300444: stump
+    3300446: stump1
+    3300448: stump10
+    3300450: stump11
+    3300452: stump12
+    3300454: stump13
+    3300456: stump14
+    3300458: stump15
+    3300460: stump16
+    3300462: stump17
+    3300464: stump18
+    3300466: stump19
+    3300468: stump2
+    3300470: stump20
+    3300472: stump21
+    3300474: stump22
+    3300476: stump23
+    3300478: stump24
+    3300480: stump25
+    3300482: stump26
+    3300484: stump3
+    3300486: stump4
+    3300488: stump5
+    3300490: stump6
+    3300492: stump7
+    3300494: stump8
+    3300496: stump9
+    3300498: subway_entrance
+    3300500: subway_entrance1
+    3300502: subway_entrance2
+    3300504: subway_entrance3
+    3300506: traffic_light01
+    3300508: traffic_light010
+    3300510: traffic_light011
+    3300512: traffic_light012
+    3300514: traffic_light013
+    3300516: traffic_light014
+    3300518: traffic_light015
+    3300520: traffic_light016
+    3300522: traffic_light02
+    3300524: traffic_light03
+    3300526: traffic_light04
+    3300528: traffic_light05
+    3300530: traffic_light06
+    3300532: traffic_light07
+    3300534: traffic_light08
+    3300536: traffic_light09
+    3300538: tree01
+    3300540: tree01 1
+    3300542: tree010
+    3300544: tree011
+    3300546: tree012
+    3300548: tree013
+    3300550: tree014
+    3300552: tree02
+    3300554: tree02 1
+    3300556: tree02 2
+    3300558: tree03
+    3300560: tree03 1
+    3300562: tree03 2
+    3300564: tree04
+    3300566: tree04 1
+    3300568: tree05
+    3300570: tree05 1
+    3300572: tree06
+    3300574: tree06 1
+    3300576: tree07
+    3300578: tree07 1
+    3300580: tree08
+    3300582: tree08 1
+    3300584: tree09
     4300000: CityBlockOut
     4300002: building1
     4300004: building2
@@ -608,6 +1336,179 @@ ModelImporter:
     4300234: tree_bot22
     4300236: road
     4300238: building
+    4300240: stump25
+    4300242: stump24
+    4300244: stump23
+    4300246: stump22
+    4300248: stump21
+    4300250: stump20
+    4300252: stump19
+    4300254: stump18
+    4300256: stump17
+    4300258: stump16
+    4300260: stump15
+    4300262: stump14
+    4300264: stump13
+    4300266: stump12
+    4300268: stump11
+    4300270: stump10
+    4300272: stump9
+    4300274: stump8
+    4300276: stump7
+    4300278: stump6
+    4300280: stump5
+    4300282: stump4
+    4300284: stump3
+    4300286: stump2
+    4300288: stump1
+    4300290: stump
+    4300292: stump26
+    4300294: traffic_light07
+    4300296: traffic_light06
+    4300298: traffic_light05
+    4300300: traffic_light01
+    4300302: traffic_light04
+    4300304: traffic_light03
+    4300306: traffic_light02
+    4300308: traffic_light08
+    4300310: traffic_light013
+    4300312: traffic_light012
+    4300314: traffic_light011
+    4300316: traffic_light010
+    4300318: traffic_light09
+    4300320: traffic_light014
+    4300322: traffic_light015
+    4300324: traffic_light016
+    4300326: sign04
+    4300328: sign03
+    4300330: sign02
+    4300332: sign01
+    4300334: sign05
+    4300336: subway_entrance
+    4300338: subway_entrance1
+    4300340: subway_entrance2
+    4300342: subway_entrance3
+    4300344: tree013
+    4300346: tree012
+    4300348: tree011
+    4300350: tree01
+    4300352: tree02
+    4300354: tree03
+    4300356: tree04
+    4300358: tree05
+    4300360: tree06
+    4300362: tree07
+    4300364: tree08
+    4300366: tree09
+    4300368: tree01
+    4300370: tree02
+    4300372: tree03
+    4300374: tree04
+    4300376: tree05
+    4300378: tree06
+    4300380: tree07
+    4300382: tree08
+    4300384: tree014
+    4300386: tree010
+    4300388: tree03
+    4300390: tree02
+    4300392: entrance_pole
+    4300394: entrance_pole1
+    4300396: entrance_pole2
+    4300398: entrance_pole3
+    4300400: polySurface45
+    4300402: polySurface46
+    4300404: polySurface47
+    4300406: polySurface48
+    4300408: polySurface49
+    4300410: polySurface50
+    4300412: polySurface51
+    4300414: polySurface52
+    4300416: polySurface53
+    4300418: polySurface54
+    4300420: polySurface55
+    4300422: polySurface56
+    4300424: polySurface57
+    4300426: polySurface58
+    4300428: polySurface59
+    4300430: polySurface60
+    4300432: polySurface61
+    4300434: polySurface62
+    4300436: polySurface63
+    4300438: polySurface32
+    4300440: polySurface33
+    4300442: polySurface34
+    4300444: polySurface35
+    4300446: polySurface36
+    4300448: polySurface37
+    4300450: polySurface38
+    4300452: polySurface39
+    4300454: polySurface40
+    4300456: polySurface41
+    4300458: polySurface42
+    4300460: polySurface43
+    4300462: polySurface44
+    4300464: polySurface29
+    4300466: polySurface30
+    4300468: polySurface31
+    4300470: polySurface29
+    4300472: polySurface30
+    4300474: polySurface31
+    4300476: polySurface22
+    4300478: polySurface23
+    4300480: polySurface24
+    4300482: polySurface25
+    4300484: polySurface26
+    4300486: polySurface27
+    4300488: polySurface21
+    4300490: polySurface17
+    4300492: polySurface18
+    4300494: polySurface19
+    4300496: polySurface17
+    4300498: polySurface18
+    4300500: polySurface19
+    4300502: polySurface21
+    4300504: polySurface22
+    4300506: polySurface23
+    4300508: polySurface24
+    4300510: polySurface25
+    4300512: polySurface26
+    4300514: polySurface27
+    4300516: polySurface28
+    4300518: polySurface10
+    4300520: polySurface11
+    4300522: polySurface12
+    4300524: polySurface13
+    4300526: polySurface14
+    4300528: polySurface15
+    4300530: polySurface16
+    4300532: polySurface17
+    4300534: polySurface10
+    4300536: polySurface11
+    4300538: polySurface12
+    4300540: polySurface13
+    4300542: polySurface14
+    4300544: polySurface15
+    4300546: polySurface16
+    4300548: polySurface17
+    4300550: polySurface1
+    4300552: polySurface2
+    4300554: polySurface3
+    4300556: polySurface4
+    4300558: polySurface5
+    4300560: polySurface6
+    4300562: polySurface7
+    4300564: polySurface8
+    4300566: polySurface9
+    4300568: polySurface1
+    4300570: polySurface64
+    4300572: polySurface2
+    4300574: polySurface3
+    4300576: polySurface4
+    4300578: polySurface5
+    4300580: polySurface6
+    4300582: polySurface7
+    4300584: polySurface8
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -639,7 +1540,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.5
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
