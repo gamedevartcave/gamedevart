@@ -74,7 +74,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Glow: 3
+    - _Glow: 6
     - _InvFade: 3
     - _LightingEnabled: 1
     - _Metallic: 0
