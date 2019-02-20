@@ -1509,7 +1509,12 @@ ModelImporter:
     4300580: polySurface6
     4300582: polySurface7
     4300584: polySurface8
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white
+    second: {fileID: 2100000, guid: 4177b5bb8f68b1d468b5644367fda3bc, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -1549,7 +1554,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0

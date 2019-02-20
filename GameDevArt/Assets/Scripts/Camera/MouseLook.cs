@@ -104,28 +104,54 @@ namespace CityBashers
 		/// </summary>
 		void Update ()
 		{
-			// Yaw rotation.
-			rotationX = transform.localEulerAngles.y + LookAxis.x * sensitivity.x * 
-				SaveAndLoadScript.Instance.MouseSensitivityMultplier;
-
-			// Use deadzone.
-			if (LookAxis.y > rotYDeadZone ||
-				LookAxis.y < -rotYDeadZone)
+			if (GameController.Instance == null)
 			{
-				// Pitch rotation.
-				rotationY += LookAxis.y * 
-					(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y) 
-					* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+				return;
+			}
+
+			if (GameController.Instance.isPaused == true)
+			{
+				return;
+			}
+
+			if (CameraLockOnController.Instance == null)
+			{
+				return;
+			}
+
+			if (CameraLockOnController.Instance.lockedOn == true)
+			{
+
+				
+			}
+
+			else
+
+			{
+				// Yaw rotation.
+				rotationX = transform.localEulerAngles.y + LookAxis.x * sensitivity.x *
+					SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+
+				// Use deadzone.
+				if (LookAxis.y > rotYDeadZone ||
+					LookAxis.y < -rotYDeadZone)
+				{
+					// Pitch rotation.
+					rotationY += LookAxis.y *
+						(SaveAndLoadScript.Instance.invertYAxis ? -sensitivity.y : sensitivity.y)
+						* SaveAndLoadScript.Instance.MouseSensitivityMultplier;
+				}
+
+				// pitch rotation.
+				rotationY = Mathf.Clamp(rotationY, minimum.y, maximum.y);
+
+				// Roll rotation.
+				float rotationZ = Mathf.Clamp(-LookAxis.x * rotationZSensitivity, rotationZBounds.x, rotationZBounds.y);
+
+				// Assign rotation amounts to object.
+				transform.localEulerAngles = new Vector3(-rotationY, rotationX, rotationZ);
 			}
 			
-			// pitch rotation.
-			rotationY = Mathf.Clamp (rotationY, minimum.y, maximum.y);
-
-			// Roll rotation.
-			float rotationZ = Mathf.Clamp (-LookAxis.x * rotationZSensitivity, rotationZBounds.x, rotationZBounds.y);
-			
-			// Assign rotation amounts to object.
-			transform.localEulerAngles = new Vector3 (-rotationY, rotationX, rotationZ);
 		}
 	}
 }
