@@ -83,14 +83,14 @@ QualitySettings:
   - serializedVersion: 2
     name: High
     pixelLightCount: 4
-    shadows: 1
-    shadowResolution: 2
+    shadows: 2
+    shadowResolution: 3
     shadowProjection: 1
     shadowCascades: 4
-    shadowDistance: 100
+    shadowDistance: 159
     shadowNearPlaneOffset: 0.5
     shadowCascade2Split: 0.28814676
-    shadowCascade4Split: {x: 0.11973496, y: 0.33702976, z: 0.4859209}
+    shadowCascade4Split: {x: 0.050687343, y: 0.16322023, z: 0.7811599}
     shadowmaskMode: 1
     blendWeights: 4
     textureQuality: 0

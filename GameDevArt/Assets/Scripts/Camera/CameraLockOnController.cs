@@ -70,7 +70,7 @@ namespace CityBashers
 			cameraRig.rotation = Quaternion.LookRotation(cam.transform.forward, Vector3.up);
 		}
 
-		private void Update()
+		void LateUpdate()
 		{
 			if (lockedOn == false)
 			{

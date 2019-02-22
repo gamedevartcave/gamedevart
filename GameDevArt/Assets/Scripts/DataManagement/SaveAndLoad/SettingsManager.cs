@@ -102,7 +102,7 @@ namespace CityBashers
 
 			Application.targetFrameRate = SaveAndLoadScript.Instance.targetFrameRate;
 			FPSCounter.Instance.ResetAverageFps();
-			Debug.Log ("Target framerate: " + Application.targetFrameRate);
+			//Debug.Log ("Target framerate: " + Application.targetFrameRate);
 		}
 
 		public void RefreshLimitFramerateToggle ()

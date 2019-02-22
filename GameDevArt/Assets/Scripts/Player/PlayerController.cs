@@ -204,6 +204,7 @@ namespace CityBashers
 			GetCamera();
 			GetPlayerStats();
 			AddListeners();
+			SetYieldTimes();
 			isGrounded = true;
 			_comboQueue = new Queue<int>(ComboQueueSize);
 		}
@@ -1069,6 +1070,7 @@ namespace CityBashers
 				{
 					stunMeshes [i].enabled = !stunMeshes [i].enabled;
 				}
+				Debug.Log("nfiwoenfpe");
 
 				yield return hitStunYield;
 			}
