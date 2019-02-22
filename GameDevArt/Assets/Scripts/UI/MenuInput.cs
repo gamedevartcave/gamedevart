@@ -88,21 +88,29 @@ namespace CityBashers
 		#region Navigation
 		void CheckNav()
 		{
-			// Can register input.
-			if (Time.unscaledTime > nextScroll)
+			if (Time.unscaledTime <= nextScroll)
 			{
-				// Check if there is a GameController Instance.
-				if (GameController.Instance != null)
-				{
-					// Game is not paused.
-					if (!GameController.Instance.isPaused)
-					{
-						return; // Bail out, there is no GameController Instance.
-					}
-				}
-
-				DoNav(); // Got to this point, GameController Instance was not found, allow menu input.
+				return;
 			}
+
+			if (PlayerController.Instance != null)
+			{
+				if (PlayerController.Instance.health <= 0)
+				{
+					DoNav();
+					return;
+				}
+			}
+
+			if (GameController.Instance != null)
+			{
+				if (GameController.Instance.isPaused == false)
+				{
+					return;
+				}
+			}
+
+			DoNav(); // Got to this point, GameController Instance was not found, allow menu input.
 		}
 
 		// Invokes correct nav direction.
