@@ -21,7 +21,7 @@ namespace CityBashers
 			{
 				Cursor.visible = true;
 				Cursor.lockState = CursorLockMode.None;
-				Debug.Log("Unlocked");
+				//Debug.Log("Unlocked");
 			}
 
 			//Debug.Log("delta X : " + delta.x);

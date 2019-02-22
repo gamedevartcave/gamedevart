@@ -379,7 +379,7 @@ namespace CityBashers
 			if (DashZone.Instance.enemyNearby == true)
 			{
 				TimescaleController.Instance.targetTimeScale = dodgeTimeScale;
-				Debug.Log("HitEnemy");
+				//Debug.Log("HitEnemy");
 			}
 
 			if (dodgedInMidAir == false)
@@ -423,7 +423,7 @@ namespace CityBashers
 						{
 							moveSpeedMultiplier *= dodgePlayerSpeedMult;
 							animSpeedMultiplier *= dodgePlayerSpeedMult;
-							Debug.Log("Dodge made player go fast.");
+							//Debug.Log("Dodge made player go fast.");
 						}
 
 						if (isGrounded == false)
@@ -1070,7 +1070,6 @@ namespace CityBashers
 				{
 					stunMeshes [i].enabled = !stunMeshes [i].enabled;
 				}
-				Debug.Log("nfiwoenfpe");
 
 				yield return hitStunYield;
 			}

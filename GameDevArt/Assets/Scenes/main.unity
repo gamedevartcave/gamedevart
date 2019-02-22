@@ -23118,6 +23118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthPickup (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1236615839413142, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 4605364590624728, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70.3
@@ -23190,6 +23194,42 @@ PrefabInstance:
         type: 3}
       propertyPath: startingPitch
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1195188503549852, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626477405587534, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765784459505356, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345344016746858, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027061555901208, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860025749119724, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460961118917640, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900335489503902, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419366465205232, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
@@ -32401,7 +32441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 709430291}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: MagicPickups
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44505,6 +44545,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthPickup (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1236615839413142, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 4605364590624728, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -73.3
@@ -44577,6 +44621,42 @@ PrefabInstance:
         type: 3}
       propertyPath: startingPitch
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1195188503549852, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626477405587534, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765784459505356, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345344016746858, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027061555901208, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860025749119724, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460961118917640, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900335489503902, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419366465205232, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
@@ -45033,6 +45113,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1730958003254828, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 114682849951983574, guid: b36e53ac7f65f974484b5ad28851023b,
         type: 3}
       propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -45111,6 +45195,42 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 1422794059351026, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778681884830612, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313019573872454, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079600050045614, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537180224123346, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036653946987884, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058155497939826, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429080004392332, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161959478955034, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
 --- !u!4 &830047475 stripped
@@ -51121,6 +51241,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicPickup (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1730958003254828, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 114682849951983574, guid: b36e53ac7f65f974484b5ad28851023b,
         type: 3}
       propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -51199,6 +51323,42 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 1422794059351026, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778681884830612, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313019573872454, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079600050045614, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537180224123346, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036653946987884, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058155497939826, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429080004392332, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161959478955034, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
 --- !u!4 &923642986 stripped
@@ -56624,6 +56784,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 709430291}
     m_Modifications:
+    - target: {fileID: 1730958003254828, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 114682849951983574, guid: b36e53ac7f65f974484b5ad28851023b,
         type: 3}
       propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -56702,6 +56866,42 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 1422794059351026, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778681884830612, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313019573872454, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079600050045614, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537180224123346, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036653946987884, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058155497939826, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429080004392332, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161959478955034, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
 --- !u!4 &962433014 stripped
@@ -70277,6 +70477,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1594125227}
     m_Modifications:
+    - target: {fileID: 1236615839413142, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 4605364590624728, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -70349,6 +70553,42 @@ PrefabInstance:
         type: 3}
       propertyPath: startingPitch
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1195188503549852, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626477405587534, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765784459505356, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345344016746858, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027061555901208, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860025749119724, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460961118917640, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900335489503902, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419366465205232, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
@@ -70792,7 +71032,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594125227}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: HealthPickups
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76827,6 +77067,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1236615839413142, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 4605364590624728, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -73.3
@@ -76899,6 +77143,42 @@ PrefabInstance:
         type: 3}
       propertyPath: startingPitch
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1195188503549852, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626477405587534, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765784459505356, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345344016746858, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027061555901208, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860025749119724, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460961118917640, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900335489503902, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419366465205232, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c05b7ca9e6df55499652e4807fc1dc7, type: 3}
@@ -89398,6 +89678,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicPickup (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1730958003254828, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 114682849951983574, guid: b36e53ac7f65f974484b5ad28851023b,
         type: 3}
       propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -89476,6 +89760,42 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 1422794059351026, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778681884830612, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313019573872454, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079600050045614, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537180224123346, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036653946987884, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058155497939826, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429080004392332, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161959478955034, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b36e53ac7f65f974484b5ad28851023b, type: 3}
 --- !u!4 &2008210247 stripped
@@ -92712,7 +93032,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 387863
+    m_Bits: 912151
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

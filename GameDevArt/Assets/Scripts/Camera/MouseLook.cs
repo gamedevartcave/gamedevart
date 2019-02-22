@@ -121,8 +121,6 @@ namespace CityBashers
 
 			if (CameraLockOnController.Instance.lockedOn == true)
 			{
-
-				
 			}
 
 			else
@@ -151,7 +149,6 @@ namespace CityBashers
 				// Assign rotation amounts to object.
 				transform.localEulerAngles = new Vector3(-rotationY, rotationX, rotationZ);
 			}
-			
 		}
 	}
 }
