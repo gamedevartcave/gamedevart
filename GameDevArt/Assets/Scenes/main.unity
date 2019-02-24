@@ -76418,7 +76418,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
-      objectReference: {fileID: 5862829739664228267}
+      objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[7].m_Target
@@ -93809,6 +93809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCol: {fileID: 0}
   playerRb: {fileID: 2339682783812214563}
+  playerAnim: {fileID: 6721605813724807194}
   startingPoint: {fileID: 1949776633}
   collidingWithScenery: 0
   dodgedInMidAir: 0
@@ -94130,25 +94131,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!95 &5862829739664228267
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8762939261102377854}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d08ade62afee4974f800dd6d68a441e7, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9c3d0521eda0f124692c5da0186d90e0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &6204420650375550268
 Animator:
   serializedVersion: 3
@@ -94285,7 +94267,7 @@ Animator:
   m_GameObject: {fileID: 6721605813734339168}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d08ade62afee4974f800dd6d68a441e7, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c3d0521eda0f124692c5da0186d90e0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -95265,6 +95247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6721605813734109056}
   - component: {fileID: 6721605813724807194}
+  - component: {fileID: 6721605813734339169}
   m_Layer: 0
   m_Name: MannequinnT
   m_TagString: Untagged
@@ -95272,6 +95255,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6721605813734339169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6721605813734339168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63be24ca9d6ee6c46a08a9e3f5105d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6721605813734339170
 GameObject:
   m_ObjectHideFlags: 0
@@ -96995,7 +96990,6 @@ GameObject:
   - component: {fileID: 5761499372747688065}
   - component: {fileID: 2339682783812214563}
   - component: {fileID: 3951512224297579203}
-  - component: {fileID: 5862829739664228267}
   m_Layer: 11
   m_Name: PlayerPrefab
   m_TagString: Player

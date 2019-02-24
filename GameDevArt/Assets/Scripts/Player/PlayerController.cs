@@ -10,7 +10,6 @@ namespace CityBashers
 {
 	[RequireComponent(typeof(Rigidbody))]
 	[RequireComponent(typeof(CapsuleCollider))]
-	[RequireComponent(typeof(Animator))]
 	public class PlayerController : MonoBehaviour
 	{
 		public static PlayerController Instance { get; private set; }
@@ -19,7 +18,7 @@ namespace CityBashers
 		[HideInInspector]
 		public CapsuleCollider playerCol;
 		public Rigidbody playerRb;
-		private Animator playerAnim;
+		public Animator playerAnim;
 		public Transform startingPoint;
 		[ReadOnly] public bool collidingWithScenery;
 		[ReadOnly] public bool dodgedInMidAir;
@@ -190,7 +189,6 @@ namespace CityBashers
 			}
 
 			// Find some components.
-			playerAnim = GetComponent<Animator>();
 			playerRb = GetComponent<Rigidbody>();
 			playerCol = GetComponent<CapsuleCollider>();
 
@@ -932,7 +930,7 @@ namespace CityBashers
 		/// <summary>
 		/// Gets the foot step sound from a list.
 		/// </summary>
-		private void GetFootStepSound ()
+		public void GetFootStepSound ()
 		{
 			footstepSoundIndex = Random.Range (0, footstepClips.Length);
 			footstepAudioSource.clip = footstepClips [footstepSoundIndex];
