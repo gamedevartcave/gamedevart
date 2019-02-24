@@ -14,22 +14,14 @@ namespace CityBashers
 		// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			relativeDodgeDir = PlayerController.Instance.transform.InverseTransformDirection(
-				PlayerController.Instance.transform.forward *
-				(PlayerController.Instance.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
-				PlayerController.Instance.dodgeSpeed);
-
 			// Tweak movement amounts.
-			PlayerController.Instance.moveMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;
+			PlayerController.Instance.moveMultiplier	  *= PlayerController.Instance.dodgeSpeedupFactor;
 			PlayerController.Instance.animSpeedMultiplier *= PlayerController.Instance.dodgeSpeedupFactor;
-			PlayerController.Instance.movingTurnSpeed *= PlayerController.Instance.dodgeSpeedupFactor;
+			PlayerController.Instance.movingTurnSpeed	  *= PlayerController.Instance.dodgeSpeedupFactor;
 			PlayerController.Instance.stationaryTurnSpeed *= PlayerController.Instance.dodgeSpeedupFactor;
 
 			// Set update mode to unscaled.
-			animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-
-			// Set dodge time.
-			//TimescaleController.Instance.targetTimeScale = PlayerController.Instance.dodgeTimeScale;
+			//animator.updateMode = AnimatorUpdateMode.UnscaledTime;
 
 			// Call events.
 			PlayerController.Instance.OnDodgeBegan.Invoke();
@@ -43,10 +35,16 @@ namespace CityBashers
 
         void DodgeAction(Animator playerAnim)
         {
+			Vector3 relativeDodgeDir = PlayerController.Instance.transform.InverseTransformDirection(
+				 PlayerController.Instance.transform.forward *
+				(PlayerController.Instance.MoveAxis.sqrMagnitude > 0 ? 1 : -1) *
+				 PlayerController.Instance.dodgeSpeed);
+
+			playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
+
 			// Game is not paused.
-			if (GameController.Instance.isPaused == false && PlayerController.Instance.collidingWithScenery == false)
+			if (GameController.Instance.isPaused == false)
 			{
-				// Decrease time left of dodging.
 				PlayerController.Instance.transform.Translate(relativeDodgeDir * Time.unscaledDeltaTime, Space.Self);
 			}
 
@@ -56,7 +54,7 @@ namespace CityBashers
 				playerAnim.ResetTrigger("Dodge");
 				playerAnim.SetBool("Dodging", false);
 			}
-        }
+		}
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -71,9 +69,9 @@ namespace CityBashers
 				animator.SetBool("Dodging", false);
 
 				// Reset speed factors.
-				PlayerController.Instance.moveMultiplier /= PlayerController.Instance.dodgeSpeedupFactor;
+				PlayerController.Instance.moveMultiplier	  /= PlayerController.Instance.dodgeSpeedupFactor;
 				PlayerController.Instance.animSpeedMultiplier /= PlayerController.Instance.dodgeSpeedupFactor;
-				PlayerController.Instance.movingTurnSpeed /= PlayerController.Instance.dodgeSpeedupFactor;
+				PlayerController.Instance.movingTurnSpeed	  /= PlayerController.Instance.dodgeSpeedupFactor;
 				PlayerController.Instance.stationaryTurnSpeed /= PlayerController.Instance.dodgeSpeedupFactor;
 
 				// Reset update mode to normal.

@@ -377,57 +377,52 @@ namespace CityBashers
 			if (DashZone.Instance.enemyNearby == true)
 			{
 				TimescaleController.Instance.targetTimeScale = dodgeTimeScale;
-				//Debug.Log("HitEnemy");
 			}
 
-			if (dodgedInMidAir == false)
+			if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
 			{
-				if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Dodging") == false)
+				// Bypass dodging if near scenery collider. That way we cannot pass through it.
+				if (MoveAxis.sqrMagnitude > 0)
 				{
-					// Bypass dodging if near scenery collider. That way we cannot pass through it.
-					if (MoveAxis.sqrMagnitude > 0)
+					// Cannot dodge, show line of sight.
+					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3, dodgeLayerMask))
 					{
-						// Cannot dodge, show line of sight.
-						if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 3,
-							dodgeLayerMask))
-						{
-							Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
-							return;
-						}
+						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * 3, Color.red, 1);
+						return;
+					}
+				}
+
+				else // No movement
+
+				{
+					// Cannot dodge, show line of sight.
+					if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3, dodgeLayerMask))
+					{
+						Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
+						return;
+					}
+				}
+
+				if (Time.unscaledTime > nextDodge)
+				{
+					isDodging = true;
+					playerAnim.SetTrigger("Dodge");
+					nextDodge = Time.unscaledTime + dodgeRate;
+
+					dodgeTimes++;
+					dodgeParticles.Play();
+
+					playerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+					if (dodgeTimes == 3)
+					{
+						moveSpeedMultiplier *= dodgePlayerSpeedMult;
+						animSpeedMultiplier *= dodgePlayerSpeedMult;
 					}
 
-					else // No movement
-
+					if (isGrounded == false)
 					{
-						// Cannot dodge, show line of sight.
-						if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), -transform.forward, 3,
-							dodgeLayerMask))
-						{
-							Debug.DrawRay(transform.position + new Vector3(0, 1, 0), -transform.forward * 3, Color.red, 1);
-							return;
-						}
-					}
-
-					if (Time.unscaledTime > nextDodge)
-					{
-						isDodging = true;
-						playerAnim.SetTrigger("Dodge");
-						nextDodge = Time.unscaledTime + dodgeRate;
-
-						dodgeTimes++;
-						dodgeParticles.Play();
-
-						if (dodgeTimes == 3)
-						{
-							moveSpeedMultiplier *= dodgePlayerSpeedMult;
-							animSpeedMultiplier *= dodgePlayerSpeedMult;
-							//Debug.Log("Dodge made player go fast.");
-						}
-
-						if (isGrounded == false)
-						{
-							dodgedInMidAir = true;
-						}
+						dodgedInMidAir = true;
 					}
 				}
 			}
@@ -503,9 +498,9 @@ namespace CityBashers
 		void FixedUpdate ()
 		{
 			playerRb.velocity = new Vector3 (
-				transform.forward.x * forwardAmount * moveSpeedMultiplier * Time.deltaTime,
+				transform.forward.x * forwardAmount * moveSpeedMultiplier * Time.unscaledDeltaTime,
 				playerRb.velocity.y,
-				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.deltaTime);
+				transform.forward.z * forwardAmount * moveSpeedMultiplier * Time.unscaledDeltaTime);
 
 			//GetBetterJumpVelocity();
 			//ClampVelocity (playerRb, terminalVelocity);
@@ -514,21 +509,17 @@ namespace CityBashers
 		void OnCollisionEnter(Collision col)
 		{
 			// Check for walkable scenery layer.
-			if (col.collider.gameObject.layer == 9)
+			if (col.collider.gameObject.layer == LayerMask.NameToLayer("Scenery"))
 			{
 				OnLand.Invoke();
 				dodgedInMidAir = false;
-			}
-
-			if (col.collider.tag == "Scenery")
-			{
 				collidingWithScenery = true;
 			}
 		}
 
 		private void OnCollisionStay(Collision col)
 		{
-			if (col.collider.gameObject.layer == 9)
+			if (col.collider.gameObject.layer == LayerMask.NameToLayer("Scenery"))
 			{
 				isGrounded = true;
 				playerAnim.SetBool("OnGround", isGrounded);
@@ -537,14 +528,10 @@ namespace CityBashers
 
 		private void OnCollisionExit(Collision col)
 		{
-			if (col.collider.gameObject.layer == 9)
+			if (col.collider.gameObject.layer == LayerMask.NameToLayer("Scenery"))
 			{
 				isGrounded = false;
 				playerAnim.SetBool("OnGround", isGrounded);
-			}
-
-			if (col.collider.tag == "Scenery")
-			{
 				collidingWithScenery = false;
 			}
 		}
@@ -588,9 +575,8 @@ namespace CityBashers
 		void ApplyExtraTurnRotation()
 	    {
 	        // Help the character turn faster (this is in addition to root rotation in the animation).
-	        float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed,
-	            forwardAmount);
-	        transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
+	        float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, forwardAmount);
+	        transform.Rotate(0, turnAmount * turnSpeed * Time.unscaledDeltaTime, 0);
 	    }
 
 		/// <summary>

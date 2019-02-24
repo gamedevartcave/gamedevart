@@ -8835,7 +8835,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 5
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.1
@@ -8866,7 +8866,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220285562}
   serializedVersion: 6
-  lengthInSec: 0.5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -8941,8 +8941,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.05
+      scalar: 0.125
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9051,8 +9051,8 @@ ParticleSystem:
       maxColor: {r: 0, g: 1, b: 0.18460202, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.12919629, b: 0, a: 1}
-        key1: {r: 1, g: 0.87827665, b: 0.3537736, a: 1}
+        key0: {r: 1, g: 0.12919629, b: 0, a: 0.7058824}
+        key1: {r: 1, g: 0.87827665, b: 0.3537736, a: 0.5882353}
         key2: {r: 0, g: 0.3668642, b: 1, a: 0}
         key3: {r: 0, g: 0.3668642, b: 1, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -9110,8 +9110,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.08
-      minScalar: 0.02
+      scalar: 0.02
+      minScalar: 0.01
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9801,7 +9801,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 400
+        scalar: 300
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -9875,9 +9875,9 @@ ParticleSystem:
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0
-          inSlope: -2
-          outSlope: -2
+          value: 1
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
@@ -12866,12 +12866,12 @@ ParticleSystem:
           outWeight: 0.22976114
         - serializedVersion: 3
           time: 1
-          value: 0
-          inSlope: -2
-          outSlope: -2
+          value: 1
+          inSlope: -0.19300629
+          outSlope: -0.19300629
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.1331779
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -12923,7 +12923,7 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 43176
+        atime0: 0
         atime1: 65535
         atime2: 0
         atime3: 0
@@ -13605,7 +13605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &227446537
 Transform:
   m_ObjectHideFlags: 0
@@ -13934,7 +13934,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.03
+      scalar: 0.02
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -76438,7 +76438,7 @@ PrefabInstance:
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.size
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -76479,21 +76479,21 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1909809187}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[7].m_Target
       value: 
-      objectReference: {fileID: 1909809187}
+      objectReference: {fileID: 6721605813720678106}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[8].m_Target
       value: 
-      objectReference: {fileID: 6721605813720678106}
+      objectReference: {fileID: 1628706859}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_Mode
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -76509,16 +76509,16 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_Target
       value: 
-      objectReference: {fileID: 1628706859}
+      objectReference: {fileID: 1931384103}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_MethodName
-      value: AssignUIPostProcessVolume
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Rendering.PostProcessing.PostProcessVolume, Unity.Postprocessing.Runtime
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -76528,7 +76528,7 @@ PrefabInstance:
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[9].m_MethodName
-      value: AssignPostProcessVolume
+      value: AssignUIPostProcessVolume
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -76554,11 +76554,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[11].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1931384103}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[11].m_MethodName
-      value: set_enabled
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -76653,12 +76653,12 @@ PrefabInstance:
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[8].m_MethodName
-      value: set_enabled
+      value: AssignPostProcessVolume
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[8].m_Mode
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
@@ -76784,12 +76784,12 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[10].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 639754338}
+      objectReference: {fileID: 0}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[9].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1521116691}
+      objectReference: {fileID: 639754338}
     - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
         type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[9].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -76819,6 +76819,21 @@ PrefabInstance:
         type: 3}
       propertyPath: OnInitializedComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
+        type: 3}
+      propertyPath: ManagersPrefab
+      value: 
+      objectReference: {fileID: 146, guid: 747e54be8d65358418fb4304178f1ccf, type: 3}
+    - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
+        type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1521116691}
+    - target: {fileID: 114933043843430940, guid: cbea631553e579f4db0813e22c25623b,
+        type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Rendering.PostProcessing.PostProcessVolume, Unity.Postprocessing.Runtime
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbea631553e579f4db0813e22c25623b, type: 3}
@@ -84005,6 +84020,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928215834}
   m_CullTransparentMesh: 1
+--- !u!1 &1931384103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: e3a932eb97a0dcf4e813b0774daa274f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2078075302}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1936306873
 GameObject:
   m_ObjectHideFlags: 0
@@ -91094,6 +91115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordBandAId
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e3a932eb97a0dcf4e813b0774daa274f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e3a932eb97a0dcf4e813b0774daa274f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.008
@@ -93440,9 +93465,9 @@ MonoBehaviour:
   - {fileID: 6721605813734109158}
   FollowPosZ:
   - {fileID: 1529000715}
-  FollowPosMethod: 1
+  FollowPosMethod: 0
   FollowPosOffset: {x: 0, y: 0, z: 0}
-  FollowPosSmoothTime: {x: 7, y: 20, z: 7}
+  FollowPosSmoothTime: {x: 10, y: 20, z: 10}
   XPosTimeUnscaled: 1
   YPosTimeUnscaled: 0
   ZPosTimeUnscaled: 1
@@ -93458,7 +93483,7 @@ MonoBehaviour:
   FollowRotOffset: {x: 0, y: 0, z: 0}
   FollowRotSmoothTime: {x: 15, y: 15, z: 0}
   XRotTimeUnscaled: 0
-  YRotTimeUnscaled: 0
+  YRotTimeUnscaled: 1
   ZRotTimeUnscaled: 0
 --- !u!114 &114787884430743818
 MonoBehaviour:
@@ -94226,8 +94251,8 @@ MonoBehaviour:
   isDodging: 0
   dodgeRate: 0.4
   nextDodge: 0
-  dodgeSpeed: 13
-  dodgeTimeScale: 0.02
+  dodgeSpeed: 9
+  dodgeTimeScale: 0.08
   dodgeSpeedupFactor: 1
   dodgeMagicCost: 10
   dodgeTimes: 0
