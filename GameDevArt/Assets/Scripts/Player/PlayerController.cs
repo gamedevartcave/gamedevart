@@ -759,18 +759,22 @@ namespace CityBashers
 
 			if (Time.time > nextFire && GameController.Instance.isPaused == false)
 			{
-				// Look at forward camera direction without pitch.
-				// TODO: Face closest target.
+				playerRb.velocity = Vector3.zero;
+				move = Vector3.zero;
+				Vector3 targetLook = CameraLockOnController.Instance.lockOnPoints[0].position - transform.position;
+				Debug.DrawLine(transform.position, CameraLockOnController.Instance.lockOnPoints[0].position);
+				Quaternion rotation = Quaternion.LookRotation(targetLook, Vector3.up);
+				transform.rotation = rotation;
+				transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-				//transform.rotation = Quaternion.LookRotation(AimNoPitchDir, Vector3.up);
 				Shoot(); // Instantiate a shot.
 				nextFire = Time.time + currentFireRate; // Shoot rate update.
 
 				// Set up camera shake.
 				// TODO: Have this modifiable from weapon.
-				GameController.Instance.camShakeScript.shakeDuration = 0.1f;
-				GameController.Instance.camShakeScript.shakeAmount = 0.08f;
-				GameController.Instance.camShakeScript.Shake();
+				//GameController.Instance.camShakeScript.shakeDuration = 0.1f;
+				//GameController.Instance.camShakeScript.shakeAmount = 0.08f;
+				//GameController.Instance.camShakeScript.Shake();
 
 				// Set up vibration.
 				VibrateController.Instance.Vibrate(0.25f, 0.25f, 0.1f, 1);

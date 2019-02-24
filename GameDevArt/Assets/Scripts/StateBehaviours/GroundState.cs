@@ -5,8 +5,14 @@ namespace CityBashers
     public class GroundState : StateMachineBehaviour
     {
         public float  runCycleLegOffset = 0.2f; // Specific to the character in sample assets, will need to be modified to work with others
+		private int combatLayerIndex;
 
-        public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
+		private void Start()
+		{
+			combatLayerIndex = PlayerController.Instance.playerAnim.GetLayerIndex("Combat");
+		}
+
+		public override void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
             base.OnStateMachineEnter(animator, stateMachinePathHash);
         }
@@ -23,8 +29,12 @@ namespace CityBashers
         //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            //Move(pc.move, animator);
-			Move(PlayerController.Instance.move, animator);
+			//Move(pc.move, animator);
+
+			if (PlayerController.Instance.playerAnim.GetCurrentAnimatorStateInfo(combatLayerIndex).IsName ("Shoot") == false)
+			{
+				Move(PlayerController.Instance.move, animator);
+			}
         }
 
         public void Move(Vector3 move, Animator playerAnim)

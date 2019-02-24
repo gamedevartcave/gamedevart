@@ -1,66 +1,81 @@
 ﻿using UnityEngine;
 
-public class CameraCollision : MonoBehaviour
+namespace CityBashers
 {
-	[ReadOnly] public bool isInRange;
-	public Vector3 SafeLocalPos = new Vector3 (0, 0, 0);
-	public Vector3 NormalLocalPos = new Vector3(0, 0, -2);
-	public float smoothing = 10;
-	public string layerCheckName = "Scenery";
-	[ReadOnly] public bool locked;
-	[ReadOnly] public float delayTimeRemaining_In;
-	[ReadOnly] public float delayTimeRemaining_Out;
-	public float delayTimeDuration_In = 1;
-	public float delayTimeDuration_Out = 1;
-
-	public void SetInRange(bool range)
+	public class CameraCollision : MonoBehaviour
 	{
-		isInRange = range;
+		public Transform ReferencePos;
+		[ReadOnly] public bool isInRange;
+		public Transform NormalPos;
+		public Transform SafePos;
+		public float smoothing = 10;
+		public string layerCheckName = "Scenery";
+		[ReadOnly] public bool locked;
+		[ReadOnly] public float delayTimeRemaining_In;
+		[ReadOnly] public float delayTimeRemaining_Out;
+		public float delayTimeDuration_In = 1;
+		public float delayTimeDuration_Out = 1;
+		private Vector3 smoothvel;
 
-		if (isInRange == true)
+		public void SetInRange(bool range)
 		{
-			delayTimeRemaining_In = delayTimeDuration_In;
-		}
+			isInRange = range;
 
-		else
-
-		{
-			delayTimeRemaining_Out = delayTimeDuration_Out;
-		}
-	}
-
-	void Update ()
-	{
-		if (delayTimeRemaining_In > 0)
-		{
-			delayTimeRemaining_In -= Time.deltaTime;
-		}
-
-		if (delayTimeRemaining_Out > 0)
-		{
-			delayTimeRemaining_Out -= Time.deltaTime;
-		}
-
-		if (delayTimeRemaining_In <= 0 && delayTimeRemaining_Out <= 0)
-		{
-			if (locked == true)
+			if (isInRange == true)
 			{
-				locked = false;
+				delayTimeRemaining_In = delayTimeDuration_In;
+			}
+
+			else
+
+			{
+				delayTimeRemaining_Out = delayTimeDuration_Out;
 			}
 		}
 
-		else
-
+		void Update()
 		{
-			locked = true;
-		}
+			if (delayTimeRemaining_In > 0)
+			{
+				delayTimeRemaining_In -= Time.deltaTime;
+			}
 
-		if (locked == false)
-		{
-			transform.localPosition = Vector3.Lerp(
-				transform.localPosition,
-				isInRange ? SafeLocalPos : NormalLocalPos,
-				Time.deltaTime * smoothing);
+			if (delayTimeRemaining_Out > 0)
+			{
+				delayTimeRemaining_Out -= Time.deltaTime;
+			}
+
+			if (delayTimeRemaining_In <= 0 && delayTimeRemaining_Out <= 0)
+			{
+				if (locked == true)
+				{
+					delayTimeRemaining_In = 0;
+					delayTimeRemaining_Out = 0;
+					locked = false;
+				}
+			}
+
+			else
+
+			{
+				locked = true;
+			}
+
+			if (CameraLockOnController.Instance.lockedOn == true)
+			{
+				delayTimeRemaining_In = 0;
+				delayTimeRemaining_Out = 0;
+				isInRange = false;
+				locked = false;
+			}
+
+			if (locked == false)
+			{
+				ReferencePos.position = Vector3.Lerp(
+					ReferencePos.position,
+					isInRange ? SafePos.position : NormalPos.position,
+					Time.deltaTime * smoothing);
+			}
 		}
 	}
 }
