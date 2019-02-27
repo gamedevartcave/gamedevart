@@ -540,8 +540,8 @@ namespace CityBashers
 			postProcessVolume.profile.GetSetting<Vignette>().enabled.value =
 				qualitySettings[QualitySettingsIndex].vignette;
 
-			postProcessVolume.profile.GetSetting<ScreenSpaceReflections>().enabled.value =
-				qualitySettings[QualitySettingsIndex].screenSpaceReflections;
+			//postProcessVolume.profile.GetSetting<ScreenSpaceReflections>().enabled.value =
+			//	qualitySettings[QualitySettingsIndex].screenSpaceReflections;
 
 			postProcessVolume.profile.GetSetting<AmbientOcclusion>().enabled.value =
 				qualitySettings[QualitySettingsIndex].ambientOcclusion;
@@ -579,8 +579,8 @@ namespace CityBashers
 			postProcessVolumeUI.profile.GetSetting<Vignette>().enabled.value =
 				qualitySettingsUI[QualitySettingsIndex].vignette;
 
-			postProcessVolumeUI.profile.GetSetting<ScreenSpaceReflections>().enabled.value =
-				qualitySettingsUI[QualitySettingsIndex].screenSpaceReflections;
+			//postProcessVolumeUI.profile.GetSetting<ScreenSpaceReflections>().enabled.value =
+			//	qualitySettingsUI[QualitySettingsIndex].screenSpaceReflections;
 
 			postProcessVolumeUI.profile.GetSetting<AmbientOcclusion>().enabled.value =
 				qualitySettingsUI[QualitySettingsIndex].ambientOcclusion;
@@ -610,13 +610,14 @@ namespace CityBashers
 			{
 				if (targetFrameRate < 30 && targetFrameRate >= 0)
 				{
-					targetFrameRate = Screen.currentResolution.refreshRate;
-					//targetFrameRate = 60;
+					//targetFrameRate = Screen.currentResolution.refreshRate;
+					targetFrameRate = 60;
 				} 
 
 				else // Target framerate unlimited.
 
 				{
+					targetFrameRate = 60;
 				}
 			} 
 
